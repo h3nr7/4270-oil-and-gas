@@ -1,6 +1,6 @@
 (function() {
 
-	var ns = MKK.getNamespace('app.core');
+	var ns = MKK.getNamespace('mkk.core');
 
 	if(!ns.Core) {
 

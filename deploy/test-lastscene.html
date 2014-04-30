@@ -16,18 +16,52 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <div id="main"></div>
+        <!-- SETTINGS -->
+        <script src="../js/data/settings.js"></script>
+
+        <!-- LIBS -->
+        <script src="../js/lib/RequestAnimationFrame.js"></script>
         <script src="../js/lib/pixi.dev.js"></script>
+
+        <!--  -->
         <script src="../js/app/SiteManager.js"></script>
         <script src="../js/mkk/core/Core.js"></script>
+
+        <!-- ASSETS -->
+        <script src="../js/app/assets/AStaticAsset.js"></script>
+        <script src="../js/app/assets/Rectangle.js"></script>
+        <script src="../js/app/assets/House.js"></script>
+        <script src="../js/app/assets/Trees.js"></script>
+        <script src="../js/app/assets/MountainGreen.js"></script>
+
+        <!-- SCENES -->
+        <script src="../js/app/scene/AScene.js"></script>
+        <script src="../js/app/scene/SceneEnd.js"></script>
+
+        <!-- MAIN -->
         <script src="js/test-lastscene.js"></script>
+
         <script>
                 // ----------------------
                 //begins!
                 // ----------------------
                 document.addEventListener("DOMContentLoaded", function() {
 
-                    console.log('Test Last Scene - Begins!')
+                    console.log('Test Last Scene - Begins!');
+                    var app = new MKK.app.App();
+                    app.setup();
+
+                    function animate() {
+
+                        app.update();
+                        app.render();
+                        window.requestAnimationFrame(animate);
+                    }
+
+                    animate();
+
+
+
                 });
         </script>
         <script>

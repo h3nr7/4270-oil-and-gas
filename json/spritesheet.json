@@ -1,0 +1,41 @@
+{
+	"meta": {
+		"image": "spritesheet.png",
+		"size": {"w":76,"h":32},
+		"scale": "1"
+	},
+	"frames": {
+		"fish.png":
+		{
+            "frame": {"x":0,"y":0,"w":38,"h":16},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":38,"h":16},
+            "sourceSize": {"w":38,"h":16}
+		},
+		"fish_copy1.png":
+		{
+            "frame": {"x":0,"y":16,"w":38,"h":16},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":38,"h":16},
+            "sourceSize": {"w":38,"h":16}
+		},
+		"fish_copy2.png":
+		{
+            "frame": {"x":38,"y":0,"w":38,"h":16},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":38,"h":16},
+            "sourceSize": {"w":38,"h":16}
+		},
+		"fish_copy3.png":
+		{
+            "frame": {"x":38,"y":16,"w":38,"h":16},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":38,"h":16},
+            "sourceSize": {"w":38,"h":16}
+		}
+	}
+}
