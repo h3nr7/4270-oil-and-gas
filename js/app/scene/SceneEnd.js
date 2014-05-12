@@ -38,6 +38,10 @@
 		p.destroy = function() {
 
 		}
+		p.update = function(speed) {
+
+			if (this.level2) this.level2.position.y += speed;
+		}
 
 		p.init = function() {
 

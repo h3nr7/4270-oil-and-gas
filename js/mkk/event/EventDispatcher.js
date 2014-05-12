@@ -1,6 +1,6 @@
 (function(){
 
-	var ns = MKK.getNamespace('monkiki.events');
+	var ns = MKK.getNamespace('mkk.event');
 
 	if (!ns.EventDispatcher) {
 
