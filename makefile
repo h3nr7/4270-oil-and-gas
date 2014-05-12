@@ -34,6 +34,8 @@ scene4:
 	${SPRITESHEET} -n scene5 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene4/*.png
 scene5:
 	${SPRITESHEET} -n scene6 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene5/*.png
+scene6:
+	${SPRITESHEET} -n scene6 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene6/*.png
 sceneend:
 	${SPRITESHEET} -n sceneend -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/sceneend/*.png
 
