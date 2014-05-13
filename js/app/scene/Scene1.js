@@ -59,7 +59,8 @@
 
 		p.update = function(frame) {
 			this.preUpdate(frame);
-			this.level1.y = this.curFrame;
+			console.log(this.curFrame/3000);
+			this.level1.y = this.curFrame*TWEEN.Easing.Elastic.In(this.curFrame/600);
 
 
 		}
