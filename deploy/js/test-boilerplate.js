@@ -31,6 +31,12 @@
 			document.body.appendChild(this.stats.domElement);
 		}
 
+		p.setup = function() {
+
+			
+			this.debug();
+		}
+
 		p.init = function() {
 			console.log('init');
 
@@ -54,5 +60,5 @@
 			//render code ends here
 			this.stats.end();
 		}
-
+	}
 })();

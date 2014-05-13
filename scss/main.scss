@@ -1,6 +1,6 @@
 @import "lib/reset";
 @import "common/global";
-
+@import "common/fonts";
 
 
 #main {
@@ -13,12 +13,12 @@
 	background: red;
 }
 
-#fakescroller {
-	display: block;
-	position: absolute;
-	width: 100%;
-	height: 50000px;
-	//for native touch feel
-	-webkit-overflow-scrolling : touch;
-}
+// #fakescroller {
+// 	display: block;
+// 	position: absolute;
+// 	width: 100%;
+// 	height: 50000px;
+// 	//for native touch feel
+// 	-webkit-overflow-scrolling : touch;
+// }
 

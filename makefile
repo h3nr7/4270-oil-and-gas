@@ -11,7 +11,7 @@ OUTPATH=deploy/assets
 #VARS
 SSFORMAT="pixi.js"
 
-default: global sceneend
+default: global scene1 sceneend
 
 development:
 	OUTPATH=deploy/assets
@@ -25,15 +25,15 @@ buildCss:
 global:
 	${SPRITESHEET} -n global -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/global/*.png
 scene1:
-	${SPRITESHEET} -n scene2 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene1/*.png
+	${SPRITESHEET} -n scene1 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene1/*.png
 scene2:
-	${SPRITESHEET} -n scene3 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene2/*.png
+	${SPRITESHEET} -n scene2 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene2/*.png
 scene3:
-	${SPRITESHEET} -n scene4 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene3/*.png
+	${SPRITESHEET} -n scene3 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene3/*.png
 scene4:
-	${SPRITESHEET} -n scene5 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene4/*.png
+	${SPRITESHEET} -n scene4 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene4/*.png
 scene5:
-	${SPRITESHEET} -n scene6 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene5/*.png
+	${SPRITESHEET} -n scene5 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene5/*.png
 scene6:
 	${SPRITESHEET} -n scene6 -p ${OUTPATH} -f ${SSFORMAT} ${ASSETSPATH}/scene6/*.png
 sceneend:

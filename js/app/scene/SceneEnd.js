@@ -27,11 +27,11 @@
 		var p = SceneEnd.prototype = new AScene();
 		var s = AScene.prototype;
 
-		p.setup = function() {
+		p.setup = function(stage) {
 
-			s.setup();
+			s.setup(stage);
+			this.stage = stage;
 			this.container = s.container;
-
 
 		}
 

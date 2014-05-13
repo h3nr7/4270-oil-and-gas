@@ -13,7 +13,7 @@
 			this.value = 0;
 			this.easingValue = 0;
 			this.easingMin = -10700;
-			this.speedDamper = 0.9;
+			this.speedDamper = 0.35;
 			this.dragOffset;
 			this.dragging;
 			this.speed = 0;
@@ -31,7 +31,6 @@
 			var that = this;
 
 			// Mouse Handler
-			console.log(this.listener);
 			this.mousedownBound = ListenerFunctions.createListenerFunction(this, this.mousedownHandler);
 			this.target.addEventListener('mousedown', this.mousedownBound);
 			this.mouseupBound = ListenerFunctions.createListenerFunction(this, this.mouseupHandler);
@@ -82,7 +81,6 @@
 				this.easingValue += this.speed;
 
 				if(Math.abs(this.speed) < 1) this.speed=0;
-
 			}
 		}
 
@@ -127,7 +125,7 @@
 
 		p.mousewheelHandler = function(e) {
 			e.preventDefault();
-			this.speed = e.wheelDelta * 0.1;
+			this.speed = e.wheelDelta * this.speedDamper;
 			
 		}
 
