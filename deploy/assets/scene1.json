@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"image": "scene1.png",
-		"size": {"w":1558,"h":691},
+		"size": {"w":1558,"h":625},
 		"scale": "1"
 	},
 	"frames": {
@@ -23,15 +23,15 @@
 		},
 		"cloud_satellite.png":
 		{
-            "frame": {"x":959,"y":390,"w":430,"h":222},
+            "frame": {"x":959,"y":390,"w":254,"h":131},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":430,"h":222},
-            "sourceSize": {"w":430,"h":222}
+            "spriteSourceSize": {"x":0,"y":0,"w":254,"h":131},
+            "sourceSize": {"w":254,"h":131}
 		},
 		"cloud_text1.png":
 		{
-            "frame": {"x":0,"y":625,"w":350,"h":66},
+            "frame": {"x":959,"y":521,"w":350,"h":66},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":350,"h":66},
@@ -39,7 +39,7 @@
 		},
 		"cloud_text1c.png":
 		{
-            "frame": {"x":1389,"y":390,"w":69,"h":36},
+            "frame": {"x":1213,"y":390,"w":69,"h":36},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":69,"h":36},

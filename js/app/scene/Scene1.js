@@ -23,6 +23,7 @@
 
 			this.level1Setup();
 			console.log(p, this);
+			
 		}
 
 		p.createLevel = function() {
@@ -31,13 +32,15 @@
 
 		p.level1Setup = function() {
 			this.level1 = this.createLevel();
-			var l2House = PIXI.Sprite.fromFrame("cloud_white1.png");
-			l2House.position.x = 400;
-			l2House.position.y = 0;
+			var l2House = PIXI.Sprite.fromFrame("cloud_satellite.png");
+			l2House.position.x = 100;
+			l2House.position.y = 100;
 
 			txt = new PIXI.Text("With over 100 years of close collaboration with the world's leading equipment builders", {font:"40px EMPrintW01-semibold", fill: "black", align:"center", wordWrap:"true", wordWrapWidth:"800"});
+			txt.x = 512;
+			txt.y = 384;
 			txt.anchor.x = 0.5;
-			txt.anchor.y = -2;
+			txt.anchor.y = 0.5;
 			txt.x = 512;
 			
 
@@ -59,7 +62,6 @@
 
 		p.update = function(frame) {
 			this.preUpdate(frame);
-			console.log(this.curFrame/3000);
 			this.level1.y = this.curFrame*TWEEN.Easing.Elastic.In(this.curFrame/600);
 
 
