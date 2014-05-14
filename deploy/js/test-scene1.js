@@ -40,17 +40,19 @@
 
 			if (this.isDebug) this.debug();
 
+			//setup scenes
+			this.scene1 = new Scene1();
+			this.scene1.setup(0, 5000/*695*/, 0, 0);
+
 			this.load();
 		}
 
 		p.init = function() {
-			console.log('init');
-
-
-			this.scene1 = new Scene1();
-			this.scene1.setup(this.stage);
+			console.log('init test-scene 1');
 
 			this.stage.addChild(this.scene1.container);
+
+			this.scene1.init(this.stage);
 		}
 
 
@@ -81,7 +83,7 @@
 
 			if (!this.loaded) return;
 			//scene update
-			this.scene1.update(this.scroller.distance);
+			this.scene1.update(this.scroller.getDistance());
 
 			this.scroller.update();
 		}
