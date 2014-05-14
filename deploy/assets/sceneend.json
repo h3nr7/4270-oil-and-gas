@@ -1,0 +1,73 @@
+{
+	"meta": {
+		"image": "sceneend.png",
+		"size": {"w":750,"h":705},
+		"scale": "1"
+	},
+	"frames": {
+		"trees.png":
+		{
+            "frame": {"x":0,"y":0,"w":300,"h":572},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":300,"h":572},
+            "sourceSize": {"w":300,"h":572}
+		},
+		"apartment.png":
+		{
+            "frame": {"x":300,"y":0,"w":450,"h":462},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":450,"h":462},
+            "sourceSize": {"w":450,"h":462}
+		},
+		"house.png":
+		{
+            "frame": {"x":0,"y":572,"w":150,"h":133},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":150,"h":133},
+            "sourceSize": {"w":150,"h":133}
+		},
+		"trees_small.png":
+		{
+            "frame": {"x":300,"y":462,"w":50,"h":95},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":50,"h":95},
+            "sourceSize": {"w":50,"h":95}
+		},
+		"mountain_darkgreen_small.png":
+		{
+            "frame": {"x":350,"y":462,"w":200,"h":86},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":200,"h":86},
+            "sourceSize": {"w":200,"h":86}
+		},
+		"mountain_green_small.png":
+		{
+            "frame": {"x":550,"y":462,"w":200,"h":86},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":200,"h":86},
+            "sourceSize": {"w":200,"h":86}
+		},
+		"sceneend_houses.png":
+		{
+            "frame": {"x":150,"y":572,"w":400,"h":75},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":400,"h":75},
+            "sourceSize": {"w":400,"h":75}
+		},
+		"house_small.png":
+		{
+            "frame": {"x":550,"y":572,"w":50,"h":44},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":50,"h":44},
+            "sourceSize": {"w":50,"h":44}
+		}
+	}
+}

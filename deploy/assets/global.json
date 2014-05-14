@@ -1,0 +1,17 @@
+{
+	"meta": {
+		"image": "global.png",
+		"size": {"w":38,"h":16},
+		"scale": "1"
+	},
+	"frames": {
+		"fish.png":
+		{
+            "frame": {"x":0,"y":0,"w":38,"h":16},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":38,"h":16},
+            "sourceSize": {"w":38,"h":16}
+		}
+	}
+}
