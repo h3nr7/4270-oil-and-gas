@@ -10,7 +10,6 @@
 			"defaultHeight":768,
 			"depthLevel":0.1,
 			"defaultTextStyle": {
-				
 				"font":"40px EMPrintW01-semibold", 
 				"fill": "#58595b", 
 				"align":"center", 

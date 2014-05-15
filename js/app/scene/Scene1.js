@@ -58,6 +58,22 @@
 
 			var cloud2 = new ElSprite("cloud_blue1.png", 100,580, 0);
 			var cloud3 = new ElSprite("cloud_grey1.png", 600,1280, 0);
+			var cloud4 = new ElSprite("cloud_white1.png", 630,1520, 0);
+			var cloud5 = new ElSprite("cloud_white2.png", 60,1490, 0);
+			var cloud6 = new ElSprite("cloud_grey2.png", 0,2780, 0);
+			var cloud7 = new ElSprite("cloud_blue1.png", 800,2320, 0);
+
+			var symbol1 = new ElSprite("cloud_icon_safety.png", 322,3730, 0);
+			var symbol2 = new ElSprite("cloud_icon_environmental.png", 470,3730, 0);
+			var symbol3 = new ElSprite("cloud_icon_productivity.png", 622,3730, 0);
+
+			var symStyle = {"font":"15px EMPrintW01-semibold", "fill": "#58595b", "align":"center", "wordWrap":"true", "wordWrapWidth":"200"};
+			var symTxt1 = new ElText("Safety", 357,3820, 0, 0.5, 0.5);
+			var symTxt2 = new ElText("Environmental Care", 506,3820, 0, 0.5, 0.5);
+			var symTxt3 = new ElText("Productivity", 655,3820, 0, 0.5, 0.5);
+			symTxt1.setStyle(symStyle);
+			symTxt2.setStyle(symStyle);
+			symTxt3.setStyle(symStyle);
 
 
 			//add to level 1
@@ -65,6 +81,9 @@
 			this.level1.addElement(cloud2.container);
 			this.level1.addElement(txt2.container);
 			this.level1.addElement(txt4.container);
+			this.level1.addElement(cloud4.container);
+			this.level1.addElement(cloud7.container);
+
 
 			//add to level 2
 			this.level2.addElement(logo1.container);
@@ -72,9 +91,19 @@
 			this.level2.addElement(cloud3.container);
 			this.level2.addElement(txt3.container);
 			this.level2.addElement(txt5.container);
+			//symbols
+			this.level2.addElement(symbol1.container);
+			this.level2.addElement(symbol2.container);
+			this.level2.addElement(symbol3.container);
+			this.level2.addElement(symTxt1.container);
+			this.level2.addElement(symTxt2.container);
+			this.level2.addElement(symTxt3.container);
+
 
 			//add to level 3
 			this.level3.addElement(arrow1.container);
+			this.level3.addElement(cloud5.container);
+			this.level3.addElement(cloud6.container);
 
 			this.addLevel(this.level1);
 			this.addLevel(this.level2);

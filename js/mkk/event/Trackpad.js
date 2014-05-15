@@ -10,14 +10,13 @@
 
 			//vars
 			this.target = target;
-			this.value = 0;
-			this.easingValue = 0;
-			this.easingMin = -10700;
-			this.speedDamper = 0.35;
-			this.dragOffset;
+			this.speedDamper = 0.92;
+			this.dragOffset = 0;;
 			this.dragging;
 			this.speed = 0;
-			this.prevPosition = 0;
+			this.touchStartX = 0;
+			this.touchStartY = 0;
+			this.touchDate = 0;
 		}
 
 
@@ -28,13 +27,6 @@
 		p.setup = function() {
 
 			console.log('Trackpad setup');
-			var that = this;
-
-			// Mouse Handler
-			this.mousedownBound = ListenerFunctions.createListenerFunction(this, this.mousedownHandler);
-			this.target.addEventListener('mousedown', this.mousedownBound);
-			this.mouseupBound = ListenerFunctions.createListenerFunction(this, this.mouseupHandler);
-			this.target.addEventListener('mouseup', that.mouseupBound);
 
 			// Mouse Wheel Handler
 			this.mousewheelBound = ListenerFunctions.createListenerFunction(this, this.mousewheelHandler);
@@ -42,11 +34,10 @@
 
 			// Touch Handler
 			this.touchStartBound = ListenerFunctions.createListenerFunction(this, this.touchstartHandler);
-			this.target.addEventListener('touchstart', this.touchstartBound);
+			this.target.addEventListener('touchstart', this.touchStartBound);
 
-			this.touchmoveBound = ListenerFunctions.createListenerFunction(this, this.touchmoveHandler);
-
-			this.touchendBound = ListenerFunctions.createListenerFunction(this, this.touchendHandler);
+			this.touchMoveBound = ListenerFunctions.createListenerFunction(this, this.touchmoveHandler);
+			this.touchEndBound = ListenerFunctions.createListenerFunction(this, this.touchendHandler);
 
 
 			//on arrow button pressed
@@ -58,47 +49,53 @@
 		p.unlock = function() {
 			this.locked = false;
 			this.speed = 0;
-			this.easingValue = this.value;
 		}
 
 		p.lock = function() {
-
 			this.locked = true;
 		}
 
 		p.update = function() {
 
-			if (this.easingValue > 0) this.easingValue=0;
-			if (this.easingValue < this.easingMin) this.easingValue = this.easingMin;
-			this.value = this.easingValue;
-
 			if (this.dragging) {
-				var newSpeed = this.easingValue - this.prevPosition;
-				this.prevPosition = this.easingValue;
+				// this.speed *= this.speedDamper;
 			}
 			else {
 				this.speed *= this.speedDamper;
-				this.easingValue += this.speed;
-
-				if(Math.abs(this.speed) < 1) this.speed=0;
 			}
+
+			if(Math.abs(this.speed) < 1) this.speed=0;
 		}
 
-		p.startDrag = function(newPosition) {
-			if(!this.locked) return;
+		p.startDrag = function(e) {
+			if(this.locked) return;
 			this.dragging = true;
-			this.dragOffset = newPosition - this.value;
+			this.touchStartX = e.touches[0].pageX;
+			this.touchStartY = e.touches[0].pageY;
+			this.touchDate = Date.now();
+			console.log('start Drag');
 
 		}
 
-		p.endDrag = function(newPosition) {
+		p.endDrag = function(e) {
 			if(this.locked) return;
 			this.dragging = false;
+			console.log('end Drag');
+			this.touchDate = Date.now();
+			console.log(this.speed);
 		}
 
-		p.updateDrag = function(newPosition) {
+		p.updateDrag = function(e) {
 			if(this.locked) return;
-			this.easingValue = (newPosition - this.dragOffset);
+			console.log('update Drag');
+			var offset = {};
+			offset.x = this.touchStartX - e.touches[0].pageX;
+			var t = Date.now() - this.touchDate;
+			// Get distance finger has moved since swipe begin:
+			offset.y = this.touchStartY - e.touches[0].pageY;
+			console.log('time', t);
+			this.speed = offset.y/(t/200);
+			console.log(offset.y);
 		}
 
 
@@ -108,20 +105,6 @@
 		// ----------------------------------------
 		// Event Handlers
 		// ----------------------------------------
-		p.mousedownHandler = function(e) {
-			if(e) e.preventDefault();
-
-			e.returnValue=false;
-
-			this.mousemoveBound = ListenerFunctions.createListenerFunction(this, this.mousemoveHandler);
-			this.target.addEventListener('mousemove', this.mousemoveBound);
-
-
-		}
-
-		p.mouseupHandler = function(e) {
-
-		}
 
 		p.mousewheelHandler = function(e) {
 			e.preventDefault();
@@ -131,42 +114,29 @@
 
 		p.onArrowHandler = function(event) {
 			if (event.keyCode == 38) {
-				this.speed +=4;
+				this.speed +=70;
 			}
 			else if (event.keyCode == 40) {
-				this.speed -=4;
+				this.speed -=70;
 				return false;
 			}
 		}
 
-		p.mousemoveHandler = function(e) {
-
-			if(e) e.preventDefault();
-			this.updateDrag(e.pageY);
-		}
-
-		p.mouseupHandler = function(e) {
-			this.target.removeEventListener('mousemove', this.mousemoveBound);
-			this.target.removeEventListener('mouseup', this.mouseupHandler);
-
-			this.endDrag();
-		}
-
 		p.touchstartHandler = function(e) {
-			this.target.addEventListener('touchmove', this.touchmoveBound);
-			this.target.addEventListener('touchend', this.touchendBound);
-			this.endDrag();
+			this.startDrag(e);
+			this.target.addEventListener('touchmove', this.touchMoveBound);
+			this.target.addEventListener('touchend', this.touchEndBound);
 		}
 
 		p.touchmoveHandler = function(e) {
 			e.preventDefault();
-			this.updateDrag(e.touches[0].clientY);
+			this.updateDrag(e);
 		}
 
 		p.touchendHandler = function(e) {
 			this.target.removeEventListener('touchmove', this.touchmoveBound);
 			this.target.removeEventListener('touchend', this.touchendBound);
-			this.endDrag();
+			this.endDrag(e);
 		}
 
 

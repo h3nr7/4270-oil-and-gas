@@ -19,6 +19,7 @@
 
 		p._setup = function() {
 			console.log('Core Setup :: ');
+			this.disableScrollBars();
 		}
 
 		//function to disable scroller

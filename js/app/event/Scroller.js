@@ -69,7 +69,7 @@
 			if (this.isDebug) this.scrollDisplay.innerHTML = Math.round(this.distance) + 'px';
 
 			if(!this.isStop) {
-
+				// console.log(this.distance, this.tp.speed)
 				this.distance += this.tp.speed*this.scrollSpeed;
 				if (this.distance<0) {
 					this.distance = 0;
