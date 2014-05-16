@@ -6,6 +6,11 @@
 	var Scene1Level = ns.level.Scene1Level;
 	var ElSprite = ns.element.ElSprite;
 	var ElText = ns.element.ElText;
+	var ElRect = ns.element.ElRect;
+
+
+	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
+	var TweenEach = MKK.getNamespace('app.animation').TweenEach;
 
 
 	if(!ns.Scene1) {
@@ -61,7 +66,7 @@
 			var cloud4 = new ElSprite("cloud_white1.png", 630,1520, 0);
 			var cloud5 = new ElSprite("cloud_white2.png", 60,1490, 0);
 			var cloud6 = new ElSprite("cloud_grey2.png", 0,2780, 0);
-			var cloud7 = new ElSprite("cloud_blue1.png", 800,2320, 0);
+			// var cloud7 = new ElSprite("cloud_blue1.png", 800,2320, 0);
 
 			var symbol1 = new ElSprite("cloud_icon_safety.png", 322,3730, 0);
 			var symbol2 = new ElSprite("cloud_icon_environmental.png", 470,3730, 0);
@@ -75,6 +80,28 @@
 			symTxt2.setStyle(symStyle);
 			symTxt3.setStyle(symStyle);
 
+			var logo2 = new ElSprite("mobile_shc_small.png", 180,4280, 0, 0.5, 0.5);
+			var logo3 = new ElSprite("mobile_grease_small.png", 518,4280, 0, 0.5, 0.5);
+			var logo4 = new ElSprite("signum_small.png", 850,4295, 0, 0.5, 0.5);
+
+			var symStyle2 = {"font":"18px EMPrintW01-regular", "fill": "#58595b", "align":"center", "wordWrap":"true", "wordWrapWidth":"400"};
+			var symTxt4 = new ElText("Our solutions help to:", 512,4400, 0, 0.5, 0.5);
+			symTxt4.setStyle(symStyle2);
+
+			var symStyle3 = {"font":"28px EMPrintW01-semibold", "fill": "#58595b", "align":"center", "wordWrap":"true", "wordWrapWidth":"400"};
+			var symTxt5 = new ElText("Reduce energy consumption", 512,4470, 0, 0.5, 0.5);
+			var symTxt6 = new ElText("Reduce downtime", 512,4540, 0, 0.5, 0.5);
+			var symTxt7 = new ElText("Increase equipment protection", 512,4610, 0, 0.5, 0.5);
+			var symTxt8 = new ElText("Optimize operating costs", 512,4680, 0, 0.5, 0.5);
+			symTxt5.setStyle(symStyle3);
+			symTxt6.setStyle(symStyle3);
+			symTxt7.setStyle(symStyle3);
+			symTxt8.setStyle(symStyle3);
+
+			var cloud8 = new ElSprite("cloud_white2.png", 50, 2700, 0);
+			var cloud9 = new ElSprite("cloud_blue1.png", 800,3710, 0);
+			var cloud10 = new ElSprite("cloud_white1.png", -100, 3200, 0);
+
 
 			//add to level 1
 			this.level1.addElement(cloud1.container);
@@ -82,7 +109,10 @@
 			this.level1.addElement(txt2.container);
 			this.level1.addElement(txt4.container);
 			this.level1.addElement(cloud4.container);
-			this.level1.addElement(cloud7.container);
+			// this.level1.addElement(cloud7.container);
+			this.level1.addElement(cloud8.container);
+			this.level1.addElement(cloud10.container);
+
 
 
 			//add to level 2
@@ -98,16 +128,41 @@
 			this.level2.addElement(symTxt1.container);
 			this.level2.addElement(symTxt2.container);
 			this.level2.addElement(symTxt3.container);
+			//logos and final part
+			this.level2.addElement(logo2.container);
+			this.level2.addElement(logo3.container);
+			this.level2.addElement(logo4.container);
+			this.level2.addElement(symTxt4.container);
+			this.level2.addElement(symTxt5.container);
+			this.level2.addElement(symTxt6.container);
+			this.level2.addElement(symTxt7.container);
+			this.level2.addElement(symTxt8.container);
+
 
 
 			//add to level 3
 			this.level3.addElement(arrow1.container);
 			this.level3.addElement(cloud5.container);
 			this.level3.addElement(cloud6.container);
+			this.level3.addElement(cloud9.container);
 
 			this.addLevel(this.level1);
 			this.addLevel(this.level2);
 			this.addLevel(this.level3);
+
+
+			var trect = new ElRect(200, 200, 0, 200, 2, 0xf1345e);
+			
+			this.level3.addElement(trect.container);
+
+			var tT = new TweenEach({x:50});
+
+			tT.to({x:100}).onUpdate(function(va){
+
+				console.log('kaka', va);
+			}).start(3000);
+
+
 
 		}
 

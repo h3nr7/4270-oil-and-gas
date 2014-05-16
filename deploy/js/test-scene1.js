@@ -8,6 +8,7 @@
 	var ns = MKK.getNamespace('app');
 	var Scene1 = MKK.getNamespace('app.scene').Scene1;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
+	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
 	if(!ns.app) {
 
@@ -129,7 +130,9 @@
 
 			if (!this.loaded) return;
 			//scene update
-			this.scene1.update(this.scroller.getDistance());
+			var frame = this.scroller.getDistance();
+			FrameTween.update(frame)
+			this.scene1.update(frame);
 
 			this.scroller.update();
 		}

@@ -30,7 +30,7 @@
 			this.f1 = this.gui.addFolder('Easing & Interpolation');
 			this.f1.add(this, 'scrollSpeed', 0.01, 5);
 
-			this.f1.open();
+			// this.f1.open();
 
 			this.scrollDisplay = document.createElement('div');
 			this.scrollDisplay.style.background = 'rgb(0, 0, 34)';

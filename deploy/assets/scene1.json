@@ -45,7 +45,7 @@
             "spriteSourceSize": {"x":0,"y":0,"w":254,"h":131},
             "sourceSize": {"w":254,"h":131}
 		},
-		"cloud_icon_safety.png":
+		"cloud_icon_environmental.png":
 		{
             "frame": {"x":836,"y":369,"w":64,"h":64},
             "rotated": false,
@@ -53,7 +53,7 @@
             "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
             "sourceSize": {"w":64,"h":64}
 		},
-		"cloud_icon_environmental.png":
+		"cloud_icon_productivity.png":
 		{
             "frame": {"x":900,"y":369,"w":64,"h":64},
             "rotated": false,
@@ -61,7 +61,7 @@
             "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
             "sourceSize": {"w":64,"h":64}
 		},
-		"cloud_icon_productivity.png":
+		"cloud_icon_safety.png":
 		{
             "frame": {"x":964,"y":369,"w":64,"h":64},
             "rotated": false,
@@ -77,9 +77,41 @@
             "spriteSourceSize": {"x":0,"y":0,"w":97,"h":54},
             "sourceSize": {"w":97,"h":54}
 		},
+		"signum_small.png":
+		{
+            "frame": {"x":663,"y":309,"w":195,"h":51},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":195,"h":51},
+            "sourceSize": {"w":195,"h":51}
+		},
+		"mobile_grease.png":
+		{
+            "frame": {"x":483,"y":599,"w":308,"h":44},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":308,"h":44},
+            "sourceSize": {"w":308,"h":44}
+		},
+		"mobile_grease_small.png":
+		{
+            "frame": {"x":254,"y":660,"w":308,"h":44},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":308,"h":44},
+            "sourceSize": {"w":308,"h":44}
+		},
+		"mobile_shc_small.png":
+		{
+            "frame": {"x":791,"y":599,"w":238,"h":42},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":238,"h":42},
+            "sourceSize": {"w":238,"h":42}
+		},
 		"cloud_text1.png":
 		{
-            "frame": {"x":663,"y":309,"w":207,"h":39},
+            "frame": {"x":836,"y":433,"w":207,"h":39},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":207,"h":39},
@@ -87,7 +119,7 @@
 		},
 		"cloud_text1c.png":
 		{
-            "frame": {"x":870,"y":309,"w":20,"h":10},
+            "frame": {"x":858,"y":309,"w":20,"h":10},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":20,"h":10},
