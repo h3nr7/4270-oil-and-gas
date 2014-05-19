@@ -50,6 +50,23 @@
 		// LEVEL in SCENE
 		// -----------------------------------------------------------
 
+		p.createLevels = function(arr, levelClass) {
+			var aLen = arr.length;
+			for(var i=0; i<aLen; i++) {
+				var tmp = new levelClass(arr[i].name);
+				tmp.setup(arr[i].x, arr[i].y, arr[i].z);
+				this.addLevel(tmp);
+				this.level.push(tmp);
+			}
+		}
+
+		p.createElements = function(arr) {
+			var aLen = arr.length;
+			for(var i=0; i<aLen; i++) {
+				
+			}
+		}
+
 		p.addLevel = function(oLevel) {
 			this.container.addChild(oLevel.container);
 			this.level.push(oLevel);
@@ -59,7 +76,7 @@
 			var index = this.level.indexOf(oLevel);
 			if( index > -1 ) {
 				this.container.removeChild(oLevel.container);
-				this.oLevel.splice(index,1);
+				this.level.splice(index,1);
 			}
 		}
 
