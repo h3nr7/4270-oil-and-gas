@@ -16,7 +16,7 @@
 	if(!ns.Scene1) {
 
 		var Scene1 = function Scene1() {
-
+			this.startFrame= 1000;
 		}
 
 
@@ -38,7 +38,7 @@
 			this.level3.setup(0,0,4);
 
 			//create elements
-			var cloud1 = new ElSprite("cloud_satellite.png", 100,100, 0);
+			var cloud1 = new ElSprite("cloud_satellite.png", 100,100, 0, 0, 0);
 			var logo1 = new ElSprite("cloud_text1.png", 512,374, 0, 0.5, 0.5);
 			var arrow1 = new ElSprite("cloud_text1c.png", 512,454, 0, 0.5, 0.5);
 
@@ -104,8 +104,8 @@
 
 
 			//add to level 1
-			this.level1.addElement(cloud1.container);
-			this.level1.addElement(cloud2.container);
+			this.level3.addElement(cloud1.container);
+			this.level3.addElement(cloud2.container);
 			this.level1.addElement(txt2.container);
 			this.level1.addElement(txt4.container);
 			this.level1.addElement(cloud4.container);
@@ -151,6 +151,7 @@
 			this.addLevel(this.level3);
 
 
+
 			var trect = new ElRect(200, 200, 0, 200, 2, 0xf1345e);
 			
 			this.level3.addElement(trect.container);
@@ -163,7 +164,6 @@
 			}).start(3000);
 
 
-
 		}
 
 		//close when destroyed
@@ -174,12 +174,15 @@
 		p.update = function(frame) {
 
 			this._update(frame);
-			if(frame>=0 && frame<this.duration) {
-				this.cPos.y = -frame;
+			var cFrame = this.localCurFrame(frame);
+
+
+			if(cFrame>=0 && cFrame<this.duration) {
+				this.cPos.y = -cFrame;
 			}
-			this.level1.update(this.localCurFrame(frame));
-			this.level2.update(this.localCurFrame(frame));
-			this.level3.update(this.localCurFrame(frame));
+			this.level1.update(cFrame);
+			this.level2.update(cFrame);
+			this.level3.update(cFrame);
 		}
 
 

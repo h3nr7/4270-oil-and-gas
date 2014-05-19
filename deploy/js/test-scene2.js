@@ -57,8 +57,8 @@
 			if (this.isDebug) this.debug();
 
 			//setup scenes
-			this.scene1 = new Scene1();
-			this.scene1.setup(3000, 5000/*695*/, 0, 0);
+			this.scene2 = new Scene2();
+			this.scene2.setup(0, 5000/*695*/, 0, 0);
 
 			this.loadFonts();
 		}
