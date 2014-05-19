@@ -26,7 +26,11 @@
 
 		p.setup = function(x, y, z) {
 			this._setup(x, y);
-			if( z!=null || z!=undefined ) this.z = z;
+		}
+
+		p.__setup = function(x, y, z) {
+			this._setup(x, y);
+			if( z!=null || z!=undefined ) this.z = z;			
 		}
 
 		p.init = function(scene) {

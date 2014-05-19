@@ -9,13 +9,13 @@
 	if(!ns.Scene2Level) {
 
 
-		var Scene2Level = function Scene1Level(name) {
+		var Scene2Level = function Scene2Level(name) {
 			this.depthLevel = settings.depthLevel;
 		}
 
 		ns.Scene2Level = Scene2Level;
 
-		var p = Scene1Level.prototype = new AbLevel;
+		var p = Scene2Level.prototype = new AbLevel;
 
 
 
