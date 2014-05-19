@@ -13,7 +13,7 @@
 			this.height = height?height:settings.defaultHeight;
 
 			this.stage = null;
-			this.container = null;
+			// this.container = null;
 			this.element = [];
 			this.level = [];
 
@@ -56,7 +56,6 @@
 				var tmp = new levelClass(arr[i].name);
 				tmp.setup(arr[i].x, arr[i].y, arr[i].z);
 				this.addLevel(tmp);
-				this.level.push(tmp);
 			}
 		}
 

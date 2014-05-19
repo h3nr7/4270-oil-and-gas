@@ -3,6 +3,8 @@
 	var scenedata = MKK.getNamespace('data').scenedata;
 	var styledata = MKK.getNamespace('data').styledata;
 	var ns = MKK.getNamespace('app.scene');
+	var scenedata = MKK.getNamespace('data').scenedata;
+	var styledata = MKK.getNamespace('data').styledata;
 	var AbScene = ns.AbScene;
 
 	var Scene1Level = ns.level.Scene1Level;
@@ -18,7 +20,7 @@
 	if(!ns.Scene1) {
 
 		var Scene1 = function Scene1() {
-			this.startFrame= 1000;
+
 		}
 
 
@@ -36,14 +38,11 @@
 			//create levels
 			// this.level1 = new Scene1Level('level1');
 			// this.level1.setup(0,0,0);
-
 			// this.level2 = new Scene1Level('level2');
 			// this.level2.setup(0,0,5);
 
 			// this.level3 = new Scene1Level('level3');
 			// this.level3.setup(0,0,4);
-
-			this.createElements(scenedata.scene1.element);
 
 			//create elements
 
@@ -112,12 +111,9 @@
 
 
 			//add to level 1
-			this.level[0].addElement(cloud1.container);
-			this.level[0].addElement(cloud2.container);
 			this.level[0].addElement(txt2.container);
 			this.level[0].addElement(txt4.container);
 			this.level[0].addElement(cloud4.container);
-			// this.level1.addElement(cloud7.container);
 			this.level[0].addElement(cloud8.container);
 			this.level[0].addElement(cloud10.container);
 
@@ -149,14 +145,16 @@
 
 
 			//add to level 3
+			this.level[2].addElement(cloud1.container);
+			this.level[2].addElement(cloud2.container);
 			this.level[2].addElement(arrow1.container);
 			this.level[2].addElement(cloud5.container);
 			this.level[2].addElement(cloud6.container);
 			this.level[2].addElement(cloud9.container);
 
-			// this.addLevel(this.level1);
-			// this.addLevel(this.level2);
-			// this.addLevel(this.level3);
+			this.addLevel(this.level[0]);
+			this.addLevel(this.level[1]);
+			this.addLevel(this.level[2]);
 
 
 
@@ -188,7 +186,6 @@
 				this.cPos.y = -cFrame;
 			}
 
-			if(this.level[0]==undefined) return;
 			this.level[0].update(cFrame);
 			this.level[1].update(cFrame);
 			this.level[2].update(cFrame);
