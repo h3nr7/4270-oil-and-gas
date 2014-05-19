@@ -43,7 +43,6 @@
 			// this.level3 = new Scene1Level('level3');
 			// this.level3.setup(0,0,4);
 
-			this.createLevels(scenedata.scene1.level, Scene1Level);
 
 			//create elements
 			var cloud1 = new ElSprite("cloud_satellite.png", 100,100, 0, 0, 0);

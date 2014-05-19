@@ -7,6 +7,7 @@
 	var Navi = MKK.getNamespace('app.scene').Navi;
 	var ns = MKK.getNamespace('app');
 	var Scene1 = MKK.getNamespace('app.scene').Scene1;
+	var Scene2 = MKK.getNamespace('app.scene').Scene2;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
@@ -59,6 +60,7 @@
 			//setup scenes
 			this.scene1 = new Scene1();
 			this.scene1.setup(3000, 5000/*695*/, 0, 0);
+
 
 			this.loadFonts();
 		}

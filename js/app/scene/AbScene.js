@@ -57,6 +57,7 @@
 				tmp.setup(arr[i].x, arr[i].y, arr[i].z);
 				this.addLevel(tmp);
 			}
+			console.log(tmp);
 		}
 
 		p.addLevel = function(oLevel) {
