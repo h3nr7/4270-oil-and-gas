@@ -11,11 +11,12 @@
 
 		var Scene1Level = function Scene1Level(name) {
 			this.depthLevel = settings.depthLevel;
+			this.name = name;
 		}
 
 		ns.Scene1Level = Scene1Level;
 
-		var p = Scene1Level.prototype = new AbLevel;
+		var p = Scene1Level.prototype = new AbLevel();
 
 		p.setup = function(x, y, z) {
 			this.__setup(x, y, z);

@@ -1,6 +1,8 @@
 (function() {
 
 	var ns = MKK.getNamespace('app.scene');
+	var scenedata = MKK.getNamespace('data').scenedata;
+	var styledata = MKK.getNamespace('data').styledata;
 	var AbScene = ns.AbScene;
 
 	var Scene1Level = ns.level.Scene1Level;
@@ -16,7 +18,7 @@
 	if(!ns.Scene1) {
 
 		var Scene1 = function Scene1() {
-			this.startFrame= 1000;
+
 		}
 
 
@@ -27,15 +29,21 @@
 		//open when init is completed
 		p.open = function() {
 
+			this.createLevels(scenedata.scene1.level, Scene1Level);
+
+			var strapStyle = styledata.straplinegrey;
+
 			//create levels
-			this.level1 = new Scene1Level('level1');
-			this.level1.setup(0,0,0);
+			// this.level1 = new Scene1Level('level1');
+			// this.level1.setup(0,0,0);
 
-			this.level2 = new Scene1Level('level2');
-			this.level2.setup(0,0,5);
+			// this.level2 = new Scene1Level('level2');
+			// this.level2.setup(0,0,5);
 
-			this.level3 = new Scene1Level('level3');
-			this.level3.setup(0,0,4);
+			// this.level3 = new Scene1Level('level3');
+			// this.level3.setup(0,0,4);
+
+			this.createLevels(scenedata.scene1.level, Scene1Level);
 
 			//create elements
 			var cloud1 = new ElSprite("cloud_satellite.png", 100,100, 0, 0, 0);
@@ -46,19 +54,18 @@
 			txt1.setStyle({"font":"12px EMPrintW01-regular"});
 
 
-			var tStyle = {"font":"40px EMPrintW01-semibold", "fill": "#58595b", "align":"center", "wordWrap":"true", "wordWrapWidth":"800"};
 			var txt2 = new ElText("With over 100 years of experience\n as an Oil & Gas global leader", 512,900, 0, 0.5, 0.5);
-			txt2.setStyle(tStyle);
+			txt2.setStyle(strapStyle);
 
 			var txt3 = new ElText("With 100 years of close collaboration\n with the world's leading equipment builders", 512,2000, 0, 0.5, 0.5);
-			txt3.setStyle(tStyle);
+			txt3.setStyle(strapStyle);
 
 
 			var txt4 = new ElText("We know that 'productivity' means more to you than just the quantity of your output", 512,2000, 0, 0.5, 0.5);
-			txt4.setStyle(tStyle);
+			txt4.setStyle(strapStyle);
 
 			var txt5 = new ElText("Our synthetic lubricants can enable\n problem-free operation to help enhance...", 512,3600, 0, 0.5, 0.5);
-			txt5.setStyle(tStyle);
+			txt5.setStyle(strapStyle);
 
 
 			var cloud2 = new ElSprite("cloud_blue1.png", 100,580, 0);
@@ -104,57 +111,56 @@
 
 
 			//add to level 1
-			this.level3.addElement(cloud1.container);
-			this.level3.addElement(cloud2.container);
-			this.level1.addElement(txt2.container);
-			this.level1.addElement(txt4.container);
-			this.level1.addElement(cloud4.container);
-			// this.level1.addElement(cloud7.container);
-			this.level1.addElement(cloud8.container);
-			this.level1.addElement(cloud10.container);
+			this.level[0].addElement(txt2.container);
+			this.level[0].addElement(txt4.container);
+			this.level[0].addElement(cloud4.container);
+			this.level[0].addElement(cloud8.container);
+			this.level[0].addElement(cloud10.container);
 
 
 
 			//add to level 2
-			this.level2.addElement(logo1.container);
-			this.level2.addElement(txt1.container);
-			this.level2.addElement(cloud3.container);
-			this.level2.addElement(txt3.container);
-			this.level2.addElement(txt5.container);
+			this.level[1].addElement(logo1.container);
+			this.level[1].addElement(txt1.container);
+			this.level[1].addElement(cloud3.container);
+			this.level[1].addElement(txt3.container);
+			this.level[1].addElement(txt5.container);
 			//symbols
-			this.level2.addElement(symbol1.container);
-			this.level2.addElement(symbol2.container);
-			this.level2.addElement(symbol3.container);
-			this.level2.addElement(symTxt1.container);
-			this.level2.addElement(symTxt2.container);
-			this.level2.addElement(symTxt3.container);
+			this.level[1].addElement(symbol1.container);
+			this.level[1].addElement(symbol2.container);
+			this.level[1].addElement(symbol3.container);
+			this.level[1].addElement(symTxt1.container);
+			this.level[1].addElement(symTxt2.container);
+			this.level[1].addElement(symTxt3.container);
 			//logos and final part
-			this.level2.addElement(logo2.container);
-			this.level2.addElement(logo3.container);
-			this.level2.addElement(logo4.container);
-			this.level2.addElement(symTxt4.container);
-			this.level2.addElement(symTxt5.container);
-			this.level2.addElement(symTxt6.container);
-			this.level2.addElement(symTxt7.container);
-			this.level2.addElement(symTxt8.container);
+			this.level[1].addElement(logo2.container);
+			this.level[1].addElement(logo3.container);
+			this.level[1].addElement(logo4.container);
+			this.level[1].addElement(symTxt4.container);
+			this.level[1].addElement(symTxt5.container);
+			this.level[1].addElement(symTxt6.container);
+			this.level[1].addElement(symTxt7.container);
+			this.level[1].addElement(symTxt8.container);
 
 
 
 			//add to level 3
-			this.level3.addElement(arrow1.container);
-			this.level3.addElement(cloud5.container);
-			this.level3.addElement(cloud6.container);
-			this.level3.addElement(cloud9.container);
+			this.level[2].addElement(cloud1.container);
+			this.level[2].addElement(cloud2.container);
+			this.level[2].addElement(arrow1.container);
+			this.level[2].addElement(cloud5.container);
+			this.level[2].addElement(cloud6.container);
+			this.level[2].addElement(cloud9.container);
 
-			this.addLevel(this.level1);
-			this.addLevel(this.level2);
-			this.addLevel(this.level3);
+			this.addLevel(this.level[0]);
+			this.addLevel(this.level[1]);
+			this.addLevel(this.level[2]);
 
 
 
 			var trect = new ElRect(200, 200, 0, 200, 2, 0xf1345e);
 			
-			this.level3.addElement(trect.container);
+			this.level[2].addElement(trect.container);
 
 			var tT = new TweenEach({x:50});
 
@@ -180,9 +186,9 @@
 			if(cFrame>=0 && cFrame<this.duration) {
 				this.cPos.y = -cFrame;
 			}
-			this.level1.update(cFrame);
-			this.level2.update(cFrame);
-			this.level3.update(cFrame);
+			this.level[0].update(cFrame);
+			this.level[1].update(cFrame);
+			this.level[2].update(cFrame);
 		}
 
 
