@@ -28,8 +28,8 @@
 			this._setup(x, y);
 		}
 
-		p.__setup = function(x, y, z) {
-			this._setup(x, y);
+		p._setup = function(x, y, z) {
+			this.__setup(x, y);
 			if( z!=null || z!=undefined ) this.z = z;			
 		}
 

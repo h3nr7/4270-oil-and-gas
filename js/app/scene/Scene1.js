@@ -47,7 +47,7 @@
 
 			//create elements
 
-			// var cloud1 = new ElSprite("cloud_satellite.png", 100,100, 0);
+			var cloud1 = new ElSprite("cloud_satellite.png", 100,100, 0);
 			var logo1 = new ElSprite("cloud_text1.png", 512,374, 0, 0.5, 0.5);
 			var arrow1 = new ElSprite("cloud_text1c.png", 512,454, 0, 0.5, 0.5);
 
@@ -188,9 +188,10 @@
 				this.cPos.y = -cFrame;
 			}
 
-			this.level[0].update(this.localCurFrame(frame));
-			this.level[1].update(this.localCurFrame(frame));
-			this.level[2].update(this.localCurFrame(frame));
+			if(this.level[0]==undefined) return;
+			this.level[0].update(cFrame);
+			this.level[1].update(cFrame);
+			this.level[2].update(cFrame);
 
 		}
 

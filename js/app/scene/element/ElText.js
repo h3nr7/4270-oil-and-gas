@@ -9,7 +9,6 @@
 		var ElText = function ElText(txt, x, y, z, aX, aY, style) {
 
 			this.txt = txt;
-			this.name = name;
 			this.z = z;
 			this.setup(x, y);
 			this.container = new PIXI.Text(txt, settings.defaultTextStyle);

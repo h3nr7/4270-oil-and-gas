@@ -11,6 +11,7 @@
 			this.oPos = null;
 			this.cPos = null;
 			this.offPos = null;
+			this.setupComplete = false;
 		}
 
 		ns.AbElement = AbElement;
@@ -33,6 +34,10 @@
 			this.cPos = new PIXI.Point(x,y);
 			//set the offsetAmount
 			this.offPos = new PIXI.Point(0,0);
+		}
+
+		p._postSetup = function() {
+			this.setupComplete = true;
 		}
 
 		//destroy

@@ -18,7 +18,7 @@
 		var p = Scene1Level.prototype = new AbLevel;
 
 		p.setup = function(x, y, z) {
-			this.__setup(x, y, z);
+			this._preSetup(x, y, z);
 			this.oPos.y = this.startFrame;
 		}
 

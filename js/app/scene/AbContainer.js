@@ -23,6 +23,7 @@
 		p.setup = function(sFrame, duration, x, y) {
 
 			this._setup(sFrame, duration, x, y);
+			this._postSetup();
 
 		}
 
