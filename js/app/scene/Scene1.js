@@ -1,7 +1,5 @@
 (function() {
 
-	var scenedata = MKK.getNamespace('data').scenedata;
-	var styledata = MKK.getNamespace('data').styledata;
 	var ns = MKK.getNamespace('app.scene');
 	var scenedata = MKK.getNamespace('data').scenedata;
 	var styledata = MKK.getNamespace('data').styledata;
@@ -31,6 +29,7 @@
 		//open when init is completed
 		p.open = function() {
 
+			console.log(scenedata.scene1.level)
 			this.createLevels(scenedata.scene1.level, Scene1Level);
 
 			var strapStyle = styledata.straplinegrey;

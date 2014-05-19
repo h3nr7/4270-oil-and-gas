@@ -11,7 +11,7 @@
 		var AbLevel = function AbLevel(name) {
 			this.name = name;
 			this.scene = null;
-			this.container = null;
+			// this.container = null;
 			this.isTiltable = false;
 			this.depthLevel = settings.depthLevel;
 			this.z = 0;
@@ -25,13 +25,15 @@
 
 
 		p.setup = function(x, y, z) {
+			console.log('lala2')
 			this._setup(x, y);
+			if( z!=null || z!=undefined ) this.z = z;	
 		}
 
-		p._setup = function(x, y, z) {
-			this.__setup(x, y);
-			if( z!=null || z!=undefined ) this.z = z;			
-		}
+		// p._setup = function(x, y, z) {
+		// 	this._setup(x, y);
+		// 	if( z!=null || z!=undefined ) this.z = z;			
+		// }
 
 		p.init = function(scene) {
 
