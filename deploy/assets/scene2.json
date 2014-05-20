@@ -1,0 +1,33 @@
+{
+	"meta": {
+		"image": "scene2.png",
+		"size": {"w":1346,"h":831},
+		"scale": "1"
+	},
+	"frames": {
+		"explorer-ship-bottom1.png":
+		{
+            "frame": {"x":0,"y":0,"w":1025,"h":831},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":1025,"h":831},
+            "sourceSize": {"w":1025,"h":831}
+		},
+		"explorer-ship-top1.png":
+		{
+            "frame": {"x":1025,"y":0,"w":321,"h":439},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":321,"h":439},
+            "sourceSize": {"w":321,"h":439}
+		},
+		"explorer-ship-small.png":
+		{
+            "frame": {"x":1025,"y":439,"w":316,"h":140},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":316,"h":140},
+            "sourceSize": {"w":316,"h":140}
+		}
+	}
+}

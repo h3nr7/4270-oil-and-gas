@@ -12,7 +12,7 @@ OUTPATH=deploy/assets
 SSFORMAT="pixi.js"
 TRIM="false"
 
-default: global scene1 sceneend
+default: global scene1 scene2 sceneend
 
 development:
 	OUTPATH=deploy/assets

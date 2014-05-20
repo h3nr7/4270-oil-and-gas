@@ -85,19 +85,19 @@
 	            },
 	            loading: fontLoadingBound,
 	            active: fontActiveBound,
-	            //inactive: function() {console.log('webfont loading')},
-				//fontloading: function(familyName, fvd) {console.log('webfont loading')},
-				//fontactive: function(familyName, fvd) {console.log('webfont loading')},
+	            inactive: function() {console.log('Error loading webfont')},
 				//fontinactive: function(familyName, fvd) {console.log('webfont loading')}
         	});
+
+
         }
 
-       p.fontLoading = function() {
+       p.fontLoading = function(e) {
        		//TODO
        		console.log('Web font loading');
        }
 
-       p.fontActive = function() {
+       p.fontActive = function(e) {
 			//TODO
        		console.log('Web font Active');
        		this.load();
@@ -105,7 +105,6 @@
 
 
 		p.load = function() {
-
 			assetsToLoader = [
 				"assets/global.json",
 				"assets/scene1.json"
@@ -115,8 +114,8 @@
 
 			// use callback
 			var that = this;
-			loadComplete = function() { that.loadComplete() };
-			loader.onComplete = loadComplete;
+			loaderBound = ListenerFunctions.createListenerFunction(this, this.loadComplete);
+			loader.onComplete = loaderBound;
 			//begin load
 			loader.load();
 		}

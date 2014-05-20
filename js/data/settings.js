@@ -15,7 +15,8 @@
 				align: "center", 
 				wordWrap: true, 
 				wordWrapWidth: 800
-			}
+			},
+			defaultSeaColor: 0x0079c1
 			// "dev": {
 			// 	"assets":""
 			// },

@@ -6,7 +6,7 @@
 	var AssetsLoader = MKK.getNamespace('app.loader').AssetsLoader;
 	var Navi = MKK.getNamespace('app.scene').Navi;
 	var ns = MKK.getNamespace('app');
-	var Scene1 = MKK.getNamespace('app.scene').Scene1;
+	var Scene2 = MKK.getNamespace('app.scene').Scene2;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
@@ -58,7 +58,7 @@
 
 			//setup scenes
 			this.scene2 = new Scene2();
-			this.scene2.setup(0, 5000/*695*/, 0, 0);
+			this.scene2.setup(200, 5000/*695*/, 0, 0);
 
 			this.loadFonts();
 		}
@@ -66,9 +66,9 @@
 		p.init = function() {
 			console.log('init test-scene 1');
 
-			this.stage.addChild(this.scene1.container);
+			this.stage.addChild(this.scene2.container);
 
-			this.scene1.init(this.stage);
+			this.scene2.init(this.stage);
 		}
 
 
@@ -106,7 +106,8 @@
 
 			assetsToLoader = [
 				"assets/global.json",
-				"assets/scene1.json"
+				"assets/scene1.json",
+				"assets/scene2.json"
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
@@ -132,7 +133,7 @@
 			//scene update
 			var frame = this.scroller.getDistance();
 			FrameTween.update(frame)
-			this.scene1.update(frame);
+			this.scene2.update(frame);
 
 			this.scroller.update();
 		}
