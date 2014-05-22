@@ -55,14 +55,6 @@
 			}		
 		}
 
-		p.show = function() {
-			this.container.visible = true;
-		}
-
-		p.hide = function() {
-			this.container.visible = false;
-		}
-
 		p.update = function(frame) {
 			this._update(frame);
 

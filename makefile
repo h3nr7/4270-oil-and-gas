@@ -12,7 +12,7 @@ OUTPATH=deploy/assets
 SSFORMAT="pixi.js"
 TRIM="false"
 
-default: global scene1 scene2 sceneend
+default: global scene1 scene2 scene2b sceneend
 
 development:
 	OUTPATH=deploy/assets
@@ -29,6 +29,8 @@ scene1:
 	${SPRITESHEET} -n scene1 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene1/*.png
 scene2:
 	${SPRITESHEET} -n scene2 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene2/*.png
+scene2b:
+	${SPRITESHEET} -n scene2b -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene2b/*.png
 scene3:
 	${SPRITESHEET} -n scene3 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene3/*.png
 scene4:

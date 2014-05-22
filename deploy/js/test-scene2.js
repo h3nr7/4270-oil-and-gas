@@ -36,7 +36,7 @@
 			// --------------------------------------------------			
 			this.stage = new PIXI.Stage(0xe7e7e7);
 			// create a renderer instance.
-			this.renderer = PIXI.autoDetectRenderer(1024, 768);
+			this.renderer = new PIXI.CanvasRenderer(1024, 768);
 			// add the renderer view element to the DOM
 			document.body.appendChild(this.renderer.view);
 
@@ -58,7 +58,7 @@
 
 			//setup scenes
 			this.scene2 = new Scene2();
-			this.scene2.setup(200, 5000/*695*/, 0, 0);
+			this.scene2.setup(0, 5000/*695*/, 0, 0);
 
 			this.loadFonts();
 		}
@@ -107,7 +107,8 @@
 			assetsToLoader = [
 				"assets/global.json",
 				"assets/scene1.json",
-				"assets/scene2.json"
+				"assets/scene2.json",
+				"assets/scene2b.json"
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
@@ -132,7 +133,9 @@
 			if (!this.loaded) return;
 			//scene update
 			var frame = this.scroller.getDistance();
-			FrameTween.update(frame)
+			FrameTween.update(frame);
+			TWEEN.update();
+			
 			this.scene2.update(frame);
 
 			this.scroller.update();

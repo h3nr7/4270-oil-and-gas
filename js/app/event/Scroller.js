@@ -13,7 +13,7 @@
 			this.view = null;
 			this.isStop = false;
 			this.isDebug = false;
-			this.scrollSpeed = 0.1;
+			this.scrollSpeed = 0.05;
 			this.distance = 0;
 			this.speedRange = 10000;
 		}
@@ -28,7 +28,7 @@
 			this.gui = gui;
 			this.isDebug = true;
 			this.f1 = this.gui.addFolder('Easing & Interpolation');
-			this.f1.add(this, 'scrollSpeed', 0.01, 5);
+			this.f1.add(this, 'scrollSpeed', 0.01, 0.2);
 
 			// this.f1.open();
 
