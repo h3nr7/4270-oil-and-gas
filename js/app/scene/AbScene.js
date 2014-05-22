@@ -39,9 +39,11 @@
 			
 		}
 
-
-
 		p.update = function() {
+			this.__update();
+		}
+
+		p.__update = function() {
 			this._update();
 		}
 
@@ -50,6 +52,12 @@
 		// LEVEL in SCENE
 		// -----------------------------------------------------------
 
+		//sectioning within the scene
+		p.createSection = function(startTime, endTime, callback) {
+
+		}
+
+		//create the levels
 		p.createLevels = function(arr, levelClass) {
 			var aLen = arr.length;
 			for(var i=0; i<aLen; i++) {

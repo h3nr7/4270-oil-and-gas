@@ -63,7 +63,7 @@
 
 			this._onStartCallbackFired = false;
 
-			this._startTime = time !== undefined ? time : ( typeof window !== 'undefined' && window.performance !== undefined && window.performance.now !== undefined ? window.performance.now() : Date.now() );
+			this._startTime = time || 0;
 			this._startTime += this._delayTime;
 
 			for ( var property in this._valuesEnd ) {
@@ -117,6 +117,9 @@
 
 		};
 
+		p.tweenVars = function() {
+			return this._object;
+		}
 
 		p.scrub = function(scrub) {
 			this._scrubbable = scrub;

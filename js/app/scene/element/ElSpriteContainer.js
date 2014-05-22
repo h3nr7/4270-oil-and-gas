@@ -9,14 +9,14 @@
 	if(!ns.ElSpriteContainer) {
 
 
-		var ElSpriteContainer = function ElSpriteContainer(name, x, y, z) {
+		var ElSpriteContainer = function ElSpriteContainer(name, sFrame, duration, x, y, z) {
 			this.name = name;
 			// this.container = null;
 			this.isTiltable = false;
 			this.depthLevel = settings.depthLevel;
 			this.z = z || 0;
 			this.element = [];
-			this.setup(x, y, z);
+			this.setup(sFrame, duration, x, y, z);
 		}
 
 
@@ -25,9 +25,8 @@
 		var p = ElSpriteContainer.prototype = new AbContainer();
 
 
-		p.setup = function(x, y, z) {
-			console.log('lala2')
-			this._setup(x, y);
+		p.setup = function(sFrame, duration, x, y, z) {
+			this._setup(sFrame, duration, x, y);
 			if( z!=null || z!=undefined ) this.z = z;	
 		}
 

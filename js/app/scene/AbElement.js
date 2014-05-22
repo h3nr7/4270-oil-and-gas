@@ -1,3 +1,13 @@
+// ================================================
+// Created by: HenryYP @ monKiKI 
+// Agency: KHWS
+// Client: EXXON Mobil
+// Date: 2015-05
+// ================================================
+// Class: AbContainer
+// Description: 
+// Base class for: AbContainer
+// ================================================
 (function(){
 
 

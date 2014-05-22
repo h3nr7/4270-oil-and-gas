@@ -1,29 +1,61 @@
 {
 	"meta": {
 		"image": "scene2.png",
-		"size": {"w":1346,"h":831},
+		"size": {"w":3425,"h":2241},
 		"scale": "1"
 	},
 	"frames": {
 		"explorer-ship-bottom1.png":
 		{
-            "frame": {"x":0,"y":0,"w":1025,"h":831},
+            "frame": {"x":0,"y":0,"w":1501,"h":1217},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1025,"h":831},
-            "sourceSize": {"w":1025,"h":831}
+            "spriteSourceSize": {"x":0,"y":0,"w":1501,"h":1217},
+            "sourceSize": {"w":1501,"h":1217}
+		},
+		"exploration_inner_bg_01.png":
+		{
+            "frame": {"x":1501,"y":0,"w":961,"h":1024},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":961,"h":1024},
+            "sourceSize": {"w":961,"h":1024}
+		},
+		"exploration_inner_bg_02.png":
+		{
+            "frame": {"x":0,"y":1217,"w":963,"h":1024},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":963,"h":1024},
+            "sourceSize": {"w":963,"h":1024}
+		},
+		"exploration_inner_bg_03.png":
+		{
+            "frame": {"x":963,"y":1217,"w":961,"h":1024},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":961,"h":1024},
+            "sourceSize": {"w":961,"h":1024}
+		},
+		"exploration_inner_bg_04.png":
+		{
+            "frame": {"x":2462,"y":0,"w":963,"h":1024},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":963,"h":1024},
+            "sourceSize": {"w":963,"h":1024}
 		},
 		"explorer-ship-top1.png":
 		{
-            "frame": {"x":1025,"y":0,"w":321,"h":439},
+            "frame": {"x":2462,"y":1024,"w":469,"h":643},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":321,"h":439},
-            "sourceSize": {"w":321,"h":439}
+            "spriteSourceSize": {"x":0,"y":0,"w":469,"h":643},
+            "sourceSize": {"w":469,"h":643}
 		},
 		"explorer-ship-small.png":
 		{
-            "frame": {"x":1025,"y":439,"w":316,"h":140},
+            "frame": {"x":2931,"y":1024,"w":316,"h":140},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":316,"h":140},

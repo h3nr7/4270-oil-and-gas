@@ -47,11 +47,20 @@
 		}
 
 		p.removeElement = function(el) {
-			var index = this.level.indexOf(el);
+			var index = this.element.indexOf(el);
+			console.log(index)
 			if( index > -1 ) {
 				this.container.removeChild(el);
-				this.oLevel.splice(index,1);
+				this.element.splice(index,1);
 			}		
+		}
+
+		p.show = function() {
+			this.container.visible = true;
+		}
+
+		p.hide = function() {
+			this.container.visible = false;
 		}
 
 		p.update = function(frame) {

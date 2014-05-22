@@ -11,6 +11,8 @@
 
 		var Scene2Level = function Scene2Level(name) {
 			this.depthLevel = settings.depthLevel;
+			this.name = name;
+
 		}
 
 		ns.Scene2Level = Scene2Level;
