@@ -21,17 +21,33 @@
             "spriteSourceSize": {"x":0,"y":0,"w":469,"h":643},
             "sourceSize": {"w":469,"h":643}
 		},
+		"engine_hook.png":
+		{
+            "frame": {"x":1501,"y":643,"w":96,"h":320},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":96,"h":320},
+            "sourceSize": {"w":96,"h":320}
+		},
 		"explorer-ship-small.png":
 		{
-            "frame": {"x":1501,"y":643,"w":270,"h":120},
+            "frame": {"x":1597,"y":643,"w":270,"h":120},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":270,"h":120},
             "sourceSize": {"w":270,"h":120}
 		},
+		"engine_gear_1.png":
+		{
+            "frame": {"x":1867,"y":643,"w":84,"h":84},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":84,"h":84},
+            "sourceSize": {"w":84,"h":84}
+		},
 		"engine_fan_2.png":
 		{
-            "frame": {"x":1771,"y":643,"w":80,"h":80},
+            "frame": {"x":1597,"y":763,"w":80,"h":80},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":80,"h":80},

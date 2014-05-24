@@ -16,6 +16,7 @@
 				wordWrap: true, 
 				wordWrapWidth: 800
 			},
+			defaultBGColor: 0xe7e7e7,
 			defaultSeaColor: 0x0079c1
 			// "dev": {
 			// 	"assets":""

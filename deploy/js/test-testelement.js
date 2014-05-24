@@ -6,8 +6,8 @@
 	var AssetsLoader = MKK.getNamespace('app.loader').AssetsLoader;
 	var Navi = MKK.getNamespace('app.scene').Navi;
 	var ns = MKK.getNamespace('app');
-	var Scene1 = MKK.getNamespace('app.scene').Scene1;
 	var Scene2 = MKK.getNamespace('app.scene').Scene2;
+	var TestElement = MKK.getNamespace('app.scene').TestElement;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
@@ -37,7 +37,7 @@
 			// --------------------------------------------------			
 			this.stage = new PIXI.Stage(0xe7e7e7);
 			// create a renderer instance.
-			this.renderer = PIXI.autoDetectRenderer(1024, 768);
+			this.renderer = new PIXI.CanvasRenderer(1024, 768);
 			// add the renderer view element to the DOM
 			document.body.appendChild(this.renderer.view);
 
@@ -58,9 +58,8 @@
 			if (this.isDebug) this.debug();
 
 			//setup scenes
-			this.scene1 = new Scene1();
-			this.scene1.setup(2000, 5000/*695*/, 0, 0);
-
+			this.testEl = new TestElement();
+			this.testEl.setup(0, 5000/*695*/, 0, 0);
 
 			this.loadFonts();
 		}
@@ -68,9 +67,9 @@
 		p.init = function() {
 			console.log('init test-scene 1');
 
-			this.stage.addChild(this.scene1.container);
+			this.stage.addChild(this.testEl.container);
 
-			this.scene1.init(this.stage);
+			this.testEl.init(this.stage);
 		}
 
 
@@ -85,19 +84,19 @@
 	            },
 	            loading: fontLoadingBound,
 	            active: fontActiveBound,
-	            inactive: function() {console.log('Error loading webfont')},
+	            //inactive: function() {console.log('webfont loading')},
+				//fontloading: function(familyName, fvd) {console.log('webfont loading')},
+				//fontactive: function(familyName, fvd) {console.log('webfont loading')},
 				//fontinactive: function(familyName, fvd) {console.log('webfont loading')}
         	});
-
-
         }
 
-       p.fontLoading = function(e) {
+       p.fontLoading = function() {
        		//TODO
        		console.log('Web font loading');
        }
 
-       p.fontActive = function(e) {
+       p.fontActive = function() {
 			//TODO
        		console.log('Web font Active');
        		this.load();
@@ -105,17 +104,20 @@
 
 
 		p.load = function() {
+
 			assetsToLoader = [
 				"assets/global.json",
-				"assets/scene1.json"
+				"assets/scene1.json",
+				"assets/scene2.json",
+				"assets/scene2b.json"
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
 
 			// use callback
 			var that = this;
-			loaderBound = ListenerFunctions.createListenerFunction(this, this.loadComplete);
-			loader.onComplete = loaderBound;
+			loadComplete = function() { that.loadComplete() };
+			loader.onComplete = loadComplete;
 			//begin load
 			loader.load();
 		}
@@ -133,7 +135,9 @@
 			//scene update
 			var frame = this.scroller.getDistance();
 			FrameTween.update(frame);
-			this.scene1.update(frame);
+			TWEEN.update();
+			
+			this.testEl.update(frame);
 
 			this.scroller.update();
 		}

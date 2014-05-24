@@ -7,7 +7,7 @@
 
 	if(!ns.ElRotatingSprite) {
 
-		var ElRotatingSprite = function ElRotatingSprite(name, x, y, z, aX, aY) {
+		var ElRotatingSprite = function ElRotatingSprite(name, x, y, z, velo, aX, aY) {
 
 			this.name = name;
 			this.z = z;
@@ -16,12 +16,16 @@
 			this.container.position = this.cPos;
 			this.container.anchor.x = aX || 0;
 			this.container.anchor.y = aY || 0;
-			this._speed = 10;
-			this._repeat = 200;
+			this._velocity = velo || 1000;
+			this._direction = 1;
+			if(this._velocity<0) this._direction = -1;
+			this._speed = Math.abs(this._velocity);
+			this._repeat = 1000;
 
 
 			var tweenUpdateBound = ListenerFunctions.createListenerFunction(this, this.tweenUpdate);
-			this.tweener = new TWEEN.Tween({rotation:0}, 5000)
+			this.tweener = new TWEEN.Tween({rotation:0})
+								.to({ rotation: 1 }, this._speed)
 								.onUpdate(tweenUpdateBound);
 
 		}	
@@ -40,7 +44,7 @@
 
 		p.tweenUpdate = function(e) {
 
-			this.container.rotation = e*MathBase.PI2;
+			this.container.rotation = e*MathBase.PI2 * this._direction;
 
 		}
 
@@ -50,9 +54,9 @@
 			return this._repeat;
 		}
 
-		p.speed = function(sp) {
-			if(sp) this._speed = sp;
-			return this._speed;
+		p.velocity = function(sp) {
+			if(sp) this._velocity = sp;
+			return this._velocity;
 		}
 
 	}

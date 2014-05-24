@@ -81,6 +81,9 @@
 		}
 
 		p.position = function(x, y) {
+			//bitwise OR statement to round up the
+			// this.container.x = (x + 0.5) | 0;
+			// this.container.y = (y + 0.5) | 0;
 			this.container.x = x;
 			this.container.y = y;
 		}
