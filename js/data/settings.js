@@ -16,6 +16,8 @@
 				wordWrap: true, 
 				wordWrapWidth: 800
 			},
+			defaultDescriptionGap: 20, 
+			defaultDescriptionLineHeight: 40,
 			defaultBGColor: 0xe7e7e7,
 			defaultSeaColor: 0x0079c1
 			// "dev": {

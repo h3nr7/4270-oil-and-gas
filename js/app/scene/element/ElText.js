@@ -15,8 +15,8 @@
 			this.container.position = this.cPos;
 			// console.log(this.container.getBounds())
 			// this.container.position.x -= Math.round( this.container.getBounds().width/2 );
-			this.container.anchor.x = aX;
-			this.container.anchor.y = aY;
+			this.container.anchor.x = aX || 0;
+			this.container.anchor.y = aY || 0;
 		}	
 
 		ns.ElText = ElText;

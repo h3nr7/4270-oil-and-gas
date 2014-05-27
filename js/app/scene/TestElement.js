@@ -12,6 +12,7 @@
 	var ElSpriteContainer = ns.element.ElSpriteContainer;
 	var ElText = ns.element.ElText;
 	var ElRect = ns.element.ElRect;
+	var ElGrowRect = ns.element.ElGrowRect;
 	var ElSeaBG = ns.element.ElSeaBG;
 	var ElSeaWave = ns.element.ElSeaWave;
 	var ElRotatingSprite = ns.element.ElRotatingSprite;
@@ -20,6 +21,7 @@
 	var ElShipInner = ns.element.ElShipInner;
 	var ElRadar = ns.element.ElRadar;
 	var ElRadarBoat = ns.element.ElRadarBoat;
+	var ElDescription= ns.element.ElDescription;
 
 
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
@@ -50,14 +52,24 @@
 
 			this.radarboat = new ElRadarBoat(0,3000, 512, 396);	
 
+			this.desc = new ElDescription ('Propulsion &\nThrusters™', 'some very long description', '', 0, 800, 200, 700, 0);
 
+			this.desc2 = new ElDescription ('Testing &\nMe™', 'some very long description', '', 100, 800, 200, 1000, 0, 200, 700, 200, 'white');
+
+
+			this.gRect = new ElGrowRect (200, 200, 0, 20, 200, 300, 20, 10, 100, 0xf1345e);
 			// ----------------------------
 			// add to levels
 			// ----------------------------
 			// this.level[1].addElement(this.shipinner.container);
 			// this.level[1].addElement(this.radar.container);
 			// this.level[1].addElement(this.radar2.container);
+			this.level[1].addElement(this.desc.container);
+			this.level[1].addElement(this.desc2.container);
 			this.level[1].addElement(this.radarboat.container);
+
+			this.level[1].addElement(this.gRect.container);
+
 			
 
 		}
@@ -80,7 +92,7 @@
 			}
 			
 			this.level[0].update(cFrame);
-			// this.level[1].update(cFrame);
+			this.level[1].update(cFrame);
 			// this.level[2].update(cFrame);
 		}
 
