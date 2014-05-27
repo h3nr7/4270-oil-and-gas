@@ -112,7 +112,7 @@
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
-
+			PIXI.scaleModes.DEFAULT = PIXI.scaleModes.LINEAR;
 			// use callback
 			var that = this;
 			loadComplete = function() { that.loadComplete() };

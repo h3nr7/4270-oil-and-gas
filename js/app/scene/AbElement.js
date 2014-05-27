@@ -88,6 +88,9 @@
 			this.container.y = y;
 		}
 
+		p.opacity = function(e) {
+			this.container.alpha = e;
+		}
 		p.mask = function(xX, yY, wW, hH, type) {
 
 			if(!this.maskObj) {

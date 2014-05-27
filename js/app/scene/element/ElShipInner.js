@@ -85,7 +85,7 @@
 
 			var selfZoom1Bound = ListenerFunctions.createListenerFunction(this, this.selfZoom1);
 			this.tween3 = new TweenEach({x: -656, y:0, scale: 1.6})
-							.to({x: 0, y:1200, scale: 0.78}, 400)
+							.to({x: 10, y:1200, scale: 0.78}, 400)
 							.easing(TWEEN.Easing.Exponential.InOut)
 							.onUpdate(selfZoom1Bound)
 							.delay(this.startFrame+1300).start();

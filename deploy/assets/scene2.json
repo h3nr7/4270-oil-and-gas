@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"image": "scene2.png",
-		"size": {"w":1970,"h":1217},
+		"size": {"w":1970,"h":1727},
 		"scale": "1"
 	},
 	"frames": {
@@ -20,6 +20,14 @@
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":469,"h":643},
             "sourceSize": {"w":469,"h":643}
+		},
+		"sonar_bg1.png":
+		{
+            "frame": {"x":0,"y":1217,"w":510,"h":510},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":510,"h":510},
+            "sourceSize": {"w":510,"h":510}
 		},
 		"engine_hook.png":
 		{

@@ -37,7 +37,8 @@
 			// --------------------------------------------------			
 			this.stage = new PIXI.Stage(0xe7e7e7);
 			// create a renderer instance.
-			this.renderer = new PIXI.CanvasRenderer(1024, 768);
+			// this.renderer = new PIXI.CanvasRenderer(1024, 768);
+			this.renderer = PIXI.autoDetectRenderer(1024, 768);
 			// add the renderer view element to the DOM
 			document.body.appendChild(this.renderer.view);
 
@@ -109,10 +110,12 @@
 				"assets/global.json",
 				"assets/scene1.json",
 				"assets/scene2.json",
-				"assets/scene2b.json"
+				"assets/scene2b.json",
+				"assets/scene2c.json"
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
+			
 
 			// use callback
 			var that = this;

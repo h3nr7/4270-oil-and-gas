@@ -111,7 +111,7 @@
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
-
+			PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
 			// use callback
 			var that = this;
 			loaderBound = ListenerFunctions.createListenerFunction(this, this.loadComplete);

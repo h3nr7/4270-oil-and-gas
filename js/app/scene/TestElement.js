@@ -16,7 +16,10 @@
 	var ElSeaWave = ns.element.ElSeaWave;
 	var ElRotatingSprite = ns.element.ElRotatingSprite;
 
+	//test element classes
 	var ElShipInner = ns.element.ElShipInner;
+	var ElRadar = ns.element.ElRadar;
+	var ElRadarBoat = ns.element.ElRadarBoat;
 
 
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
@@ -37,17 +40,24 @@
 		//open when init is completed
 		p.open = function() {
 
+			//test the shipinner class
 			this.createLevels(scenedata.scene2.level, Scene2Level);
+			// this.shipinner = new ElShipInner(0, 3000);
 
-			this.shipinner = new ElShipInner(0, 3000);
+			//test the radar class
+			// this.radar = new ElRadar(0, 3000, 100,100, true);	
+			// this.radar2 = new ElRadar(0, 3000, 300, 500);	
+
+			this.radarboat = new ElRadarBoat(0,3000, 512, 396);	
 
 
 			// ----------------------------
 			// add to levels
 			// ----------------------------
-			this.level[1].addElement(this.shipinner.container);
-			// this.level[1].addElement(this.inner.container);
-			// this.level[2].addElement(this.ship.container);
+			// this.level[1].addElement(this.shipinner.container);
+			// this.level[1].addElement(this.radar.container);
+			// this.level[1].addElement(this.radar2.container);
+			this.level[1].addElement(this.radarboat.container);
 			
 
 		}

@@ -28,7 +28,8 @@
 					{name:"level2", x:0, y:0, z:10},
 				],
 				element:{
-					shipInner: { x: -500, y:0, z:0 }
+					shipInner: { x: -500, y:0, z:0 },
+					radar: { x:0, y:0, z:0 }
 				}
 			},
 
