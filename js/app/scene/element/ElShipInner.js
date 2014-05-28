@@ -85,7 +85,7 @@
 
 			var selfZoom1Bound = ListenerFunctions.createListenerFunction(this, this.selfZoom1);
 			this.tween3 = new TweenEach({x: -656, y:0, scale: 1.6})
-							.to({x: 10, y:1200, scale: 0.78}, 400)
+							.to({x: 0, y:1600, scale: 0.78}, 400)
 							.easing(TWEEN.Easing.Exponential.InOut)
 							.onUpdate(selfZoom1Bound)
 							.delay(this.startFrame+1300).start();
@@ -126,24 +126,26 @@
 
 		p.selfMove1 = function(e) {
 			var cObj = this.tween1.tweenVars();
-			this.container.x = cObj.x;
+			this.xPos (cObj.x);
 		}
 
 		p.selfMove2 = function(e) {
 			var cObj = this.tween2.tweenVars();
-			this.container.x = cObj.x;
+			this.xPos (cObj.x);
 		}
 
 		p.selfZoom1 = function(e) {
 			var cObj = this.tween3.tweenVars();
 			this.scale(cObj.scale);
-			this.position(cObj.x, cObj.y);
+			this.xPos( cObj.x );
+			// this.position(cObj.x, cObj.y);
 
 		}
 
 		p.update = function(frame) {
-			this._update(frame);
-			var cFrame = this.localCurFrame(frame);
+			// this._update(frame);
+			// var cFrame = this.localCurFrame(frame);
+			console.log('me working', this.cPos, this.offPos, this.container.y)
 		}
 
 	}

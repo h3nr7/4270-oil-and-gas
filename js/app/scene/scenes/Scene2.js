@@ -13,8 +13,8 @@
 	var ElRect = ns.element.ElRect;
 	var ElSeaBG = ns.element.ElSeaBG;
 	var ElSeaWave = ns.element.ElSeaWave;
-	var ElRotatingSprite = ns.element.ElRotatingSprite;
-
+	var ElShipInner = ns.element.ElShipInner;
+	var ElRadarBoat = ns.element.ElRadarBoat;
 
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 	var TweenEach = MKK.getNamespace('app.animation').TweenEach;
@@ -39,10 +39,10 @@
 			// ----------------------------
 			// create sea
 			// ----------------------------
-			this.seabg = new ElSeaBG('seabg', 0,1050,0,0,0, 1024, 1024);
-			this.seawave = new ElSeaWave('seawave', 0, 1050,0,0,0, 1024);
+			this.seabg = new ElSeaBG('seabg', 0,1250,0,0,0, 1024, 1024);
+			this.seawave = new ElSeaWave('seawave', 0, 1250,0,0,0, 1024);
 
-			this.smallship = new ElSprite('explorer-ship-small.png', 100, 930, 0, 0);
+			this.smallship = new ElSprite('explorer-ship-small.png', 100, 1130, 0, 0);
 
 			// ----------------------------
 			// create ship
@@ -53,54 +53,46 @@
 
 
 			// ----------------------------
-			// create inner
+			// create ship inner
 			// ----------------------------
-			this.inner = new ElSpriteContainer('inner', 0, 0, -200, 1200, 0);
-			this.inner.addSprite("exploration_inner_bg_01.png", 0,0);
-			this.inner.addSprite("exploration_inner_bg_02.png", 655,0);
-			this.inner.addSprite("exploration_inner_bg_03.png", 0,699);
-			this.inner.addSprite("exploration_inner_bg_04.png", 655,699);
-			this.inner.scale(1.2);
-			this.inner.mask(300, 50, 550, 2400);
-			this.inner.showMask();
+			this.shipinner = new ElShipInner(this.startFrame+1300, 8000);
+			this.shipinner.mask(300, 40, 490, 2300);
+			this.shipinner.showMask();
 
-			this.fan = new ElRotatingSprite('engine_fan_2.png', 400, 2200, 0, 0.5, 0.5);
-			this.fan.start();
-
+			// ----------------------------
+			// create ship outer
+			// ----------------------------			
+			this.radarboat = new ElRadarBoat(0, 8000, 512, 3000);
 
 			// ----------------------------
 			// ship tween to zoom
 			// ----------------------------
 			var tweenSmallShipBound = ListenerFunctions.createListenerFunction(this, this.tweenSmallShip);
-			this.tween0 = new TweenEach({x: 100, y: 930})
+			this.tween0 = new TweenEach({x: 100, y: 1130})
 							.to({x: 700}, this.startFrame+728)
 							.easing(TWEEN.Easing.Exponential.Out)
 							.onUpdate(tweenSmallShipBound)
 							.delay(this.startFrame+350).start();
 
 			var tweenShipBound = ListenerFunctions.createListenerFunction(this, this.tweenShip);
-			this.tween1 = new TweenEach({scale:1, x: 0, y:0, ix: 0, iy: 1200})
-							.to({scale:3, x: -560, y:-2200, ix: 0, iy: 2200})
+			this.tween1 = new TweenEach({scale:1, x: 0, y:0, ix: -500, iy:1150})
+							.to({scale:3, x: -560, y:-2200, ix: -500, iy: 1500})
 							.onUpdate(tweenShipBound)
 							.delay(this.startFrame+792).start();
 
-			var tweenInnerBound = ListenerFunctions.createListenerFunction(this, this.tweenInner);
-			this.tween2 = new TweenEach({x: 300, y: 50, width:550, height: 2400})
-							.to({x: 0, width:1200}, 200)
-							.onUpdate(tweenInnerBound)
+
+			var tweenInnerMaskBound = ListenerFunctions.createListenerFunction(this, this.tweenInnerMask);
+			this.tween2 = new TweenEach({x: 300, y: 50, width:490, height: 2300})
+							.to({x: -150, width:1500}, 200)
+							.onUpdate(tweenInnerMaskBound)
 							.delay(this.startFrame+964).start();
 
-			var tweenInnerMoveBound = ListenerFunctions.createListenerFunction(this, this.tweenInnerMove);
-			this.tween3 = new TweenEach({x:-100, y:1200}, 2000)
-							.to({y:1700})
-							.onUpdate(tweenInnerMoveBound)
-							.delay(this.startFrame+842).start();
-
-			// var tweenInnerScaleBound = ListenerFunctions.createListenerFunction(this, this.tweenInnerScale);
-			// this.tween4 = new TweenEach({scale:1.2}, 100)
-			// 				.to({scale:0.8})
-			// 				.onUpdate(tweenInnerScaleBound)
-			// 				.delay(this.startFrame+2000).start();
+			var tweenInnerBound = ListenerFunctions.createListenerFunction(this, this.tweenInner);
+			this.tween3 = new TweenEach({y: 1500})
+							.to({y: 3200}, 400)
+							.onUpdate(tweenInnerBound)
+							.easing(TWEEN.Easing.Exponential.InOut)
+							.delay(this.startFrame+2600).start();
 
 			// ----------------------------
 			// add to levels
@@ -108,9 +100,9 @@
 			this.level[0].addElement(this.smallship.container);
 			this.level[0].addElement(this.seabg.container);
 			this.level[0].addElement(this.seawave.container);
-			this.level[1].addElement(this.inner.container);
-			this.level[1].addElement(this.fan.container);
+			this.level[1].addElement(this.shipinner.container);
 			this.level[2].addElement(this.ship.container);
+			this.level[3].addElement(this.radarboat.container);
 			
 
 		}
@@ -123,8 +115,6 @@
 				var cObj = this.tween0.tweenVars();
 				smallship.position(cObj.x, cObj.y);
 
-				// this.inner.position(cObj.ix, cObj.iy);
-
 		}
 
 		p.tweenShip = function(e) {
@@ -133,28 +123,18 @@
 				ship.scale(cObj.scale);
 				ship.position(cObj.x, cObj.y);
 
-				// this.inner.position(cObj.ix, cObj.iy);
+				this.shipinner.yPos(cObj.iy);
 
+		}
+
+		p.tweenInnerMask = function(e) {
+			var cObj = this.tween2.tweenVars();
+			this.shipinner.mask(cObj.x, cObj.y, cObj.width, cObj.height);
 		}
 
 		p.tweenInner = function(e) {
-			var cObj = this.tween2.tweenVars();
-			this.inner.mask(cObj.x, cObj.y, cObj.width, cObj.height);
-			if(e>=1) {
-				this.inner.hideMask();
-			}
-		}
-
-		p.tweenInnerMove = function(e) {
 			var cObj = this.tween3.tweenVars();
-			this.inner.position(cObj.x, cObj.y);
-			
-		}
-
-		p.tweenInnerScale = function(e) {
-			var cObj = this.tween4.tweenVars();
-			this.inner.scale(cObj.scale);
-			
+			this.shipinner.yPos(cObj.y);
 		}
 
 		//close when destroyed

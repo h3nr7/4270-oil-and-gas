@@ -64,7 +64,7 @@
 		}
 
 		p.init = function() {
-			console.log('init test-scene 1');
+			console.log('init test-scene 2');
 
 			this.stage.addChild(this.scene2.container);
 
@@ -108,7 +108,8 @@
 				"assets/global.json",
 				"assets/scene1.json",
 				"assets/scene2.json",
-				"assets/scene2b.json"
+				"assets/scene2b.json",
+				"assets/scene2c.json"
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);

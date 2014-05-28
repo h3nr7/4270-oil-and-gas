@@ -1,18 +1,89 @@
-#tools
+##############################
+#NPM TOOLS
+##############################
 SPRITESHEET=node_modules/.bin/spritesheet-js
 UGLIFY=node_modules/.bin/uglifyjs
 
-#oaths
+##############################
+#PATHS
+##############################
 JSSOURCE=js
 ASSETSPATH=assets
 DEPLOYPATH=deploy/assets
 OUTPATH=deploy/assets
 
-#VARS
+##############################
+#SPRITE SHEET VARS
+##############################
 SSFORMAT="pixi.js"
 TRIM="false"
 
-default: global scene1 scene2 scene2b scene2c sceneend
+##############################
+#UGLIFY VARS
+##############################
+#3rd PARTY LIBS
+LIB.DEBUG.IN =${JSSOURCE}/lib/debug/*.js
+LIB.IN = ${JSSOURCE}/lib/*.js
+#SITE MANAGER
+SITEMANAGER.IN = ${JSSOURCE}/app/SiteManager.js
+#MKK LIBS
+MKK.EVENT.IN = ${JSSOURCE}/mkk/event/*.js
+MKK.CORE.IN = ${JSSOURCE}/mkk/core/*.js
+MKK.MATH.IN = ${JSSOURCE}/mkk/math/*.js
+MKK.PHYS.IN = ${JSSOURCE}/mkk/physics/*.js
+
+MKK.IN = ${MKK.EVENT.IN} ${MKK.CORE.IN} ${MKK.MATH.IN} ${MKK.PHYS.IN}
+
+##############################
+#APP 
+##############################
+
+#APP Events and Animation
+APPEVENT.IN = ${JSSOURCE}/app/event/*.js
+APPANIM.IN = ${JSSOURCE}/app/animation/*.js
+
+#APP Scene
+APPSCENE.PATH = ${JSSOURCE}/app/scene
+APPSCENE.IN = ${APPSCENE.PATH}/AbElement.js ${APPSCENE.PATH}/AbContainer.js ${APPSCENE.PATH}/AbLevel.js ${APPSCENE.PATH}/AbScene.js
+
+#APP Elements
+APPELEMENTBASE.IN = ${JSSOURCE}/app/scene/element/base/*.js
+APPELEMENT.IN = ${JSSOURCE}/app/scene/element/*js
+
+#APP Navigation, Levels & Scenes
+APPNAVI.IN = ${JSSOURCE}/app/scene/navi/*.js
+APPNLEVEL.IN = ${JSSOURCE}/app/scene/level/*.js
+APPNSCENEALL.IN = ${JSSOURCE}/app/scene/scenes/*.js
+
+
+#APP Testing 
+APPTESTING.PATH = ${JSSOURCE}/app/scene/scenes/testing
+APPTESTING.IN = ${APPTESTING.PATH}/*.js
+
+#APP TO be output
+MAINJS.IN = ${APPEVENT.IN} ${APPANIM.IN} ${APPSCENE.IN} ${APPELEMENTBASE.IN} ${APPELEMENT.IN} ${APPNAVI.IN} ${APPNLEVEL.IN} ${APPNSCENEALL.IN} ${JSSOURCE}/app.js
+
+##############################
+#DATA
+##############################
+DATA.IN = ${JSSOURCE}/data/*.js
+
+##############################
+#BEAUTIFY-JS VARS
+##############################
+FLAGS="--beautify"
+
+##############################
+#OUTPUT
+##############################
+DEVELOP.OUT = deploy/js/app.dev.js
+DEPLOY.OUT = deploy/js/app.min.js
+
+
+##############################
+#DEPLOYMENT
+##############################
+default: development deploy
 
 development:
 	OUTPATH=deploy/assets
@@ -44,10 +115,14 @@ scene6:
 sceneend:
 	${SPRITESHEET} -n sceneend -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/sceneend/*.png
 
+assets: global scene1 scene2 scene2b scene2c sceneend
 
-compress:
-	# ${UGLIFY} ${LIB.IN} ${NSMANAGER.IN} ${SUBAPP.IN} ${APP.IN} ${MAINJS.IN} ${FLAGS} -o ${DEVELOP.OUT}
-deploy:
+development: assets
+	${UGLIFY} ${LIB.DEBUG.IN} ${LIB.IN} ${SITEMANAGER.IN} ${MKK.IN} ${DATA.IN} ${MAINJS.IN} ${APPTESTING.IN} ${FLAGS} -o ${DEVELOP.OUT}
 
+deploy: assets
+	${UGLIFY} ${LIB.IN} ${SITEMANAGER.IN} ${MKK.IN} ${DATA.IN} ${MAINJS.IN} -o ${DEPLOY.OUT}
+
+all: development deploy
 
 

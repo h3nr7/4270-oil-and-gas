@@ -85,7 +85,8 @@
 		}
 
 		p._update = function(frame) {
-			this.container.position = this.cPos.add(this.offPos);
+			this.container.position.x = this.cPos.x + this.offPos.x;
+			this.container.position.y = this.cPos.y + this.offPos.y;
 		}
 
 

@@ -80,12 +80,55 @@
 			this.container.scale.x = this.container.scale.y = factor;
 		}
 
+		p.offsetX = function(x) {
+			if(x) {
+				this.offPos.x = x;
+
+			}
+			return this.offPos.x;
+		}
+
+		p.offsetY = function(y) {
+			if(y) {
+				this.offPos.y = y;
+			}
+			return this.offPos.y;
+		}
+
+		p.xPos = function(x) {
+			if(x) {
+				this.cPos.x  = x;
+			}
+			return this.cPos.x;
+		}
+
+		p.yPos = function(y) {
+			if (y) {
+				this.cPos.y = y;
+				this.container.y = this.cPos.y + this.offPos.y;
+			}
+			return this.cPos.y;
+		}
+
+		p.realXPos = function() {
+			return this.container.x;
+		}
+
+		p.realYPos = function() {
+
+			return this.container.y;
+		}
+
+
+
 		p.position = function(x, y) {
 			//bitwise OR statement to round up the
 			// this.container.x = (x + 0.5) | 0;
 			// this.container.y = (y + 0.5) | 0;
-			this.container.x = x;
-			this.container.y = y;
+			this.cPos.x  = x;
+			this.cPos.y = y;
+			this.container.x = this.cPos.x + this.offPos.x;
+			this.container.y = this.cPos.y + this.offPos.y;
 		}
 
 		p.opacity = function(e) {

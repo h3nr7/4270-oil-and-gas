@@ -8,10 +8,10 @@
 
 		var ElText = function ElText(txt, x, y, z, aX, aY, style) {
 
-			this.txt = txt;
+			this.txt = txt? txt:'';
 			this.z = z;
 			this.setup(x, y);
-			this.container = new PIXI.Text(txt, settings.defaultTextStyle);
+			this.container = new PIXI.Text(this.txt, settings.defaultTextStyle);
 			this.container.position = this.cPos;
 			// console.log(this.container.getBounds())
 			// this.container.position.x -= Math.round( this.container.getBounds().width/2 );

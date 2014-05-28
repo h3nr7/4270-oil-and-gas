@@ -44,31 +44,31 @@
 
 			//test the shipinner class
 			this.createLevels(scenedata.scene2.level, Scene2Level);
-			// this.shipinner = new ElShipInner(0, 3000);
+			this.shipinner = new ElShipInner(0, 3000);
 
 			//test the radar class
-			// this.radar = new ElRadar(0, 3000, 100,100, true);	
-			// this.radar2 = new ElRadar(0, 3000, 300, 500);	
+			this.radar = new ElRadar(0, 3000, 100,100, true);	
+			this.radar2 = new ElRadar(0, 3000, 300, 500);	
 
 			this.radarboat = new ElRadarBoat(0,3000, 512, 396);	
 
-			this.desc = new ElDescription ('Propulsion &\nThrusters™', 'some very long description', '', 0, 800, 200, 700, 0);
+			// this.desc = new ElDescription ('Propulsion &\nThrusters™', 'some very long description', '', 0, 800, 200, 700, 0);
 
-			this.desc2 = new ElDescription ('Testing &\nMe™', 'some very long description', '', 100, 800, 200, 1000, 0, 200, 700, 200, 'white');
+			// this.desc2 = new ElDescription ('Testing &\nMe™', 'some very long description', '', 100, 800, 200, 1000, 0, 200, 700, 200, 'white');
 
 
-			this.gRect = new ElGrowRect (200, 200, 0, 20, 200, 300, 20, 10, 100, 0xf1345e);
+			// this.gRect = new ElGrowRect (200, 200, 0, 20, 200, 300, 20, 10, 100, 0xf1345e);
 			// ----------------------------
 			// add to levels
 			// ----------------------------
-			// this.level[1].addElement(this.shipinner.container);
-			// this.level[1].addElement(this.radar.container);
-			// this.level[1].addElement(this.radar2.container);
-			this.level[1].addElement(this.desc.container);
-			this.level[1].addElement(this.desc2.container);
+			this.level[1].addElement(this.shipinner.container);
+			this.level[1].addElement(this.radar.container);
+			this.level[1].addElement(this.radar2.container);
+			// this.level[1].addElement(this.desc.container);
+			// this.level[1].addElement(this.desc2.container);
 			this.level[1].addElement(this.radarboat.container);
 
-			this.level[1].addElement(this.gRect.container);
+			// this.level[1].addElement(this.gRect.container);
 
 			
 
