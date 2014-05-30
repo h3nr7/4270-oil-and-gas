@@ -15,8 +15,6 @@
 	var ElGrowRect = ns.element.ElGrowRect;
 	var ElSeaBG = ns.element.ElSeaBG;
 	var ElSeaWave = ns.element.ElSeaWave;
-	var ElSeaFloor = ns.element.ElSeaFloor;
-	var ElOilCave = ns.element.ElOilCave;
 	var ElRotatingSprite = ns.element.ElRotatingSprite;
 
 	//test element classes
@@ -30,16 +28,16 @@
 	var TweenEach = MKK.getNamespace('app.animation').TweenEach;
 
 
-	if(!ns.TestElement) {
+	if(!ns.TestElement2) {
 
-		var TestElement = function TestElement() {
+		var TestElement2 = function TestElement2() {
 
 		}
 
 
-		ns.TestElement = TestElement;
+		ns.TestElement2 = TestElement2;
 
-		var p = TestElement.prototype = new AbScene();
+		var p = TestElement2.prototype = new AbScene();
 
 		//open when init is completed
 		p.open = function() {
@@ -54,12 +52,9 @@
 
 			this.radarboat = new ElRadarBoat(0,3000, 512, 396);	
 
-			this.seafloor = new ElSeaFloor('seafloor', 0, 4282, 0,0,0, 1024, 1024);
+			// this.desc = new ElDescription ('Propulsion &\nThrusters™', 'some very long description', '', 0, 800, 200, 700, 0);
 
-			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 200, 0,0);
-			// this.desc = new ElDescription ('Propulsion &\nThrusters™', 'some very long description', '', '', 0, 800, 200, 700, 0);
-
-			// this.desc2 = new ElDescription ('Testing &\nMe™', 'some very long description', '', 'white', 100, 800, 200, 1000, 0, 200, 700, 200);
+			// this.desc2 = new ElDescription ('Testing &\nMe™', 'some very long description', '', 100, 800, 200, 1000, 0, 200, 700, 200, 'white');
 
 
 			// this.gRect = new ElGrowRect (200, 200, 0, 20, 200, 300, 20, 10, 100, 0xf1345e);
@@ -72,8 +67,7 @@
 			// this.level[1].addElement(this.desc.container);
 			// this.level[1].addElement(this.desc2.container);
 			this.level[1].addElement(this.radarboat.container);
-			this.level[1].addElement(this.seafloor.container);
-			this.level[1].addElement(this.oilcave.container);
+
 			// this.level[1].addElement(this.gRect.container);
 
 			

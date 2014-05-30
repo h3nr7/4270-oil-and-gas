@@ -6,8 +6,8 @@
 	var AssetsLoader = MKK.getNamespace('app.loader').AssetsLoader;
 	var Navi = MKK.getNamespace('app.scene').Navi;
 	var ns = MKK.getNamespace('app');
+	var Scene1 = MKK.getNamespace('app.scene').Scene1;
 	var Scene2 = MKK.getNamespace('app.scene').Scene2;
-	var TestElement = MKK.getNamespace('app.scene').TestElement;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
@@ -59,37 +59,48 @@
 			if (this.isDebug) this.debug();
 
 			//setup scenes
-			this.testEl = new TestElement();
-			this.testEl.setup(0, 5000/*695*/, 0, 0);
-
+			// this.testEl = new TestElement();
+			// this.testEl.setup(0, 5000/*695*/, 0, 0);
+			this.scene1 = new Scene1();
+			this.scene1.setup(0, 4000/*695*/, 0, 0);
+			this.scene2 = new Scene2();
+			this.scene2.setup(3300,12000/*695*/, 0, 0);
 			this.loadFonts();
 		}
 
 		p.init = function() {
 			console.log('init test-scene 1');
 
-			this.stage.addChild(this.testEl.container);
+			this.stage.addChild(this.scene1.container);
+			this.stage.addChild(this.scene2.container);
 
-			this.testEl.init(this.stage);
+			this.scene1.init(this.stage);
+			this.scene2.init(this.stage);
 		}
 
 
         p.loadFonts = function() {
 
-        	var fontLoadingBound = ListenerFunctions.createListenerFunction(this, this.fontLoading);
+    //     	var fontLoadingBound = ListenerFunctions.createListenerFunction(this, this.fontLoading);
             var fontActiveBound = ListenerFunctions.createListenerFunction(this, this.fontActive);
-        	WebFont.load({
-	            custom: {
-	                families: ['emprintW01-light', 'emprintw01-regular', 'emprintw01-semibold'],
-	                urls: ['css/main.css']
-	            },
-	            loading: fontLoadingBound,
-	            active: fontActiveBound,
-	            //inactive: function() {console.log('webfont loading')},
-				//fontloading: function(familyName, fvd) {console.log('webfont loading')},
-				//fontactive: function(familyName, fvd) {console.log('webfont loading')},
-				//fontinactive: function(familyName, fvd) {console.log('webfont loading')}
-        	});
+    //     	WebFont.load({
+	   //          custom: {
+	   //              families: ['emprintw01-light', 'emprintw01-regular', 'emprintw01-semibold'],
+	   //              urls: ['css/main.css']
+	   //          },
+	   //          loading: fontLoadingBound,
+	   //          active: fontActiveBound,
+	   //          //inactive: function() {console.log('webfont loading')},
+				// //fontloading: function(familyName, fvd) {console.log('webfont loading')},
+				// //fontactive: function(familyName, fvd) {console.log('webfont loading')},
+				// //fontinactive: function(familyName, fvd) {console.log('webfont loading')}
+    //     	});
+
+			//dummy font loader
+			this.tweener = new TWEEN.Tween({rotation:0})
+								.to({ rotation: 1 }, 100)
+								.onUpdate(function(e){ console.log('Load Progress: ' + e*100 + '%') })
+								.onComplete(fontActiveBound).start();
         }
 
        p.fontLoading = function() {
@@ -134,13 +145,14 @@
 
 		p.update = function() {
 
+			TWEEN.update();
 			if (!this.loaded) return;
 			//scene update
 			var frame = this.scroller.getDistance();
 			FrameTween.update(frame);
-			TWEEN.update();
 			
-			this.testEl.update(frame);
+			this.scene1.update(frame);
+			this.scene2.update(frame);
 
 			this.scroller.update();
 		}

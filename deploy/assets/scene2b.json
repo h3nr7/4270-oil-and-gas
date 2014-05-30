@@ -36,6 +36,22 @@
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":657,"h":700},
             "sourceSize": {"w":657,"h":700}
+		},
+		"oilrig-cave-mask.png":
+		{
+            "frame": {"x":657,"y":700,"w":1024,"h":390},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":1024,"h":390},
+            "sourceSize": {"w":1024,"h":390}
+		},
+		"oilrig-cave-oil.png":
+		{
+            "frame": {"x":657,"y":1090,"w":1200,"h":60},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":1200,"h":60},
+            "sourceSize": {"w":1200,"h":60}
 		}
 	}
 }

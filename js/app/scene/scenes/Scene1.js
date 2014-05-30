@@ -155,12 +155,6 @@
 			this.addLevel(this.level[1]);
 			this.addLevel(this.level[2]);
 
-
-
-			var trect = new ElRect(200, 200, 0, 200, 2, 0xf1345e);
-			
-			this.level[2].addElement(trect.container);
-
 			var tT = new TweenEach({x:50});
 
 			tT.to({x:100}).onUpdate(function(va){

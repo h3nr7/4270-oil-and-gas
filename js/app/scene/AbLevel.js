@@ -16,6 +16,8 @@
 			this.depthLevel = settings.depthLevel;
 			this.z = 0;
 			this.element = [];
+
+			this.isframeControlled = true;
 		}
 
 
@@ -55,14 +57,24 @@
 			}		
 		}
 
-		p.update = function(frame) {
-			this._update(frame);
+		p.frameControlled = function(e) {
+			if(e!=undefined) {
+				this.isframeControlled = e;
+			}
+			return this.isframeControlled;
+		}
 
-			//update all elements
-			var el = this.element;
-			var elLen = this.element.length;
-			for(var i=0; i<elLen; i++) {
-				// el[i].y = this.
+		p.update = function(frame) {
+
+			if(this.isframeControlled) {
+				this._update(frame);
+
+				//update all elements
+				// var el = this.element;
+				// var elLen = this.element.length;
+				// for(var i=0; i<elLen; i++) {
+				// 	// el[i].y = this.
+				// }
 			}
 
 		}

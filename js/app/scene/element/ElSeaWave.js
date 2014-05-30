@@ -12,7 +12,8 @@
 			var offset = 8;
 			this.name = name;
 			this.z = z;
-			this.setup(x, (y-offset));
+			this.waveOffset = offset;
+			this.setup(x, (y-this.waveOffset));
 			this.container = new PIXI.DisplayObjectContainer();
 			this.container.position = this.cPos;
 			var texWidth = texWidth || 1024;
@@ -31,7 +32,13 @@
 
 		var p = ElSeaWave.prototype = new AbElement();
 
-
+		p.yPos = function(y) {
+			if (y) {
+				this.cPos.y = y;
+				this.container.y = this.cPos.y + this.offPos.y - this.waveOffset;
+			}
+			return this.cPos.y;
+		}
 
 		p.update = function() {
 

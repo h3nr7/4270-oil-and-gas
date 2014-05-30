@@ -6,18 +6,18 @@
 	var AbContainer = ns.AbContainer;
 
 
-	if(!ns.Scene2Level) {
+	if(!ns.StaticLevel) {
 
 
-		var Scene2Level = function Scene2Level(name) {
+		var StaticLevel = function StaticLevel(name) {
 			this.depthLevel = settings.depthLevel;
 			this.name = name;
 
 		}
 
-		ns.Scene2Level = Scene2Level;
+		ns.StaticLevel = StaticLevel;
 
-		var p = Scene2Level.prototype = new AbLevel;
+		var p = StaticLevel.prototype = new AbLevel();
 
 
 

@@ -21,12 +21,13 @@
 
 		p.update = function(frame) {
 
-			this._update(frame);
 			// console.log(this.oPos.y, this.cPos.y, frame)
-			var round = (this.oPos.y-frame*this.z*this.depthLevel) + 0.5 | 0;
-			this.cPos.setY(round);
+			if(this.isframeControlled) {
+				this._update(frame);
+				var round = (this.oPos.y-frame*this.z*this.depthLevel) + 0.5 | 0;
+				this.cPos.setY(round);
+			}
 		}
 	}
-
 
 })();

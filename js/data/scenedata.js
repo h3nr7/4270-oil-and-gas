@@ -26,7 +26,7 @@
 					{name:"level0", x:0, y:0, z:0},
 					{name:"level1", x:0, y:0, z:1},
 					{name:"level2", x:0, y:0, z:10},
-					{name:"level3", x:0, y:0, z:10},
+					{name:"level3", x:0, y:0, z:1},
 				],
 				element:{
 					shipInner: { x: -500, y:1150, z:0 },

@@ -10,7 +10,7 @@
 			defaultHeight:768,
 			depthLevel:0.1,
 			defaultTextStyle: {
-				font:"40px EMPrintW01-semibold", 
+				font:"40px emprintw01-semibold", 
 				fill: "#58595b", 
 				align: "center", 
 				wordWrap: true, 
@@ -19,6 +19,9 @@
 			defaultDescriptionGap: 20, 
 			defaultDescriptionLineHeight: 40,
 			defaultBGColor: 0xe7e7e7,
+			defaultOilColor: 0x000000,
+			defaultOilBGColor: 0xc5c5c7,
+			defaultSeaFloorColor: 0x464649,
 			defaultSeaColor: 0x0079c1
 			// "dev": {
 			// 	"assets":""

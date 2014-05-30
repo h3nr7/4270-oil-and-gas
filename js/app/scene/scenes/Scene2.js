@@ -6,6 +6,7 @@
 	var styledata = MKK.getNamespace('data').styledata;
 	var AbScene = ns.AbScene;
 
+	var StaticLevel = ns.level.StaticLevel;
 	var Scene2Level = ns.level.Scene2Level;
 	var ElSprite = ns.element.ElSprite;
 	var ElSpriteContainer = ns.element.ElSpriteContainer;
@@ -13,8 +14,11 @@
 	var ElRect = ns.element.ElRect;
 	var ElSeaBG = ns.element.ElSeaBG;
 	var ElSeaWave = ns.element.ElSeaWave;
+	var ElSeaFloor = ns.element.ElSeaFloor;
+	var ElOilCave = ns.element.ElOilCave;
 	var ElShipInner = ns.element.ElShipInner;
 	var ElRadarBoat = ns.element.ElRadarBoat;
+	var ElDescription= ns.element.ElDescription;
 
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 	var TweenEach = MKK.getNamespace('app.animation').TweenEach;
@@ -35,14 +39,20 @@
 		p.open = function() {
 
 			this.createLevels(scenedata.scene2.level, Scene2Level);
+			this.staticlevel = new StaticLevel('statictxt');
+			this.staticlevel.setup(0, 0, 0);
+			this.addLevel(this.staticlevel);
+
+			this.desc = new ElDescription ('Gear Applications', 'Outstanding protection for gears opearting in extreme conditions\n\n Mobil SHC™ 600', '', 'white', this.startFrame+1500, 800, 50, 1800, 0);
+
 
 			// ----------------------------
 			// create sea
 			// ----------------------------
-			this.seabg = new ElSeaBG('seabg', 0,1250,0,0,0, 1024, 1024);
-			this.seawave = new ElSeaWave('seawave', 0, 1250,0,0,0, 1024);
+			this.seabg = new ElSeaBG('seabg', 0,1050,0,0,0, 1024, 1024);
+			this.seawave = new ElSeaWave('seawave', 0, 1050,0,0,0, 1024);
 
-			this.smallship = new ElSprite('explorer-ship-small.png', 100, 1130, 0, 0);
+			this.smallship = new ElSprite('explorer-ship-small.png', 100, 930, 0, 0);
 
 			// ----------------------------
 			// create ship
@@ -62,13 +72,17 @@
 			// ----------------------------
 			// create ship outer
 			// ----------------------------			
-			this.radarboat = new ElRadarBoat(0, 8000, 512, 3000);
+			this.radarboat = new ElRadarBoat(0, 8000, 512, 3414);
 
+			this.seabg2 = new ElSeaBG('seabg', 0,4282,0,0,0, 1024, 1024);
+			this.seawave2 = new ElSeaWave('seawave', 0, 4282,0,0,0, 1024, 1520);
+			this.seafloor = new ElSeaFloor('seafloor', 0, 5582, 0,0,0, 1024, 120);
+			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 5682, 0,0);
 			// ----------------------------
 			// ship tween to zoom
 			// ----------------------------
 			var tweenSmallShipBound = ListenerFunctions.createListenerFunction(this, this.tweenSmallShip);
-			this.tween0 = new TweenEach({x: 100, y: 1130})
+			this.tween0 = new TweenEach({x: 100, y: 930})
 							.to({x: 700}, this.startFrame+728)
 							.easing(TWEEN.Easing.Exponential.Out)
 							.onUpdate(tweenSmallShipBound)
@@ -94,6 +108,21 @@
 							.easing(TWEEN.Easing.Exponential.InOut)
 							.delay(this.startFrame+2600).start();
 
+
+
+			var tweenRadar1Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar1);
+			this.tween4 = new TweenEach({y: 3414, scale:1, sy: 4282})
+							.to({y: 4364, scale:0.3, sy: 4602}, 600)
+							.onUpdate(tweenRadar1Bound)
+							.delay(this.startFrame+4250).start();
+
+
+			var tweenRadar2Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar2);
+			this.tween5 = new TweenEach({y: -384})
+							.to({y: -2000}, 2000)
+							.onUpdate(tweenRadar2Bound)
+							.delay(this.startFrame+4940).start();
+
 			// ----------------------------
 			// add to levels
 			// ----------------------------
@@ -102,7 +131,13 @@
 			this.level[0].addElement(this.seawave.container);
 			this.level[1].addElement(this.shipinner.container);
 			this.level[2].addElement(this.ship.container);
+			this.level[3].addElement(this.seabg2.container);
 			this.level[3].addElement(this.radarboat.container);
+			this.level[3].addElement(this.seawave2.container);
+			this.level[3].addElement(this.seafloor.container);
+			this.level[3].addElement(this.oilcave.container);
+			this.staticlevel.addElement(this.desc.container);
+
 			
 
 		}
@@ -137,6 +172,21 @@
 			this.shipinner.yPos(cObj.y);
 		}
 
+		p.tweenRadar1 = function(e) {
+			var cObj = this.tween4.tweenVars();
+			this.radarboat.yPos(cObj.y);
+			this.radarboat.scale(cObj.scale);
+
+			this.seabg2.yPos(cObj.sy);
+			this.seawave2.yPos(cObj.sy);
+		}
+
+		p.tweenRadar2 = function(e) {
+			var cObj = this.tween5.tweenVars();
+			this.level[3].yPos(cObj.y);
+			// this.level[3].yPos(cObj.y);
+		}
+
 		//close when destroyed
 		p.close = function() {
 
@@ -148,32 +198,52 @@
 			var cFrame = this.localCurFrame(frame);
 
 
-			if(cFrame>=0 && cFrame<this.duration) {
+			if(cFrame>=0 && cFrame<3850) {
 				this.show();
 				this.cPos.y = -cFrame;
 			}
 			else {
-				this.hide();
+				// this.hide();
 			}
 
 			if (cFrame>=611) {
+				this.shipinner.show();
 				this.level[1].show();
 			}
 			else {
+				this.shipinner.hide();
 				this.level[1].hide();
 			}
 
 			if(cFrame>=1320) {
 				this.level[2].hide();
+				this.level[3].show();
 			}
 			else {
 				this.level[2].show();
+				this.level[3].hide();
 			}
+
+			if(cFrame>=3850) {
+				
+				this.level[1].hide();
+				this.level[3].frameControlled(false);
+				this.radarboat.showTop();
+			}
+			else {
+				this.level[1].show();
+				this.level[3].frameControlled(true);
+				this.radarboat.hideTop();
+			}
+
+
 
 			
 			this.level[0].update(cFrame);
 			this.level[1].update(cFrame);
 			this.level[2].update(cFrame);
+			this.level[3].update(cFrame);
+			this.staticlevel.update(cFrame);
 		}
 
 

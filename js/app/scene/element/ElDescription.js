@@ -14,15 +14,15 @@
 
 	if(!ns.ElDescription) {
 
-		var ElDescription = function ElDescription(title, body, color, sFrame, duration, x, y, z, animateIn, animateOut, animateDuration, styling) {
+		var ElDescription = function ElDescription(title, body, products, styling, sFrame, duration, x, y, z, animateIn, animateOut, animateDuration) {
 
 			this.name = name;
 			this.container = new PIXI.DisplayObjectContainer();
 			this.titleTxt = title.split("\n");
 			this.bodyTxt = body;
-			this.color = color;
+			this.productTxt = products;
 			this.title = [];
-			this.styling = styling? styling:'blue';
+			this.styling = (styling || styling=='')? styling:'blue';
 
 			this.duration = duration || 600;
 			this.delayFactor = 40;

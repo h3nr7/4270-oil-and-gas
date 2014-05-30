@@ -37,7 +37,7 @@
 			this.part0 = this.addSprite('radar_boat1_01.png', 0, 0, 0, 0.5, 0);
 			this.part1 = this.addSprite('radar_boat1_02.png', 0, 342, 0, 0.5, 0);
 			this.part3 = this.addSprite('radar_boat1_03.png', 0, 668, 0, 0.5, 0);
-			this.part2 = this.addSprite('radar_boat1_04.png', 0, 869, 0, 0.5, 0);
+			this.part2 = this.addSprite('radar_boat1_04.png', 0, 867, 0, 0.5, 0);
 
 			this.addFan(250, 1035, 0, 1000);
 			this.addFan(-250, 1035, 0, 1000);
@@ -54,7 +54,7 @@
 		p.showTop = function() {
 			this.part0.show();
 			this.part1.show();
-			this.part2.show();
+			this.part3.show();
 			this._showTop = true;
 		}
 
