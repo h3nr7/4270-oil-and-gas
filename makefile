@@ -112,10 +112,14 @@ scene5:
 	${SPRITESHEET} -n scene5 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene5/*.png
 scene6:
 	${SPRITESHEET} -n scene6 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene6/*.png
+scene7:
+	${SPRITESHEET} -n scene7 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene7/*.png
+scene8:
+	${SPRITESHEET} -n scene8 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene8/*.png
 sceneend:
 	${SPRITESHEET} -n sceneend -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/sceneend/*.png
 
-assets: global scene1 scene2 scene2b scene2c sceneend
+assets: global scene1 scene2 scene2b scene2c scene3 scene4 scene5 scene6 scene7 scene8 sceneend
 
 development: assets
 	${UGLIFY} ${LIB.DEBUG.IN} ${LIB.IN} ${SITEMANAGER.IN} ${MKK.IN} ${DATA.IN} ${MAINJS.IN} ${APPTESTING.IN} ${FLAGS} -o ${DEVELOP.OUT}

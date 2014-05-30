@@ -52,6 +52,22 @@
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":160,"h":160},
             "sourceSize": {"w":160,"h":160}
+		},
+		"radar_boat_small_01.png":
+		{
+            "frame": {"x":1184,"y":800,"w":320,"h":140},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":320,"h":140},
+            "sourceSize": {"w":320,"h":140}
+		},
+		"radar_boat_small_02.png":
+		{
+            "frame": {"x":500,"y":668,"w":390,"h":90},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":390,"h":90},
+            "sourceSize": {"w":390,"h":90}
 		}
 	}
 }

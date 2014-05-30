@@ -1,0 +1,17 @@
+{
+	"meta": {
+		"image": "scene7.png",
+		"size": {"w":1,"h":1},
+		"scale": "1"
+	},
+	"frames": {
+		"s7_1px.png":
+		{
+            "frame": {"x":0,"y":0,"w":1,"h":1},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},
+            "sourceSize": {"w":1,"h":1}
+		}
+	}
+}

@@ -17,6 +17,7 @@
 	var ElSeaWave = ns.element.ElSeaWave;
 	var ElSeaFloor = ns.element.ElSeaFloor;
 	var ElOilCave = ns.element.ElOilCave;
+	var ElRadarBoatSide = ns.element.ElRadarBoatSide;
 	var ElRotatingSprite = ns.element.ElRotatingSprite;
 
 	//test element classes
@@ -57,6 +58,8 @@
 			this.seafloor = new ElSeaFloor('seafloor', 0, 4282, 0,0,0, 1024, 1024);
 
 			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 200, 0,0);
+
+			this.radarboatside = new ElRadarBoatSide(0 ,0 ,0 ,0 );
 			// this.desc = new ElDescription ('Propulsion &\nThrusters™', 'some very long description', '', '', 0, 800, 200, 700, 0);
 
 			// this.desc2 = new ElDescription ('Testing &\nMe™', 'some very long description', '', 'white', 100, 800, 200, 1000, 0, 200, 700, 200);
@@ -74,6 +77,7 @@
 			this.level[1].addElement(this.radarboat.container);
 			this.level[1].addElement(this.seafloor.container);
 			this.level[1].addElement(this.oilcave.container);
+			this.level[1].addElement(this.radarboatside.container);
 			// this.level[1].addElement(this.gRect.container);
 
 			

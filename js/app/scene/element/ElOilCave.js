@@ -35,7 +35,7 @@
 
 			this.oilContainer = new PIXI.DisplayObjectContainer();
 			this.oil = new ElSprite(this.oilName, 512, 0, 0, 0.5, 0);
-			this.oilExtend = this.drawExtendedOil(0, 60, 1200, 300);
+			this.oilExtend = this.drawExtendedOil(0, 50, 1200, 300);
 			
 			this.oilContainer.addChild(this.oilExtend);
 			this.oilContainer.addChild(this.oil.container);

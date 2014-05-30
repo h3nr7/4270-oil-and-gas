@@ -20,6 +20,7 @@
         <![endif]-->
 
 
+
         <!-- DEV TOOLS -->
         <script src="../js/lib/debug/dat.gui.js"></script>
         <script src="../js/lib/debug/stats.min.js"></script>
@@ -70,13 +71,12 @@
         <script src="../js/app/scene/element/ElGrowRect.js"></script>
         <script src="../js/app/scene/element/ElSeaBG.js"></script>
         <script src="../js/app/scene/element/ElSeaWave.js"></script>
+        <script src="../js/app/scene/element/ElSeaFloor.js"></script>
+        <script src="../js/app/scene/element/ElOilCave.js"></script>
         <script src="../js/app/scene/element/ElShipInner.js"></script>
         <script src="../js/app/scene/element/ElRadar.js"></script>
         <script src="../js/app/scene/element/ElRadarBoat.js"></script>
         <script src="../js/app/scene/element/ElRadarBoatSide.js"></script>
-        <script src="../js/app/scene/element/ElSeaFloor.js"></script>
-        <script src="../js/app/scene/element/ElOilCave.js"></script>
-
         <script src="../js/app/scene/element/ElDescription.js"></script>
 
 
@@ -84,6 +84,7 @@
         <script src="../js/app/scene/navi/Navi.js"></script>
 
         <!-- LEVELS -->
+        <script src="../js/app/scene/level/StaticLevel.js"></script>
         <script src="../js/app/scene/level/Scene1Level.js"></script>
         <script src="../js/app/scene/level/Scene2Level.js"></script>
 
@@ -91,10 +92,16 @@
         <script src="../js/app/scene/AbScene.js"></script>
         <script src="../js/app/scene/scenes/Scene1.js"></script>
         <script src="../js/app/scene/scenes/Scene2.js"></script>
+        <script src="../js/app/scene/scenes/Scene3.js"></script>
+        <script src="../js/app/scene/scenes/Scene4.js"></script>
+        <script src="../js/app/scene/scenes/Scene5.js"></script>
+        <script src="../js/app/scene/scenes/Scene6.js"></script>
+        <script src="../js/app/scene/scenes/Scene7.js"></script>
+        <script src="../js/app/scene/scenes/Scene8.js"></script>
         <script src="../js/app/scene/scenes/testing/testelement.js"></script>
 
         <!-- MAIN -->
-        <script src="js/test-TestElement.js"></script>
+        <script src="js/test-scene7.js"></script>
 
         <script>
                 // ----------------------
@@ -102,7 +109,7 @@
                 // ----------------------
                 document.addEventListener("DOMContentLoaded", function() {
 
-                    console.log('Test Element - Begins!');
+                    console.log('Test Scene 7 - Begins!');
                     var app = new MKK.app.App();
                     app.setup();
 
@@ -120,12 +127,13 @@
                 });
         </script>
         <script>
-            // (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            // function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            // e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            // e.src='//www.google-analytics.com/analytics.js';
-            // r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            // ga('create','UA-XXXXX-X');ga('send','pageview');
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
         </script>
+        <!-- <div id="loading"></div> -->
     </body>
 </html>

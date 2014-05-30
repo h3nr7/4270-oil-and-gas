@@ -10886,6 +10886,7 @@ TWEEN.Interpolation = {
             this.name = name;
             this.scene = null;
             this.isTiltable = false;
+            this.isReversed = false;
             this.depthLevel = settings.depthLevel;
             this.z = 0;
             this.element = [];
@@ -11368,7 +11369,7 @@ TWEEN.Interpolation = {
             this.bg = this.drawBG(50, 50, 900, 400);
             this.oilContainer = new PIXI.DisplayObjectContainer();
             this.oil = new ElSprite(this.oilName, 512, 0, 0, .5, 0);
-            this.oilExtend = this.drawExtendedOil(0, 60, 1200, 300);
+            this.oilExtend = this.drawExtendedOil(0, 50, 1200, 300);
             this.oilContainer.addChild(this.oilExtend);
             this.oilContainer.addChild(this.oil.container);
             this.container.addChild(this.bg);
@@ -11396,6 +11397,42 @@ TWEEN.Interpolation = {
             this.oilContainer.y = 400 - e * 350;
         };
         p.update = function() {};
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene.element");
+    var settings = MKK.getNamespace("data").settings;
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    var AbContainer = MKK.getNamespace("app.scene").AbContainer;
+    var ElSprite = ns.ElSprite;
+    var ElRotatingSprite = ns.ElRotatingSprite;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    if (!ns.ElOilrig) {
+        var ElOilrig = function ElOilrig(sFrame, duration, x, y, z) {
+            this.name = name;
+            this.element = [];
+            this.container = new PIXI.DisplayObjectContainer();
+            this.setup(sFrame, duration, x, y);
+            this.z = z;
+            this.container.position = this.cPos;
+        };
+        ns.ElOilrig = ElOilrig;
+        var p = ElOilrig.prototype = new AbContainer();
+        p.setup = function(sFrame, duration, x, y) {
+            this._setup(sFrame, duration, x, y);
+        };
+        p.open = function() {};
+        p.addSprite = function(name, x, y, z, aX, aY) {
+            var tmp = new ElSprite(name, x, y, z, aX, aY);
+            this.element.push(tmp);
+            this.container.addChild(tmp.container);
+        };
+        p.update = function(frame) {
+            this._update(frame);
+            var cFrame = this.localCurFrame(frame);
+        };
     }
 })();
 
@@ -11585,6 +11622,44 @@ TWEEN.Interpolation = {
             var tmp = new ElRotatingSprite("radar_boat1_propeller.png", x, y, z, velo, .5, .5);
             tmp.start();
             this.fan.push(tmp);
+            this.container.addChild(tmp.container);
+        };
+        p.update = function(frame) {
+            this._update(frame);
+            var cFrame = this.localCurFrame(frame);
+        };
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene.element");
+    var settings = MKK.getNamespace("data").settings;
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    var AbContainer = MKK.getNamespace("app.scene").AbContainer;
+    var ElSprite = ns.ElSprite;
+    var ElRotatingSprite = ns.ElRotatingSprite;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    if (!ns.ElRadarBoatSide) {
+        var ElRadarBoatSide = function ElRadarBoatSide(sFrame, duration, x, y, z) {
+            this.name = name;
+            this.element = [];
+            this.container = new PIXI.DisplayObjectContainer();
+            this.setup(sFrame, duration, x, y);
+            this.z = z;
+            this.container.position = this.cPos;
+        };
+        ns.ElRadarBoatSide = ElRadarBoatSide;
+        var p = ElRadarBoatSide.prototype = new AbContainer();
+        p.setup = function(sFrame, duration, x, y) {
+            this._setup(sFrame, duration, x, y);
+            this.addSprite("radar_boat_small_02.png", 298, 102, 0, 0, 0);
+            this.addSprite("radar_boat_small_01.png", 0, 0, 0, 0, 0);
+        };
+        p.open = function() {};
+        p.addSprite = function(name, x, y, z, aX, aY) {
+            var tmp = new ElSprite(name, x, y, z, aX, aY);
+            this.element.push(tmp);
             this.container.addChild(tmp.container);
         };
         p.update = function(frame) {
@@ -11895,7 +11970,8 @@ TWEEN.Interpolation = {
         p.update = function(frame) {
             this._update(frame);
             if (this.isframeControlled) {
-                var round = this.oPos.y - frame * this.z * this.depthLevel + .5 | 0;
+                var direction = !this.isReversed ? 1 : -1;
+                var round = this.oPos.y - direction * frame * this.z * this.depthLevel + .5 | 0;
                 this.cPos.setY(round);
             }
         };
@@ -12080,8 +12156,10 @@ TWEEN.Interpolation = {
     var ElSeaBG = ns.element.ElSeaBG;
     var ElSeaWave = ns.element.ElSeaWave;
     var ElSeaFloor = ns.element.ElSeaFloor;
+    var ElOilCave = ns.element.ElOilCave;
     var ElShipInner = ns.element.ElShipInner;
     var ElRadarBoat = ns.element.ElRadarBoat;
+    var ElRadarBoatSide = ns.element.ElRadarBoatSide;
     var ElDescription = ns.element.ElDescription;
     var FrameTween = MKK.getNamespace("app.animation").FrameTween;
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
@@ -12107,7 +12185,9 @@ TWEEN.Interpolation = {
             this.radarboat = new ElRadarBoat(0, 8e3, 512, 3414);
             this.seabg2 = new ElSeaBG("seabg", 0, 4282, 0, 0, 0, 1024, 1024);
             this.seawave2 = new ElSeaWave("seawave", 0, 4282, 0, 0, 0, 1024, 1520);
-            this.seafloor = new ElSeaFloor("seafloor", 0, 5582, 0, 0, 0, 1024, 1024);
+            this.seafloor = new ElSeaFloor("seafloor", 0, 5582, 0, 0, 0, 1024, 120);
+            this.oilcave = new ElOilCave("oilcave", 0, 0, 0, 5682, 0, 0);
+            this.radarboatside = new ElRadarBoatSide(0, 0, 200, 4462, 0);
             var tweenSmallShipBound = ListenerFunctions.createListenerFunction(this, this.tweenSmallShip);
             this.tween0 = new TweenEach({
                 x: 100,
@@ -12159,8 +12239,14 @@ TWEEN.Interpolation = {
             this.tween5 = new TweenEach({
                 y: -384
             }).to({
-                y: -2e3
-            }, 2e3).onUpdate(tweenRadar2Bound).delay(this.startFrame + 4940).start();
+                y: -1400
+            }, 560).onUpdate(tweenRadar2Bound).delay(this.startFrame + 4940).start();
+            var tweenRadar3Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar3);
+            this.tween6 = new TweenEach({
+                y: -1400
+            }).to({
+                y: -384
+            }, 560).onUpdate(tweenRadar3Bound).delay(this.startFrame + 5500).start();
             this.level[0].addElement(this.smallship.container);
             this.level[0].addElement(this.seabg.container);
             this.level[0].addElement(this.seawave.container);
@@ -12168,8 +12254,10 @@ TWEEN.Interpolation = {
             this.level[2].addElement(this.ship.container);
             this.level[3].addElement(this.seabg2.container);
             this.level[3].addElement(this.radarboat.container);
-            this.level[3].addElement(this.seawave2.container);
             this.level[3].addElement(this.seafloor.container);
+            this.level[3].addElement(this.oilcave.container);
+            this.level[3].addElement(this.radarboatside.container);
+            this.level[3].addElement(this.seawave2.container);
             this.staticlevel.addElement(this.desc.container);
         };
         p.tweenSmallShip = function(e) {
@@ -12201,7 +12289,11 @@ TWEEN.Interpolation = {
         };
         p.tweenRadar2 = function(e) {
             var cObj = this.tween5.tweenVars();
-            console.log(this.level[3].yPos(cObj.y));
+            this.level[3].yPos(cObj.y);
+        };
+        p.tweenRadar3 = function(e) {
+            var cObj = this.tween6.tweenVars();
+            this.level[3].yPos(cObj.y);
         };
         p.close = function() {};
         p.update = function(frame) {
@@ -12226,13 +12318,20 @@ TWEEN.Interpolation = {
                 this.level[3].hide();
             }
             if (cFrame >= 3850) {
-                this.level[1].hide();
                 this.level[3].frameControlled(false);
+                this.level[1].hide();
                 this.radarboat.showTop();
             } else {
-                this.level[1].show();
                 this.level[3].frameControlled(true);
+                this.level[1].show();
                 this.radarboat.hideTop();
+            }
+            if (cFrame >= 5180) {
+                this.radarboatside.show();
+                this.radarboat.hide();
+            } else {
+                this.radarboatside.hide();
+                this.radarboat.show();
             }
             this.level[0].update(cFrame);
             this.level[1].update(cFrame);
@@ -12240,6 +12339,38 @@ TWEEN.Interpolation = {
             this.level[3].update(cFrame);
             this.staticlevel.update(cFrame);
         };
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene");
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    var styledata = MKK.getNamespace("data").styledata;
+    var AbScene = ns.AbScene;
+    var StaticLevel = ns.level.StaticLevel;
+    var Scene2Level = ns.level.Scene2Level;
+    var ElSprite = ns.element.ElSprite;
+    var ElSpriteContainer = ns.element.ElSpriteContainer;
+    var ElText = ns.element.ElText;
+    var ElRect = ns.element.ElRect;
+    var ElSeaBG = ns.element.ElSeaBG;
+    var ElSeaWave = ns.element.ElSeaWave;
+    var ElSeaFloor = ns.element.ElSeaFloor;
+    var ElOilCave = ns.element.ElOilCave;
+    var ElShipInner = ns.element.ElShipInner;
+    var ElRadarBoat = ns.element.ElRadarBoat;
+    var ElRadarBoatSide = ns.element.ElRadarBoatSide;
+    var ElDescription = ns.element.ElDescription;
+    var FrameTween = MKK.getNamespace("app.animation").FrameTween;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    if (!ns.Scene3) {
+        var Scene3 = function Scene3() {};
+        ns.Scene3 = Scene3;
+        var p = Scene3.prototype = new AbScene();
+        p.open = function() {};
+        p.close = function() {};
+        p.update = function(frame) {};
     }
 })();
 
@@ -12264,6 +12395,7 @@ TWEEN.Interpolation = {
     var ElSeaWave = ns.element.ElSeaWave;
     var ElSeaFloor = ns.element.ElSeaFloor;
     var ElOilCave = ns.element.ElOilCave;
+    var ElRadarBoatSide = ns.element.ElRadarBoatSide;
     var ElRotatingSprite = ns.element.ElRotatingSprite;
     var ElShipInner = ns.element.ElShipInner;
     var ElRadar = ns.element.ElRadar;
@@ -12283,12 +12415,14 @@ TWEEN.Interpolation = {
             this.radarboat = new ElRadarBoat(0, 3e3, 512, 396);
             this.seafloor = new ElSeaFloor("seafloor", 0, 4282, 0, 0, 0, 1024, 1024);
             this.oilcave = new ElOilCave("oilcave", 0, 0, 0, 200, 0, 0);
+            this.radarboatside = new ElRadarBoatSide(0, 0, 0, 0);
             this.level[1].addElement(this.shipinner.container);
             this.level[1].addElement(this.radar.container);
             this.level[1].addElement(this.radar2.container);
             this.level[1].addElement(this.radarboat.container);
             this.level[1].addElement(this.seafloor.container);
             this.level[1].addElement(this.oilcave.container);
+            this.level[1].addElement(this.radarboatside.container);
         };
         p.close = function() {};
         p.update = function(frame) {

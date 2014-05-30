@@ -13,6 +13,7 @@
 			this.scene = null;
 			// this.container = null;
 			this.isTiltable = false;
+			this.isReversed = false;
 			this.depthLevel = settings.depthLevel;
 			this.z = 0;
 			this.element = [];

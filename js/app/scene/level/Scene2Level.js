@@ -26,7 +26,8 @@
 			// console.log(this.oPos.y, this.cPos.y, frame)
 			this._update(frame);
 			if(this.isframeControlled) {
-				var round = (this.oPos.y-frame*this.z*this.depthLevel) + 0.5 | 0;
+				var direction = (!this.isReversed)? 1:-1;
+				var round = (this.oPos.y - direction * frame*this.z*this.depthLevel ) + 0.5 | 0;
 				this.cPos.setY(round);
 			}
 		}
