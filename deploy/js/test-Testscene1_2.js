@@ -37,8 +37,9 @@
 			// --------------------------------------------------			
 			this.stage = new PIXI.Stage(0xe7e7e7);
 			// create a renderer instance.
-			// this.renderer = new PIXI.CanvasRenderer(1024, 768);
-			this.renderer = PIXI.autoDetectRenderer(1024, 768);
+			this.renderer = new PIXI.CanvasRenderer(1024, 768);
+			this.renderer.roundPixels = true;
+			// this.renderer = PIXI.autoDetectRenderer(1024, 768);
 			// add the renderer view element to the DOM
 			document.body.appendChild(this.renderer.view);
 

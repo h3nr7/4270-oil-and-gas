@@ -11270,6 +11270,42 @@ TWEEN.Interpolation = {
 
 (function() {
     var ns = MKK.getNamespace("app.scene.element");
+    var settings = MKK.getNamespace("data").settings;
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    var AbContainer = MKK.getNamespace("app.scene").AbContainer;
+    var ElSprite = ns.ElSprite;
+    var ElRotatingSprite = ns.ElRotatingSprite;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    if (!ns.ElEngine) {
+        var ElEngine = function ElEngine(sFrame, duration, x, y, z) {
+            this.name = name;
+            this.element = [];
+            this.container = new PIXI.DisplayObjectContainer();
+            this.setup(sFrame, duration, x, y);
+            this.z = z;
+            this.container.position = this.cPos;
+        };
+        ns.ElEngine = ElEngine;
+        var p = ElEngine.prototype = new AbContainer();
+        p.setup = function(sFrame, duration, x, y) {
+            this._setup(sFrame, duration, x, y);
+        };
+        p.open = function() {};
+        p.addSprite = function(name, x, y, z, aX, aY) {
+            var tmp = new ElSprite(name, x, y, z, aX, aY);
+            this.element.push(tmp);
+            this.container.addChild(tmp.container);
+        };
+        p.update = function(frame) {
+            this._update(frame);
+            var cFrame = this.localCurFrame(frame);
+        };
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene.element");
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
     var AbElement = MKK.getNamespace("app.scene").AbElement;
     var settings = MKK.getNamespace("data").settings;
@@ -12375,6 +12411,166 @@ TWEEN.Interpolation = {
 })();
 
 (function() {
+    var ns = MKK.getNamespace("app.scene");
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    var styledata = MKK.getNamespace("data").styledata;
+    var AbScene = ns.AbScene;
+    var StaticLevel = ns.level.StaticLevel;
+    var Scene2Level = ns.level.Scene2Level;
+    var ElSprite = ns.element.ElSprite;
+    var ElSpriteContainer = ns.element.ElSpriteContainer;
+    var ElText = ns.element.ElText;
+    var ElRect = ns.element.ElRect;
+    var ElSeaBG = ns.element.ElSeaBG;
+    var ElSeaWave = ns.element.ElSeaWave;
+    var ElSeaFloor = ns.element.ElSeaFloor;
+    var ElOilCave = ns.element.ElOilCave;
+    var ElShipInner = ns.element.ElShipInner;
+    var ElRadarBoat = ns.element.ElRadarBoat;
+    var ElRadarBoatSide = ns.element.ElRadarBoatSide;
+    var ElDescription = ns.element.ElDescription;
+    var FrameTween = MKK.getNamespace("app.animation").FrameTween;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    if (!ns.Scene4) {
+        var Scene4 = function Scene4() {};
+        ns.Scene4 = Scene4;
+        var p = Scene4.prototype = new AbScene();
+        p.open = function() {};
+        p.close = function() {};
+        p.update = function(frame) {};
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene");
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    var styledata = MKK.getNamespace("data").styledata;
+    var AbScene = ns.AbScene;
+    var StaticLevel = ns.level.StaticLevel;
+    var Scene2Level = ns.level.Scene2Level;
+    var ElSprite = ns.element.ElSprite;
+    var ElSpriteContainer = ns.element.ElSpriteContainer;
+    var ElText = ns.element.ElText;
+    var ElRect = ns.element.ElRect;
+    var ElSeaBG = ns.element.ElSeaBG;
+    var ElSeaWave = ns.element.ElSeaWave;
+    var ElSeaFloor = ns.element.ElSeaFloor;
+    var ElOilCave = ns.element.ElOilCave;
+    var ElShipInner = ns.element.ElShipInner;
+    var ElRadarBoat = ns.element.ElRadarBoat;
+    var ElRadarBoatSide = ns.element.ElRadarBoatSide;
+    var ElDescription = ns.element.ElDescription;
+    var FrameTween = MKK.getNamespace("app.animation").FrameTween;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    if (!ns.Scene5) {
+        var Scene5 = function Scene5() {};
+        ns.Scene5 = Scene5;
+        var p = Scene5.prototype = new AbScene();
+        p.open = function() {};
+        p.close = function() {};
+        p.update = function(frame) {};
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene");
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    var styledata = MKK.getNamespace("data").styledata;
+    var AbScene = ns.AbScene;
+    var StaticLevel = ns.level.StaticLevel;
+    var Scene2Level = ns.level.Scene2Level;
+    var ElSprite = ns.element.ElSprite;
+    var ElSpriteContainer = ns.element.ElSpriteContainer;
+    var ElText = ns.element.ElText;
+    var ElRect = ns.element.ElRect;
+    var ElSeaBG = ns.element.ElSeaBG;
+    var ElSeaWave = ns.element.ElSeaWave;
+    var ElSeaFloor = ns.element.ElSeaFloor;
+    var ElOilCave = ns.element.ElOilCave;
+    var ElShipInner = ns.element.ElShipInner;
+    var ElRadarBoat = ns.element.ElRadarBoat;
+    var ElRadarBoatSide = ns.element.ElRadarBoatSide;
+    var ElDescription = ns.element.ElDescription;
+    var FrameTween = MKK.getNamespace("app.animation").FrameTween;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    if (!ns.Scene6) {
+        var Scene6 = function Scene6() {};
+        ns.Scene6 = Scene6;
+        var p = Scene6.prototype = new AbScene();
+        p.open = function() {};
+        p.close = function() {};
+        p.update = function(frame) {};
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene");
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    var styledata = MKK.getNamespace("data").styledata;
+    var AbScene = ns.AbScene;
+    var StaticLevel = ns.level.StaticLevel;
+    var Scene2Level = ns.level.Scene2Level;
+    var ElSprite = ns.element.ElSprite;
+    var ElSpriteContainer = ns.element.ElSpriteContainer;
+    var ElText = ns.element.ElText;
+    var ElRect = ns.element.ElRect;
+    var ElSeaBG = ns.element.ElSeaBG;
+    var ElSeaWave = ns.element.ElSeaWave;
+    var ElSeaFloor = ns.element.ElSeaFloor;
+    var ElOilCave = ns.element.ElOilCave;
+    var ElShipInner = ns.element.ElShipInner;
+    var ElRadarBoat = ns.element.ElRadarBoat;
+    var ElRadarBoatSide = ns.element.ElRadarBoatSide;
+    var ElDescription = ns.element.ElDescription;
+    var FrameTween = MKK.getNamespace("app.animation").FrameTween;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    if (!ns.Scene7) {
+        var Scene7 = function Scene7() {};
+        ns.Scene7 = Scene7;
+        var p = Scene7.prototype = new AbScene();
+        p.open = function() {};
+        p.close = function() {};
+        p.update = function(frame) {};
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene");
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    var styledata = MKK.getNamespace("data").styledata;
+    var AbScene = ns.AbScene;
+    var StaticLevel = ns.level.StaticLevel;
+    var Scene2Level = ns.level.Scene2Level;
+    var ElSprite = ns.element.ElSprite;
+    var ElSpriteContainer = ns.element.ElSpriteContainer;
+    var ElText = ns.element.ElText;
+    var ElRect = ns.element.ElRect;
+    var ElSeaBG = ns.element.ElSeaBG;
+    var ElSeaWave = ns.element.ElSeaWave;
+    var ElSeaFloor = ns.element.ElSeaFloor;
+    var ElOilCave = ns.element.ElOilCave;
+    var ElShipInner = ns.element.ElShipInner;
+    var ElRadarBoat = ns.element.ElRadarBoat;
+    var ElRadarBoatSide = ns.element.ElRadarBoatSide;
+    var ElDescription = ns.element.ElDescription;
+    var FrameTween = MKK.getNamespace("app.animation").FrameTween;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    if (!ns.Scene8) {
+        var Scene8 = function Scene8() {};
+        ns.Scene8 = Scene8;
+        var p = Scene8.prototype = new AbScene();
+        p.open = function() {};
+        p.close = function() {};
+        p.update = function(frame) {};
+    }
+})();
+
+(function() {
     document.addEventListener("DOMContentLoaded", function() {});
 })();
 
@@ -12395,6 +12591,7 @@ TWEEN.Interpolation = {
     var ElSeaWave = ns.element.ElSeaWave;
     var ElSeaFloor = ns.element.ElSeaFloor;
     var ElOilCave = ns.element.ElOilCave;
+    var ElEngine = ns.element.ElEngine;
     var ElRadarBoatSide = ns.element.ElRadarBoatSide;
     var ElRotatingSprite = ns.element.ElRotatingSprite;
     var ElShipInner = ns.element.ElShipInner;
@@ -12416,13 +12613,8 @@ TWEEN.Interpolation = {
             this.seafloor = new ElSeaFloor("seafloor", 0, 4282, 0, 0, 0, 1024, 1024);
             this.oilcave = new ElOilCave("oilcave", 0, 0, 0, 200, 0, 0);
             this.radarboatside = new ElRadarBoatSide(0, 0, 0, 0);
-            this.level[1].addElement(this.shipinner.container);
-            this.level[1].addElement(this.radar.container);
-            this.level[1].addElement(this.radar2.container);
-            this.level[1].addElement(this.radarboat.container);
-            this.level[1].addElement(this.seafloor.container);
-            this.level[1].addElement(this.oilcave.container);
-            this.level[1].addElement(this.radarboatside.container);
+            this.engine = new ElEngine(0, 0, 300, 300, 0);
+            this.level[1].addElement(this.engine.container);
         };
         p.close = function() {};
         p.update = function(frame) {
