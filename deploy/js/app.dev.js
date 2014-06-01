@@ -8910,303 +8910,427 @@ var ScrollDat = function() {
     };
 };
 
-"use strict";
-
-void 0 === Date.now && (Date.now = function() {
-    return new Date().valueOf();
-});
+if (Date.now === undefined) {
+    Date.now = function() {
+        return new Date().valueOf();
+    };
+}
 
 var TWEEN = TWEEN || function() {
-    var a = [];
+    var _tweens = [];
     return {
         REVISION: "13",
         getAll: function() {
-            return a;
+            return _tweens;
         },
         removeAll: function() {
-            a = [];
+            _tweens = [];
         },
-        add: function(c) {
-            a.push(c);
+        add: function(tween) {
+            _tweens.push(tween);
         },
-        remove: function(c) {
-            c = a.indexOf(c);
-            -1 !== c && a.splice(c, 1);
+        remove: function(tween) {
+            var i = _tweens.indexOf(tween);
+            if (i !== -1) {
+                _tweens.splice(i, 1);
+            }
         },
-        update: function(c) {
-            if (0 === a.length) return !1;
-            for (var b = 0, c = void 0 !== c ? c : "undefined" !== typeof window && void 0 !== window.performance && void 0 !== window.performance.now ? window.performance.now() : Date.now(); b < a.length; ) a[b].update(c) ? b++ : a.splice(b, 1);
-            return !0;
+        update: function(time) {
+            if (_tweens.length === 0) return false;
+            var i = 0;
+            time = time !== undefined ? time : typeof window !== "undefined" && window.performance !== undefined && window.performance.now !== undefined ? window.performance.now() : Date.now();
+            while (i < _tweens.length) {
+                if (_tweens[i].update(time)) {
+                    i++;
+                } else {
+                    _tweens.splice(i, 1);
+                }
+            }
+            return true;
         }
     };
 }();
 
-TWEEN.Tween = function(a) {
-    var c = {}, b = {}, d = {}, e = 1e3, g = 0, h = !1, j = !1, q = 0, m = null, w = TWEEN.Easing.Linear.None, x = TWEEN.Interpolation.Linear, n = [], r = null, s = !1, t = null, u = null, k = null, v;
-    for (v in a) c[v] = parseFloat(a[v], 10);
-    this.to = function(a, c) {
-        void 0 !== c && (e = c);
-        b = a;
+TWEEN.Tween = function(object) {
+    var _object = object;
+    var _valuesStart = {};
+    var _valuesEnd = {};
+    var _valuesStartRepeat = {};
+    var _duration = 1e3;
+    var _repeat = 0;
+    var _yoyo = false;
+    var _isPlaying = false;
+    var _reversed = false;
+    var _delayTime = 0;
+    var _startTime = null;
+    var _easingFunction = TWEEN.Easing.Linear.None;
+    var _interpolationFunction = TWEEN.Interpolation.Linear;
+    var _chainedTweens = [];
+    var _onStartCallback = null;
+    var _onStartCallbackFired = false;
+    var _onUpdateCallback = null;
+    var _onCompleteCallback = null;
+    var _onStopCallback = null;
+    for (var field in object) {
+        _valuesStart[field] = parseFloat(object[field], 10);
+    }
+    this.to = function(properties, duration) {
+        if (duration !== undefined) {
+            _duration = duration;
+        }
+        _valuesEnd = properties;
         return this;
     };
-    this.start = function(e) {
+    this.start = function(time) {
         TWEEN.add(this);
-        j = !0;
-        s = !1;
-        m = void 0 !== e ? e : "undefined" !== typeof window && void 0 !== window.performance && void 0 !== window.performance.now ? window.performance.now() : Date.now();
-        m += q;
-        for (var f in b) {
-            if (b[f] instanceof Array) {
-                if (0 === b[f].length) continue;
-                b[f] = [ a[f] ].concat(b[f]);
+        _isPlaying = true;
+        _onStartCallbackFired = false;
+        _startTime = time !== undefined ? time : typeof window !== "undefined" && window.performance !== undefined && window.performance.now !== undefined ? window.performance.now() : Date.now();
+        _startTime += _delayTime;
+        for (var property in _valuesEnd) {
+            if (_valuesEnd[property] instanceof Array) {
+                if (_valuesEnd[property].length === 0) {
+                    continue;
+                }
+                _valuesEnd[property] = [ _object[property] ].concat(_valuesEnd[property]);
             }
-            c[f] = a[f];
-            !1 === c[f] instanceof Array && (c[f] *= 1);
-            d[f] = c[f] || 0;
+            _valuesStart[property] = _object[property];
+            if (_valuesStart[property] instanceof Array === false) {
+                _valuesStart[property] *= 1;
+            }
+            _valuesStartRepeat[property] = _valuesStart[property] || 0;
         }
         return this;
     };
     this.stop = function() {
-        if (!j) return this;
+        if (!_isPlaying) {
+            return this;
+        }
         TWEEN.remove(this);
-        j = !1;
-        null !== k && k.call(a);
+        _isPlaying = false;
+        if (_onStopCallback !== null) {
+            _onStopCallback.call(_object);
+        }
         this.stopChainedTweens();
         return this;
     };
     this.stopChainedTweens = function() {
-        for (var a = 0, b = n.length; a < b; a++) n[a].stop();
+        for (var i = 0, numChainedTweens = _chainedTweens.length; i < numChainedTweens; i++) {
+            _chainedTweens[i].stop();
+        }
     };
-    this.delay = function(a) {
-        q = a;
+    this.delay = function(amount) {
+        _delayTime = amount;
         return this;
     };
-    this.repeat = function(a) {
-        g = a;
+    this.repeat = function(times) {
+        _repeat = times;
         return this;
     };
-    this.yoyo = function(a) {
-        h = a;
+    this.yoyo = function(yoyo) {
+        _yoyo = yoyo;
         return this;
     };
-    this.easing = function(a) {
-        w = a;
+    this.easing = function(easing) {
+        _easingFunction = easing;
         return this;
     };
-    this.interpolation = function(a) {
-        x = a;
+    this.interpolation = function(interpolation) {
+        _interpolationFunction = interpolation;
         return this;
     };
     this.chain = function() {
-        n = arguments;
+        _chainedTweens = arguments;
         return this;
     };
-    this.onStart = function(a) {
-        r = a;
+    this.onStart = function(callback) {
+        _onStartCallback = callback;
         return this;
     };
-    this.onUpdate = function(a) {
-        t = a;
+    this.onUpdate = function(callback) {
+        _onUpdateCallback = callback;
         return this;
     };
-    this.onComplete = function(a) {
-        u = a;
+    this.onComplete = function(callback) {
+        _onCompleteCallback = callback;
         return this;
     };
-    this.onStop = function(a) {
-        k = a;
+    this.onStop = function(callback) {
+        _onStopCallback = callback;
         return this;
     };
-    this.update = function(p) {
-        var f;
-        if (p < m) return !0;
-        !1 === s && (null !== r && r.call(a), s = !0);
-        var i = (p - m) / e, i = 1 < i ? 1 : i, j = w(i);
-        for (f in b) {
-            var k = c[f] || 0, l = b[f];
-            l instanceof Array ? a[f] = x(l, j) : ("string" === typeof l && (l = k + parseFloat(l, 10)), 
-            "number" === typeof l && (a[f] = k + (l - k) * j));
+    this.update = function(time) {
+        var property;
+        if (time < _startTime) {
+            return true;
         }
-        null !== t && t.call(a, j);
-        if (1 == i) if (0 < g) {
-            isFinite(g) && g--;
-            for (f in d) "string" === typeof b[f] && (d[f] += parseFloat(b[f], 10)), h && (i = d[f], 
-            d[f] = b[f], b[f] = i), c[f] = d[f];
-            m = p + q;
-        } else {
-            null !== u && u.call(a);
-            f = 0;
-            for (i = n.length; f < i; f++) n[f].start(p);
-            return !1;
+        if (_onStartCallbackFired === false) {
+            if (_onStartCallback !== null) {
+                _onStartCallback.call(_object);
+            }
+            _onStartCallbackFired = true;
         }
-        return !0;
+        var elapsed = (time - _startTime) / _duration;
+        elapsed = elapsed > 1 ? 1 : elapsed;
+        var value = _easingFunction(elapsed);
+        for (property in _valuesEnd) {
+            var start = _valuesStart[property] || 0;
+            var end = _valuesEnd[property];
+            if (end instanceof Array) {
+                _object[property] = _interpolationFunction(end, value);
+            } else {
+                if (typeof end === "string") {
+                    end = start + parseFloat(end, 10);
+                }
+                if (typeof end === "number") {
+                    _object[property] = start + (end - start) * value;
+                }
+            }
+        }
+        if (_onUpdateCallback !== null) {
+            _onUpdateCallback.call(_object, value);
+        }
+        if (elapsed == 1) {
+            if (_repeat > 0) {
+                if (isFinite(_repeat)) {
+                    _repeat--;
+                }
+                for (property in _valuesStartRepeat) {
+                    if (typeof _valuesEnd[property] === "string") {
+                        _valuesStartRepeat[property] = _valuesStartRepeat[property] + parseFloat(_valuesEnd[property], 10);
+                    }
+                    if (_yoyo) {
+                        var tmp = _valuesStartRepeat[property];
+                        _valuesStartRepeat[property] = _valuesEnd[property];
+                        _valuesEnd[property] = tmp;
+                    }
+                    _valuesStart[property] = _valuesStartRepeat[property];
+                }
+                if (_yoyo) {
+                    _reversed = !_reversed;
+                }
+                _startTime = time + _delayTime;
+                return true;
+            } else {
+                if (_onCompleteCallback !== null) {
+                    _onCompleteCallback.call(_object);
+                }
+                for (var i = 0, numChainedTweens = _chainedTweens.length; i < numChainedTweens; i++) {
+                    _chainedTweens[i].start(time);
+                }
+                return false;
+            }
+        }
+        return true;
     };
 };
 
 TWEEN.Easing = {
     Linear: {
-        None: function(a) {
-            return a;
+        None: function(k) {
+            return k;
         }
     },
     Quadratic: {
-        In: function(a) {
-            return a * a;
+        In: function(k) {
+            return k * k;
         },
-        Out: function(a) {
-            return a * (2 - a);
+        Out: function(k) {
+            return k * (2 - k);
         },
-        InOut: function(a) {
-            return 1 > (a *= 2) ? .5 * a * a : -.5 * (--a * (a - 2) - 1);
+        InOut: function(k) {
+            if ((k *= 2) < 1) return .5 * k * k;
+            return -.5 * (--k * (k - 2) - 1);
         }
     },
     Cubic: {
-        In: function(a) {
-            return a * a * a;
+        In: function(k) {
+            return k * k * k;
         },
-        Out: function(a) {
-            return --a * a * a + 1;
+        Out: function(k) {
+            return --k * k * k + 1;
         },
-        InOut: function(a) {
-            return 1 > (a *= 2) ? .5 * a * a * a : .5 * ((a -= 2) * a * a + 2);
+        InOut: function(k) {
+            if ((k *= 2) < 1) return .5 * k * k * k;
+            return .5 * ((k -= 2) * k * k + 2);
         }
     },
     Quartic: {
-        In: function(a) {
-            return a * a * a * a;
+        In: function(k) {
+            return k * k * k * k;
         },
-        Out: function(a) {
-            return 1 - --a * a * a * a;
+        Out: function(k) {
+            return 1 - --k * k * k * k;
         },
-        InOut: function(a) {
-            return 1 > (a *= 2) ? .5 * a * a * a * a : -.5 * ((a -= 2) * a * a * a - 2);
+        InOut: function(k) {
+            if ((k *= 2) < 1) return .5 * k * k * k * k;
+            return -.5 * ((k -= 2) * k * k * k - 2);
         }
     },
     Quintic: {
-        In: function(a) {
-            return a * a * a * a * a;
+        In: function(k) {
+            return k * k * k * k * k;
         },
-        Out: function(a) {
-            return --a * a * a * a * a + 1;
+        Out: function(k) {
+            return --k * k * k * k * k + 1;
         },
-        InOut: function(a) {
-            return 1 > (a *= 2) ? .5 * a * a * a * a * a : .5 * ((a -= 2) * a * a * a * a + 2);
+        InOut: function(k) {
+            if ((k *= 2) < 1) return .5 * k * k * k * k * k;
+            return .5 * ((k -= 2) * k * k * k * k + 2);
         }
     },
     Sinusoidal: {
-        In: function(a) {
-            return 1 - Math.cos(a * Math.PI / 2);
+        In: function(k) {
+            return 1 - Math.cos(k * Math.PI / 2);
         },
-        Out: function(a) {
-            return Math.sin(a * Math.PI / 2);
+        Out: function(k) {
+            return Math.sin(k * Math.PI / 2);
         },
-        InOut: function(a) {
-            return .5 * (1 - Math.cos(Math.PI * a));
+        InOut: function(k) {
+            return .5 * (1 - Math.cos(Math.PI * k));
         }
     },
     Exponential: {
-        In: function(a) {
-            return 0 === a ? 0 : Math.pow(1024, a - 1);
+        In: function(k) {
+            return k === 0 ? 0 : Math.pow(1024, k - 1);
         },
-        Out: function(a) {
-            return 1 === a ? 1 : 1 - Math.pow(2, -10 * a);
+        Out: function(k) {
+            return k === 1 ? 1 : 1 - Math.pow(2, -10 * k);
         },
-        InOut: function(a) {
-            return 0 === a ? 0 : 1 === a ? 1 : 1 > (a *= 2) ? .5 * Math.pow(1024, a - 1) : .5 * (-Math.pow(2, -10 * (a - 1)) + 2);
+        InOut: function(k) {
+            if (k === 0) return 0;
+            if (k === 1) return 1;
+            if ((k *= 2) < 1) return .5 * Math.pow(1024, k - 1);
+            return .5 * (-Math.pow(2, -10 * (k - 1)) + 2);
         }
     },
     Circular: {
-        In: function(a) {
-            return 1 - Math.sqrt(1 - a * a);
+        In: function(k) {
+            return 1 - Math.sqrt(1 - k * k);
         },
-        Out: function(a) {
-            return Math.sqrt(1 - --a * a);
+        Out: function(k) {
+            return Math.sqrt(1 - --k * k);
         },
-        InOut: function(a) {
-            return 1 > (a *= 2) ? -.5 * (Math.sqrt(1 - a * a) - 1) : .5 * (Math.sqrt(1 - (a -= 2) * a) + 1);
+        InOut: function(k) {
+            if ((k *= 2) < 1) return -.5 * (Math.sqrt(1 - k * k) - 1);
+            return .5 * (Math.sqrt(1 - (k -= 2) * k) + 1);
         }
     },
     Elastic: {
-        In: function(a) {
-            var c, b = .1;
-            if (0 === a) return 0;
-            if (1 === a) return 1;
-            !b || 1 > b ? (b = 1, c = .1) : c = .4 * Math.asin(1 / b) / (2 * Math.PI);
-            return -(b * Math.pow(2, 10 * (a -= 1)) * Math.sin((a - c) * 2 * Math.PI / .4));
+        In: function(k) {
+            var s, a = .1, p = .4;
+            if (k === 0) return 0;
+            if (k === 1) return 1;
+            if (!a || a < 1) {
+                a = 1;
+                s = p / 4;
+            } else s = p * Math.asin(1 / a) / (2 * Math.PI);
+            return -(a * Math.pow(2, 10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p));
         },
-        Out: function(a) {
-            var c, b = .1;
-            if (0 === a) return 0;
-            if (1 === a) return 1;
-            !b || 1 > b ? (b = 1, c = .1) : c = .4 * Math.asin(1 / b) / (2 * Math.PI);
-            return b * Math.pow(2, -10 * a) * Math.sin((a - c) * 2 * Math.PI / .4) + 1;
+        Out: function(k) {
+            var s, a = .1, p = .4;
+            if (k === 0) return 0;
+            if (k === 1) return 1;
+            if (!a || a < 1) {
+                a = 1;
+                s = p / 4;
+            } else s = p * Math.asin(1 / a) / (2 * Math.PI);
+            return a * Math.pow(2, -10 * k) * Math.sin((k - s) * (2 * Math.PI) / p) + 1;
         },
-        InOut: function(a) {
-            var c, b = .1;
-            if (0 === a) return 0;
-            if (1 === a) return 1;
-            !b || 1 > b ? (b = 1, c = .1) : c = .4 * Math.asin(1 / b) / (2 * Math.PI);
-            return 1 > (a *= 2) ? -.5 * b * Math.pow(2, 10 * (a -= 1)) * Math.sin((a - c) * 2 * Math.PI / .4) : .5 * b * Math.pow(2, -10 * (a -= 1)) * Math.sin((a - c) * 2 * Math.PI / .4) + 1;
+        InOut: function(k) {
+            var s, a = .1, p = .4;
+            if (k === 0) return 0;
+            if (k === 1) return 1;
+            if (!a || a < 1) {
+                a = 1;
+                s = p / 4;
+            } else s = p * Math.asin(1 / a) / (2 * Math.PI);
+            if ((k *= 2) < 1) return -.5 * (a * Math.pow(2, 10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p));
+            return a * Math.pow(2, -10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p) * .5 + 1;
         }
     },
     Back: {
-        In: function(a) {
-            return a * a * (2.70158 * a - 1.70158);
+        In: function(k) {
+            var s = 1.70158;
+            return k * k * ((s + 1) * k - s);
         },
-        Out: function(a) {
-            return --a * a * (2.70158 * a + 1.70158) + 1;
+        Out: function(k) {
+            var s = 1.70158;
+            return --k * k * ((s + 1) * k + s) + 1;
         },
-        InOut: function(a) {
-            return 1 > (a *= 2) ? .5 * a * a * (3.5949095 * a - 2.5949095) : .5 * ((a -= 2) * a * (3.5949095 * a + 2.5949095) + 2);
+        InOut: function(k) {
+            var s = 1.70158 * 1.525;
+            if ((k *= 2) < 1) return .5 * (k * k * ((s + 1) * k - s));
+            return .5 * ((k -= 2) * k * ((s + 1) * k + s) + 2);
         }
     },
     Bounce: {
-        In: function(a) {
-            return 1 - TWEEN.Easing.Bounce.Out(1 - a);
+        In: function(k) {
+            return 1 - TWEEN.Easing.Bounce.Out(1 - k);
         },
-        Out: function(a) {
-            return a < 1 / 2.75 ? 7.5625 * a * a : a < 2 / 2.75 ? 7.5625 * (a -= 1.5 / 2.75) * a + .75 : a < 2.5 / 2.75 ? 7.5625 * (a -= 2.25 / 2.75) * a + .9375 : 7.5625 * (a -= 2.625 / 2.75) * a + .984375;
+        Out: function(k) {
+            if (k < 1 / 2.75) {
+                return 7.5625 * k * k;
+            } else if (k < 2 / 2.75) {
+                return 7.5625 * (k -= 1.5 / 2.75) * k + .75;
+            } else if (k < 2.5 / 2.75) {
+                return 7.5625 * (k -= 2.25 / 2.75) * k + .9375;
+            } else {
+                return 7.5625 * (k -= 2.625 / 2.75) * k + .984375;
+            }
         },
-        InOut: function(a) {
-            return .5 > a ? .5 * TWEEN.Easing.Bounce.In(2 * a) : .5 * TWEEN.Easing.Bounce.Out(2 * a - 1) + .5;
+        InOut: function(k) {
+            if (k < .5) return TWEEN.Easing.Bounce.In(k * 2) * .5;
+            return TWEEN.Easing.Bounce.Out(k * 2 - 1) * .5 + .5;
         }
     }
 };
 
 TWEEN.Interpolation = {
-    Linear: function(a, c) {
-        var b = a.length - 1, d = b * c, e = Math.floor(d), g = TWEEN.Interpolation.Utils.Linear;
-        return 0 > c ? g(a[0], a[1], d) : 1 < c ? g(a[b], a[b - 1], b - d) : g(a[e], a[e + 1 > b ? b : e + 1], d - e);
+    Linear: function(v, k) {
+        var m = v.length - 1, f = m * k, i = Math.floor(f), fn = TWEEN.Interpolation.Utils.Linear;
+        if (k < 0) return fn(v[0], v[1], f);
+        if (k > 1) return fn(v[m], v[m - 1], m - f);
+        return fn(v[i], v[i + 1 > m ? m : i + 1], f - i);
     },
-    Bezier: function(a, c) {
-        var b = 0, d = a.length - 1, e = Math.pow, g = TWEEN.Interpolation.Utils.Bernstein, h;
-        for (h = 0; h <= d; h++) b += e(1 - c, d - h) * e(c, h) * a[h] * g(d, h);
+    Bezier: function(v, k) {
+        var b = 0, n = v.length - 1, pw = Math.pow, bn = TWEEN.Interpolation.Utils.Bernstein, i;
+        for (i = 0; i <= n; i++) {
+            b += pw(1 - k, n - i) * pw(k, i) * v[i] * bn(n, i);
+        }
         return b;
     },
-    CatmullRom: function(a, c) {
-        var b = a.length - 1, d = b * c, e = Math.floor(d), g = TWEEN.Interpolation.Utils.CatmullRom;
-        return a[0] === a[b] ? (0 > c && (e = Math.floor(d = b * (1 + c))), g(a[(e - 1 + b) % b], a[e], a[(e + 1) % b], a[(e + 2) % b], d - e)) : 0 > c ? a[0] - (g(a[0], a[0], a[1], a[1], -d) - a[0]) : 1 < c ? a[b] - (g(a[b], a[b], a[b - 1], a[b - 1], d - b) - a[b]) : g(a[e ? e - 1 : 0], a[e], a[b < e + 1 ? b : e + 1], a[b < e + 2 ? b : e + 2], d - e);
+    CatmullRom: function(v, k) {
+        var m = v.length - 1, f = m * k, i = Math.floor(f), fn = TWEEN.Interpolation.Utils.CatmullRom;
+        if (v[0] === v[m]) {
+            if (k < 0) i = Math.floor(f = m * (1 + k));
+            return fn(v[(i - 1 + m) % m], v[i], v[(i + 1) % m], v[(i + 2) % m], f - i);
+        } else {
+            if (k < 0) return v[0] - (fn(v[0], v[0], v[1], v[1], -f) - v[0]);
+            if (k > 1) return v[m] - (fn(v[m], v[m], v[m - 1], v[m - 1], f - m) - v[m]);
+            return fn(v[i ? i - 1 : 0], v[i], v[m < i + 1 ? m : i + 1], v[m < i + 2 ? m : i + 2], f - i);
+        }
     },
     Utils: {
-        Linear: function(a, c, b) {
-            return (c - a) * b + a;
+        Linear: function(p0, p1, t) {
+            return (p1 - p0) * t + p0;
         },
-        Bernstein: function(a, c) {
-            var b = TWEEN.Interpolation.Utils.Factorial;
-            return b(a) / b(c) / b(a - c);
+        Bernstein: function(n, i) {
+            var fc = TWEEN.Interpolation.Utils.Factorial;
+            return fc(n) / fc(i) / fc(n - i);
         },
         Factorial: function() {
             var a = [ 1 ];
-            return function(c) {
-                var b = 1, d;
-                if (a[c]) return a[c];
-                for (d = c; 1 < d; d--) b *= d;
-                return a[c] = b;
+            return function(n) {
+                var s = 1, i;
+                if (a[n]) return a[n];
+                for (i = n; i > 1; i--) s *= i;
+                return a[n] = s;
             };
         }(),
-        CatmullRom: function(a, c, b, d, e) {
-            var a = .5 * (b - a), d = .5 * (d - c), g = e * e;
-            return (2 * c - 2 * b + a + d) * e * g + (-3 * c + 3 * b - 2 * a - d) * g + a * e + c;
+        CatmullRom: function(p0, p1, p2, p3, t) {
+            var v0 = (p2 - p0) * .5, v1 = (p3 - p1) * .5, t2 = t * t, t3 = t * t2;
+            return (2 * p1 - 2 * p2 + v0 + v1) * t3 + (-3 * p1 + 3 * p2 - 2 * v0 - v1) * t2 + v0 * t + p1;
         }
     }
 };
@@ -11022,7 +11146,7 @@ TWEEN.Interpolation = {
             this._direction = 1;
             if (this._velocity < 0) this._direction = -1;
             this._speed = Math.abs(this._velocity);
-            this._repeat = 1e3;
+            this._repeat = Infinity;
             var tweenUpdateBound = ListenerFunctions.createListenerFunction(this, this.tweenUpdate);
             this.tweener = new TWEEN.Tween({
                 rotation: 0
@@ -11278,10 +11402,13 @@ TWEEN.Interpolation = {
     var ElRotatingSprite = ns.ElRotatingSprite;
     var scenedata = MKK.getNamespace("data").scenedata;
     if (!ns.ElEngine) {
-        var ElEngine = function ElEngine(sFrame, duration, x, y, z) {
+        var ElEngine = function ElEngine(sFrame, duration, x, y, z, isColorBlue) {
             this.name = name;
-            this.element = [];
+            this.base = [];
+            this.pistons = [];
+            this.drives = [];
             this.container = new PIXI.DisplayObjectContainer();
+            this.color = isColorBlue == true ? "_blue" : "";
             this.setup(sFrame, duration, x, y);
             this.z = z;
             this.container.position = this.cPos;
@@ -11290,11 +11417,82 @@ TWEEN.Interpolation = {
         var p = ElEngine.prototype = new AbContainer();
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
+            this._speed = 350;
+            this._repeat = 1e3;
+            this.addBase("engine-base" + this.color + ".png", 0, 0, 0, .5, .5);
+            this.addPiston("engine-piston" + this.color + ".png", -68, 13, 0, .5, .5);
+            this.addPiston("engine-piston" + this.color + ".png", -23, -14, 0, .5, .5);
+            this.addPiston("engine-piston" + this.color + ".png", 24, -14, 0, .5, .5);
+            this.addPiston("engine-piston" + this.color + ".png", 70, 13, 0, .5, .5);
+            this.addDrive("engine-drive" + this.color + ".png", -56, 35, 0, .5, .5);
+            this.addDrive("engine-drive" + this.color + ".png", -36, 22, 0, .5, .5);
+            this.addDrive("engine-drive" + this.color + ".png", 36, 22, 0, .5, .5);
+            this.addDrive("engine-drive" + this.color + ".png", 57, 35, 0, .5, .5);
+            var that = this;
+            var tweenUpdateBound = function(e) {
+                that.pistons[0].yPos(this.y);
+                that.pistons[3].yPos(this.y);
+            };
+            this.tweener1 = new TWEEN.Tween({
+                y: 13
+            }).to({
+                y: -14
+            }, this._speed).easing(TWEEN.Easing.Cubic.InOut).repeat(Infinity).yoyo(true).onUpdate(tweenUpdateBound);
+            var tweenUpdate2Bound = function(e) {
+                that.pistons[1].yPos(this.y);
+                that.pistons[2].yPos(this.y);
+            };
+            this.tweener2 = new TWEEN.Tween({
+                y: -14
+            }).to({
+                y: 13
+            }, this._speed).easing(TWEEN.Easing.Cubic.InOut).repeat(Infinity).yoyo(true).onUpdate(tweenUpdate2Bound);
+            var tweenUpdate3Bound = function(e) {
+                that.drives[0].yPos(this.y);
+                that.drives[3].yPos(this.y);
+            };
+            this.tweener3 = new TWEEN.Tween({
+                y: 35
+            }).to({
+                y: 22
+            }, this._speed).easing(TWEEN.Easing.Cubic.InOut).repeat(Infinity).yoyo(true).onUpdate(tweenUpdate3Bound);
+            var tweenUpdate4Bound = function(e) {
+                that.drives[1].yPos(this.y);
+                that.drives[2].yPos(this.y);
+            };
+            this.tweener4 = new TWEEN.Tween({
+                y: 22
+            }).to({
+                y: 35
+            }, this._speed).easing(TWEEN.Easing.Cubic.InOut).repeat(Infinity).yoyo(true).onUpdate(tweenUpdate4Bound);
+            this.start();
         };
         p.open = function() {};
-        p.addSprite = function(name, x, y, z, aX, aY) {
+        p.start = function() {
+            this.tweener1.start();
+            this.tweener2.start();
+            this.tweener3.start();
+            this.tweener4.start();
+        };
+        p.stop = function() {
+            this.tweener1.stop();
+            this.tweener2.stop();
+            this.tweener3.stop();
+            this.tweener4.stop();
+        };
+        p.addBase = function(name, x, y, z, aX, aY) {
             var tmp = new ElSprite(name, x, y, z, aX, aY);
-            this.element.push(tmp);
+            this.base.push(tmp);
+            this.container.addChild(tmp.container);
+        };
+        p.addPiston = function(name, x, y, z, aX, aY) {
+            var tmp = new ElSprite(name, x, y, z, aX, aY);
+            this.pistons.push(tmp);
+            this.container.addChild(tmp.container);
+        };
+        p.addDrive = function(name, x, y, z, aX, aY) {
+            var tmp = new ElSprite(name, x, y, z, aX, aY);
+            this.drives.push(tmp);
             this.container.addChild(tmp.container);
         };
         p.update = function(frame) {
@@ -11444,6 +11642,7 @@ TWEEN.Interpolation = {
     var AbContainer = MKK.getNamespace("app.scene").AbContainer;
     var ElSprite = ns.ElSprite;
     var ElRotatingSprite = ns.ElRotatingSprite;
+    var ElEngine = ns.ElEngine;
     var scenedata = MKK.getNamespace("data").scenedata;
     if (!ns.ElOilrig) {
         var ElOilrig = function ElOilrig(sFrame, duration, x, y, z) {
@@ -11458,6 +11657,17 @@ TWEEN.Interpolation = {
         var p = ElOilrig.prototype = new AbContainer();
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
+            this.addSprite("oilrig_01.png", 0, 0, 0, 0, 0);
+            this.addSprite("oilrig_02.png", 602, 0, 0, 0, 0);
+            this.addSprite("oilrig_03.png", 0, 693, 0, 0, 0);
+            this.addSprite("oilrig_04.png", 602, 693, 0, 0, 0);
+            this.addSprite("oilrig_05.png", 0, 1073, 0, 0, 0);
+            this.addSprite("oilrig_06.png", 602, 1072, 0, 0, 0);
+            this.engine = new ElEngine(0, 0, 500, 598, 0, true);
+            this.engine.scale(.6);
+            this.engineShadow = new ElSprite("oilrig_engine_shadow.png", 501, 597, 0, .5, .5);
+            this.container.addChild(this.engine.container);
+            this.container.addChild(this.engineShadow.container);
         };
         p.open = function() {};
         p.addSprite = function(name, x, y, z, aX, aY) {
@@ -11841,6 +12051,7 @@ TWEEN.Interpolation = {
     var AbContainer = MKK.getNamespace("app.scene").AbContainer;
     var ElSprite = ns.ElSprite;
     var ElRotatingSprite = ns.ElRotatingSprite;
+    var ElEngine = ns.ElEngine;
     var scenedata = MKK.getNamespace("data").scenedata;
     if (!ns.ElShipInner) {
         var ElShipInner = function ElShipInner(sFrame, duration) {
@@ -11870,6 +12081,8 @@ TWEEN.Interpolation = {
             this.addFan(545, 407, 0, 1e3);
             this.addFan(545, 782, 0, 5e3);
             this.addFan(545, 407, 0);
+            this.engine = new ElEngine(0, 0, 469, 905, 0);
+            this.container.addChild(this.engine.container);
             var tweenHookBound = ListenerFunctions.createListenerFunction(this, this.tweenHook);
             this.tween0 = new TweenEach({
                 x: 709,
@@ -12592,6 +12805,7 @@ TWEEN.Interpolation = {
     var ElSeaFloor = ns.element.ElSeaFloor;
     var ElOilCave = ns.element.ElOilCave;
     var ElEngine = ns.element.ElEngine;
+    var ElOilrig = ns.element.ElOilrig;
     var ElRadarBoatSide = ns.element.ElRadarBoatSide;
     var ElRotatingSprite = ns.element.ElRotatingSprite;
     var ElShipInner = ns.element.ElShipInner;
@@ -12613,8 +12827,8 @@ TWEEN.Interpolation = {
             this.seafloor = new ElSeaFloor("seafloor", 0, 4282, 0, 0, 0, 1024, 1024);
             this.oilcave = new ElOilCave("oilcave", 0, 0, 0, 200, 0, 0);
             this.radarboatside = new ElRadarBoatSide(0, 0, 0, 0);
-            this.engine = new ElEngine(0, 0, 300, 300, 0);
-            this.level[1].addElement(this.engine.container);
+            this.oilrig = new ElOilrig(0, 0, 0, 0, 0, 0, 0);
+            this.level[1].addElement(this.oilrig.container);
         };
         p.close = function() {};
         p.update = function(frame) {

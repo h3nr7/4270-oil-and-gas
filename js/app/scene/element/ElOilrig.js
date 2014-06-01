@@ -7,6 +7,7 @@
 	var AbContainer = MKK.getNamespace('app.scene').AbContainer;
 	var ElSprite = ns.ElSprite;
 	var ElRotatingSprite = ns.ElRotatingSprite;
+	var ElEngine = ns.ElEngine;
 	var scenedata = MKK.getNamespace('data').scenedata;
 
 	if(!ns.ElOilrig) {
@@ -33,6 +34,27 @@
 
 			this._setup(sFrame, duration, x, y);
 
+			this.addSprite('oilrig_01.png', 0,0,0, 0,0);
+			this.addSprite('oilrig_02.png', 602,0,0, 0,0);
+			this.addSprite('oilrig_03.png', 0,693,0, 0,0);
+			this.addSprite('oilrig_04.png', 602,693,0, 0,0);
+			this.addSprite('oilrig_05.png', 0,1073,0, 0,0);
+			this.addSprite('oilrig_06.png', 602,1072,0, 0,0);
+
+			this.addSprite('oilrig_wave.png', 150,1215,0, 0,0);
+			this.addSprite('oilrig_wave.png', 1000,1640,0, 0,0);
+
+			this.element[7].rotate(0.75);
+
+			this.needle = new ElSprite('oilrig_needle.png', 1067, 533, 0, 0.5, 0.5);
+			this.container.addChild(this.needle.container);
+
+			this.engine = new ElEngine(0,0, 500,598,0, true);
+			this.engine.scale(0.6);
+			this.engineShadow = new ElSprite('oilrig_engine_shadow.png', 501, 597, 0, 0.5, 0.5);
+
+			this.container.addChild(this.engine.container);
+			this.container.addChild(this.engineShadow.container);
 							
 
 		}

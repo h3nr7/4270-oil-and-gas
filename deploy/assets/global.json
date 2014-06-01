@@ -29,9 +29,25 @@
             "spriteSourceSize": {"x":0,"y":0,"w":214,"h":116},
             "sourceSize": {"w":214,"h":116}
 		},
+		"engine-base_blue.png":
+		{
+            "frame": {"x":218,"y":116,"w":214,"h":116},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":214,"h":116},
+            "sourceSize": {"w":214,"h":116}
+		},
 		"engine-piston.png":
 		{
-            "frame": {"x":218,"y":116,"w":30,"h":78},
+            "frame": {"x":218,"y":232,"w":30,"h":78},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":30,"h":78},
+            "sourceSize": {"w":30,"h":78}
+		},
+		"engine-piston_blue.png":
+		{
+            "frame": {"x":248,"y":232,"w":30,"h":78},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":30,"h":78},
@@ -39,7 +55,15 @@
 		},
 		"engine-drive.png":
 		{
-            "frame": {"x":248,"y":116,"w":12,"h":32},
+            "frame": {"x":278,"y":232,"w":12,"h":32},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":12,"h":32},
+            "sourceSize": {"w":12,"h":32}
+		},
+		"engine-drive_blue.png":
+		{
+            "frame": {"x":290,"y":232,"w":12,"h":32},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":12,"h":32},
@@ -47,7 +71,7 @@
 		},
 		"sea_wave.png":
 		{
-            "frame": {"x":260,"y":116,"w":120,"h":30},
+            "frame": {"x":302,"y":232,"w":120,"h":30},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":120,"h":30},
@@ -55,7 +79,7 @@
 		},
 		"fish.png":
 		{
-            "frame": {"x":380,"y":116,"w":38,"h":16},
+            "frame": {"x":278,"y":264,"w":38,"h":16},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":38,"h":16},

@@ -111,11 +111,18 @@
 				"assets/scene1.json",
 				"assets/scene2.json",
 				"assets/scene2b.json",
-				"assets/scene2c.json"
+				"assets/scene2c.json",
+				"assets/scene3.json",
+				"assets/scene4.json",
+				"assets/scene5.json",
+				"assets/scene6.json",
+				"assets/scene7.json",
+				"assets/scene8.json",
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
-			
+			PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
+
 
 			// use callback
 			var that = this;

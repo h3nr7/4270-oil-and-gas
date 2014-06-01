@@ -18,6 +18,7 @@
 	var ElSeaFloor = ns.element.ElSeaFloor;
 	var ElOilCave = ns.element.ElOilCave;
 	var ElEngine = ns.element.ElEngine;
+	var ElOilrig = ns.element.ElOilrig;
 	var ElRadarBoatSide = ns.element.ElRadarBoatSide;
 	var ElRotatingSprite = ns.element.ElRotatingSprite;
 
@@ -65,7 +66,9 @@
 
 			// this.desc2 = new ElDescription ('Testing &\nMe™', 'some very long description', '', 'white', 100, 800, 200, 1000, 0, 200, 700, 200);
 
-			this.engine = new ElEngine(0,0,300, 300, 0);
+
+
+			this.oilrig = new ElOilrig(0,0, -500,0,0, 0,0 );
 
 			// this.gRect = new ElGrowRect (200, 200, 0, 20, 200, 300, 20, 10, 100, 0xf1345e);
 			// ----------------------------
@@ -82,7 +85,7 @@
 			// this.level[1].addElement(this.radarboatside.container);
 			// this.level[1].addElement(this.gRect.container);
 
-			this.level[1].addElement(this.engine.container);
+			this.level[1].addElement(this.oilrig.container);
 
 			
 

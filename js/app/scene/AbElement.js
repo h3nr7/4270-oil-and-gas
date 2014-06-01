@@ -12,6 +12,7 @@
 
 
 	var ns = MKK.getNamespace('app.scene');
+	var MathBase = MKK.getNamespace('mkk.math').MathBase;
 	var EventDispatcher = MKK.getNamespace('mkk.event').EventDispatcher;
 
 	if (!ns.AbElement) {
@@ -117,6 +118,10 @@
 		p.realYPos = function() {
 
 			return this.container.y;
+		}
+
+		p.rotate = function(e) {
+			this.container.rotation = MathBase.PI2*(e);
 		}
 
 

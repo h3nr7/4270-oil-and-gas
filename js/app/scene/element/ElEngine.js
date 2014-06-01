@@ -11,7 +11,7 @@
 
 	if(!ns.ElEngine) {
 
-		var ElEngine = function ElEngine(sFrame, duration, x, y, z) {
+		var ElEngine = function ElEngine(sFrame, duration, x, y, z, isColorBlue) {
 
 			this.name = name;
 			this.base = [];
@@ -19,7 +19,10 @@
 			this.drives = [];
 			this.container = new PIXI.DisplayObjectContainer();
 
+			this.color = (isColorBlue==true)?'_blue':'';
 			this.setup(sFrame, duration, x, y);
+
+
 
 			this.z = z
 			this.container.position = this.cPos;
@@ -37,19 +40,19 @@
 			this._speed = 350;
 			this._repeat = 1000;
 			//base
-			this.addBase('engine-base.png', 0, 0, 0, 0.5, 0.5);	
+			this.addBase('engine-base'+ this.color +'.png', 0, 0, 0, 0.5, 0.5);	
 
 			//pistons	
-			this.addPiston('engine-piston.png', -68, 13, 0, 0.5, 0.5);
-			this.addPiston('engine-piston.png', -23, -14, 0, 0.5, 0.5);		
-			this.addPiston('engine-piston.png',  24, -14, 0, 0.5, 0.5);		
-			this.addPiston('engine-piston.png',  70, 13, 0, 0.5, 0.5);			
+			this.addPiston('engine-piston'+ this.color +'.png', -68, 13, 0, 0.5, 0.5);
+			this.addPiston('engine-piston'+ this.color +'.png', -23, -14, 0, 0.5, 0.5);		
+			this.addPiston('engine-piston'+ this.color +'.png',  24, -14, 0, 0.5, 0.5);		
+			this.addPiston('engine-piston'+ this.color +'.png',  70, 13, 0, 0.5, 0.5);			
 
 			//drives
-			this.addDrive('engine-drive.png', -56, 35, 0, 0.5, 0.5);		
-			this.addDrive('engine-drive.png', -36, 22, 0, 0.5, 0.5);				
-			this.addDrive('engine-drive.png', 36, 22, 0, 0.5, 0.5);		
-			this.addDrive('engine-drive.png', 57, 35, 0, 0.5, 0.5);	
+			this.addDrive('engine-drive'+ this.color +'.png', -56, 35, 0, 0.5, 0.5);		
+			this.addDrive('engine-drive'+ this.color +'.png', -36, 22, 0, 0.5, 0.5);				
+			this.addDrive('engine-drive'+ this.color +'.png', 36, 22, 0, 0.5, 0.5);		
+			this.addDrive('engine-drive'+ this.color +'.png', 57, 35, 0, 0.5, 0.5);	
 
 
 			var that = this;
