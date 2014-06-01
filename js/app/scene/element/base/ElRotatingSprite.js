@@ -20,7 +20,7 @@
 			this._direction = 1;
 			if(this._velocity<0) this._direction = -1;
 			this._speed = Math.abs(this._velocity);
-			this._repeat = 1000;
+			this._repeat = Infinity;
 
 
 			var tweenUpdateBound = ListenerFunctions.createListenerFunction(this, this.tweenUpdate);

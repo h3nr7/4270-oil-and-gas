@@ -34,7 +34,7 @@
 		p.setup = function(sFrame, duration, x, y) {
 
 			this._setup(sFrame, duration, x, y);
-			this._speed = 500;
+			this._speed = 350;
 			this._repeat = 1000;
 			//base
 			this.addBase('engine-base.png', 0, 0, 0, 0.5, 0.5);	
@@ -52,21 +52,58 @@
 			this.addDrive('engine-drive.png', 57, 35, 0, 0.5, 0.5);	
 
 
-			var tweenUpdateBound = ListenerFunctions.createListenerFunction(this, this.tweenUpdate);
-			this.tweener = new TWEEN.Tween({y: 13})
+			var that = this;
+			var tweenUpdateBound = function(e) { that.pistons[0].yPos(this.y); that.pistons[3].yPos(this.y); };
+			this.tweener1 = new TWEEN.Tween({y: 13})
 								.to({ y: -14 }, this._speed)
-								.onUpdate(tweenUpdateBound)
-								.start();
+								.easing( TWEEN.Easing.Cubic.InOut )
+								.repeat( Infinity )
+								.yoyo( true )
+								.onUpdate(tweenUpdateBound);
+
+			var tweenUpdate2Bound = function(e) { that.pistons[1].yPos(this.y); that.pistons[2].yPos(this.y); };
+			this.tweener2 = new TWEEN.Tween({y: -14})
+								.to({ y: 13 }, this._speed)
+								.easing( TWEEN.Easing.Cubic.InOut )
+								.repeat( Infinity )
+								.yoyo( true )
+								.onUpdate(tweenUpdate2Bound);
+
+			var tweenUpdate3Bound = function(e) { that.drives[0].yPos(this.y); that.drives[3].yPos(this.y); };
+			this.tweener3 = new TWEEN.Tween({y: 35})
+								.to({ y: 22 }, this._speed)
+								.easing( TWEEN.Easing.Cubic.InOut )
+								.repeat( Infinity )
+								.yoyo( true )
+								.onUpdate(tweenUpdate3Bound);
+
+			var tweenUpdate4Bound = function(e) { that.drives[1].yPos(this.y); that.drives[2].yPos(this.y); };
+			this.tweener4 = new TWEEN.Tween({y: 22})
+								.to({ y: 35 }, this._speed)
+								.easing( TWEEN.Easing.Cubic.InOut )
+								.repeat( Infinity )
+								.yoyo( true )
+								.onUpdate(tweenUpdate4Bound);
+
+			this.start();
 		}
 
 		p.open = function() {
 
 		}
 
-		p.tweenUpdate = function(e) {
-			// cObj = this.tweener
-			var out = -14 + (e*27);
-			this.pistons[0].yPos(out);
+		p.start = function() {
+			this.tweener1.start();
+			this.tweener2.start();
+			this.tweener3.start();
+			this.tweener4.start();
+		}
+
+		p.stop = function() {
+			this.tweener1.stop();
+			this.tweener2.stop();
+			this.tweener3.stop();
+			this.tweener4.stop();			
 		}
 
 		p.addBase = function(name, x, y, z, aX, aY) {

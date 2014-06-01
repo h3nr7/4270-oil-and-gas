@@ -7,6 +7,7 @@
 	var AbContainer = MKK.getNamespace('app.scene').AbContainer;
 	var ElSprite = ns.ElSprite;
 	var ElRotatingSprite = ns.ElRotatingSprite;
+	var ElEngine = ns.ElEngine;
 	var scenedata = MKK.getNamespace('data').scenedata;
 
 	if(!ns.ElShipInner) {
@@ -60,6 +61,10 @@
 			this.addFan (545, 407, 0, 1000);
 			this.addFan (545, 782, 0, 5000);
 			this.addFan (545, 407, 0);
+
+			//add engine
+			this.engine = new ElEngine(0,0,469,  905, 0);
+			this.container.addChild(this.engine.container);
 		
 
 			var tweenHookBound = ListenerFunctions.createListenerFunction(this, this.tweenHook);
