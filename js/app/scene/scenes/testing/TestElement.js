@@ -68,7 +68,7 @@
 
 
 
-			this.oilrig = new ElOilrig(0,0, -500,0,0, 0,0 );
+			this.oilrig = new ElOilrig(0,0, 0,0,0, 0,0 );
 
 			// this.gRect = new ElGrowRect (200, 200, 0, 20, 200, 300, 20, 10, 100, 0xf1345e);
 			// ----------------------------

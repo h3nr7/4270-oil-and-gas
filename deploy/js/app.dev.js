@@ -10835,6 +10835,7 @@ TWEEN.Interpolation = {
 
 (function() {
     var ns = MKK.getNamespace("app.scene");
+    var MathBase = MKK.getNamespace("mkk.math").MathBase;
     var EventDispatcher = MKK.getNamespace("mkk.event").EventDispatcher;
     if (!ns.AbElement) {
         var AbElement = function AbElement() {
@@ -10904,6 +10905,9 @@ TWEEN.Interpolation = {
         };
         p.realYPos = function() {
             return this.container.y;
+        };
+        p.rotate = function(e) {
+            this.container.rotation = MathBase.PI2 * e;
         };
         p.position = function(x, y) {
             this.cPos.x = x;
@@ -11663,6 +11667,12 @@ TWEEN.Interpolation = {
             this.addSprite("oilrig_04.png", 602, 693, 0, 0, 0);
             this.addSprite("oilrig_05.png", 0, 1073, 0, 0, 0);
             this.addSprite("oilrig_06.png", 602, 1072, 0, 0, 0);
+            this.addSprite("oilrig_wave.png", 150, 1215, 0, 0, 0);
+            this.addSprite("oilrig_wave.png", 1e3, 1640, 0, 0, 0);
+            this.addFan(0, 0, 0, 2e3);
+            this.element[7].rotate(.75);
+            this.needle = new ElSprite("oilrig_needle.png", 1067, 533, 0, .5, .5);
+            this.container.addChild(this.needle.container);
             this.engine = new ElEngine(0, 0, 500, 598, 0, true);
             this.engine.scale(.6);
             this.engineShadow = new ElSprite("oilrig_engine_shadow.png", 501, 597, 0, .5, .5);
@@ -11673,6 +11683,12 @@ TWEEN.Interpolation = {
         p.addSprite = function(name, x, y, z, aX, aY) {
             var tmp = new ElSprite(name, x, y, z, aX, aY);
             this.element.push(tmp);
+            this.container.addChild(tmp.container);
+        };
+        p.addFan = function(x, y, z, velo) {
+            var tmp = new ElRotatingSprite("oilrig_fan_1.png", x, y, z, velo, .5, .5);
+            tmp.start();
+            this.fan.push(tmp);
             this.container.addChild(tmp.container);
         };
         p.update = function(frame) {
@@ -12241,10 +12257,7 @@ TWEEN.Interpolation = {
         var p = StaticLevel.prototype = new AbLevel();
         p.update = function(frame) {
             this._update(frame);
-            if (this.isframeControlled) {
-                var round = this.oPos.y - frame * this.z * this.depthLevel + .5 | 0;
-                this.cPos.setY(round);
-            }
+            if (this.isframeControlled) {}
         };
     }
 })();
@@ -12496,6 +12509,12 @@ TWEEN.Interpolation = {
             }).to({
                 y: -384
             }, 560).onUpdate(tweenRadar3Bound).delay(this.startFrame + 5500).start();
+            var tweenEndingBound = ListenerFunctions.createListenerFunction(this, this.tweenEnding);
+            this.tween7 = new TweenEach({
+                x: 0
+            }).to({
+                x: -1024
+            }, 1e3).easing(TWEEN.Easing.Cubic.Out).onUpdate(tweenEndingBound).delay(this.startFrame + 6060).start();
             this.level[0].addElement(this.smallship.container);
             this.level[0].addElement(this.seabg.container);
             this.level[0].addElement(this.seawave.container);
@@ -12543,6 +12562,10 @@ TWEEN.Interpolation = {
         p.tweenRadar3 = function(e) {
             var cObj = this.tween6.tweenVars();
             this.level[3].yPos(cObj.y);
+        };
+        p.tweenEnding = function(e) {
+            var cObj = this.tween7.tweenVars();
+            this.level[3].xPos(cObj.x);
         };
         p.close = function() {};
         p.update = function(frame) {
@@ -12827,7 +12850,7 @@ TWEEN.Interpolation = {
             this.seafloor = new ElSeaFloor("seafloor", 0, 4282, 0, 0, 0, 1024, 1024);
             this.oilcave = new ElOilCave("oilcave", 0, 0, 0, 200, 0, 0);
             this.radarboatside = new ElRadarBoatSide(0, 0, 0, 0);
-            this.oilrig = new ElOilrig(0, 0, 0, 0, 0, 0, 0);
+            this.oilrig = new ElOilrig(0, 0, -500, 0, 0, 0, 0);
             this.level[1].addElement(this.oilrig.container);
         };
         p.close = function() {};

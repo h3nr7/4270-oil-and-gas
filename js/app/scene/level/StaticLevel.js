@@ -26,8 +26,8 @@
 			// console.log(this.oPos.y, this.cPos.y, frame)
 			this._update(frame);
 			if(this.isframeControlled) {
-				var round = (this.oPos.y-frame*this.z*this.depthLevel) + 0.5 | 0;
-				this.cPos.setY(round);
+				// var round = (this.oPos.y-frame*this.z*this.depthLevel) + 0.5 | 0;
+				// this.cPos.setY(round);
 			}
 		}
 	}

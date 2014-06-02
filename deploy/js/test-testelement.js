@@ -121,7 +121,7 @@
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
-			PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
+			// PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
 
 
 			// use callback

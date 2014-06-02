@@ -16,6 +16,7 @@
 
 			this.name = name;
 			this.element = [];
+			this.fan = [];
 			this.container = new PIXI.DisplayObjectContainer();
 
 			this.setup(sFrame, duration, x, y);
@@ -44,6 +45,9 @@
 			this.addSprite('oilrig_wave.png', 150,1215,0, 0,0);
 			this.addSprite('oilrig_wave.png', 1000,1640,0, 0,0);
 
+			this.addFan(552,1290,0, 2000);
+			this.addFan(1077,12900, 2000);
+
 			this.element[7].rotate(0.75);
 
 			this.needle = new ElSprite('oilrig_needle.png', 1067, 533, 0, 0.5, 0.5);
@@ -66,6 +70,13 @@
 		p.addSprite = function(name, x, y, z, aX, aY) {
 			var tmp = new ElSprite(name, x, y, z, aX, aY);
 			this.element.push(tmp);
+			this.container.addChild(tmp.container);
+		}
+
+		p.addFan = function(x, y, z, velo) {
+			var tmp = new ElRotatingSprite('oilrig_fan_1.png', x, y, z, velo, 0.5, 0.5);
+			tmp.start();
+			this.fan.push(tmp);
 			this.container.addChild(tmp.container);
 		}
 
