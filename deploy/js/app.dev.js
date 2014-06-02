@@ -11663,11 +11663,11 @@ TWEEN.Interpolation = {
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
             this.addSprite("oilrig_01.png", 0, 0, 0, 0, 0);
-            this.addSprite("oilrig_02.png", 602, 0, 0, 0, 0);
-            this.addSprite("oilrig_03.png", 0, 693, 0, 0, 0);
-            this.addSprite("oilrig_04.png", 602, 693, 0, 0, 0);
+            this.addSprite("oilrig_02.png", 604, 0, 0, 0, 0);
+            this.addSprite("oilrig_03.png", 0, 691, 0, 0, 0);
+            this.addSprite("oilrig_04.png", 604, 691, 0, 0, 0);
             this.addSprite("oilrig_05.png", 0, 1073, 0, 0, 0);
-            this.addSprite("oilrig_06.png", 603, 1072, 0, 0, 0);
+            this.addSprite("oilrig_06.png", 604, 1072, 0, 0, 0);
             this.addSprite("oilrig_wave.png", 150, 1215, 0, 0, 0);
             this.addSprite("oilrig_wave.png", 1e3, 1640, 0, 0, 0);
             this.addFan(552, 1290, 0, 2e3);
@@ -12520,7 +12520,7 @@ TWEEN.Interpolation = {
                 x: 0
             }).to({
                 x: -1024
-            }, 1e3).easing(TWEEN.Easing.Cubic.Out).onUpdate(tweenEndingBound).delay(this.startFrame + 6060).start();
+            }, 1e3).easing(TWEEN.Easing.Cubic.In).onUpdate(tweenEndingBound).delay(this.startFrame + 6060).start();
             this.level[0].addElement(this.smallship.container);
             this.level[0].addElement(this.seabg.container);
             this.level[0].addElement(this.seawave.container);
@@ -12639,6 +12639,7 @@ TWEEN.Interpolation = {
     var ElOilCave = ns.element.ElOilCave;
     var ElEngine = ns.element.ElEngine;
     var ElOilrig = ns.element.ElOilrig;
+    var ElSeaWave = ns.element.ElSeaWave;
     var ElRadarBoatSide = ns.element.ElRadarBoatSide;
     var ElRotatingSprite = ns.element.ElRotatingSprite;
     var ElDescription = ns.element.ElDescription;
@@ -12651,11 +12652,15 @@ TWEEN.Interpolation = {
                 tween1Start: 1674,
                 tween2Start: 2700,
                 tween3Start: 3500,
+                tween4Start: 4e3,
+                tween5Start: 4600,
                 startX0: 1024,
                 startY0: 50,
                 scale0: 1,
                 orX0: 0,
                 orY0: 0,
+                waveX0: 0,
+                waveY0: 825,
                 moveX1: 250,
                 moveX2: -500,
                 moveY2: 50,
@@ -12664,30 +12669,49 @@ TWEEN.Interpolation = {
                 moveX4: 500,
                 moveY4: 500,
                 scale4: .3,
-                orX4: 860,
-                orY4: 384
+                orX4: 890,
+                orY4: 384,
+                waveX1: 0,
+                waveY1: 457,
+                moveY5: -1650
             };
         };
         ns.Scene3 = Scene3;
         var p = Scene3.prototype = new AbScene();
         p.open = function() {
             var tTime = this.tweenTime;
+            this.seabglevel = new StaticLevel("staticseabg");
+            this.seabglevel.setup(0, 0, 0);
+            this.addLevel(this.seabglevel);
             this.staticlevel = new StaticLevel("statictxt");
             this.staticlevel.setup(tTime.startX0, tTime.startY0, 0);
             this.addLevel(this.staticlevel);
-            this.waveLevel = new StaticLevel("staticwave");
-            this.staticlevel.setup(tTime.startX0, tTime.startY0, 0);
-            this.addLevel(this.staticlevel);
-            console.log(tTime.startX0);
+            this.wavelevel = new StaticLevel("staticwave");
+            this.wavelevel.setup(0, 0, 0);
+            this.addLevel(this.wavelevel);
+            this.txtlevel = new StaticLevel("statictxt");
+            this.txtlevel.setup(0, 0, 0);
+            this.addLevel(this.txtlevel);
+            this.seabg = new ElSeaBG("seabg", tTime.waveX0, tTime.waveY0, 0, 0, 0, 1024, 1024);
+            this.seafloor = new ElSeaFloor("seafloor", 0, 1484, 0, 0, 0, 1024, 1200);
+            this.oilcave = new ElOilCave("oilcave", 0, 0, 0, 2024, 0, 0);
+            this.iceberg = new ElSpriteContainer("iceberg", 0, 0, 0, 0, 0);
+            this.iceberg.addSprite("drilling_iceberg1.pngg", 0, 0);
+            this.seabglevel.addElement(this.seabg.container);
+            this.seabglevel.addElement(this.seafloor.container);
+            this.seabglevel.addElement(this.oilcave.container);
+            this.seabglevel.addElement(this.iceberg.container);
             this.oilrig = new ElOilrig(0, 5e3, 0, 0, 0);
             this.staticlevel.addElement(this.oilrig.container);
+            this.seawave = new ElSeaWave("seawave", tTime.waveX0, tTime.waveY0, 0, 0, 0, 1024, 1520);
+            this.wavelevel.addElement(this.seawave.container);
             var tweenStartingBound = ListenerFunctions.createListenerFunction(this, this.tweenStarting);
             this.tween0 = new TweenEach({
                 x: tTime.startX0,
                 y: tTime.startY0
             }).to({
                 x: tTime.moveX1
-            }, tTime._speed).easing(TWEEN.Easing.Cubic.In).onUpdate(tweenStartingBound).delay(this.startFrame).start();
+            }, tTime._speed).easing(TWEEN.Easing.Cubic.Out).onUpdate(tweenStartingBound).delay(this.startFrame).start();
             var tweenMove1Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove1);
             this.tween1 = new TweenEach({
                 x: tTime.moveX1
@@ -12708,18 +12732,41 @@ TWEEN.Interpolation = {
                 y: tTime.moveY3,
                 orX: tTime.orX0,
                 orY: tTime.orY0,
+                wX: tTime.waveX0,
+                wY: tTime.waveY0,
                 scale: tTime.scale0
             }).to({
                 x: tTime.moveX4,
                 y: tTime.moveY4,
                 orX: tTime.orX4,
                 orY: tTime.orY4,
+                wX: tTime.waveX1,
+                wY: tTime.waveY1,
                 scale: tTime.scale4
             }, tTime._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tweenMove3Bound).delay(this.startFrame + tTime.tween3Start).start();
+            var tweenMove4Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove4);
+            this.tween4 = new TweenEach({
+                y: 0
+            }).to({
+                y: tTime.moveY5
+            }, tTime._speed).onUpdate(tweenMove4Bound).delay(this.startFrame + tTime.tween4Start).start();
+            var tweenMove5Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove5);
+            this.tween5 = new TweenEach({
+                y: tTime.moveY5
+            }).to({
+                y: 0
+            }, tTime._speed).onUpdate(tweenMove5Bound).delay(this.startFrame + tTime.tween5Start).start();
         };
         p.close = function() {};
         p.update = function(frame) {
+            this.seabglevel.update(frame);
             this.staticlevel.update(frame);
+            this.wavelevel.update(frame);
+            if (frame >= 4200) {
+                this.oilrig.hide();
+            } else {
+                this.oilrig.show();
+            }
         };
         p.tweenStarting = function(e) {
             var cObj = this.tween0.tweenVars();
@@ -12737,6 +12784,16 @@ TWEEN.Interpolation = {
             var cObj = this.tween3.tweenVars();
             this.oilrig.scale(cObj.scale);
             this.oilrig.position(cObj.orX, cObj.orY);
+            this.seawave.yPos(cObj.wY);
+            this.seabg.yPos(cObj.wY);
+        };
+        p.tweenMove4 = function(e) {
+            var cObj = this.tween4.tweenVars();
+            this.yPos(cObj.y);
+        };
+        p.tweenMove5 = function(e) {
+            var cObj = this.tween5.tweenVars();
+            this.yPos(cObj.y);
         };
     }
 })();

@@ -99,6 +99,7 @@
 		p.xPos = function(x) {
 			if(x) {
 				this.cPos.x  = x;
+				this.container.x = this.cPos.x + this.offPos.x;
 			}
 			return this.cPos.x;
 		}

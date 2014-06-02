@@ -1,13 +1,29 @@
 {
 	"meta": {
 		"image": "scene5.png",
-		"size": {"w":1,"h":1},
+		"size": {"w":1676,"h":764},
 		"scale": "1"
 	},
 	"frames": {
+		"drilling_iceberg2.png":
+		{
+            "frame": {"x":0,"y":0,"w":1028,"h":764},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":1028,"h":764},
+            "sourceSize": {"w":1028,"h":764}
+		},
+		"drilling_iceberg1.png":
+		{
+            "frame": {"x":1028,"y":0,"w":648,"h":760},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":648,"h":760},
+            "sourceSize": {"w":648,"h":760}
+		},
 		"s5_1px.png":
 		{
-            "frame": {"x":0,"y":0,"w":1,"h":1},
+            "frame": {"x":1028,"y":760,"w":1,"h":1},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},

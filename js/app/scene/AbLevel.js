@@ -28,7 +28,6 @@
 
 
 		p.setup = function(x, y, z) {
-			console.log('lala2')
 			this._setup(x, y);
 			if( z!=null || z!=undefined ) this.z = z;	
 		}
@@ -51,7 +50,6 @@
 
 		p.removeElement = function(el) {
 			var index = this.element.indexOf(el);
-			console.log(index)
 			if( index > -1 ) {
 				this.container.removeChild(el);
 				this.element.splice(index,1);

@@ -63,7 +63,6 @@
 			for(var i=0; i<aLen; i++) {
 				var tmp = new levelClass(arr[i].name);
 				tmp.setup(arr[i].x, arr[i].y, arr[i].z);
-				console.log('lala1')
 				this.addLevel(tmp);
 			}
 		}
@@ -76,7 +75,6 @@
 		// }
 
 		p.addLevel = function(oLevel) {
-			console.log(oLevel.container)
 			this.container.addChild(oLevel.container);
 			this.level.push(oLevel);
 		}

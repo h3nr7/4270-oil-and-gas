@@ -36,11 +36,11 @@
 			this._setup(sFrame, duration, x, y);
 
 			this.addSprite('oilrig_01.png', 0,0,0, 0,0);
-			this.addSprite('oilrig_02.png', 606,0,0, 0,0);
-			this.addSprite('oilrig_03.png', 0,693,0, 0,0);
-			this.addSprite('oilrig_04.png', 606,693,0, 0,0);
+			this.addSprite('oilrig_02.png', 604,0,0, 0,0);
+			this.addSprite('oilrig_03.png', 0,691,0, 0,0);
+			this.addSprite('oilrig_04.png', 604,691,0, 0,0);
 			this.addSprite('oilrig_05.png', 0,1073,0, 0,0);
-			this.addSprite('oilrig_06.png', 606,1072,0, 0,0);
+			this.addSprite('oilrig_06.png', 604,1072,0, 0,0);
 
 			this.addSprite('oilrig_wave.png', 150,1215,0, 0,0);
 			this.addSprite('oilrig_wave.png', 1000,1640,0, 0,0);

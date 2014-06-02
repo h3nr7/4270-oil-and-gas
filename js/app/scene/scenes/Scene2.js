@@ -143,7 +143,7 @@
 			var tweenEndingBound = ListenerFunctions.createListenerFunction(this, this.tweenEnding);
 			this.tween7 = new TweenEach({x: 0})
 							.to({x: -1024}, 1000)
-							.easing(TWEEN.Easing.Cubic.Out)
+							.easing(TWEEN.Easing.Cubic.In)
 							.onUpdate(tweenEndingBound)
 							.delay(this.startFrame+6060).start();
 

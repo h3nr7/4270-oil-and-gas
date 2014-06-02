@@ -70,7 +70,7 @@
 
 			if(!this.isStop) {
 				// console.log(this.distance, this.tp.speed)
-				this.distance += this.tp.speed*this.scrollSpeed;
+				this.distance += (this.tp.speed*this.scrollSpeed);
 				if (this.distance<0) {
 					this.distance = 0;
 				}
