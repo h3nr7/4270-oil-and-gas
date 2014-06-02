@@ -33,6 +33,11 @@
 
 			this._setup(sFrame, duration, x, y);
 
+			this.addSprite('productionrig_01.png', 0,0,0, 0,0);
+			this.addSprite('productionrig_02.png', 602,0,0, 0,0);
+			this.addSprite('productionrig_03.png', 0,693,0, 0,0);
+			this.addSprite('productionrig_04.png', 602,693,0, 0,0);
+
 		}
 
 		p.open = function() {

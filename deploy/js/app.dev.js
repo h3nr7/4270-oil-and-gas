@@ -11652,6 +11652,7 @@ TWEEN.Interpolation = {
         var ElOilrig = function ElOilrig(sFrame, duration, x, y, z) {
             this.name = name;
             this.element = [];
+            this.fan = [];
             this.container = new PIXI.DisplayObjectContainer();
             this.setup(sFrame, duration, x, y);
             this.z = z;
@@ -11666,10 +11667,11 @@ TWEEN.Interpolation = {
             this.addSprite("oilrig_03.png", 0, 693, 0, 0, 0);
             this.addSprite("oilrig_04.png", 602, 693, 0, 0, 0);
             this.addSprite("oilrig_05.png", 0, 1073, 0, 0, 0);
-            this.addSprite("oilrig_06.png", 602, 1072, 0, 0, 0);
+            this.addSprite("oilrig_06.png", 603, 1072, 0, 0, 0);
             this.addSprite("oilrig_wave.png", 150, 1215, 0, 0, 0);
             this.addSprite("oilrig_wave.png", 1e3, 1640, 0, 0, 0);
-            this.addFan(0, 0, 0, 2e3);
+            this.addFan(552, 1290, 0, 2e3);
+            this.addFan(1077, 1290, 2e3);
             this.element[7].rotate(.75);
             this.needle = new ElSprite("oilrig_needle.png", 1067, 533, 0, .5, .5);
             this.container.addChild(this.needle.container);
@@ -11720,6 +11722,10 @@ TWEEN.Interpolation = {
         var p = ElProductionRig.prototype = new AbContainer();
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
+            this.addSprite("productionrig_01.png", 0, 0, 0, 0, 0);
+            this.addSprite("productionrig_02.png", 602, 0, 0, 0, 0);
+            this.addSprite("productionrig_03.png", 0, 693, 0, 0, 0);
+            this.addSprite("productionrig_04.png", 602, 693, 0, 0, 0);
         };
         p.open = function() {};
         p.addSprite = function(name, x, y, z, aX, aY) {
@@ -12620,29 +12626,118 @@ TWEEN.Interpolation = {
     var scenedata = MKK.getNamespace("data").scenedata;
     var styledata = MKK.getNamespace("data").styledata;
     var AbScene = ns.AbScene;
+    var Scene1Level = ns.level.Scene1Level;
     var StaticLevel = ns.level.StaticLevel;
-    var Scene2Level = ns.level.Scene2Level;
     var ElSprite = ns.element.ElSprite;
     var ElSpriteContainer = ns.element.ElSpriteContainer;
     var ElText = ns.element.ElText;
     var ElRect = ns.element.ElRect;
+    var ElGrowRect = ns.element.ElGrowRect;
     var ElSeaBG = ns.element.ElSeaBG;
     var ElSeaWave = ns.element.ElSeaWave;
     var ElSeaFloor = ns.element.ElSeaFloor;
     var ElOilCave = ns.element.ElOilCave;
-    var ElShipInner = ns.element.ElShipInner;
-    var ElRadarBoat = ns.element.ElRadarBoat;
+    var ElEngine = ns.element.ElEngine;
+    var ElOilrig = ns.element.ElOilrig;
     var ElRadarBoatSide = ns.element.ElRadarBoatSide;
+    var ElRotatingSprite = ns.element.ElRotatingSprite;
     var ElDescription = ns.element.ElDescription;
     var FrameTween = MKK.getNamespace("app.animation").FrameTween;
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene3) {
-        var Scene3 = function Scene3() {};
+        var Scene3 = function Scene3() {
+            this.tweenTime = {
+                _speed: 500,
+                tween1Start: 1674,
+                tween2Start: 2700,
+                tween3Start: 3500,
+                startX0: 1024,
+                startY0: 50,
+                scale0: 1,
+                orX0: 0,
+                orY0: 0,
+                moveX1: 250,
+                moveX2: -500,
+                moveY2: 50,
+                moveX3: -600,
+                moveY3: -250,
+                moveX4: 500,
+                moveY4: 500,
+                scale4: .3,
+                orX4: 860,
+                orY4: 384
+            };
+        };
         ns.Scene3 = Scene3;
         var p = Scene3.prototype = new AbScene();
-        p.open = function() {};
+        p.open = function() {
+            var tTime = this.tweenTime;
+            this.staticlevel = new StaticLevel("statictxt");
+            this.staticlevel.setup(tTime.startX0, tTime.startY0, 0);
+            this.addLevel(this.staticlevel);
+            this.waveLevel = new StaticLevel("staticwave");
+            this.staticlevel.setup(tTime.startX0, tTime.startY0, 0);
+            this.addLevel(this.staticlevel);
+            console.log(tTime.startX0);
+            this.oilrig = new ElOilrig(0, 5e3, 0, 0, 0);
+            this.staticlevel.addElement(this.oilrig.container);
+            var tweenStartingBound = ListenerFunctions.createListenerFunction(this, this.tweenStarting);
+            this.tween0 = new TweenEach({
+                x: tTime.startX0,
+                y: tTime.startY0
+            }).to({
+                x: tTime.moveX1
+            }, tTime._speed).easing(TWEEN.Easing.Cubic.In).onUpdate(tweenStartingBound).delay(this.startFrame).start();
+            var tweenMove1Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove1);
+            this.tween1 = new TweenEach({
+                x: tTime.moveX1
+            }).to({
+                x: tTime.moveX2
+            }, tTime._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tweenMove1Bound).delay(this.startFrame + tTime.tween1Start).start();
+            var tweenMove2Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove2);
+            this.tween2 = new TweenEach({
+                x: tTime.moveX2,
+                y: tTime.moveY2
+            }).to({
+                x: tTime.moveX3,
+                y: tTime.moveY3
+            }, tTime._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tweenMove2Bound).delay(this.startFrame + tTime.tween2Start).start();
+            var tweenMove3Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove3);
+            this.tween3 = new TweenEach({
+                x: tTime.moveX3,
+                y: tTime.moveY3,
+                orX: tTime.orX0,
+                orY: tTime.orY0,
+                scale: tTime.scale0
+            }).to({
+                x: tTime.moveX4,
+                y: tTime.moveY4,
+                orX: tTime.orX4,
+                orY: tTime.orY4,
+                scale: tTime.scale4
+            }, tTime._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tweenMove3Bound).delay(this.startFrame + tTime.tween3Start).start();
+        };
         p.close = function() {};
-        p.update = function(frame) {};
+        p.update = function(frame) {
+            this.staticlevel.update(frame);
+        };
+        p.tweenStarting = function(e) {
+            var cObj = this.tween0.tweenVars();
+            this.staticlevel.position(cObj.x, cObj.y);
+        };
+        p.tweenMove1 = function(e) {
+            var cObj = this.tween1.tweenVars();
+            this.staticlevel.xPos(cObj.x);
+        };
+        p.tweenMove2 = function(e) {
+            var cObj = this.tween2.tweenVars();
+            this.staticlevel.position(cObj.x, cObj.y);
+        };
+        p.tweenMove3 = function(e) {
+            var cObj = this.tween3.tweenVars();
+            this.oilrig.scale(cObj.scale);
+            this.oilrig.position(cObj.orX, cObj.orY);
+        };
     }
 })();
 
@@ -12829,6 +12924,7 @@ TWEEN.Interpolation = {
     var ElOilCave = ns.element.ElOilCave;
     var ElEngine = ns.element.ElEngine;
     var ElOilrig = ns.element.ElOilrig;
+    var ElProductionRig = ns.element.ElProductionRig;
     var ElRadarBoatSide = ns.element.ElRadarBoatSide;
     var ElRotatingSprite = ns.element.ElRotatingSprite;
     var ElShipInner = ns.element.ElShipInner;
@@ -12850,8 +12946,9 @@ TWEEN.Interpolation = {
             this.seafloor = new ElSeaFloor("seafloor", 0, 4282, 0, 0, 0, 1024, 1024);
             this.oilcave = new ElOilCave("oilcave", 0, 0, 0, 200, 0, 0);
             this.radarboatside = new ElRadarBoatSide(0, 0, 0, 0);
-            this.oilrig = new ElOilrig(0, 0, -500, 0, 0, 0, 0);
-            this.level[1].addElement(this.oilrig.container);
+            this.oilrig = new ElOilrig(0, 0, 0, 0, 0, 0, 0);
+            this.productionrig = new ElProductionRig(0, 0, 0, 0, 0, 0, 0);
+            this.level[1].addElement(this.productionrig.container);
         };
         p.close = function() {};
         p.update = function(frame) {

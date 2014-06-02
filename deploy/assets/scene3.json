@@ -1,61 +1,77 @@
 {
 	"meta": {
 		"image": "scene3.png",
-		"size": {"w":1878,"h":1074},
+		"size": {"w":1874,"h":1355},
 		"scale": "1"
 	},
 	"frames": {
 		"oilrig_01.png":
 		{
-            "frame": {"x":0,"y":0,"w":602,"h":693},
+            "frame": {"x":0,"y":0,"w":606,"h":693},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":602,"h":693},
-            "sourceSize": {"w":602,"h":693}
+            "spriteSourceSize": {"x":0,"y":0,"w":606,"h":693},
+            "sourceSize": {"w":606,"h":693}
 		},
 		"oilrig_02.png":
 		{
-            "frame": {"x":602,"y":0,"w":638,"h":693},
+            "frame": {"x":606,"y":0,"w":634,"h":693},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":638,"h":693},
-            "sourceSize": {"w":638,"h":693}
+            "spriteSourceSize": {"x":0,"y":0,"w":634,"h":693},
+            "sourceSize": {"w":634,"h":693}
 		},
 		"oilrig_03.png":
 		{
-            "frame": {"x":0,"y":693,"w":602,"h":381},
+            "frame": {"x":0,"y":693,"w":606,"h":381},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":602,"h":381},
-            "sourceSize": {"w":602,"h":381}
+            "spriteSourceSize": {"x":0,"y":0,"w":606,"h":381},
+            "sourceSize": {"w":606,"h":381}
 		},
 		"oilrig_04.png":
 		{
-            "frame": {"x":602,"y":693,"w":638,"h":381},
+            "frame": {"x":606,"y":693,"w":634,"h":381},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":638,"h":381},
-            "sourceSize": {"w":638,"h":381}
+            "spriteSourceSize": {"x":0,"y":0,"w":634,"h":381},
+            "sourceSize": {"w":634,"h":381}
 		},
 		"oilrig_06.png":
 		{
-            "frame": {"x":1240,"y":0,"w":638,"h":284},
+            "frame": {"x":1240,"y":0,"w":634,"h":285},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":638,"h":284},
-            "sourceSize": {"w":638,"h":284}
+            "spriteSourceSize": {"x":0,"y":0,"w":634,"h":285},
+            "sourceSize": {"w":634,"h":285}
+		},
+		"oilrig_07.png":
+		{
+            "frame": {"x":1240,"y":285,"w":606,"h":283},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":606,"h":283},
+            "sourceSize": {"w":606,"h":283}
 		},
 		"oilrig_05.png":
 		{
-            "frame": {"x":1240,"y":284,"w":602,"h":282},
+            "frame": {"x":1240,"y":568,"w":606,"h":283},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":602,"h":282},
-            "sourceSize": {"w":602,"h":282}
+            "spriteSourceSize": {"x":0,"y":0,"w":606,"h":283},
+            "sourceSize": {"w":606,"h":283}
+		},
+		"oilrig_08.png":
+		{
+            "frame": {"x":0,"y":1074,"w":634,"h":281},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":634,"h":281},
+            "sourceSize": {"w":634,"h":281}
 		},
 		"oilrig_wave.png":
 		{
-            "frame": {"x":1240,"y":566,"w":260,"h":170},
+            "frame": {"x":1240,"y":851,"w":260,"h":170},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":260,"h":170},
@@ -63,7 +79,7 @@
 		},
 		"oilrig_engine_shadow.png":
 		{
-            "frame": {"x":1500,"y":566,"w":134,"h":134},
+            "frame": {"x":1500,"y":851,"w":134,"h":134},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":134,"h":134},
@@ -71,7 +87,7 @@
 		},
 		"oilrig_fan_1.png":
 		{
-            "frame": {"x":1634,"y":566,"w":80,"h":80},
+            "frame": {"x":1634,"y":851,"w":80,"h":80},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":80,"h":80},
@@ -79,7 +95,7 @@
 		},
 		"oilrig_needle.png":
 		{
-            "frame": {"x":1714,"y":566,"w":60,"h":60},
+            "frame": {"x":1714,"y":851,"w":60,"h":60},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":60,"h":60},

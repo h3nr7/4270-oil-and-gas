@@ -19,6 +19,7 @@
 	var ElOilCave = ns.element.ElOilCave;
 	var ElEngine = ns.element.ElEngine;
 	var ElOilrig = ns.element.ElOilrig;
+	var ElProductionRig = ns.element.ElProductionRig;
 	var ElRadarBoatSide = ns.element.ElRadarBoatSide;
 	var ElRotatingSprite = ns.element.ElRotatingSprite;
 
@@ -70,6 +71,8 @@
 
 			this.oilrig = new ElOilrig(0,0, 0,0,0, 0,0 );
 
+			this.productionrig = new ElProductionRig(0,0, 0,0,0, 0,0);
+
 			// this.gRect = new ElGrowRect (200, 200, 0, 20, 200, 300, 20, 10, 100, 0xf1345e);
 			// ----------------------------
 			// add to levels
@@ -85,7 +88,8 @@
 			// this.level[1].addElement(this.radarboatside.container);
 			// this.level[1].addElement(this.gRect.container);
 
-			this.level[1].addElement(this.oilrig.container);
+			// this.level[1].addElement(this.oilrig.container);
+			this.level[1].addElement(this.productionrig.container);
 
 			
 
