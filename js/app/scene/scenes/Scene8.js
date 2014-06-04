@@ -39,6 +39,15 @@
 		//open when init is completed
 		p.open = function() {
 
+			//back
+			this.level1 = new StaticLevel('level1');
+			this.level1.setup(0, 0, 0);
+			this.addLevel(this.level1);	
+
+			//strapline1
+			this.strap1 = new 
+
+			this.level1.addElement()
 
 		}
 
@@ -49,6 +58,10 @@
 		}
 
 		p.update = function(frame) {
+			this._update(frame);
+			var cFrame = this.localCurFrame(frame);
+
+			this.level1.update(cFrame);
 
 		}
 

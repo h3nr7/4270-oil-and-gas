@@ -8,6 +8,7 @@
 	var ElSprite = ns.ElSprite;
 	var ElRotatingSprite = ns.ElRotatingSprite;
 	var ElEngine = ns.ElEngine;
+	var ElDrill = ns.ElDrill;
 	var scenedata = MKK.getNamespace('data').scenedata;
 
 	if(!ns.ElOilrig) {
@@ -35,6 +36,15 @@
 
 			this._setup(sFrame, duration, x, y);
 
+			//adcasing
+			this.addCasing();
+			this.drillStartY = 1600;
+			this.drill = new ElDrill(0,0, 855, this.drillStartY, 0);
+			this.drill.scale(1.8);
+
+			this.container.addChild(this.drill.container);
+
+			//add the oilrig
 			this.addSprite('oilrig_01.png', 0,0,0, 0,0);
 			this.addSprite('oilrig_02.png', 604,0,0, 0,0);
 			this.addSprite('oilrig_03.png', 0,691,0, 0,0);
@@ -48,6 +58,8 @@
 			this.addFan(552,1290,0, 2000);
 			this.addFan(1077,1290, 2000);
 
+			this.addWire();
+
 			this.element[7].rotate(0.75);
 
 			this.needle = new ElSprite('oilrig_needle.png', 1067, 533, 0, 0.5, 0.5);
@@ -58,13 +70,42 @@
 			this.engineShadow = new ElSprite('oilrig_engine_shadow.png', 501, 597, 0, 0.5, 0.5);
 
 			this.container.addChild(this.engine.container);
-			this.container.addChild(this.engineShadow.container);
-							
+			this.container.addChild(this.engineShadow.container);		
 
+			
 		}
 
 		p.open = function() {
 
+		}
+
+		p.addCasing = function() {
+			this.casing = new PIXI.Graphics();
+			this.casing.clear();
+			this.casing.beginFill(settings.defaultOilRigBlue, 1);
+			this.casing.drawRect(0, 0, 100, 3640);
+			this.casing.endFill();
+			this.casing.position.x = 804;
+			this.casing.position.y = 850;	
+			this.casing.alpha = 0.6;
+			this.container.addChild(this.casing);
+		}
+
+
+		p.addWire = function() {
+			this.wire = new PIXI.Graphics();
+			this.updateWire(0);
+			this.wire.position.x = 850;
+			this.wire.position.y = 430;	
+			this.wire.alpha = 0.9;
+			this.container.addChild(this.wire);
+		}
+
+		p.updateWire = function(e) {
+			this.wire.clear();
+			this.wire.beginFill(settings.defaultOilRigLightBlue, 1);
+			this.wire.drawRect(0, 0, 10, 1000 + 4950*e);
+			this.wire.endFill();
 		}
 
 		p.addSprite = function(name, x, y, z, aX, aY) {
@@ -78,6 +119,19 @@
 			tmp.start();
 			this.fan.push(tmp);
 			this.container.addChild(tmp.container);
+		}
+
+		p.updateNeedle = function(e) {
+			this.needle.rotate(e);
+		}
+
+		p.scaleDrill = function(e) {
+			this.drill.scale(e);
+		}
+
+		p.updateDrill = function(e) {
+			var pos = this.drillStartY + e*4800;
+			this.drill.yPos(pos);
 		}
 
 		p.update = function(frame) {

@@ -16,9 +16,11 @@
 	var ElSeaBG = ns.element.ElSeaBG;
 	var ElSeaWave = ns.element.ElSeaWave;
 	var ElSeaFloor = ns.element.ElSeaFloor;
+	var ElSeaBed = ns.element.ElSeaBed;
 	var ElOilCave = ns.element.ElOilCave;
 	var ElEngine = ns.element.ElEngine;
 	var ElOilrig = ns.element.ElOilrig;
+	var ElOilHole = ns.element.ElOilHole;
 	var ElSeaWave = ns.element.ElSeaWave;
 	var ElRadarBoatSide = ns.element.ElRadarBoatSide;
 	var ElRotatingSprite = ns.element.ElRotatingSprite;
@@ -34,14 +36,17 @@
 	if(!ns.Scene3) {
 
 		var Scene3 = function Scene3() {
+
 			this.tweenTime= {
 
-				_speed: 500,
-				tween1Start: 1674,
-				tween2Start: 2700,
-				tween3Start: 3500,
-				tween4Start: 4000,
-				tween5Start: 4600,
+				_speed: 250,
+				_speed2: 500,
+				_speed3: 750, 
+				tween1Start: 800,
+				tween2Start: 1550,
+				tween3Start: 2400,
+				tween4Start: 3200,
+				tween5Start: 4200,
 				tween6Start: 5200,
 				startX0: 1024,
 				startY0: 50,
@@ -59,12 +64,21 @@
 				moveY4: 500,
 				moveX6: -1024,
 				scale4: 0.3,
-				orX4: 890,
+				orX4: 850,
 				orY4: 384,
 				waveX1: 0,
 				waveY1: 457,
+				moveY5: -1650,
 
-				moveY5: -1650
+				drill1Start: 3960
+			}
+
+			this.txtTime = {
+
+				txt1Start: 200,
+				txt2Start: 1050,
+				txt3Start: 1750,
+				txt4Start: 2630
 			}
 		}
 
@@ -79,7 +93,7 @@
 
 			//tweenTIme
 			var tTime = this.tweenTime;
-
+			var txtTime = this.txtTime;
 
 			//sea bg level
 			this.seabglevel = new StaticLevel('staticseabg');
@@ -105,17 +119,20 @@
 			//create seabg
 			this.seabg = new ElSeaBG('seabg', tTime.waveX0, tTime.waveY0,0,0,0, 1024, 1024);
 			this.seafloor = new ElSeaFloor('seafloor', 0, 1484, 0,0,0, 1024, 1200);
-			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 2024, 0,0);
+			this.seabed = new ElSeaBed(0,0, 0, 1484,0, 1024);
+			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 1994, 0,0);
+			this.oilhole = new ElOilHole('oilhole', 0,0, -5, 1484, 0,0)
+
 			//iceberg 1
 			this.iceberg = new ElSpriteContainer('iceberg', 0, 0, 0, 0, 0);
 			this.iceberg.addSprite("drilling_iceberg1.png", 0, tTime.waveY0);
 
 			this.seabglevel.addElement(this.seabg.container);
+			this.seabglevel.addElement(this.seabed.container);
 			this.seabglevel.addElement(this.seafloor.container);
 			this.seabglevel.addElement(this.oilcave.container);
 			this.seabglevel.addElement(this.iceberg.container);
-
-
+			this.seabglevel.addElement(this.oilhole.container);
 
 			//create oilrig
 			this.oilrig = new ElOilrig(0,5000, 0, 0, 0 );
@@ -125,6 +142,23 @@
 			this.wavelevel.addElement(this.seawave.container);
 			// this.wavelevel.addElement(this.oilrig.container);
 			
+
+			//txt
+			this.desc = new ElDescription ('Engines', 'Mobil Delvac 1™ 600\nMobil Delvac MX™ 600\nMobil Pegasus™', '', 'blue', this.startFrame+txtTime.txt1Start, 800, 50, 400, 0);
+			this.txtlevel.addElement(this.desc.container);
+
+			this.desc2 = new ElDescription ('Top Drive', 'Mobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™', '', 'blue', this.startFrame+txtTime.txt2Start, 800, 470, 70, 0);
+			this.txtlevel.addElement(this.desc2.container);
+
+			this.desc3 = new ElDescription ('Mud Pumps', 'Mobil SHC™ Gear\nMobil Polyrex™ EM', '', 'blue', this.startFrame+txtTime.txt3Start, 800, 600, 240, 0);
+			this.txtlevel.addElement(this.desc3.container);
+
+			this.desc4 = new ElDescription ('Positioning Thruster', 'Mobil SHC™ 600\nMobilgear™ 600XP', '', 'white', this.startFrame+txtTime.txt4Start, 800, 630, 500, 0);
+			this.txtlevel.addElement(this.desc4.container);
+
+			// ------------------------------------------------
+			// Tween main scene
+			// ------------------------------------------------
 			//move into scene, left
 			var tweenStartingBound = ListenerFunctions.createListenerFunction(this, this.tweenStarting);
 			this.tween0 = new TweenEach({x: tTime.startX0, y: tTime.startY0})
@@ -169,16 +203,16 @@
 			//move bottom of seabed
 			var tweenMove4Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove4);
 			this.tween4 = new TweenEach({y: 0})
-							.to({y: tTime.moveY5}, tTime._speed)
+							.to({y: tTime.moveY5}, tTime._speed3)
 							// .easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tweenMove4Bound)
-							.delay(this.startFrame + tTime.tween4Start).start();
+							.delay(this.startFrame + tTime.tween4Start).start();	
 
 
 			//move back top
 			var tweenMove5Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove5);
 			this.tween5 = new TweenEach({y: tTime.moveY5})
-							.to({y: 0}, tTime._speed)
+							.to({y: 0}, tTime._speed3)
 							// .easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tweenMove5Bound)
 							.delay(this.startFrame + tTime.tween5Start).start();
@@ -190,6 +224,19 @@
 							.easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tweenMove6Bound)
 							.delay(this.startFrame + tTime.tween6Start).start();
+
+
+
+			// ----------------------------
+			//Drill and hole Tweens
+			// ----------------------------
+			//move drill away
+			var tweenDrill1Bound = ListenerFunctions.createListenerFunction(this, this.tweenDrill1);
+			this.drillTween1 = new TweenEach({y: 0})
+							.to({y: 1}, tTime._speed)
+							// .easing(TWEEN.Easing.Cubic.InOut)
+							.onUpdate(tweenDrill1Bound)
+							.delay(this.startFrame + tTime.drill1Start).start();	
 		}
 
 
@@ -230,6 +277,7 @@
 		p.tweenMove2 = function(e) {
 			var cObj = this.tween2.tweenVars();
 			this.staticlevel.position(cObj.x, cObj.y);
+			this.oilrig.updateNeedle(0.4*e);
 		}
 
 		p.tweenMove3 = function(e) {
@@ -245,6 +293,8 @@
 		p.tweenMove4 = function(e) {
 			var cObj = this.tween4.tweenVars();
 			this.yPos(cObj.y);
+			this.oilrig.updateDrill(e);
+			this.oilrig.updateWire(e);
 		}
 
 		p.tweenMove5 = function(e) {
@@ -257,7 +307,11 @@
 			this.xPos(cObj.x);
 		}
 
-
+		//drill tweening
+		p.tweenDrill1 = function(e) {
+			this.oilrig.updateWire(1-e);
+			this.oilrig.updateDrill(1-e);
+		}
 	}
 
 })();

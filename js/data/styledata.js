@@ -33,7 +33,7 @@
 				fill: "#58595b", 
 				align:"left", 
 				wordWrap:"true", 
-				wordWrapWidth:"500"
+				wordWrapWidth:"400"
 			},
 			descriptionTitleWhite:{
 				font:"40px emprintw01-semibold", 
@@ -48,7 +48,7 @@
 				fill: "#ffffff", 
 				align:"left", 
 				wordWrap:"true", 
-				wordWrapWidth:"500"
+				wordWrapWidth:"400"
 			},
 			descriptionTitleBlue:{
 				font:"40px emprintw01-semibold", 
@@ -63,7 +63,7 @@
 				fill: "#174c8f", 
 				align:"left", 
 				wordWrap:"true", 
-				wordWrapWidth:"500"
+				wordWrapWidth:"400"
 			},
 			descriptionTitleRed:{
 				font:"40px emprintw01-semibold", 
@@ -78,7 +78,7 @@
 				fill: "#aa1816", 
 				align:"left", 
 				wordWrap:"true", 
-				wordWrapWidth:"500"
+				wordWrapWidth:"400"
 			},
 			
 

@@ -14,6 +14,7 @@
 
 	var ns = MKK.getNamespace('app.scene');
 	var AbElement = ns.AbElement;
+	var AbSprite = ns.AbSprite;
 
 
 	if(!ns.AbContainer) {
@@ -90,61 +91,15 @@
 		}
 
 
-		// // -----------------------------------------------------------
-		// // Container Functions
-		// // -----------------------------------------------------------
-		// p.scale = function(factor) {
-		// 	this.container.scale.x = this.container.scale.y = factor;
-		// }
+		// -----------------------------------------------------------
+		// Container Functions
+		// -----------------------------------------------------------
 
-		// p.position = function(x, y) {
-		// 	this.container.x = x;
-		// 	this.container.y = y;
-		// }
-
-		// p.mask = function(xX, yY, wW, hH, type) {
-
-		// 	if(!this.maskObj) {
-		// 		this.maskObj = new PIXI.Graphics();
-		// 		this.container.addChild(this.maskObj);
-		// 	}
-
-		// 	this.maskObj.clear();
-		// 	this.maskObj.beginFill(0x8bc5ff, 1);
-
-		// 	switch (type) {
-
-		// 		default:
-		// 		case 'rect':
-		// 			this.maskObj.drawRect(0, 0, wW, hH);
-		// 			break;
-		// 		case 'round':
-		// 			break;
-		// 	}
-		// 	this.maskObj.endFill();
-		// 	this.maskObj.position.x = xX;
-		// 	this.maskObj.position.y = yY;
-
-		// }
-
-
-		// p.showMask = function() {
-		// 	if(this.container.mask) return;
-		// 	this.container.mask = this.maskObj;
-		// }
-
-		// p.hideMask = function() {
-		// 	if(this.container.mask) this.container.mask = null;
-		// }
-
-
-		// p.show = function() {
-		// 	this.container.visible = true;
-		// }
-
-		// p.hide = function() {
-		// 	this.container.visible = false;
-		// }
+		p.addSprite = function(name, x, y, z, aX, aY) {
+			var tmp = new AbSprite(name, x, y, z, aX, aY);
+			this.element.push(tmp);
+			this.container.addChild(tmp.container);
+		}
 
 		// -----------------------------------------------------------
 		// Animate In and Out in SCENE

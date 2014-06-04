@@ -1,13 +1,69 @@
 {
 	"meta": {
 		"image": "scene7.png",
-		"size": {"w":1,"h":1},
+		"size": {"w":1602,"h":810},
 		"scale": "1"
 	},
 	"frames": {
+		"truck_02.png":
+		{
+            "frame": {"x":0,"y":0,"w":560,"h":810},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":560,"h":810},
+            "sourceSize": {"w":560,"h":810}
+		},
+		"tree_big.png":
+		{
+            "frame": {"x":560,"y":0,"w":318,"h":604},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":318,"h":604},
+            "sourceSize": {"w":318,"h":604}
+		},
+		"road.png":
+		{
+            "frame": {"x":878,"y":0,"w":724,"h":406},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":724,"h":406},
+            "sourceSize": {"w":724,"h":406}
+		},
+		"house.png":
+		{
+            "frame": {"x":878,"y":406,"w":204,"h":180},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":204,"h":180},
+            "sourceSize": {"w":204,"h":180}
+		},
+		"tree_small.png":
+		{
+            "frame": {"x":1082,"y":406,"w":82,"h":154},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":82,"h":154},
+            "sourceSize": {"w":82,"h":154}
+		},
+		"flat.png":
+		{
+            "frame": {"x":1164,"y":406,"w":97,"h":100},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":97,"h":100},
+            "sourceSize": {"w":97,"h":100}
+		},
+		"truck_01.png":
+		{
+            "frame": {"x":1261,"y":406,"w":204,"h":94},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":204,"h":94},
+            "sourceSize": {"w":204,"h":94}
+		},
 		"s7_1px.png":
 		{
-            "frame": {"x":0,"y":0,"w":1,"h":1},
+            "frame": {"x":1465,"y":406,"w":1,"h":1},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},

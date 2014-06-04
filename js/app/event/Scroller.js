@@ -13,7 +13,7 @@
 			this.view = null;
 			this.isStop = false;
 			this.isDebug = false;
-			this.scrollSpeed = 0.05;
+			this.scrollSpeed = 0.03;
 			this.distance = 0;
 			this.speedRange = 10000;
 		}

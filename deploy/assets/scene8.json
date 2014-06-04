@@ -1,13 +1,53 @@
 {
 	"meta": {
 		"image": "scene8.png",
-		"size": {"w":1,"h":1},
+		"size": {"w":1204,"h":1076},
 		"scale": "1"
 	},
 	"frames": {
+		"mountain_lightgreen_big.png":
+		{
+            "frame": {"x":0,"y":0,"w":1204,"h":522},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":1204,"h":522},
+            "sourceSize": {"w":1204,"h":522}
+		},
+		"mountain_green_mid.png":
+		{
+            "frame": {"x":0,"y":522,"w":629,"h":277},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":629,"h":277},
+            "sourceSize": {"w":629,"h":277}
+		},
+		"mountain_lightgreen_mid.png":
+		{
+            "frame": {"x":0,"y":799,"w":629,"h":277},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":629,"h":277},
+            "sourceSize": {"w":629,"h":277}
+		},
+		"mountain_twin_small.png":
+		{
+            "frame": {"x":629,"y":522,"w":424,"h":164},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":424,"h":164},
+            "sourceSize": {"w":424,"h":164}
+		},
+		"the_end.png":
+		{
+            "frame": {"x":629,"y":686,"w":340,"h":66},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":340,"h":66},
+            "sourceSize": {"w":340,"h":66}
+		},
 		"s8_1px.png":
 		{
-            "frame": {"x":0,"y":0,"w":1,"h":1},
+            "frame": {"x":1053,"y":522,"w":1,"h":1},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},

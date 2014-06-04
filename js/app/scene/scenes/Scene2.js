@@ -15,6 +15,7 @@
 	var ElSeaBG = ns.element.ElSeaBG;
 	var ElSeaWave = ns.element.ElSeaWave;
 	var ElSeaFloor = ns.element.ElSeaFloor;
+	var ElSeaBed = ns.element.ElSeaBed;
 	var ElOilCave = ns.element.ElOilCave;
 	var ElShipInner = ns.element.ElShipInner;
 	var ElRadarBoat = ns.element.ElRadarBoat;
@@ -52,7 +53,6 @@
 			// ----------------------------
 			this.seabg = new ElSeaBG('seabg', 0,1050,0,0,0, 1024, 1024);
 			this.seawave = new ElSeaWave('seawave', 0, 1050,0,0,0, 1024);
-
 			this.smallship = new ElSprite('explorer-ship-small.png', 100, 930, 0, 0);
 
 			// ----------------------------
@@ -81,6 +81,7 @@
 			// ----------------------------		
 			this.seabg2 = new ElSeaBG('seabg', 0,4282,0,0,0, 1024, 1024);
 			this.seawave2 = new ElSeaWave('seawave', 0, 4282,0,0,0, 1024, 1520);
+			this.seabed = new ElSeaBed(0,0, 0, 5582,0, 1024);
 			this.seafloor = new ElSeaFloor('seafloor', 0, 5582, 0,0,0, 1024, 120);
 			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 5682, 0,0);
 
@@ -157,6 +158,7 @@
 			this.level[2].addElement(this.ship.container);
 			this.level[3].addElement(this.seabg2.container);
 			this.level[3].addElement(this.radarboat.container);
+			this.level[3].addElement(this.seabed.container);
 			this.level[3].addElement(this.seafloor.container);
 			this.level[3].addElement(this.oilcave.container);
 			this.level[3].addElement(this.radarboatside.container);

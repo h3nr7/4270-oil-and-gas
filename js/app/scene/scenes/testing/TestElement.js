@@ -16,12 +16,16 @@
 	var ElSeaBG = ns.element.ElSeaBG;
 	var ElSeaWave = ns.element.ElSeaWave;
 	var ElSeaFloor = ns.element.ElSeaFloor;
+	var ElSeaBed = ns.element.ElSeaBed;
 	var ElOilCave = ns.element.ElOilCave;
 	var ElEngine = ns.element.ElEngine;
 	var ElOilrig = ns.element.ElOilrig;
 	var ElProductionRig = ns.element.ElProductionRig;
 	var ElRadarBoatSide = ns.element.ElRadarBoatSide;
+	var ElFpso = ns.element.ElFpso;
+	var ElHelicopter = ns.element.ElHelicopter;
 	var ElRotatingSprite = ns.element.ElRotatingSprite;
+	var ElDrill = ns.element.ElDrill;
 
 	//test element classes
 	var ElShipInner = ns.element.ElShipInner;
@@ -73,6 +77,15 @@
 
 			this.productionrig = new ElProductionRig(0,0, 0,0,0, 0,0);
 
+			this.fpso = new ElFpso(0,0, 0,200,0, 0,0);
+
+			this.helicopter = new ElHelicopter(0,0, 0,200,0, 0,0);
+
+			this.seabed = new ElSeaBed(0,0, 0, 200,0, 1024);
+
+			this.drill = new ElDrill(0,0, 200, 200, 0);
+			this.drill.scale(0.6);
+
 			// this.gRect = new ElGrowRect (200, 200, 0, 20, 200, 300, 20, 10, 100, 0xf1345e);
 			// ----------------------------
 			// add to levels
@@ -89,7 +102,13 @@
 			// this.level[1].addElement(this.gRect.container);
 
 			// this.level[1].addElement(this.oilrig.container);
-			this.level[1].addElement(this.productionrig.container);
+			// this.level[1].addElement(this.productionrig.container);
+			// this.level[1].addElement(this.fpso.container);
+			// this.level[1].addElement(this.helicopter.container);
+			// this.level[1].addElement(this.seabed.container);
+			this.level[1].addElement(this.drill.container);
+
+
 
 			
 

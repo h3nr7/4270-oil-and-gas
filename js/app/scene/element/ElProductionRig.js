@@ -11,7 +11,7 @@
 
 	if(!ns.ElProductionRig) {
 
-		var ElProductionRig = function ElProductionRig(sFrame, duration, x, y) {
+		var ElProductionRig = function ElProductionRig(sFrame, duration, x, y, z) {
 
 			this.name = name;
 			this.element = [];
@@ -19,7 +19,7 @@
 
 			this.setup(sFrame, duration, x, y);
 
-			this.z = scenedata.scene2.element.radar.z;
+			this.z = z;
 			this.container.position = this.cPos;
 
 
@@ -33,10 +33,17 @@
 
 			this._setup(sFrame, duration, x, y);
 
-			this.addSprite('productionrig_01.png', 0,0,0, 0,0);
-			this.addSprite('productionrig_02.png', 602,0,0, 0,0);
-			this.addSprite('productionrig_03.png', 0,693,0, 0,0);
-			this.addSprite('productionrig_04.png', 602,693,0, 0,0);
+			this.addSprite('productionrig-bg2.png', 0,0,0, 0,0);
+			this.addSprite('productionrig-bg1.png', 400,210,0, 0,0);
+
+
+			this.addSprite('productionrig_02.png', 0,320,0, 0,0);
+			this.addSprite('productionrig_03.png', 204,320,0, 0,0);
+			this.addSprite('productionrig_04.png', 407,320,0, 0,0);
+
+			this.fan = new ElRotatingSprite('productionrig_fan.png', 154, 476, 0, 2000, 0.5, 0.5);
+			this.fan.start();
+			this.container.addChild(this.fan.container);
 
 		}
 
@@ -44,11 +51,6 @@
 
 		}
 
-		p.addSprite = function(name, x, y, z, aX, aY) {
-			var tmp = new ElSprite(name, x, y, z, aX, aY);
-			this.element.push(tmp);
-			this.container.addChild(tmp.container);
-		}
 
 	}
 

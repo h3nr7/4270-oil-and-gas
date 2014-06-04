@@ -1,13 +1,53 @@
 {
 	"meta": {
 		"image": "scene4.png",
-		"size": {"w":354,"h":144},
+		"size": {"w":1230,"h":1060},
 		"scale": "1"
 	},
 	"frames": {
+		"productionrig-bg2.png":
+		{
+            "frame": {"x":0,"y":0,"w":619,"h":628},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":619,"h":628},
+            "sourceSize": {"w":619,"h":628}
+		},
+		"productionrig_02.png":
+		{
+            "frame": {"x":619,"y":0,"w":204,"h":432},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":204,"h":432},
+            "sourceSize": {"w":204,"h":432}
+		},
+		"productionrig_03.png":
+		{
+            "frame": {"x":823,"y":0,"w":407,"h":432},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":407,"h":432},
+            "sourceSize": {"w":407,"h":432}
+		},
+		"productionrig_04.png":
+		{
+            "frame": {"x":0,"y":628,"w":519,"h":432},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":519,"h":432},
+            "sourceSize": {"w":519,"h":432}
+		},
+		"productionrig-bg1.png":
+		{
+            "frame": {"x":519,"y":628,"w":409,"h":363},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":409,"h":363},
+            "sourceSize": {"w":409,"h":363}
+		},
 		"helicopter.png":
 		{
-            "frame": {"x":0,"y":0,"w":354,"h":90},
+            "frame": {"x":823,"y":432,"w":354,"h":90},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":354,"h":90},
@@ -15,7 +55,15 @@
 		},
 		"helicopter_blade.png":
 		{
-            "frame": {"x":0,"y":90,"w":54,"h":54},
+            "frame": {"x":823,"y":522,"w":54,"h":54},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":54,"h":54},
+            "sourceSize": {"w":54,"h":54}
+		},
+		"productionrig_fan.png":
+		{
+            "frame": {"x":877,"y":522,"w":54,"h":54},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":54,"h":54},
@@ -23,7 +71,7 @@
 		},
 		"s4_1px.png":
 		{
-            "frame": {"x":54,"y":90,"w":1,"h":1},
+            "frame": {"x":1177,"y":432,"w":1,"h":1},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},

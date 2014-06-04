@@ -33,6 +33,12 @@
 
 			this._setup(sFrame, duration, x, y);
 
+			this.addSprite('helicopter.png', 0,0,0, 0,0);
+
+			this.blade = new ElRotatingSprite('helicopter_blade.png', 30, 30, 0, 2000, 0.5, 0.5);
+			this.blade.start();
+			this.container.addChild(this.blade.container);
+
 		}
 
 		p.open = function() {
