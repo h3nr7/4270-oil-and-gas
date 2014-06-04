@@ -54,8 +54,8 @@
 			this.container.addChild(this.hook.container);
 
 			//add gear
-			this.addGear (674, 105, 0, 5000, 0.7);
-			this.addGear (751, 98, 0, -5000, 0.8);
+			this.addGear (674, 125, 0, 5000, 0.7);
+			this.addGear (751, 118, 0, -5000, 0.8);
 
 			//add fan
 			this.addFan (545, 407, 0, 1000);

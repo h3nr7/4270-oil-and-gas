@@ -3,7 +3,9 @@
 	var ns = MKK.getNamespace('app.scene');
 	var scenedata = MKK.getNamespace('data').scenedata;
 	var styledata = MKK.getNamespace('data').styledata;
+	var settings = MKK.getNamespace('data').settings;
 	var AbScene = ns.AbScene;
+	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
 
 	var Scene1Level = ns.level.Scene1Level;
 	var ElSprite = ns.element.ElSprite;
@@ -19,6 +21,12 @@
 
 		var Scene1 = function Scene1() {
 
+			this.tweenTime = {
+				_speed: 500,
+
+				startTime1: 2200
+			};
+
 		}
 
 
@@ -29,19 +37,9 @@
 		//open when init is completed
 		p.open = function() {
 
-			console.log(scenedata.scene1.level)
 			this.createLevels(scenedata.scene1.level, Scene1Level);
 
 			var strapStyle = styledata.straplinegrey;
-
-			//create levels
-			// this.level1 = new Scene1Level('level1');
-			// this.level1.setup(0,0,0);
-			// this.level2 = new Scene1Level('level2');
-			// this.level2.setup(0,0,5);
-
-			// this.level3 = new Scene1Level('level3');
-			// this.level3.setup(0,0,4);
 
 			//create elements
 
@@ -79,12 +77,12 @@
 			var symbol3 = new ElSprite("cloud_icon_productivity.png", 622,3730, 0);
 
 			var symStyle = {"font":"15px EMPrintW01-semibold", "fill": "#58595b", "align":"center", "wordWrap":"true", "wordWrapWidth":"200"};
-			var symTxt1 = new ElText("Safety", 357,3820, 0, 0.5, 0.5);
-			var symTxt2 = new ElText("Environmental Care", 506,3820, 0, 0.5, 0.5);
-			var symTxt3 = new ElText("Productivity", 655,3820, 0, 0.5, 0.5);
-			symTxt1.setStyle(symStyle);
-			symTxt2.setStyle(symStyle);
-			symTxt3.setStyle(symStyle);
+			this.symTxt1 = new ElText("Safety", 357,3820, 0, 0.5, 0.5);
+			this.symTxt2 = new ElText("Environmental Care", 506,3820, 0, 0.5, 0.5);
+			this.symTxt3 = new ElText("Productivity", 655,3820, 0, 0.5, 0.5);
+			this.symTxt1.setStyle(symStyle);
+			this.symTxt2.setStyle(symStyle);
+			this.symTxt3.setStyle(symStyle);
 
 			var logo2 = new ElSprite("mobile_shc_small.png", 180,4280, 0, 0.5, 0.5);
 			var logo3 = new ElSprite("mobile_grease_small.png", 518,4280, 0, 0.5, 0.5);
@@ -128,9 +126,10 @@
 			this.level[1].addElement(symbol1.container);
 			this.level[1].addElement(symbol2.container);
 			this.level[1].addElement(symbol3.container);
-			this.level[1].addElement(symTxt1.container);
-			this.level[1].addElement(symTxt2.container);
-			this.level[1].addElement(symTxt3.container);
+
+			this.level[1].addElement(this.symTxt1.container);
+			this.level[1].addElement(this.symTxt2.container);
+			this.level[1].addElement(this.symTxt3.container);
 			//logos and final part
 			this.level[1].addElement(logo2.container);
 			this.level[1].addElement(logo3.container);
@@ -155,12 +154,41 @@
 			this.addLevel(this.level[1]);
 			this.addLevel(this.level[2]);
 
-			var tT = new TweenEach({x:50});
+			// var tT = new TweenEach({x:50});
 
-			tT.to({x:100}).onUpdate(function(va){
+			// tT.to({x:100}).onUpdate(function(va){
 
-				console.log('kaka', va);
-			}).start(3000);
+			// }).start(3000);
+			
+			// -------------------------
+			//TWEENING
+			// -------------------------
+			// var tT = this.tweenTime;
+			// var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
+			// this.tween0 = new TweenEach({alpha:0 })
+			// 				.to({alpha:1}, tT._speed)
+			// 				// .easing(TWEEN.Easing.Cubic.Out)
+			// 				.onUpdate(tween0Bound)
+			// 				.delay(this.startFrame + tT.startTime1).start();
+
+
+
+		}
+
+
+		// -------------------------
+		// TWEENING FUNCTION
+		// -------------------------
+		p.tweenFunc0 = function(e) {
+			cObj = this.tween0.tweenVars();
+			this.symTxt1.opacity(this.tween0.alpha)
+		}
+
+		p.tweenFunc1 = function(e) {
+
+		}
+
+		p.tweenFunc2 = function(e) {
 
 		}
 

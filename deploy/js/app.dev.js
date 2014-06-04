@@ -11959,10 +11959,12 @@ TWEEN.Interpolation = {
     var ElRotatingSprite = ns.ElRotatingSprite;
     var scenedata = MKK.getNamespace("data").scenedata;
     if (!ns.ElRadar) {
-        var ElRadar = function ElRadar(sFrame, duration, x, y, isReverse) {
+        var ElRadar = function ElRadar(sFrame, duration, x, y, isReverse, maskx, masky) {
             this.name = name;
             this.element = [];
             this._direction = isReverse ? 1 : 0;
+            this.maskx = maskx || -150;
+            this.masky = masky || 237;
             this.container = new PIXI.DisplayObjectContainer();
             this.setup(sFrame, duration, x, y);
             this.z = scenedata.scene2.element.radar.z;
@@ -11970,7 +11972,7 @@ TWEEN.Interpolation = {
         };
         ns.ElRadar = ElRadar;
         var p = ElRadar.prototype = new AbContainer();
-        p.setup = function(sFrame, duration, x, y) {
+        p.setup = function(sFrame, duration, x, y, maskx, masky) {
             this._setup(sFrame, duration, x, y);
             this._radarSpeed = 1e3;
             this._radarDelay = 1010;
@@ -12017,6 +12019,9 @@ TWEEN.Interpolation = {
             this.tween2.repeat(1e3).delay(this._radarDelay * 2).start();
             this.tween4.repeat(1e3).delay(this._radarDelay * 2).start();
             this.tween6.repeat(1e3).delay(this._radarDelay * 2).start();
+            this.masker = this.createMask(this.maskx, this.masky, 830, 384);
+            this.container.addChild(this.masker);
+            this.container.mask = this.masker;
         };
         p.open = function() {};
         p.addSprite = function(name, x, y, z, aX, aY) {
@@ -12044,6 +12049,16 @@ TWEEN.Interpolation = {
             var sS = Math.abs(e - this._direction);
             this.round3.scale(sS * .5 + 1);
             this.round3.opacity(1 - sS);
+        };
+        p.createMask = function(x, y, wW, hH) {
+            var casing = new PIXI.Graphics();
+            casing.clear();
+            casing.beginFill(3355443, 1);
+            casing.drawRect(0, 0, wW, hH);
+            casing.endFill();
+            casing.position.x = x;
+            casing.position.y = y;
+            return casing;
         };
     }
 })();
@@ -12351,8 +12366,8 @@ TWEEN.Interpolation = {
             this.addSprite("exploration_inner_bg_04.png", 654, 699);
             this.hook = new ElSprite("engine_hook.png", 709, -54, 0, .5, 0);
             this.container.addChild(this.hook.container);
-            this.addGear(674, 105, 0, 5e3, .7);
-            this.addGear(751, 98, 0, -5e3, .8);
+            this.addGear(674, 125, 0, 5e3, .7);
+            this.addGear(751, 118, 0, -5e3, .8);
             this.addFan(545, 407, 0, 1e3);
             this.addFan(545, 782, 0, 5e3);
             this.addFan(545, 407, 0);
@@ -12525,7 +12540,9 @@ TWEEN.Interpolation = {
     var ns = MKK.getNamespace("app.scene");
     var scenedata = MKK.getNamespace("data").scenedata;
     var styledata = MKK.getNamespace("data").styledata;
+    var settings = MKK.getNamespace("data").settings;
     var AbScene = ns.AbScene;
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
     var Scene1Level = ns.level.Scene1Level;
     var ElSprite = ns.element.ElSprite;
     var ElText = ns.element.ElText;
@@ -12533,11 +12550,15 @@ TWEEN.Interpolation = {
     var FrameTween = MKK.getNamespace("app.animation").FrameTween;
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene1) {
-        var Scene1 = function Scene1() {};
+        var Scene1 = function Scene1() {
+            this.tweenTime = {
+                _speed: 500,
+                startTime1: 2200
+            };
+        };
         ns.Scene1 = Scene1;
         var p = Scene1.prototype = new AbScene();
         p.open = function() {
-            console.log(scenedata.scene1.level);
             this.createLevels(scenedata.scene1.level, Scene1Level);
             var strapStyle = styledata.straplinegrey;
             var cloud1 = new ElSprite("cloud_satellite.png", 100, 100, 0);
@@ -12570,12 +12591,12 @@ TWEEN.Interpolation = {
                 wordWrap: "true",
                 wordWrapWidth: "200"
             };
-            var symTxt1 = new ElText("Safety", 357, 3820, 0, .5, .5);
-            var symTxt2 = new ElText("Environmental Care", 506, 3820, 0, .5, .5);
-            var symTxt3 = new ElText("Productivity", 655, 3820, 0, .5, .5);
-            symTxt1.setStyle(symStyle);
-            symTxt2.setStyle(symStyle);
-            symTxt3.setStyle(symStyle);
+            this.symTxt1 = new ElText("Safety", 357, 3820, 0, .5, .5);
+            this.symTxt2 = new ElText("Environmental Care", 506, 3820, 0, .5, .5);
+            this.symTxt3 = new ElText("Productivity", 655, 3820, 0, .5, .5);
+            this.symTxt1.setStyle(symStyle);
+            this.symTxt2.setStyle(symStyle);
+            this.symTxt3.setStyle(symStyle);
             var logo2 = new ElSprite("mobile_shc_small.png", 180, 4280, 0, .5, .5);
             var logo3 = new ElSprite("mobile_grease_small.png", 518, 4280, 0, .5, .5);
             var logo4 = new ElSprite("signum_small.png", 850, 4295, 0, .5, .5);
@@ -12619,9 +12640,9 @@ TWEEN.Interpolation = {
             this.level[1].addElement(symbol1.container);
             this.level[1].addElement(symbol2.container);
             this.level[1].addElement(symbol3.container);
-            this.level[1].addElement(symTxt1.container);
-            this.level[1].addElement(symTxt2.container);
-            this.level[1].addElement(symTxt3.container);
+            this.level[1].addElement(this.symTxt1.container);
+            this.level[1].addElement(this.symTxt2.container);
+            this.level[1].addElement(this.symTxt3.container);
             this.level[1].addElement(logo2.container);
             this.level[1].addElement(logo3.container);
             this.level[1].addElement(logo4.container);
@@ -12639,15 +12660,13 @@ TWEEN.Interpolation = {
             this.addLevel(this.level[0]);
             this.addLevel(this.level[1]);
             this.addLevel(this.level[2]);
-            var tT = new TweenEach({
-                x: 50
-            });
-            tT.to({
-                x: 100
-            }).onUpdate(function(va) {
-                console.log("kaka", va);
-            }).start(3e3);
         };
+        p.tweenFunc0 = function(e) {
+            cObj = this.tween0.tweenVars();
+            this.symTxt1.opacity(this.tween0.alpha);
+        };
+        p.tweenFunc1 = function(e) {};
+        p.tweenFunc2 = function(e) {};
         p.close = function() {};
         p.update = function(frame) {
             this._update(frame);
@@ -12683,18 +12702,43 @@ TWEEN.Interpolation = {
     var ElRadarBoat = ns.element.ElRadarBoat;
     var ElRadarBoatSide = ns.element.ElRadarBoatSide;
     var ElDescription = ns.element.ElDescription;
+    var ElRadar = ns.element.ElRadar;
     var FrameTween = MKK.getNamespace("app.animation").FrameTween;
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene2) {
-        var Scene2 = function Scene2() {};
+        var Scene2 = function Scene2() {
+            this.txtLevel = [];
+        };
         ns.Scene2 = Scene2;
         var p = Scene2.prototype = new AbScene();
+        p.init = function(stage) {
+            this._init();
+            this.stage = stage;
+            this.stage.addChild(this.container);
+            this.stage.addChild(this.txtContainer);
+            this.open();
+        };
+        p._setup = function(sFrame, duration, x, y) {
+            this._preSetup(x, y);
+            this.container = new PIXI.DisplayObjectContainer();
+            this.txtContainer = new PIXI.DisplayObjectContainer();
+            this.container.position = this.oPos.clone();
+            this.txtContainer.position = this.oPos.clone();
+            this.startFrame = sFrame;
+            this.duration = duration;
+        };
+        p.addTxtLevel = function(oLevel) {
+            this.txtContainer.addChild(oLevel.container);
+            this.txtLevel.push(oLevel);
+        };
         p.open = function() {
             this.createLevels(scenedata.scene2.level, Scene2Level);
             this.staticlevel = new StaticLevel("statictxt");
             this.staticlevel.setup(0, 0, 0);
-            this.addLevel(this.staticlevel);
-            this.desc = new ElDescription("Gear Applications", "Outstanding protection for gears opearting in extreme conditions\n\n Mobil SHC™ 600", "", "white", this.startFrame + 1500, 800, 50, 1800, 0);
+            this.addTxtLevel(this.staticlevel);
+            this.desc = new ElDescription("Gear Applications", "Outstanding protection for gears opearting in extreme conditions\n\nMobil SHC™ 600\nMobilgear™ Gear\nMobil SHC™ 600XP", "", "white", this.startFrame + 1380, 1e3, 50, 50, 0);
+            this.desc2 = new ElDescription("Engines", "Advanced engine cleaniness and extended oil drain intervals\n\nMobil Gard™ SHC\nMobil Delvac 1™\nMobil Delvac 1™ 600\nMobilGard™ M\nMobilGard™ HSD", "", "white", this.startFrame + 1950, 1e3, 50, 300, 0);
+            this.desc3 = new ElDescription("Propulsion &\nThrusters", "Excellent load carrying and anti-wear properties\n\nMobil SHC™ Gear\nMobil DTE 10 Excel™", "", "white", this.startFrame + 3700, 1e3, 342, 280, 0);
             this.seabg = new ElSeaBG("seabg", 0, 1050, 0, 0, 0, 1024, 1024);
             this.seawave = new ElSeaWave("seawave", 0, 1050, 0, 0, 0, 1024);
             this.smallship = new ElSprite("explorer-ship-small.png", 100, 930, 0, 0);
@@ -12747,7 +12791,7 @@ TWEEN.Interpolation = {
                 y: 1500
             }).to({
                 y: 3200
-            }, 400).onUpdate(tweenInnerBound).easing(TWEEN.Easing.Exponential.InOut).delay(this.startFrame + 2600).start();
+            }, 400).onUpdate(tweenInnerBound).easing(TWEEN.Easing.Cubic.Out).easing(TWEEN.Easing.Exponential.InOut).delay(this.startFrame + 2600).start();
             var tweenRadar1Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar1);
             this.tween4 = new TweenEach({
                 y: 3414,
@@ -12763,19 +12807,21 @@ TWEEN.Interpolation = {
                 y: -384
             }).to({
                 y: -1400
-            }, 560).onUpdate(tweenRadar2Bound).delay(this.startFrame + 4940).start();
+            }, 560).onUpdate(tweenRadar2Bound).delay(this.startFrame + 5690).start();
             var tweenRadar3Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar3);
             this.tween6 = new TweenEach({
                 y: -1400
             }).to({
                 y: -384
-            }, 560).onUpdate(tweenRadar3Bound).delay(this.startFrame + 5500).start();
+            }, 560).onUpdate(tweenRadar3Bound).delay(this.startFrame + 6250).start();
             var tweenEndingBound = ListenerFunctions.createListenerFunction(this, this.tweenEnding);
             this.tween7 = new TweenEach({
                 x: 0
             }).to({
                 x: -1024
-            }, 1e3).easing(TWEEN.Easing.Cubic.In).onUpdate(tweenEndingBound).delay(this.startFrame + 6060).start();
+            }, 1e3).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tweenEndingBound).delay(this.startFrame + 6810).start();
+            this.radar1 = new ElRadar(this.startFrame + 4250, 750, 256, 4362, false);
+            this.radar2 = new ElRadar(this.startFrame + 4250, 750, 400, 4392, true, false, 207);
             this.level[0].addElement(this.smallship.container);
             this.level[0].addElement(this.seabg.container);
             this.level[0].addElement(this.seawave.container);
@@ -12788,7 +12834,11 @@ TWEEN.Interpolation = {
             this.level[3].addElement(this.oilcave.container);
             this.level[3].addElement(this.radarboatside.container);
             this.level[3].addElement(this.seawave2.container);
+            this.level[3].addElement(this.radar1.container);
+            this.level[3].addElement(this.radar2.container);
             this.staticlevel.addElement(this.desc.container);
+            this.staticlevel.addElement(this.desc2.container);
+            this.staticlevel.addElement(this.desc3.container);
         };
         p.tweenSmallShip = function(e) {
             var smallship = this.smallship;
@@ -12860,12 +12910,19 @@ TWEEN.Interpolation = {
                 this.level[1].show();
                 this.radarboat.hideTop();
             }
-            if (cFrame >= 5180) {
+            if (cFrame >= 4850 && cFrame < 6200) {
+                this.radar1.show();
+            } else {
+                this.radar1.hide();
+            }
+            if (cFrame >= 6200) {
                 this.radarboatside.show();
                 this.radarboat.hide();
+                this.radar2.show();
             } else {
                 this.radarboatside.hide();
                 this.radarboat.show();
+                this.radar2.hide();
             }
             this.level[0].update(cFrame);
             this.level[1].update(cFrame);
@@ -13227,6 +13284,7 @@ TWEEN.Interpolation = {
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene7) {
         var Scene7 = function Scene7() {
+            this.buildings = [];
             this.tweenTime = {
                 _fast: 150,
                 _speed: 250,
@@ -13251,6 +13309,11 @@ TWEEN.Interpolation = {
                 fronttruckY0: 400,
                 fronttruckY1: 340
             };
+            this.buildingVars = [ {
+                x: 0,
+                y: 0,
+                type: "house"
+            } ];
         };
         ns.Scene7 = Scene7;
         var p = Scene7.prototype = new AbScene();
@@ -13292,6 +13355,7 @@ TWEEN.Interpolation = {
             this.frontroad.scale(1.5);
             this.fronttruck = new ElSprite("truck_02.png", tT.fronttruckX0, tT.fronttruckY0, 0, .5, 0);
             this.sea = this.createSea();
+            this.theend = new ElSprite("the_end.png", 512, 800, 0, .5, 0);
             this.backlevel.addElement(this.backmountain1.container);
             this.backlevel.addElement(this.tree1.container);
             this.backlevel.addElement(this.tree2.container);
@@ -13310,6 +13374,7 @@ TWEEN.Interpolation = {
             this.frontlevel.addElement(this.treelarge.container);
             this.frontlevel.addElement(this.fronttruck.container);
             this.endlevel.addElement(this.fronttruck.container);
+            this.endlevel.addElement(this.theend.container);
             this.maskCircle = this.createMask();
             this.container.addChild(this.maskCircle);
             var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
@@ -13356,7 +13421,7 @@ TWEEN.Interpolation = {
             this.tween5 = new TweenEach({
                 y: 800
             }).to({
-                y: 384
+                y: 524
             }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween5Bound).delay(this.startFrame + tT.tween5Start).start();
             var tween6Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc6);
             this.tween6 = new TweenEach({
@@ -13416,6 +13481,7 @@ TWEEN.Interpolation = {
         };
         p.tweenFunc5 = function(e) {
             cObj = this.tween5.tweenVars();
+            this.theend.yPos(cObj.y);
         };
         p.tweenFunc6 = function(e) {
             cObj = this.tween6.tweenVars();
@@ -13488,6 +13554,15 @@ TWEEN.Interpolation = {
         p.maskUpdateScale = function(e) {
             this.maskCircle.scale.x = this.maskCircle.scale.y = e;
         };
+        p.createBuildings = function() {
+            var bArr = this.buildings;
+            for (var i = 0; i < bArr.length; i++) {
+                var tmp;
+                if (bArr[i].type == "house") tmp = new ElSprite("house.png", 1540, 538, 0, 0, 0); else new ElSprite("flat.png", 1540, 538, 0, 0, 0);
+                this.buildings.push(tmp);
+                this.midlevel.addElement(tmp.container);
+            }
+        };
     }
 })();
 
@@ -13517,9 +13592,18 @@ TWEEN.Interpolation = {
         var Scene8 = function Scene8() {};
         ns.Scene8 = Scene8;
         var p = Scene8.prototype = new AbScene();
-        p.open = function() {};
+        p.open = function() {
+            this.level1 = new StaticLevel("level1");
+            this.level1.setup(0, 0, 0);
+            this.addLevel(this.level1);
+            this.strap1 = new this.level1.addElement();
+        };
         p.close = function() {};
-        p.update = function(frame) {};
+        p.update = function(frame) {
+            this._update(frame);
+            var cFrame = this.localCurFrame(frame);
+            this.level1.update(cFrame);
+        };
     }
 })();
 

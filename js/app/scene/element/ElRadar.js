@@ -11,11 +11,13 @@
 
 	if(!ns.ElRadar) {
 
-		var ElRadar = function ElRadar(sFrame, duration, x, y, isReverse) {
+		var ElRadar = function ElRadar(sFrame, duration, x, y, isReverse, maskx, masky) {
 
 			this.name = name;
 			this.element = [];
 			this._direction = isReverse? 1:0;
+			this.maskx = maskx || -150;
+			this.masky = masky || 237;
 			this.container = new PIXI.DisplayObjectContainer();
 
 			this.setup(sFrame, duration, x, y);
@@ -30,7 +32,7 @@
 
 		var p = ElRadar.prototype = new AbContainer();
 
-		p.setup = function(sFrame, duration, x, y) {
+		p.setup = function(sFrame, duration, x, y, maskx, masky) {
 
 			this._setup(sFrame, duration, x, y);
 
@@ -91,6 +93,11 @@
 			this.tween4.repeat(1000).delay(this._radarDelay*2).start();	
 
 			this.tween6.repeat(1000).delay(this._radarDelay*2).start();	
+
+			this.masker = this.createMask(this.maskx, this.masky, 830, 384);
+			this.container.addChild(this.masker);
+
+			this.container.mask = this.masker;
 							
 
 		}
@@ -130,6 +137,17 @@
 			var sS = Math.abs(e-this._direction);
 			this.round3.scale(sS*0.5 + 1);
 			this.round3.opacity(1-sS);
+		}
+
+		p.createMask = function(x, y, wW, hH) {
+			var casing = new PIXI.Graphics();
+			casing.clear();
+			casing.beginFill(0x333333, 1);
+			casing.drawRect(0, 0, wW, hH);
+			casing.endFill();
+			casing.position.x = x;
+			casing.position.y = y;	
+			return casing;			
 		}
 
 	}

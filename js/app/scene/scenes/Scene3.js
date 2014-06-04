@@ -121,7 +121,7 @@
 			this.seafloor = new ElSeaFloor('seafloor', 0, 1484, 0,0,0, 1024, 1200);
 			this.seabed = new ElSeaBed(0,0, 0, 1484,0, 1024);
 			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 1994, 0,0);
-			this.oilhole = new ElOilHole('oilhole', 0,0, -5, 1484, 0,0)
+			this.oilhole = new ElOilHole('oilhole', 0,0, -5, 1484, 0,0);
 
 			//iceberg 1
 			this.iceberg = new ElSpriteContainer('iceberg', 0, 0, 0, 0, 0);

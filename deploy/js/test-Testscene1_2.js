@@ -8,6 +8,8 @@
 	var ns = MKK.getNamespace('app');
 	var Scene1 = MKK.getNamespace('app.scene').Scene1;
 	var Scene2 = MKK.getNamespace('app.scene').Scene2;
+	var Scene3 = MKK.getNamespace('app.scene').Scene3;
+	var Scene7 = MKK.getNamespace('app.scene').Scene7;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
@@ -65,7 +67,11 @@
 			this.scene1 = new Scene1();
 			this.scene1.setup(0, 4000/*695*/, 0, 0);
 			this.scene2 = new Scene2();
-			this.scene2.setup(3300,12000/*695*/, 0, 0);
+			this.scene2.setup(3300,8000/*695*/, 0, 0);
+			this.scene3 = new Scene3();
+			this.scene3.setup(8000,12000/*695*/, 0, 0);
+			this.scene7 = new Scene7();
+			this.scene7.setup(12000,15000/*695*/, 0, 0);
 			this.loadFonts();
 		}
 
@@ -74,9 +80,13 @@
 
 			this.stage.addChild(this.scene1.container);
 			this.stage.addChild(this.scene2.container);
+			this.stage.addChild(this.scene3.container);
+			this.stage.addChild(this.scene7.container);
 
 			this.scene1.init(this.stage);
 			this.scene2.init(this.stage);
+			this.scene3.init(this.stage);
+			this.scene7.init(this.stage);
 		}
 
 
@@ -99,7 +109,7 @@
 
 			//dummy font loader
 			this.tweener = new TWEEN.Tween({rotation:0})
-								.to({ rotation: 1 }, 100)
+								.to({ rotation: 1 }, 3000)
 								.onUpdate(function(e){ console.log('Load Progress: ' + e*100 + '%') })
 								.onComplete(fontActiveBound).start();
         }
@@ -123,7 +133,13 @@
 				"assets/scene1.json",
 				"assets/scene2.json",
 				"assets/scene2b.json",
-				"assets/scene2c.json"
+				"assets/scene2c.json",
+				"assets/scene3.json",
+				"assets/scene4.json",
+				"assets/scene5.json",
+				"assets/scene6.json",
+				"assets/scene7.json",
+				"assets/scene8.json",
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
@@ -154,6 +170,8 @@
 			
 			this.scene1.update(frame);
 			this.scene2.update(frame);
+			this.scene3.update(frame);
+			this.scene7.update(frame);
 
 			this.scroller.update();
 		}
