@@ -117,12 +117,23 @@
 			// radar
 			// ----------------------------
 
-			this.radar1 = new ElRadar(this.startFrame + 4250, 750, 256, 4362, false);
+			this.radar1 = new ElRadar(this.startFrame + 4250, 750, 256, 4473, false, false, 129);
 			this.radar2 = new ElRadar(this.startFrame + 4250, 750, 400, 4392, true, false, 207);
 
-			this.radarpuller = new ElSpriteContainer('radarpuller', 0, 0, 0, 0, 0);
-			this.radarpuller.addSprite('radar-line.png', 512,4282, 0.5, 0.5);
-			this.radarpuller.addSprite('radar-large.png', 512,5062, 0.5, 0.5);
+			this.radarpuller = new ElSpriteContainer('radarpuller', 0, 0, 0, 4282, 0);
+			this.radarpullerMask = this.createMask(472, 0, 80, 80);
+			this.radarpuller.addElement(this.radarpullerMask);
+			this.radarpuller.addSprite('radar-line.png', 512, 0, 0.5, 0.5);
+			this.radarpuller.addSprite('radar-large.png', 512, 780, 0.5, 0.5);
+			this.radarpuller.sprite[1].scale(2);
+
+			this.radarline = new ElSprite('radar_line.png', 512, 4650,0, 0.5, 0);
+			this.lineMask = this.createMask(507, 4729, 10, 1230);
+			this.radarline.container.mask = this.lineMask;
+			this.radarping = new ElSprite('radar_ping.png', 512,4729,0, 0.5, 0.5);
+
+
+
 
 			// ----------------------------
 			// Sea and Cave
@@ -173,22 +184,38 @@
 
 
 			var tweenRadar1Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar1);
-			this.tween4 = new TweenEach({y: 3414, scale:1, sy: 4282})
-							.to({y: 4364, scale:0.3, sy: 4602}, 600)
+			this.tween4 = new TweenEach({y: 3414, scale:1, sy: 4282, ry: 4282, by: 780})
+							.to({y: 4364, scale:0.3, sy: 4602, ry: 4602, by: 0} , 600)
 							.onUpdate(tweenRadar1Bound)
 							.delay(this.startFrame+4250).start();
 
+			var tweenRadar1bBound = ListenerFunctions.createListenerFunction(this, this.tweenRadar1b);
+			this.tween4b = new TweenEach({y: 0, scale:2, y: 0})
+							.to({y: 25, scale:0.3}, 600)
+							.onUpdate(tweenRadar1bBound)
+							.easing(TWEEN.Easing.Circular.InOut)
+							.delay(this.startFrame+4850).start();
+
 
 			var tweenRadar2Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar2);
-			this.tween5 = new TweenEach({y: -384})
-							.to({y: -1400}, 560)
+			this.tween5 = new TweenEach({y: -384, py: 4729, lh: 1})
+							.to({y: -1400, py: 5960, lh: 1220}, 560)
 							.onUpdate(tweenRadar2Bound)
+							.easing(TWEEN.Easing.Circular.InOut)
 							.delay(this.startFrame+5690).start();
 
+			var tweenRadar2bBound = ListenerFunctions.createListenerFunction(this, this.tweenRadar2b);
+			this.tween5b = new TweenEach({x: 200, rx: 400})
+							.to({x:55, rx: 255}, 500)
+							.onUpdate(tweenRadar2bBound)
+							.easing(TWEEN.Easing.Circular.InOut)
+							.delay(this.startFrame+6370).start();
+
 			var tweenRadar3Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar3);
-			this.tween6 = new TweenEach({y: -1400})
-							.to({y: -384}, 560)
+			this.tween6 = new TweenEach({y: -1400, py: 5960, ly: 5960,lh: 1})
+							.to({y: -384, py: 4650, ly: 4650, lh: 1220}, 560)
 							.onUpdate(tweenRadar3Bound)
+							.easing(TWEEN.Easing.Circular.InOut)
 							.delay(this.startFrame+6250).start();
 
 			var tweenEndingBound = ListenerFunctions.createListenerFunction(this, this.tweenEnding);
@@ -220,6 +247,9 @@
 			this.level[3].addElement(this.radar1.container);
 			this.level[3].addElement(this.radar2.container);
 			this.level[3].addElement(this.radarpuller.container);
+			this.level[3].addElement(this.radarline.container);
+			this.level[3].addElement(this.lineMask);
+			this.level[3].addElement(this.radarping.container);
 
 
 			// element of static text
@@ -268,11 +298,29 @@
 
 			this.seabg2.yPos(cObj.sy);
 			this.seawave2.yPos(cObj.sy);
+			this.radarpuller.yPos(cObj.ry);
+			this.radarpuller.sprite[1].yPos(cObj.by);
+			
+		}
+
+		p.tweenRadar1b = function(e) {
+			var cObj = this.tween4b.tweenVars();
+			this.radarpuller.sprite[1].yPos(cObj.y);
+			this.radarpuller.sprite[1].scale(cObj.scale);
 		}
 
 		p.tweenRadar2 = function(e) {
 			var cObj = this.tween5.tweenVars();
 			this.level[3].yPos(cObj.y);
+			this.radarping.yPos(cObj.py);
+			this.updateMask(this.lineMask, 10, cObj.lh);
+			// this.level[3].yPos(cObj.y);
+		}
+
+		p.tweenRadar2b = function(e) {
+			var cObj = this.tween5b.tweenVars();
+			this.radarboatside.xPos(cObj.x);
+			this.radar2.xPos(cObj.rx);
 			// this.level[3].yPos(cObj.y);
 		}
 
@@ -280,11 +328,32 @@
 			var cObj = this.tween6.tweenVars();
 			this.level[3].yPos(cObj.y);
 			// this.level[3].yPos(cObj.y);
+			this.radarping.yPos(cObj.py);
+			this.updateMask(this.lineMask, 10, cObj.lh);
+			this.lineMask.position.y = cObj.ly;
 		}
 
 		p.tweenEnding = function(e) {
 			var cObj = this.tween7.tweenVars();
 			this.level[3].xPos(cObj.x);
+		}
+
+		p.createMask = function(x, y, w, h) {
+			var casing = new PIXI.Graphics();
+			casing.clear();
+			casing.beginFill(0x222222, 1);
+			casing.drawRect(0, 0, w, h);
+			casing.endFill();
+			casing.position.x = x;
+			casing.position.y = y;	
+			return casing;						
+		}
+
+		p.updateMask = function(casing, w, h) {
+			casing.clear();
+			casing.beginFill(0x222222, 1);
+			casing.drawRect(0, 0, w, h);
+			casing.endFill();
 		}
 
 		//close when destroyed
@@ -335,11 +404,31 @@
 				this.radarboat.hideTop();
 			}
 
-			if (cFrame>=4850 && cFrame<6200) {
+			if (cFrame>=4850) {
+				this.radarpullerMask.visible = true;
+				this.radarpuller.sprite[0].container.mask = this.radarpullerMask;
+			}
+			else {
+				this.radarpullerMask.visible = false;
+				this.radarpuller.sprite[0].container.mask = null;
+			}
+
+			if(cFrame>=5450 && cFrame<6200) {
 				this.radar1.show();
 			}
 			else {
 				this.radar1.hide();
+			}
+
+			if (cFrame>=5450 ) {
+				this.lineMask.visible = true;
+				this.radarline.show();
+				this.radarping.show();
+			}
+			else {
+				this.lineMask.visible = false;
+				this.radarline.hide();
+				this.radarping.hide();
 			}
 
 
@@ -347,11 +436,13 @@
 				this.radarboatside.show();
 				this.radarboat.hide();
 				this.radar2.show();
+				this.radarpuller.hide();
 			}
 			else {
 				this.radarboatside.hide();
 				this.radarboat.show();
 				this.radar2.hide();
+				this.radarpuller.show();
 			}
 
 

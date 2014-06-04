@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"image": "scene2.png",
-		"size": {"w":1977,"h":1727},
+		"size": {"w":1970,"h":1727},
 		"scale": "1"
 	},
 	"frames": {
@@ -13,17 +13,9 @@
             "spriteSourceSize": {"x":0,"y":0,"w":1501,"h":1217},
             "sourceSize": {"w":1501,"h":1217}
 		},
-		"radar_line.png":
-		{
-            "frame": {"x":1501,"y":0,"w":7,"h":1028},
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":7,"h":1028},
-            "sourceSize": {"w":7,"h":1028}
-		},
 		"explorer-ship-top1.png":
 		{
-            "frame": {"x":1508,"y":0,"w":469,"h":643},
+            "frame": {"x":1501,"y":0,"w":469,"h":643},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":469,"h":643},
@@ -39,7 +31,7 @@
 		},
 		"engine_hook.png":
 		{
-            "frame": {"x":1508,"y":643,"w":96,"h":320},
+            "frame": {"x":1501,"y":643,"w":96,"h":320},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":96,"h":320},
@@ -47,7 +39,7 @@
 		},
 		"explorer-ship-small.png":
 		{
-            "frame": {"x":1604,"y":643,"w":270,"h":120},
+            "frame": {"x":1597,"y":643,"w":270,"h":120},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":270,"h":120},
@@ -55,7 +47,7 @@
 		},
 		"engine_gear_1.png":
 		{
-            "frame": {"x":1874,"y":643,"w":84,"h":84},
+            "frame": {"x":1867,"y":643,"w":84,"h":84},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":84,"h":84},
@@ -63,7 +55,7 @@
 		},
 		"engine_fan_2.png":
 		{
-            "frame": {"x":1604,"y":763,"w":80,"h":80},
+            "frame": {"x":1597,"y":763,"w":80,"h":80},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":80,"h":80},
@@ -71,7 +63,7 @@
 		},
 		"radar_ping.png":
 		{
-            "frame": {"x":1684,"y":763,"w":40,"h":40},
+            "frame": {"x":1677,"y":763,"w":40,"h":40},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},

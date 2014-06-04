@@ -15,6 +15,7 @@
 			this.isTiltable = false;
 			this.depthLevel = settings.depthLevel;
 			this.z = z || 0;
+			this.sprite = [];
 			this.element = [];
 			this.setup(sFrame, duration, x, y, z);
 		}
@@ -38,16 +39,21 @@
 
 		p.addSprite = function(name, x, y, z, aX, aY) {
 			var tmp = new ElSprite(name, x, y, z, aX, aY);
-			this.element.push(tmp);
+			this.sprite.push(tmp);
 			this.container.addChild(tmp.container);
+		}
+
+		p.addElement = function(obj) {
+			this.element.push(obj);
+			this.container.addChild(obj);
 		}
 
 		p.update = function(frame) {
 			this._update(frame);
 
-			//update all elements
-			var el = this.element;
-			var elLen = this.element.length;
+			//update all sprites
+			var el = this.sprite;
+			var elLen = this.sprite.length;
 			for(var i=0; i<elLen; i++) {
 				// el[i].y = this.
 			}

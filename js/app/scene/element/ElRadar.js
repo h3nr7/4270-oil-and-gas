@@ -36,8 +36,8 @@
 
 			this._setup(sFrame, duration, x, y);
 
-			this._radarSpeed = 1000;
-			this._radarDelay = 1010;
+			this._radarSpeed = 300;
+			this._radarDelay = 310;
 
 
 			this.round0 = new ElSprite('sonar_bg1.png', 255, 255, 0, 0.5, 0.5);
@@ -94,7 +94,7 @@
 
 			this.tween6.repeat(1000).delay(this._radarDelay*2).start();	
 
-			this.masker = this.createMask(this.maskx, this.masky, 830, 384);
+			this.masker = this.createMask(this.maskx, this.masky, 830, 534);
 			this.container.addChild(this.masker);
 
 			this.container.mask = this.masker;
