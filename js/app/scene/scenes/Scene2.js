@@ -113,6 +113,16 @@
 			// ----------------------------			
 			this.radarboat = new ElRadarBoat(0, 8000, 512, 3414);
 
+			// ----------------------------
+			// radar
+			// ----------------------------
+
+			this.radar1 = new ElRadar(this.startFrame + 4250, 750, 256, 4362, false);
+			this.radar2 = new ElRadar(this.startFrame + 4250, 750, 400, 4392, true, false, 207);
+
+			this.radarpuller = new ElSpriteContainer('radarpuller', 0, 0, 0, 0, 0);
+			this.radarpuller.addSprite('radar-line.png', 512,4282, 0.5, 0.5);
+			this.radarpuller.addSprite('radar-large.png', 512,5062, 0.5, 0.5);
 
 			// ----------------------------
 			// Sea and Cave
@@ -189,11 +199,6 @@
 							.delay(this.startFrame+6810).start();
 
 
-
-
-			this.radar1 = new ElRadar(this.startFrame + 4250, 750, 256, 4362, false);
-			this.radar2 = new ElRadar(this.startFrame + 4250, 750, 400, 4392, true, false, 207);
-
 			// ----------------------------
 			// add to levels
 			// ----------------------------
@@ -211,8 +216,10 @@
 
 			this.level[3].addElement(this.seawave2.container);
 
+			//add radar
 			this.level[3].addElement(this.radar1.container);
 			this.level[3].addElement(this.radar2.container);
+			this.level[3].addElement(this.radarpuller.container);
 
 
 			// element of static text
