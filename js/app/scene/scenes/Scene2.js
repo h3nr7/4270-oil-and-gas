@@ -129,7 +129,6 @@
 
 			this.radarline = new ElSprite('radar_line.png', 512, 4650,0, 0.5, 0);
 			this.lineMask = this.createMask(507, 4729, 10, 1230);
-			this.radarline.container.mask = this.lineMask;
 			this.radarping = new ElSprite('radar_ping.png', 512,4729,0, 0.5, 0.5);
 
 
@@ -198,8 +197,8 @@
 
 
 			var tweenRadar2Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar2);
-			this.tween5 = new TweenEach({y: -384, py: 4729, lh: 1})
-							.to({y: -1400, py: 5960, lh: 1220}, 560)
+			this.tween5 = new TweenEach({y: -384, py: 4729, ly: 4729, lh: 1})
+							.to({y: -1400, py: 5960, ly:4729, lh: 1220}, 560)
 							.onUpdate(tweenRadar2Bound)
 							.easing(TWEEN.Easing.Circular.InOut)
 							.delay(this.startFrame+5690).start();
@@ -314,6 +313,7 @@
 			this.level[3].yPos(cObj.y);
 			this.radarping.yPos(cObj.py);
 			this.updateMask(this.lineMask, 10, cObj.lh);
+			this.lineMask.position.y = cObj.ly;
 			// this.level[3].yPos(cObj.y);
 		}
 
@@ -422,11 +422,13 @@
 
 			if (cFrame>=5450 ) {
 				this.lineMask.visible = true;
+				this.radarline.container.mask = this.lineMask;
 				this.radarline.show();
 				this.radarping.show();
 			}
 			else {
 				this.lineMask.visible = false;
+				this.radarline.container.mask = null;
 				this.radarline.hide();
 				this.radarping.hide();
 			}

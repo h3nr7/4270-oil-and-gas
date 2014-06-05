@@ -78,8 +78,7 @@
             var fontActiveBound = ListenerFunctions.createListenerFunction(this, this.fontActive);
         	WebFont.load({
 	            custom: {
-	                families: ['EMPrintW01-light', 'EMPrintW01-regular', 'EMPrintW01-semibold'],
-	                urls: ['css/main.css']
+	                families: ['EMPrintW01-regular', 'EMPrintW01-semibold'],
 	            },
 	            loading: fontLoadingBound,
 	            active: fontActiveBound,
