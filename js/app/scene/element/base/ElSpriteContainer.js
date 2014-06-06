@@ -41,6 +41,7 @@
 			var tmp = new ElSprite(name, x, y, z, aX, aY);
 			this.sprite.push(tmp);
 			this.container.addChild(tmp.container);
+			return tmp;
 		}
 
 		p.addElement = function(obj) {

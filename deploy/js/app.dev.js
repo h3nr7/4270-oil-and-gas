@@ -10963,6 +10963,25 @@ TWEEN.Interpolation = {
 
 (function() {
     var ns = MKK.getNamespace("app.scene");
+    var AbElement = MKK.getNamespace("app.scene").AbElement;
+    if (!ns.AbSprite) {
+        var AbSprite = function AbSprite(name, x, y, z, aX, aY) {
+            this.name = name;
+            this.z = z;
+            this.setup(x, y);
+            this.container = PIXI.Sprite.fromFrame(name);
+            this.container.position = this.cPos;
+            this.container.anchor.x = aX || 0;
+            this.container.anchor.y = aY || 0;
+        };
+        ns.AbSprite = AbSprite;
+        var p = AbSprite.prototype = new AbElement();
+        p.update = function() {};
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene");
     var AbElement = ns.AbElement;
     var AbSprite = ns.AbSprite;
     if (!ns.AbContainer) {
@@ -11012,6 +11031,7 @@ TWEEN.Interpolation = {
             var tmp = new AbSprite(name, x, y, z, aX, aY);
             this.element.push(tmp);
             this.container.addChild(tmp.container);
+            return tmp;
         };
         p.animateIn = function(frame, duration, callback) {};
         p.animateOut = function(frame, duration, callback) {};
@@ -11092,8 +11112,13 @@ TWEEN.Interpolation = {
         p.update = function() {
             this.__update();
         };
-        p.__update = function() {
-            this._update();
+        p.__update = function(frame) {
+            this._update(frame);
+            if (frame <= this.startFrame) {
+                this.container.visible = false;
+            } else {
+                this.container.visible = true;
+            }
         };
         p.createSection = function(startTime, endTime, callback) {};
         p.createLevels = function(arr, levelClass) {
@@ -11234,6 +11259,7 @@ TWEEN.Interpolation = {
             var tmp = new ElSprite(name, x, y, z, aX, aY);
             this.sprite.push(tmp);
             this.container.addChild(tmp.container);
+            return tmp;
         };
         p.addElement = function(obj) {
             this.element.push(obj);
@@ -11723,6 +11749,7 @@ TWEEN.Interpolation = {
         var p = ElHelicopter.prototype = new AbContainer();
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
+            this.sign = this.addSprite("helicopter-sign.png", 0, 30, 0, 0, 0, 0);
             this.addSprite("helicopter.png", 0, 0, 0, 0, 0);
             this.blade = new ElRotatingSprite("helicopter_blade.png", 30, 30, 0, 2e3, .5, .5);
             this.blade.start();
@@ -11733,6 +11760,13 @@ TWEEN.Interpolation = {
             var tmp = new ElSprite(name, x, y, z, aX, aY);
             this.element.push(tmp);
             this.container.addChild(tmp.container);
+            return tmp;
+        };
+        p.showSign = function() {
+            this.sign.show();
+        };
+        p.hideSign = function() {
+            this.sign.hide();
         };
     }
 })();
@@ -11791,6 +11825,7 @@ TWEEN.Interpolation = {
 })();
 
 (function() {
+    var MathBase = MKK.getNamespace("mkk.math").MathBase;
     var ns = MKK.getNamespace("app.scene.element");
     var settings = MKK.getNamespace("data").settings;
     var ElSprite = ns.ElSprite;
@@ -11799,19 +11834,98 @@ TWEEN.Interpolation = {
         var ElOilHole = function ElOilHole(name, startFrame, duration, x, y, z, sLevel) {
             this.name = name;
             this.holeName = "oilrig-drill-hole.png";
+            this.pipeoilName = "oilrig_pipe_oil.png";
             this.z = z;
             this._level = sLevel || 0;
+            this.holeX = 512;
+            this.holeY = -100;
+            this.drillStartY = -1e3;
             this.setup(startFrame, duration, x, y);
         };
         ns.ElOilHole = ElOilHole;
         var p = ElOilHole.prototype = new AbContainer();
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
-            this.hole = new ElSprite(this.holeName, 512, 0, 0, .5, 0);
+            this.hole = new ElSprite(this.holeName, this.holeX, this.holeY, 0, .5, 0);
+            this.masker = this.createMask(485, -50, 55, 705);
+            this.casing = this.addCasing(0, 665);
+            this.pipe = this.addCasing(-1076, 1076, "pipe");
+            this.oilmask = this.createMask(497, 0, 30, 1731);
             this.container.addChild(this.hole.container);
+            this.container.addChild(this.masker);
+            this.hole.container.mask = this.masker;
+            this.createPipeOil();
+            this.updateOil(.1);
         };
         p.updateInner = function(level) {};
         p.update = function() {};
+        p.createMask = function(x, y, w, h) {
+            var casing = new PIXI.Graphics();
+            casing.clear();
+            casing.beginFill(10066329, 1);
+            casing.drawRect(0, 0, w, h);
+            casing.endFill();
+            casing.position.x = x;
+            casing.position.y = y;
+            return casing;
+        };
+        p.setHoleYPos = function(e) {
+            this.hole.container.y = -1550 + e * 1450;
+        };
+        p.showPipe = function() {
+            this.pipeOil.visible = true;
+            this.pipe.visible = true;
+            this.casing.visible = true;
+        };
+        p.hidePipe = function() {
+            this.pipeOil.visible = false;
+            this.pipe.visible = false;
+            this.casing.visible = false;
+        };
+        p.addCasing = function(y, h, isPipe) {
+            var color = settings.defaultOilBGColor;
+            var alpha = .6;
+            if (isPipe) {
+                color = settings.defaultOilRigBlue;
+                this.casing.alpha = 1;
+            }
+            var casing = new PIXI.Graphics();
+            casing.clear();
+            casing.beginFill(color, 1);
+            casing.drawRect(0, 0, 30, h);
+            casing.endFill();
+            casing.position.x = 497;
+            casing.position.y = y;
+            casing.alpha = alpha;
+            casing.visible = false;
+            this.container.addChild(casing);
+            return casing;
+        };
+        p.createPipeOil = function() {
+            this.masker2 = this.createMask(485, -1076, 55, 1745);
+            this.pipeOil = new PIXI.DisplayObjectContainer();
+            this.pipewave = new ElSprite(this.pipeoilName, 0, 0, 0, 0, 0);
+            this.pipeExt = this.drawExtendedOil(0, 28, 30, 1680);
+            this.pipeOil.addChild(this.pipewave.container);
+            this.pipeOil.addChild(this.pipeExt);
+            this.pipeOil.position.x = 497;
+            this.pipeOil.position.y = -1047;
+            this.pipeOil.mask = this.masker2;
+            this.pipeOil.visible = false;
+            this.container.addChild(this.masker2);
+            this.container.addChild(this.pipeOil);
+        };
+        p.updateOil = function(e) {
+            this.pipeOil.position.y = MathBase.Fit01(e, 670, -1097);
+        };
+        p.drawExtendedOil = function(x, y, width, height) {
+            var extended = new PIXI.Graphics();
+            var oilcolor = settings.defaultOilColor;
+            extended.beginFill(oilcolor);
+            extended.drawRect(x, y, width, height);
+            extended.endFill();
+            return extended;
+        };
     }
 })();
 
@@ -11841,7 +11955,7 @@ TWEEN.Interpolation = {
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
             this.addCasing();
-            this.drillStartY = 1600;
+            this.drillStartY = 1750;
             this.drill = new ElDrill(0, 0, 855, this.drillStartY, 0);
             this.drill.scale(1.8);
             this.container.addChild(this.drill.container);
@@ -11881,14 +11995,14 @@ TWEEN.Interpolation = {
             this.wire = new PIXI.Graphics();
             this.updateWire(0);
             this.wire.position.x = 850;
-            this.wire.position.y = 430;
+            this.wire.position.y = 480;
             this.wire.alpha = .9;
             this.container.addChild(this.wire);
         };
         p.updateWire = function(e) {
             this.wire.clear();
             this.wire.beginFill(settings.defaultOilRigLightBlue, 1);
-            this.wire.drawRect(0, 0, 10, 1e3 + 4950 * e);
+            this.wire.drawRect(0, 0, 10, 1050 + 4970 * e);
             this.wire.endFill();
         };
         p.addSprite = function(name, x, y, z, aX, aY) {
@@ -11909,7 +12023,7 @@ TWEEN.Interpolation = {
             this.drill.scale(e);
         };
         p.updateDrill = function(e) {
-            var pos = this.drillStartY + e * 4800;
+            var pos = this.drillStartY + e * 4820;
             this.drill.yPos(pos);
         };
         p.update = function(frame) {
@@ -11920,6 +12034,7 @@ TWEEN.Interpolation = {
 })();
 
 (function() {
+    var MathBase = MKK.getNamespace("mkk.math").MathBase;
     var ns = MKK.getNamespace("app.scene.element");
     var settings = MKK.getNamespace("data").settings;
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
@@ -11941,16 +12056,20 @@ TWEEN.Interpolation = {
         var p = ElProductionRig.prototype = new AbContainer();
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
-            this.addSprite("productionrig-bg2.png", 0, 0, 0, 0, 0);
-            this.addSprite("productionrig-bg1.png", 400, 210, 0, 0, 0);
+            this.bg2 = this.addSprite("productionrig-bg2.png", 0, 0, 0, 0, 0);
+            this.bg1 = this.addSprite("productionrig-bg1.png", 400, 210, 0, 0, 0);
             this.addSprite("productionrig_02.png", 0, 320, 0, 0, 0);
             this.addSprite("productionrig_03.png", 204, 320, 0, 0, 0);
-            this.addSprite("productionrig_04.png", 407, 320, 0, 0, 0);
+            this.addSprite("productionrig_04.png", 611, 320, 0, 0, 0);
             this.fan = new ElRotatingSprite("productionrig_fan.png", 154, 476, 0, 2e3, .5, .5);
             this.fan.start();
             this.container.addChild(this.fan.container);
         };
         p.open = function() {};
+        p.parallaxing = function(e) {
+            this.bg2.xPos(MathBase.Fit01(e, -100, 280));
+            this.bg1.xPos(MathBase.Fit01(e, 210, 450));
+        };
     }
 })();
 
@@ -12757,12 +12876,13 @@ TWEEN.Interpolation = {
             this.radar1 = new ElRadar(this.startFrame + 4250, 750, 256, 4473, false, false, 129);
             this.radar2 = new ElRadar(this.startFrame + 4250, 750, 400, 4392, true, false, 207);
             this.radarpuller = new ElSpriteContainer("radarpuller", 0, 0, 0, 4282, 0);
-            this.radarpullerMask = this.pullerMask(472, 0, 80, 80);
+            this.radarpullerMask = this.createMask(472, 0, 80, 80);
             this.radarpuller.addElement(this.radarpullerMask);
             this.radarpuller.addSprite("radar-line.png", 512, 0, .5, .5);
             this.radarpuller.addSprite("radar-large.png", 512, 780, .5, .5);
-            this.radarpuller.sprite[1].scale(1.8);
+            this.radarpuller.sprite[1].scale(2);
             this.radarline = new ElSprite("radar_line.png", 512, 4650, 0, .5, 0);
+            this.lineMask = this.createMask(507, 4729, 10, 1230);
             this.radarping = new ElSprite("radar_ping.png", 512, 4729, 0, .5, .5);
             this.seabg2 = new ElSeaBG("seabg", 0, 4282, 0, 0, 0, 1024, 1024);
             this.seawave2 = new ElSeaWave("seawave", 0, 4282, 0, 0, 0, 1024, 1520);
@@ -12824,19 +12944,23 @@ TWEEN.Interpolation = {
             var tweenRadar1bBound = ListenerFunctions.createListenerFunction(this, this.tweenRadar1b);
             this.tween4b = new TweenEach({
                 y: 0,
-                scale: 1.8,
+                scale: 2,
                 y: 0
             }).to({
                 y: 25,
-                scale: .2
+                scale: .3
             }, 600).onUpdate(tweenRadar1bBound).easing(TWEEN.Easing.Circular.InOut).delay(this.startFrame + 4850).start();
             var tweenRadar2Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar2);
             this.tween5 = new TweenEach({
                 y: -384,
-                py: 4729
+                py: 4729,
+                ly: 4729,
+                lh: 1
             }).to({
                 y: -1400,
-                py: 5960
+                py: 5960,
+                ly: 4729,
+                lh: 1220
             }, 560).onUpdate(tweenRadar2Bound).easing(TWEEN.Easing.Circular.InOut).delay(this.startFrame + 5690).start();
             var tweenRadar2bBound = ListenerFunctions.createListenerFunction(this, this.tweenRadar2b);
             this.tween5b = new TweenEach({
@@ -12849,10 +12973,14 @@ TWEEN.Interpolation = {
             var tweenRadar3Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar3);
             this.tween6 = new TweenEach({
                 y: -1400,
-                py: 5960
+                py: 5960,
+                ly: 5960,
+                lh: 1
             }).to({
                 y: -384,
-                py: 4650
+                py: 4650,
+                ly: 4650,
+                lh: 1220
             }, 560).onUpdate(tweenRadar3Bound).easing(TWEEN.Easing.Circular.InOut).delay(this.startFrame + 6250).start();
             var tweenEndingBound = ListenerFunctions.createListenerFunction(this, this.tweenEnding);
             this.tween7 = new TweenEach({
@@ -12876,6 +13004,7 @@ TWEEN.Interpolation = {
             this.level[3].addElement(this.radar2.container);
             this.level[3].addElement(this.radarpuller.container);
             this.level[3].addElement(this.radarline.container);
+            this.level[3].addElement(this.lineMask);
             this.level[3].addElement(this.radarping.container);
             this.staticlevel.addElement(this.desc.container);
             this.staticlevel.addElement(this.desc2.container);
@@ -12919,6 +13048,8 @@ TWEEN.Interpolation = {
             var cObj = this.tween5.tweenVars();
             this.level[3].yPos(cObj.y);
             this.radarping.yPos(cObj.py);
+            this.updateMask(this.lineMask, 10, cObj.lh);
+            this.lineMask.position.y = cObj.ly;
         };
         p.tweenRadar2b = function(e) {
             var cObj = this.tween5b.tweenVars();
@@ -12929,12 +13060,14 @@ TWEEN.Interpolation = {
             var cObj = this.tween6.tweenVars();
             this.level[3].yPos(cObj.y);
             this.radarping.yPos(cObj.py);
+            this.updateMask(this.lineMask, 10, cObj.lh);
+            this.lineMask.position.y = cObj.ly;
         };
         p.tweenEnding = function(e) {
             var cObj = this.tween7.tweenVars();
             this.level[3].xPos(cObj.x);
         };
-        p.pullerMask = function(x, y, w, h) {
+        p.createMask = function(x, y, w, h) {
             var casing = new PIXI.Graphics();
             casing.clear();
             casing.beginFill(2236962, 1);
@@ -12943,6 +13076,12 @@ TWEEN.Interpolation = {
             casing.position.x = x;
             casing.position.y = y;
             return casing;
+        };
+        p.updateMask = function(casing, w, h) {
+            casing.clear();
+            casing.beginFill(2236962, 1);
+            casing.drawRect(0, 0, w, h);
+            casing.endFill();
         };
         p.close = function() {};
         p.update = function(frame) {
@@ -12988,9 +13127,13 @@ TWEEN.Interpolation = {
                 this.radar1.hide();
             }
             if (cFrame >= 5450) {
+                this.lineMask.visible = true;
+                this.radarline.container.mask = this.lineMask;
                 this.radarline.show();
                 this.radarping.show();
             } else {
+                this.lineMask.visible = false;
+                this.radarline.container.mask = null;
                 this.radarline.hide();
                 this.radarping.hide();
             }
@@ -13047,12 +13190,13 @@ TWEEN.Interpolation = {
                 _speed: 250,
                 _speed2: 500,
                 _speed3: 750,
+                _speed4: 1500,
                 tween1Start: 800,
                 tween2Start: 1550,
                 tween3Start: 2400,
                 tween4Start: 3200,
-                tween5Start: 4200,
-                tween6Start: 5200,
+                tween5Start: 4700,
+                tween6Start: 5700,
                 startX0: 1024,
                 startY0: 50,
                 scale0: 1,
@@ -13074,7 +13218,9 @@ TWEEN.Interpolation = {
                 waveX1: 0,
                 waveY1: 457,
                 moveY5: -1650,
-                drill1Start: 3960
+                drill0Start: 3950,
+                drill1Start: 4150,
+                pipe1Start: 4150
             };
             this.txtTime = {
                 txt1Start: 200,
@@ -13086,45 +13232,31 @@ TWEEN.Interpolation = {
         ns.Scene3 = Scene3;
         var p = Scene3.prototype = new AbScene();
         p.open = function() {
+            this.addLevels();
             var tTime = this.tweenTime;
-            var txtTime = this.txtTime;
-            this.seabglevel = new StaticLevel("staticseabg");
-            this.seabglevel.setup(0, 0, 0);
-            this.addLevel(this.seabglevel);
-            this.staticlevel = new StaticLevel("statictxt");
-            this.staticlevel.setup(tTime.startX0, tTime.startY0, 0);
-            this.addLevel(this.staticlevel);
-            this.wavelevel = new StaticLevel("staticwave");
-            this.wavelevel.setup(0, 0, 0);
-            this.addLevel(this.wavelevel);
-            this.txtlevel = new StaticLevel("statictxt");
-            this.txtlevel.setup(0, 0, 0);
-            this.addLevel(this.txtlevel);
             this.seabg = new ElSeaBG("seabg", tTime.waveX0, tTime.waveY0, 0, 0, 0, 1024, 1024);
             this.seafloor = new ElSeaFloor("seafloor", 0, 1484, 0, 0, 0, 1024, 1200);
             this.seabed = new ElSeaBed(0, 0, 0, 1484, 0, 1024);
-            this.oilcave = new ElOilCave("oilcave", 0, 0, 0, 1994, 0, 0);
-            this.oilhole = new ElOilHole("oilhole", 0, 0, -5, 1484, 0, 0);
-            this.iceberg = new ElSpriteContainer("iceberg", 0, 0, 0, 0, 0);
-            this.iceberg.addSprite("drilling_iceberg1.png", 0, tTime.waveY0);
+            this.oilcave = new ElOilCave("oilcave", 0, 0, 0, 2044, 0, 0);
+            this.oilcave.updateLevel(.5);
+            this.oilhole = new ElOilHole("oilhole", 0, -210, -5, 1534, 0, 0);
+            this.divers = new ElSpriteContainer("divers", 0, 0, 0, 0, 0);
+            this.bgpipe1 = this.addbgPipe(450, .75);
+            this.bgpipe3 = this.addbgPipe(100, .75);
+            this.divers.addSprite("diver-small.png", 600, 1200);
+            this.divers.addSprite("diver-small.png", 400, 800);
+            this.divers.addSprite("diver-large.png", 300, 900);
             this.seabglevel.addElement(this.seabg.container);
             this.seabglevel.addElement(this.seabed.container);
             this.seabglevel.addElement(this.seafloor.container);
             this.seabglevel.addElement(this.oilcave.container);
-            this.seabglevel.addElement(this.iceberg.container);
+            this.seabglevel.addElement(this.divers.container);
             this.seabglevel.addElement(this.oilhole.container);
             this.oilrig = new ElOilrig(0, 5e3, 0, 0, 0);
             this.staticlevel.addElement(this.oilrig.container);
             this.seawave = new ElSeaWave("seawave", tTime.waveX0, tTime.waveY0, 0, 0, 0, 1024, 1520);
             this.wavelevel.addElement(this.seawave.container);
-            this.desc = new ElDescription("Engines", "Mobil Delvac 1™ 600\nMobil Delvac MX™ 600\nMobil Pegasus™", "", "blue", this.startFrame + txtTime.txt1Start, 800, 50, 400, 0);
-            this.txtlevel.addElement(this.desc.container);
-            this.desc2 = new ElDescription("Top Drive", "Mobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™", "", "blue", this.startFrame + txtTime.txt2Start, 800, 470, 70, 0);
-            this.txtlevel.addElement(this.desc2.container);
-            this.desc3 = new ElDescription("Mud Pumps", "Mobil SHC™ Gear\nMobil Polyrex™ EM", "", "blue", this.startFrame + txtTime.txt3Start, 800, 600, 240, 0);
-            this.txtlevel.addElement(this.desc3.container);
-            this.desc4 = new ElDescription("Positioning Thruster", "Mobil SHC™ 600\nMobilgear™ 600XP", "", "white", this.startFrame + txtTime.txt4Start, 800, 630, 500, 0);
-            this.txtlevel.addElement(this.desc4.container);
+            this.addDescriptionTxt();
             var tweenStartingBound = ListenerFunctions.createListenerFunction(this, this.tweenStarting);
             this.tween0 = new TweenEach({
                 x: tTime.startX0,
@@ -13174,7 +13306,7 @@ TWEEN.Interpolation = {
             this.tween5 = new TweenEach({
                 y: tTime.moveY5
             }).to({
-                y: 0
+                y: 255
             }, tTime._speed3).onUpdate(tweenMove5Bound).delay(this.startFrame + tTime.tween5Start).start();
             var tweenMove6Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove6);
             this.tween6 = new TweenEach({
@@ -13182,6 +13314,18 @@ TWEEN.Interpolation = {
             }).to({
                 x: tTime.moveX6
             }, tTime._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tweenMove6Bound).delay(this.startFrame + tTime.tween6Start).start();
+            var tweenCaveOil1Bound = ListenerFunctions.createListenerFunction(this, this.tweenCaveOil1);
+            this.caveTween0 = new TweenEach({
+                y: 0
+            }).to({
+                y: 1
+            }, tTime._speed).onUpdate(tweenCaveOil1Bound).delay(this.startFrame + tTime.drill0Start).start();
+            var tweenPipe1Bound = ListenerFunctions.createListenerFunction(this, this.tweenPipe1);
+            this.pipeTween1 = new TweenEach({
+                y: 0
+            }).to({
+                y: 1
+            }, tTime._speed4).onUpdate(tweenPipe1Bound).delay(this.startFrame + tTime.pipe1Start).start();
             var tweenDrill1Bound = ListenerFunctions.createListenerFunction(this, this.tweenDrill1);
             this.drillTween1 = new TweenEach({
                 y: 0
@@ -13191,16 +13335,52 @@ TWEEN.Interpolation = {
         };
         p.close = function() {};
         p.update = function(frame) {
-            this.seabglevel.update(frame);
-            this.staticlevel.update(frame);
-            this.wavelevel.update(frame);
-            if (frame >= 4260) {
+            this.__update(frame);
+            var cFrame = this.localCurFrame(frame);
+            this.seabglevel.update(cFrame);
+            this.staticlevel.update(cFrame);
+            this.wavelevel.update(cFrame);
+            if (cFrame >= 4760) {
                 this.oilrig.hide();
-                this.iceberg.show();
+                this.divers.show();
+                this.seawave.hide();
             } else {
                 this.oilrig.show();
-                this.iceberg.hide();
+                this.divers.hide();
+                this.seawave.show();
             }
+        };
+        p.addLevels = function() {
+            var tTime = this.tweenTime;
+            this.seabglevel = new StaticLevel("staticseabg");
+            this.seabglevel.setup(0, 0, 0);
+            this.addLevel(this.seabglevel);
+            this.staticlevel = new StaticLevel("statictxt");
+            this.staticlevel.setup(tTime.startX0, tTime.startY0, 0);
+            this.addLevel(this.staticlevel);
+            this.wavelevel = new StaticLevel("staticwave");
+            this.wavelevel.setup(0, 0, 0);
+            this.addLevel(this.wavelevel);
+            this.txtlevel = new StaticLevel("statictxt");
+            this.txtlevel.setup(0, 0, 0);
+            this.addLevel(this.txtlevel);
+        };
+        p.addDescriptionTxt = function() {
+            var txtTime = this.txtTime;
+            this.desc = new ElDescription("Engines", "Mobil Delvac 1™ 600\nMobil Delvac MX™ 600\nMobil Pegasus™", "", "blue", this.startFrame + txtTime.txt1Start, 800, 50, 400, 0);
+            this.txtlevel.addElement(this.desc.container);
+            this.desc2 = new ElDescription("Top Drive", "Mobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™", "", "blue", this.startFrame + txtTime.txt2Start, 800, 470, 70, 0);
+            this.txtlevel.addElement(this.desc2.container);
+            this.desc3 = new ElDescription("Mud Pumps", "Mobil SHC™ Gear\nMobil Polyrex™ EM", "", "blue", this.startFrame + txtTime.txt3Start, 800, 600, 240, 0);
+            this.txtlevel.addElement(this.desc3.container);
+            this.desc4 = new ElDescription("Positioning Thruster", "Mobil SHC™ 600\nMobilgear™ 600XP", "", "white", this.startFrame + txtTime.txt4Start, 800, 630, 500, 0);
+            this.txtlevel.addElement(this.desc4.container);
+        };
+        p.addbgPipe = function(x, scale) {
+            var bgpipe1 = this.divers.addSprite("pipe-bg.png", x, 460);
+            bgpipe1.opacity(.35);
+            bgpipe1.scale(scale);
+            return bgpipe1;
         };
         p.tweenStarting = function(e) {
             var cObj = this.tween0.tweenVars();
@@ -13221,13 +13401,14 @@ TWEEN.Interpolation = {
             this.oilrig.position(cObj.orX, cObj.orY);
             this.seawave.yPos(cObj.wY);
             this.seabg.yPos(cObj.wY);
-            this.iceberg.yPos(cObj.wY - 1166);
         };
         p.tweenMove4 = function(e) {
             var cObj = this.tween4.tweenVars();
             this.yPos(cObj.y);
             this.oilrig.updateDrill(e);
             this.oilrig.updateWire(e);
+            this.oilhole.setHoleYPos(e);
+            this.oilhole.hidePipe();
         };
         p.tweenMove5 = function(e) {
             var cObj = this.tween5.tweenVars();
@@ -13237,9 +13418,17 @@ TWEEN.Interpolation = {
             var cObj = this.tween6.tweenVars();
             this.xPos(cObj.x);
         };
+        p.tweenCaveOil1 = function(e) {
+            this.oilcave.updateLevel(e);
+        };
+        p.tweenPipe1 = function(e) {
+            this.oilhole.updateOil(e);
+        };
         p.tweenDrill1 = function(e) {
             this.oilrig.updateWire(1 - e);
             this.oilrig.updateDrill(1 - e);
+            this.oilhole.setHoleYPos(1 - e);
+            this.oilhole.showPipe();
         };
     }
 })();
@@ -13251,7 +13440,6 @@ TWEEN.Interpolation = {
     var styledata = MKK.getNamespace("data").styledata;
     var AbScene = ns.AbScene;
     var StaticLevel = ns.level.StaticLevel;
-    var Scene2Level = ns.level.Scene2Level;
     var ElSprite = ns.element.ElSprite;
     var ElSpriteContainer = ns.element.ElSpriteContainer;
     var ElText = ns.element.ElText;
@@ -13259,20 +13447,116 @@ TWEEN.Interpolation = {
     var ElSeaBG = ns.element.ElSeaBG;
     var ElSeaWave = ns.element.ElSeaWave;
     var ElSeaFloor = ns.element.ElSeaFloor;
-    var ElOilCave = ns.element.ElOilCave;
-    var ElShipInner = ns.element.ElShipInner;
-    var ElRadarBoat = ns.element.ElRadarBoat;
-    var ElRadarBoatSide = ns.element.ElRadarBoatSide;
+    var ElProductionRig = ns.element.ElProductionRig;
+    var ElHelicopter = ns.element.ElHelicopter;
+    var ElFpso = ns.element.ElFpso;
     var ElDescription = ns.element.ElDescription;
     var FrameTween = MKK.getNamespace("app.animation").FrameTween;
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene4) {
-        var Scene4 = function Scene4() {};
+        var Scene4 = function Scene4() {
+            this.tweenTime = {
+                _completespeed: 4e3,
+                _speed: 250,
+                _speed3: 2100,
+                txtTime1: 1200,
+                txtTime2: 1660,
+                txtTime3: 2965,
+                dropTime: 840,
+                helicopterFromXPos: -400,
+                helicopterFromYPos: 100,
+                helicopterToXPos: [ 500, 800, 1700, 2050 ],
+                helicopterToYPos: [ 100, 400, 80, 360 ],
+                offsetMoveTime: 500
+            };
+        };
         ns.Scene4 = Scene4;
         var p = Scene4.prototype = new AbScene();
-        p.open = function() {};
+        p.open = function() {
+            var tT = this.tweenTime;
+            this.backlevel = new StaticLevel("staticsback");
+            this.backlevel.setup(0, 0, 0);
+            this.addLevel(this.backlevel);
+            this.midlevel = new StaticLevel("staticsmid");
+            this.midlevel.setup(0, 0, 0);
+            this.addLevel(this.midlevel);
+            this.frontlevel = new StaticLevel("staticsfront");
+            this.frontlevel.setup(0, 0, 0);
+            this.addLevel(this.frontlevel);
+            this.txtlevel = new StaticLevel("staticstxt");
+            this.txtlevel.setup(0, 0, 0);
+            this.addLevel(this.txtlevel);
+            this.seabg = new ElSeaBG("seabg", 1024, 708, 0, 0, 0, 5120, 70);
+            this.seawave = new ElSeaWave("seawave", 0, 708, 0, 0, 0, 6144);
+            this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 366, 0, 0, 0);
+            this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 349, 0, 0, 0);
+            this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 366, 0, 0, 0);
+            this.helicopter = new ElHelicopter(0, 4e3, -400, 0);
+            this.fpso = new ElFpso(0, 4e3, 2770, 335, 0);
+            this.productionrig = new ElProductionRig(0, 4e3, 1324, -40, 0);
+            this.backlevel.addElement(this.iceberg1.container);
+            this.midlevel.addElement(this.productionrig.container);
+            this.midlevel.addElement(this.helicopter.container);
+            this.midlevel.addElement(this.fpso.container);
+            this.frontlevel.addElement(this.iceberg2.container);
+            this.frontlevel.addElement(this.iceberg3.container);
+            this.frontlevel.addElement(this.seabg.container);
+            this.frontlevel.addElement(this.seawave.container);
+            this.desc = new ElDescription("Turbines", "Excellent anti-oxdation and air release properties\n\nMobil Delvac 1™ 600\nMobil SHC™ 800\nMobil DTE™ 932 GT", "", "blue", this.startFrame + tT.txtTime1, 700, 100, 50, 0);
+            this.txtlevel.addElement(this.desc.container);
+            this.desc2 = new ElDescription("Compressors", "Outstanding cleanliness and reduced deposit formations\n\nMobil Rarus SHC™ 1020\nMobil Rarus™ 800\nMobil Pegasus™", "", "blue", this.startFrame + tT.txtTime2, 700, 100, 50, 0);
+            this.txtlevel.addElement(this.desc2.container);
+            this.desc3 = new ElDescription("Deck Machinery", "Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798", "", "blue", this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
+            this.txtlevel.addElement(this.desc3.container);
+            var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
+            this.tween0 = new TweenEach({
+                x: 0
+            }).to({
+                x: -5120
+            }, tT._completespeed).onUpdate(tween0Bound).delay(this.startFrame + tT.offsetMoveTime).start();
+            var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
+            this.tween1 = new TweenEach({
+                x: tT.helicopterFromXPos,
+                y: tT.helicopterFromYPos
+            }).to({
+                x: tT.helicopterToXPos,
+                y: tT.helicopterToYPos
+            }, tT._speed3).interpolation(TWEEN.Interpolation.CatmullRom).onUpdate(tween1Bound).delay(this.startFrame).start();
+            var tween2Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc2);
+            this.tween2 = new TweenEach({
+                x: 0
+            }).to({
+                x: 1
+            }, 1700).onUpdate(tween2Bound).delay(this.startFrame + 780).start();
+        };
         p.close = function() {};
-        p.update = function(frame) {};
+        p.update = function(frame) {
+            this.__update(frame);
+            var cFrame = this.localCurFrame(frame);
+            var tT = this.tweenTime;
+            this.backlevel.update(cFrame);
+            this.midlevel.update(cFrame);
+            this.frontlevel.update(cFrame);
+            this.txtlevel.update(cFrame);
+            if (cFrame <= tT.dropTime) {
+                this.helicopter.showSign();
+            } else {
+                this.helicopter.hideSign();
+            }
+        };
+        p.tweenFunc0 = function(e) {
+            var cObj = this.tween0.tweenVars();
+            this.frontlevel.xPos(cObj.x);
+            this.midlevel.xPos(cObj.x * .9);
+            this.backlevel.xPos(cObj.x * .8);
+        };
+        p.tweenFunc1 = function(e) {
+            var cObj = this.tween1.tweenVars();
+            this.helicopter.position(cObj.x, cObj.y);
+        };
+        p.tweenFunc2 = function(e) {
+            this.productionrig.parallaxing(e);
+        };
     }
 })();
 

@@ -29,14 +29,20 @@
 
 			this.tweenTime = {
 
-				_completespeed: 8000,
-				_speed: 500,
-				_speed3: 4200,
+				_completespeed: 4000,
+				_speed: 250,
+				_speed3: 2100,
 
-				txtTime1: 1800,
-				txtTime2: 3000,
-				txtTime3: 5930,
+				txtTime1: 1200,
+				txtTime2: 1660,
+				txtTime3: 2965,
 
+				dropTime: 840,
+
+				helicopterFromXPos:-400,
+				helicopterFromYPos:100,
+				helicopterToXPos:[500, 800, 1700, 2050],
+				helicopterToYPos:[100, 400, 80, 360],
 
 				offsetMoveTime: 500
 			};
@@ -118,11 +124,11 @@
 			this.frontlevel.addElement(this.seawave.container);
 
 			//text
-			this.desc = new ElDescription ('Turbines', 'Excellent anti-oxdation and air release properties\n\nMobil Delvac 1™ 600\nMobil SHC™ 800\nMobil DTE™ 932 GT', '', 'blue', this.startFrame + tT.txtTime1, 1400, 100, 100, 0);
+			this.desc = new ElDescription ('Turbines', 'Excellent anti-oxdation and air release properties\n\nMobil Delvac 1™ 600\nMobil SHC™ 800\nMobil DTE™ 932 GT', '', 'blue', this.startFrame + tT.txtTime1, 700, 100, 50, 0);
 			this.txtlevel.addElement(this.desc.container);
-			this.desc2 = new ElDescription ('Compressors', 'Outstanding cleanliness and reduced deposit formations\n\nMobil Rarus SHC™ 1020\nMobil Rarus™ 800\nMobil Pegasus™', '', 'blue', this.startFrame + tT.txtTime2, 1400, 100, 100, 0);
+			this.desc2 = new ElDescription ('Compressors', 'Outstanding cleanliness and reduced deposit formations\n\nMobil Rarus SHC™ 1020\nMobil Rarus™ 800\nMobil Pegasus™', '', 'blue', this.startFrame + tT.txtTime2, 700, 100, 50, 0);
 			this.txtlevel.addElement(this.desc2.container);
-			this.desc3 = new ElDescription ('Deck Machinery', 'Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798', '', 'blue', this.startFrame + tT.txtTime3, 2200, 100, 50, 0);
+			this.desc3 = new ElDescription ('Deck Machinery', 'Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798', '', 'blue', this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
 			this.txtlevel.addElement(this.desc3.container);
 
 			// ------------------------------------------------
@@ -138,12 +144,19 @@
 
 			//move into scene, left
 			var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
-			this.tween1 = new TweenEach({x: -400, y:100})
-							.to({x: [500, 800, 1700, 2050], y:[100, 400, 80, 360] }, tT._speed3)
+			this.tween1 = new TweenEach({x: tT.helicopterFromXPos, y:tT.helicopterFromYPos})
+							.to({x: tT.helicopterToXPos, y: tT.helicopterToYPos }, tT._speed3)
 							// .easing(TWEEN.Easing.Cubic.Out)
 							.interpolation( TWEEN.Interpolation.CatmullRom )
 							.onUpdate(tween1Bound)
 							.delay(this.startFrame).start();
+
+			var tween2Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc2);
+			this.tween2 = new TweenEach({x: 0})
+							.to({x: 1 }, 1700)
+							// .easing(TWEEN.Easing.Cubic.Out)
+							.onUpdate(tween2Bound)
+							.delay(this.startFrame + 780).start();
 		}
 
 
@@ -154,13 +167,22 @@
 
 		p.update = function(frame) {
 
-			this._update(frame);
+			this.__update(frame);
 			var cFrame = this.localCurFrame(frame);
+
+			var tT = this.tweenTime;
 
 			this.backlevel.update(cFrame);
 			this.midlevel.update(cFrame);
 			this.frontlevel.update(cFrame);
 			this.txtlevel.update(cFrame);
+
+			if (cFrame<=tT.dropTime) {
+				this.helicopter.showSign();
+			}
+			else {
+				this.helicopter.hideSign();
+			}
 		}
 
 		p.tweenFunc0 = function(e) {
@@ -174,6 +196,10 @@
 			var cObj = this.tween1.tweenVars();
 			// console.log(cObj.x, cObj.y)
 			this.helicopter.position(cObj.x, cObj.y);
+		}
+
+		p.tweenFunc2 = function(e) {
+			this.productionrig.parallaxing(e);
 		}
 
 	}

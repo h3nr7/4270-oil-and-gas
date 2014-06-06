@@ -41,10 +41,18 @@
 
 		p.update = function() {
 			this.__update();
+
 		}
 
-		p.__update = function() {
-			this._update();
+		p.__update = function(frame) {
+
+			this._update(frame);
+			if(frame<=this.startFrame) {
+				this.container.visible = false;
+			}
+			else {
+				this.container.visible = true;
+			}
 		}
 
 

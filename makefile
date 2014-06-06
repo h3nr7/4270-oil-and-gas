@@ -44,7 +44,7 @@ APPANIM.IN = ${JSSOURCE}/app/animation/*.js
 
 #APP Scene
 APPSCENE.PATH = ${JSSOURCE}/app/scene
-APPSCENE.IN = ${APPSCENE.PATH}/AbElement.js ${APPSCENE.PATH}/AbContainer.js ${APPSCENE.PATH}/AbLevel.js ${APPSCENE.PATH}/AbScene.js
+APPSCENE.IN = ${APPSCENE.PATH}/AbElement.js ${APPSCENE.PATH}/AbSprite.js ${APPSCENE.PATH}/AbContainer.js ${APPSCENE.PATH}/AbLevel.js ${APPSCENE.PATH}/AbScene.js
 
 #APP Elements
 APPELEMENTBASE.IN = ${JSSOURCE}/app/scene/element/base/*.js

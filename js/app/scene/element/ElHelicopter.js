@@ -33,6 +33,7 @@
 
 			this._setup(sFrame, duration, x, y);
 
+			this.sign = this.addSprite('helicopter-sign.png', 0, 30, 0, 0, 0, 0);
 			this.addSprite('helicopter.png', 0,0,0, 0,0);
 
 			this.blade = new ElRotatingSprite('helicopter_blade.png', 30, 30, 0, 2000, 0.5, 0.5);
@@ -49,6 +50,15 @@
 			var tmp = new ElSprite(name, x, y, z, aX, aY);
 			this.element.push(tmp);
 			this.container.addChild(tmp.container);
+			return tmp;
+		}
+
+		p.showSign = function() {
+			this.sign.show();
+		}
+
+		p.hideSign = function() {
+			this.sign.hide();
 		}
 
 	}

@@ -1,5 +1,6 @@
 (function(){
 
+	var MathBase = MKK.getNamespace('mkk.math').MathBase;
 	var ns = MKK.getNamespace('app.scene.element');
 	var settings = MKK.getNamespace('data').settings;
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
@@ -33,8 +34,8 @@
 
 			this._setup(sFrame, duration, x, y);
 
-			this.addSprite('productionrig-bg2.png', 0,0,0, 0,0);
-			this.addSprite('productionrig-bg1.png', 400,210,0, 0,0);
+			this.bg2 = this.addSprite('productionrig-bg2.png', 0,0,0, 0,0);
+			this.bg1 = this.addSprite('productionrig-bg1.png', 400,210,0, 0,0);
 
 
 			this.addSprite('productionrig_02.png', 0,320,0, 0,0);
@@ -49,6 +50,11 @@
 
 		p.open = function() {
 
+		}
+
+		p.parallaxing = function(e) {
+			this.bg2.xPos( MathBase.Fit01(e, -100, 280) );
+			this.bg1.xPos( MathBase.Fit01(e, 210, 450) );
 		}
 
 

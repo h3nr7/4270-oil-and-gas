@@ -45,6 +45,14 @@
             "spriteSourceSize": {"x":0,"y":0,"w":409,"h":363},
             "sourceSize": {"w":409,"h":363}
 		},
+		"helicopter-sign.png":
+		{
+            "frame": {"x":928,"y":628,"w":284,"h":226},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":284,"h":226},
+            "sourceSize": {"w":284,"h":226}
+		},
 		"helicopter.png":
 		{
             "frame": {"x":823,"y":432,"w":354,"h":90},

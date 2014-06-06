@@ -99,6 +99,7 @@
 			var tmp = new AbSprite(name, x, y, z, aX, aY);
 			this.element.push(tmp);
 			this.container.addChild(tmp.container);
+			return tmp;
 		}
 
 		// -----------------------------------------------------------

@@ -38,7 +38,7 @@
 
 			//adcasing
 			this.addCasing();
-			this.drillStartY = 1600;
+			this.drillStartY = 1750;
 			this.drill = new ElDrill(0,0, 855, this.drillStartY, 0);
 			this.drill.scale(1.8);
 
@@ -96,7 +96,7 @@
 			this.wire = new PIXI.Graphics();
 			this.updateWire(0);
 			this.wire.position.x = 850;
-			this.wire.position.y = 430;	
+			this.wire.position.y = 480;	
 			this.wire.alpha = 0.9;
 			this.container.addChild(this.wire);
 		}
@@ -104,7 +104,7 @@
 		p.updateWire = function(e) {
 			this.wire.clear();
 			this.wire.beginFill(settings.defaultOilRigLightBlue, 1);
-			this.wire.drawRect(0, 0, 10, 1000 + 4950*e);
+			this.wire.drawRect(0, 0, 10, 1050 + 4970*e);
 			this.wire.endFill();
 		}
 
@@ -130,7 +130,7 @@
 		}
 
 		p.updateDrill = function(e) {
-			var pos = this.drillStartY + e*4800;
+			var pos = this.drillStartY + e*4820;
 			this.drill.yPos(pos);
 		}
 
