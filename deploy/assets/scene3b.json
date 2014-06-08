@@ -68,6 +68,14 @@
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":377,"h":282},
             "sourceSize": {"w":377,"h":282}
+		},
+		"storm-cloud-grey.png":
+		{
+            "frame": {"x":377,"y":939,"w":250,"h":164},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":250,"h":164},
+            "sourceSize": {"w":250,"h":164}
 		}
 	}
 }

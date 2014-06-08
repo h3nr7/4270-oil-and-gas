@@ -12831,6 +12831,14 @@ TWEEN.Interpolation = {
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene2) {
         var Scene2 = function Scene2() {
+            this.tweenTime = {
+                thunderCloudX0: 10,
+                drillCloudX0: 1e3,
+                greyCloudX0: 900,
+                thunderCloudX1: 900,
+                drillCloudX1: 1540,
+                greyCloudX1: 1340
+            };
             this.txtLevel = [];
         };
         ns.Scene2 = Scene2;
@@ -12856,6 +12864,7 @@ TWEEN.Interpolation = {
             this.txtLevel.push(oLevel);
         };
         p.open = function() {
+            tT = this.tweenTime;
             this.createLevels(scenedata.scene2.level, Scene2Level);
             this.staticlevel = new StaticLevel("statictxt");
             this.staticlevel.setup(0, 0, 0);
@@ -12898,6 +12907,9 @@ TWEEN.Interpolation = {
             this.clouds.addSprite("storm_clouds_04.png", 0, 309);
             this.clouds.addSprite("storm_clouds_05.png", 618, 309);
             this.clouds.addSprite("storm_clouds_06.png", 1239, 309);
+            this.thundercloud = this.clouds.addSprite("storm-cloud-thunder.png", tT.thunderCloudX0, 160);
+            this.drillcloud = this.clouds.addSprite("storm_clouds-sign.png", tT.drillCloudX0, 100);
+            this.greycloud = this.clouds.addSprite("storm-cloud-grey.png", tT.greyCloudX0, 400);
             var tweenSmallShipBound = ListenerFunctions.createListenerFunction(this, this.tweenSmallShip);
             this.tween0 = new TweenEach({
                 x: 100,
@@ -12992,9 +13004,15 @@ TWEEN.Interpolation = {
             }, 560).onUpdate(tweenRadar3Bound).easing(TWEEN.Easing.Circular.InOut).delay(this.startFrame + 6250).start();
             var tweenEndingBound = ListenerFunctions.createListenerFunction(this, this.tweenEnding);
             this.tween7 = new TweenEach({
-                x: 0
+                x: 0,
+                tX: tT.thunderCloudX0,
+                dX: tT.drillCloudX0,
+                gX: tT.greyCloudX0
             }).to({
-                x: -3200
+                x: -3200,
+                tX: tT.thunderCloudX1,
+                dX: tT.drillCloudX1,
+                gX: tT.greyCloudX1
             }, 1500).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tweenEndingBound).delay(this.startFrame + 6810).start();
             this.level[0].addElement(this.smallship.container);
             this.level[0].addElement(this.seabg.container);
@@ -13075,6 +13093,9 @@ TWEEN.Interpolation = {
         p.tweenEnding = function(e) {
             var cObj = this.tween7.tweenVars();
             this.level[3].xPos(cObj.x);
+            this.thundercloud.xPos(cObj.tX);
+            this.drillcloud.xPos(cObj.dX);
+            this.greycloud.xPos(cObj.gX);
         };
         p.createMask = function(x, y, w, h) {
             var casing = new PIXI.Graphics();
@@ -13151,11 +13172,13 @@ TWEEN.Interpolation = {
                 this.radarboat.hide();
                 this.radar2.show();
                 this.radarpuller.hide();
+                this.clouds.show();
             } else {
                 this.radarboatside.hide();
                 this.radarboat.show();
                 this.radar2.hide();
                 this.radarpuller.show();
+                this.clouds.hide();
             }
             this.level[0].update(cFrame);
             this.level[1].update(cFrame);
