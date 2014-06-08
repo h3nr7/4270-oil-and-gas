@@ -1,0 +1,73 @@
+{
+	"meta": {
+		"image": "scene3b.png",
+		"size": {"w":1868,"h":1221},
+		"scale": "1"
+	},
+	"frames": {
+		"storm_clouds_04.png":
+		{
+            "frame": {"x":0,"y":0,"w":619,"h":470},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":619,"h":470},
+            "sourceSize": {"w":619,"h":470}
+		},
+		"storm_clouds_05.png":
+		{
+            "frame": {"x":619,"y":0,"w":624,"h":469},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":624,"h":469},
+            "sourceSize": {"w":624,"h":469}
+		},
+		"storm_clouds_06.png":
+		{
+            "frame": {"x":0,"y":470,"w":565,"h":469},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":565,"h":469},
+            "sourceSize": {"w":565,"h":469}
+		},
+		"storm_clouds-sign.png":
+		{
+            "frame": {"x":565,"y":470,"w":604,"h":394},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":604,"h":394},
+            "sourceSize": {"w":604,"h":394}
+		},
+		"storm_clouds_02.png":
+		{
+            "frame": {"x":1243,"y":0,"w":625,"h":311},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":625,"h":311},
+            "sourceSize": {"w":625,"h":311}
+		},
+		"storm_clouds_03.png":
+		{
+            "frame": {"x":1243,"y":311,"w":564,"h":311},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":564,"h":311},
+            "sourceSize": {"w":564,"h":311}
+		},
+		"storm_clouds_01.png":
+		{
+            "frame": {"x":1243,"y":622,"w":619,"h":310},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":619,"h":310},
+            "sourceSize": {"w":619,"h":310}
+		},
+		"storm-cloud-thunder.png":
+		{
+            "frame": {"x":0,"y":939,"w":377,"h":282},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":377,"h":282},
+            "sourceSize": {"w":377,"h":282}
+		}
+	}
+}

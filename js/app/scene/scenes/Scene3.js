@@ -48,7 +48,7 @@
 				tween3Start: 2400,
 				tween4Start: 3200,
 				tween5Start: 4700,
-				tween6Start: 5700,
+				tween6Start: 5950,
 				startX0: 1024,
 				startY0: 50,
 				scale0: 1,
@@ -70,6 +70,7 @@
 				waveX1: 0,
 				waveY1: 457,
 				moveY5: -1650,
+				moveY6: 250,
 
 				drill0Start: 3950,
 				drill1Start: 4150,
@@ -105,7 +106,7 @@
 			this.seafloor = new ElSeaFloor('seafloor', 0, 1484, 0,0,0, 1024, 1200);
 			this.seabed = new ElSeaBed(0,0, 0, 1484,0, 1024);
 			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 2044, 0,0);
-			this.oilcave.updateLevel(0.5);
+			this.oilcave.updateLevel(0);
 			this.oilhole = new ElOilHole('oilhole', 0,-210, -5, 1534, 0,0);
 
 			//iceberg 1
@@ -191,7 +192,7 @@
 			//move back top
 			var tweenMove5Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove5);
 			this.tween5 = new TweenEach({y: tTime.moveY5})
-							.to({y: 255}, tTime._speed3)
+							.to({y: tTime.moveY6}, tTime._speed3)
 							// .easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tweenMove5Bound)
 							.delay(this.startFrame + tTime.tween5Start).start();
@@ -199,8 +200,8 @@
 			//move out of screen
 			var tweenMove6Bound = ListenerFunctions.createListenerFunction(this, this.tweenMove6);
 			this.tween6 = new TweenEach({x: 0})
-							.to({x: tTime.moveX6}, tTime._speed)
-							.easing(TWEEN.Easing.Cubic.InOut)
+							.to({x: tTime.moveX6}, 800)
+							// .easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tweenMove6Bound)
 							.delay(this.startFrame + tTime.tween6Start).start();
 
@@ -230,8 +231,8 @@
 			//move drill away
 			var tweenDrill1Bound = ListenerFunctions.createListenerFunction(this, this.tweenDrill1);
 			this.drillTween1 = new TweenEach({y: 0})
-							.to({y: 1}, tTime._speed)
-							// .easing(TWEEN.Easing.Cubic.InOut)
+							.to({y: 1}, tTime._speed4)
+							.easing(TWEEN.Easing.Cubic.Out)
 							.onUpdate(tweenDrill1Bound)
 							.delay(this.startFrame + tTime.drill1Start).start();	
 		}

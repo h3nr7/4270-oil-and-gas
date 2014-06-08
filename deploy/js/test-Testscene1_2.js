@@ -70,9 +70,9 @@
 			this.scene2 = new Scene2();
 			this.scene2.setup(3300,7200/*695*/, 0, 0);
 			this.scene3 = new Scene3();
-			this.scene3.setup((4000+7200),(4000+7200+5950), 0, 0);
+			this.scene3.setup((4000+7200),(4000+7200+4700), 0, 0);
 			this.scene4 = new Scene4();
-			this.scene4.setup((4000+7200+5950)/*4700*/,(4000+15000), 0, 0);			
+			this.scene4.setup((4000+7200+4700)/*4700*/,(4000+15000), 0, 0);			
 			// this.scene7 = new Scene7();
 			// this.scene7.setup(12000,15000/*695*/, 0, 0);
 			this.loadFonts();
@@ -141,6 +141,7 @@
 				"assets/scene2b.json",
 				"assets/scene2c.json",
 				"assets/scene3.json",
+				"assets/scene3b.json",
 				"assets/scene4.json",
 				"assets/scene5.json",
 				"assets/scene6.json",

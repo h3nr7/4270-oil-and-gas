@@ -45,7 +45,7 @@
 			this.container.addChild(this.oilContainer);
 			this.container.addChild(this.base.container);
 
-			this.updateLevel(0.6);
+			this.updateLevel(0);
 		}
 
 
@@ -75,7 +75,7 @@
 
 
 		p.updateLevel = function(e) {
-			this.oilContainer.y = 400 - e*350;
+			this.oilContainer.y = 400 - (0.2 + e*0.8) * 350;
 		}
 
 		p.update = function() {

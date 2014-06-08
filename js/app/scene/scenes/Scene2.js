@@ -137,17 +137,29 @@
 			// ----------------------------
 			// Sea and Cave
 			// ----------------------------		
-			this.seabg2 = new ElSeaBG('seabg', 0,4282,0,0,0, 1024, 1024);
-			this.seawave2 = new ElSeaWave('seawave', 0, 4282,0,0,0, 1024, 1520);
+			this.seabg2 = new ElSeaBG('seabg', 0,4282,0,0,0, 1536, 1024);
+			this.seawave2 = new ElSeaWave('seawave', 0, 4282,0,0,0, 1536, 1520);
 			this.seabed = new ElSeaBed(0,0, 0, 5582,0, 1024);
 			this.seafloor = new ElSeaFloor('seafloor', 0, 5582, 0,0,0, 1024, 120);
 			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 5682, 0,0);
+			this.oilcave.updateLevel(0.6);
 
 			// ----------------------------
 			// Sea and Cave
 			// ----------------------------		
 			this.radarboatside = new ElRadarBoatSide(0, 0, 200, 4462, 0 );			
 
+			// ----------------------------
+			// clouds
+			// ----------------------------		
+			this.clouds = new ElSpriteContainer('clouds', 0, 0, 1030, 4272, 0);
+			this.clouds.addSprite('storm_clouds_01.png', 0,0);
+			this.clouds.addSprite('storm_clouds_02.png', 618,0);
+			this.clouds.addSprite('storm_clouds_03.png', 1240,0);
+			this.clouds.addSprite('storm_clouds_04.png', 0,309);
+			this.clouds.addSprite('storm_clouds_05.png', 618, 309);
+			this.clouds.addSprite('storm_clouds_06.png', 1239,309);
+			
 			// ----------------------------
 			// ship tween to zoom
 			// ----------------------------
@@ -219,7 +231,7 @@
 
 			var tweenEndingBound = ListenerFunctions.createListenerFunction(this, this.tweenEnding);
 			this.tween7 = new TweenEach({x: 0})
-							.to({x: -1024}, 1000)
+							.to({x: -3200}, 1500)
 							.easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tweenEndingBound)
 							.delay(this.startFrame+6810).start();
@@ -255,6 +267,9 @@
 			this.staticlevel.addElement(this.desc.container);
 			this.staticlevel.addElement(this.desc2.container);
 			this.staticlevel.addElement(this.desc3.container);
+
+			//
+			this.level[3].addElement(this.clouds.container);
 
 			
 

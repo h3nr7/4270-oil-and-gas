@@ -31,6 +31,7 @@
 
 				_completespeed: 4000,
 				_speed: 250,
+				_speed2: 750,
 				_speed3: 2100,
 
 				txtTime1: 1200,
@@ -44,7 +45,14 @@
 				helicopterToXPos:[500, 800, 1700, 2050],
 				helicopterToYPos:[100, 400, 80, 360],
 
-				offsetMoveTime: 500
+
+				delayStartTime: 500, 
+				movementStartTime: 750,
+				rigParallaxTime:  780,
+				offsetMoveTime: 500,
+
+				tweenInY0: -1905,
+				tweenInY1: 0
 			};
 		}
 
@@ -81,7 +89,7 @@
 			// ----------------------------
 			// create sea
 			// ----------------------------
-			this.seabg = new ElSeaBG('seabg', 1024,708, 0, 0,0,5120, 70);
+			this.seabg = new ElSeaBG('seabg', 1024,708, 0, 0,0,5020, 70);
 			this.seawave = new ElSeaWave('seawave', 0, 708, 0, 0,0, 6144);
 
 			// ----------------------------
@@ -118,9 +126,9 @@
 			this.midlevel.addElement(this.fpso.container);
 
 			//front		
+			this.frontlevel.addElement(this.seabg.container);
 			this.frontlevel.addElement(this.iceberg2.container);
 			this.frontlevel.addElement(this.iceberg3.container);
-			this.frontlevel.addElement(this.seabg.container);
 			this.frontlevel.addElement(this.seawave.container);
 
 			//text
@@ -134,13 +142,21 @@
 			// ------------------------------------------------
 			// Tween
 			// ------------------------------------------------
+
+			var tweenInBound = ListenerFunctions.createListenerFunction(this, this.tweenInFunc);
+			this.tweenIn = new TweenEach({y: tT.tweenInY0})
+							.to({ y:tT.tweenInY1 }, tT._speed2)
+							.onUpdate(tweenInBound)
+							.delay(this.startFrame).start();
+
+
 			//move iscene lef to right
 			var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
 			this.tween0 = new TweenEach({x: 0})
 							.to({x: -5120}, tT._completespeed)
 							// .easing(TWEEN.Easing.Cubic.Out)
 							.onUpdate(tween0Bound)
-							.delay(this.startFrame + tT.offsetMoveTime).start();
+							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime).start();
 
 			//move into scene, left
 			var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
@@ -149,14 +165,14 @@
 							// .easing(TWEEN.Easing.Cubic.Out)
 							.interpolation( TWEEN.Interpolation.CatmullRom )
 							.onUpdate(tween1Bound)
-							.delay(this.startFrame).start();
+							.delay(this.startFrame + tT.movementStartTime).start();
 
 			var tween2Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc2);
 			this.tween2 = new TweenEach({x: 0})
 							.to({x: 1 }, 1700)
 							// .easing(TWEEN.Easing.Cubic.Out)
 							.onUpdate(tween2Bound)
-							.delay(this.startFrame + 780).start();
+							.delay(this.startFrame + tT.movementStartTime + tT.rigParallaxTime).start();
 		}
 
 
@@ -183,6 +199,11 @@
 			else {
 				this.helicopter.hideSign();
 			}
+		}
+
+		p.tweenInFunc = function(e) {
+			var cObj = this.tweenIn.tweenVars();
+			this.yPos(cObj.y);
 		}
 
 		p.tweenFunc0 = function(e) {

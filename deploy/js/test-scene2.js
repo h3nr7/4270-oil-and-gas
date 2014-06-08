@@ -112,6 +112,7 @@
 				"assets/scene2b.json",
 				"assets/scene2c.json",
 				"assets/scene3.json",
+				"assets/scene3b.json",
 				"assets/scene4.json",
 				"assets/scene5.json",
 				"assets/scene6.json",
