@@ -13,9 +13,12 @@
 	var ElRect = ns.element.ElRect;
 	var ElSeaBG = ns.element.ElSeaBG;
 	var ElSeaWave = ns.element.ElSeaWave;
+	var ElSeaBed = ns.element.ElSeaBed;
+	var ElSeaFloor = ns.element.ElSeaFloor;
 	var ElSeaFloor = ns.element.ElSeaFloor;
 	var ElProductionRig = ns.element.ElProductionRig;
 	var ElHelicopter = ns.element.ElHelicopter;
+	var ElSubmarine = ns.element.ElSubmarine;
 	var ElFpso = ns.element.ElFpso;
 	var ElDescription= ns.element.ElDescription;
 
@@ -29,7 +32,7 @@
 
 			this.tweenTime = {
 
-				_completespeed: 4000,
+				_completespeed: 3122 /*4000*/,
 				_speed: 250,
 				_speed2: 750,
 				_speed3: 2100,
@@ -38,7 +41,7 @@
 				txtTime2: 1660,
 				txtTime3: 2965,
 
-				dropTime: 840,
+				dropTime: 1730,
 
 				helicopterFromXPos:-400,
 				helicopterFromYPos:100,
@@ -50,6 +53,9 @@
 				movementStartTime: 750,
 				rigParallaxTime:  780,
 				offsetMoveTime: 500,
+				movedownStartTime: 3120,
+				moveSubStartTime: 3500,
+				moveLandStartTime: 4250,
 
 				tweenInY0: -1905,
 				tweenInY1: 0
@@ -89,8 +95,12 @@
 			// ----------------------------
 			// create sea
 			// ----------------------------
-			this.seabg = new ElSeaBG('seabg', 1024,708, 0, 0,0,5020, 70);
-			this.seawave = new ElSeaWave('seawave', 0, 708, 0, 0,0, 6144);
+			this.seabg = new ElSeaBG('seabg', 1024,708, 0, 0,0,4096, 70);
+			this.seawave = new ElSeaWave('seawave', 0, 708, 0, 0,0, 9144);
+
+			this.seabg2 = new ElSeaBG('seabg', 4596,708, 0, 0,0,4096, 1524);
+			this.seabed = new ElSeaBed(0,0, 4690, 1800, 0, 4096);
+			this.seafloor = new ElSeaFloor('seafloor', 4556, 1800, 0, 0, 0, 3072, 80);
 
 			// ----------------------------
 			// create iceberg
@@ -116,6 +126,19 @@
 			this.productionrig = new ElProductionRig(0, 4000, 1324, -40, 0);
 
 			// ----------------------------
+			// create sub
+			// ----------------------------
+			this.submarine = new ElSubmarine(0,3000, 5080, 1200, 0);
+
+			// ----------------------------
+			// fpso sign
+			// ----------------------------		
+			this.fpsosign = new ElSprite("fpso-sign.png", 4880, 200, 0, 0,0);
+			this.fpsomover = new ElSprite("fpso-mover.png",4965, 498, 0,0);
+			this.fpsomask = this.createMask(4870, 523, 230, 2000);
+			this.fpsosign.container.mask = this.fpsomask;
+
+			// ----------------------------
 			// Add levels
 			// ----------------------------	
 			//back
@@ -127,9 +150,18 @@
 
 			//front		
 			this.frontlevel.addElement(this.seabg.container);
+			this.frontlevel.addElement(this.seabg2.container)
+			this.frontlevel.addElement(this.seabed.container);
+			this.frontlevel.addElement(this.seafloor.container);
+			this.frontlevel.addElement(this.fpsosign.container);
+			this.frontlevel.addElement(this.fpsomask);
+			
+			this.frontlevel.addElement(this.fpsomover.container);
 			this.frontlevel.addElement(this.iceberg2.container);
 			this.frontlevel.addElement(this.iceberg3.container);
 			this.frontlevel.addElement(this.seawave.container);
+
+			this.frontlevel.addElement(this.submarine.container);
 
 			//text
 			this.desc = new ElDescription ('Turbines', 'Excellent anti-oxdation and air release properties\n\nMobil Delvac 1™ 600\nMobil SHC™ 800\nMobil DTE™ 932 GT', '', 'blue', this.startFrame + tT.txtTime1, 700, 100, 50, 0);
@@ -153,10 +185,32 @@
 			//move iscene lef to right
 			var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
 			this.tween0 = new TweenEach({x: 0})
-							.to({x: -5120}, tT._completespeed)
+							.to({x: -4700/*-5120*/}, tT._completespeed)
 							// .easing(TWEEN.Easing.Cubic.Out)
 							.onUpdate(tween0Bound)
 							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime).start();
+
+			//move down
+			var tween0bBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0b);
+			this.tween0b = new TweenEach({y:0, ry: 200})
+							.to({y: -1100, ry: 950}, tT._speed2)
+							.onUpdate(tween0bBound)
+							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.movedownStartTime).start();
+
+			var tweenSubBound = ListenerFunctions.createListenerFunction(this, this.tweenSubFunc);
+			this.tweensub = new TweenEach({x: 6200})
+							.to({x: 5080}, 500)
+							.easing(TWEEN.Easing.Cubic.Out)
+							.onUpdate(tweenSubBound)
+							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveSubStartTime).start();	
+
+			var tweenLandBound = ListenerFunctions.createListenerFunction(this, this.tweenLandFunc);
+			this.tweenland = new TweenEach({x:-4700, y: -1100})
+							.to({x:[-6500, -6500, -8000], y:[-1100, -1100, 50] }, 750)
+							.interpolation( TWEEN.Interpolation.Bezier)
+							.onUpdate(tweenLandBound)
+							.easing(TWEEN.Easing.Cubic.InOut)
+							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime).start();
 
 			//move into scene, left
 			var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
@@ -172,7 +226,9 @@
 							.to({x: 1 }, 1700)
 							// .easing(TWEEN.Easing.Cubic.Out)
 							.onUpdate(tween2Bound)
-							.delay(this.startFrame + tT.movementStartTime + tT.rigParallaxTime).start();
+							.delay(this.startFrame + tT.movementStartTime + tT.rigParallaxTime).start()
+
+		
 		}
 
 
@@ -213,14 +269,44 @@
 			this.backlevel.xPos(cObj.x*0.8);
 		}
 
+		p.tweenFunc0b = function(e) {
+			var cObj = this.tween0b.tweenVars();
+			this.frontlevel.yPos(cObj.y);
+			this.midlevel.yPos(cObj.y);
+			this.backlevel.yPos(cObj.y);
+			this.fpsosign.yPos(cObj.ry);
+		}
+
 		p.tweenFunc1 = function(e) {
 			var cObj = this.tween1.tweenVars();
 			// console.log(cObj.x, cObj.y)
 			this.helicopter.position(cObj.x, cObj.y);
 		}
 
+		p.tweenSubFunc = function(e) {
+			var cObj = this.tweensub.tweenVars();
+			this.submarine.xPos(cObj.x);
+		}
+
+		p.tweenLandFunc = function(e) {
+			var cObj = this.tweenland.tweenVars();
+			this.frontlevel.position(cObj.x, cObj.y);
+			// this.midlevel.position(cObj.x*0.9, cObj.y);
+		}
+
 		p.tweenFunc2 = function(e) {
 			this.productionrig.parallaxing(e);
+		}
+
+		p.createMask = function(x, y, w, h) {
+			var casing = new PIXI.Graphics();
+			casing.clear();
+			casing.beginFill(0xcccccc, 1);
+			casing.drawRect(0, 0, w, h);
+			casing.endFill();
+			casing.position.x = x;
+			casing.position.y = y;	
+			return casing;			
 		}
 
 	}

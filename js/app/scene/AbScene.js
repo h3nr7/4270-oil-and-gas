@@ -46,8 +46,12 @@
 
 		p.__update = function(frame) {
 
+
+			var sT = this.startFrame;
+			var sD = this.startFrame + this.duration;
+
 			this._update(frame);
-			if(frame<=this.startFrame) {
+			if(frame<=sT || frame>sD) {
 				this.container.visible = false;
 			}
 			else {

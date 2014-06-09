@@ -252,9 +252,9 @@
 		}
 
 		p.update = function(frame) {
-
-			this._update(frame);
-			var cFrame = this.localCurFrame(frame);
+			
+			this.__update(frame);
+			var cFrame = this.localCurFrame(frame);		
 
 			this.backlevel.update(cFrame);
 			this.midlevel.update(cFrame);
