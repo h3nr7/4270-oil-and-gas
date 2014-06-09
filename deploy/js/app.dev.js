@@ -10991,6 +10991,7 @@ TWEEN.Interpolation = {
             this.curFrame = 0;
             this.duration = 0;
             this.maskObj = null;
+            this.element = [];
         };
         ns.AbContainer = AbContainer;
         var p = AbContainer.prototype = new AbElement();
@@ -12291,6 +12292,104 @@ TWEEN.Interpolation = {
 
 (function() {
     var ns = MKK.getNamespace("app.scene.element");
+    var AbContainer = MKK.getNamespace("app.scene").AbContainer;
+    if (!ns.ElRain) {
+        var ElRain = function ElRain(sFrame, duration, x, y, z, numDrop) {
+            this.assetName = "rain-drop.png";
+            this.name = name;
+            this.z = z;
+            this.numDrop = numDrop || 200;
+            this.rainArr = [];
+            this.speed = 30;
+            this.dropSize = 1.5;
+            this.windSpeed = 5;
+            this.topMargin = -580;
+            this.bottomMargin = 768;
+            this.rightMargin = 1500;
+            this.sizeDeviation = .8;
+            this.timeDeviation = 10;
+            this.isRaining = false;
+            this.beginTime = Date.now();
+            this.setup(sFrame, duration, x, y);
+            this.show();
+        };
+        ns.ElRain = ElRain;
+        var p = ElRain.prototype = new AbContainer();
+        p.setup = function(sFrame, duration, x, y) {
+            this._setup(sFrame, duration, x, y);
+            this.setupRain();
+        };
+        p.setupRain = function() {
+            var tname = this.assetName;
+            var rainLen = this.numDrop;
+            var rMargin = this.rightMargin;
+            var tMargin = this.topMargin;
+            var bMargin = this.bottomMargin;
+            var sDeviation = this.sizeDeviation;
+            var tDeviation = this.timeDeviation;
+            var dSize = this.dropSize;
+            for (var i = 0; i < rainLen; i++) {
+                var xX = Math.random() * rMargin;
+                var yY = tMargin * (.5 + Math.random() * .5);
+                var size = dSize * (1 - sDeviation) + Math.random() * dSize * sDeviation;
+                var velo = .5 * (this.speed + Math.random());
+                var tmp = this.addSprite(tname, xX, yY, .5, .5);
+                tmp.rotate(.06);
+                tmp.scale(size);
+                this.rainArr[i] = {
+                    ox: xX,
+                    oy: yY,
+                    sprite: tmp,
+                    speed: velo,
+                    starttime: tDeviation * i
+                };
+            }
+        };
+        p.show = function() {
+            this.container.visible = true;
+            this.isRaining = true;
+        };
+        p.hide = function() {
+            this.container.visible = false;
+            this.isRaining = false;
+        };
+        p.animate = function() {
+            if (!this.isRaining) return;
+            var rainLen = this.rainArr.length;
+            var rMargin = this.rightMargin;
+            var tMargin = this.topMargin;
+            var bMargin = this.bottomMargin;
+            var sDeviation = this.sizeDeviation;
+            var wSpeed = this.windSpeed;
+            var bTime = this.beginTime;
+            for (var i = 0; i < rainLen; i++) {
+                var tmpTime = Date.now();
+                var stTime = this.rainArr[i].starttime;
+                if (tmpTime < bTime + stTime) return;
+                var tmpSprite = this.rainArr[i].sprite;
+                var tSpeed = this.rainArr[i].speed;
+                var tox = this.rainArr[i].ox;
+                var toy = this.rainArr[i].oy;
+                if (tmpSprite.yPos() < tMargin || tmpSprite.yPos() > bMargin) {
+                    tmpSprite.hide();
+                } else {
+                    tmpSprite.show();
+                }
+                if (tmpSprite.yPos() <= bMargin) {
+                    var ty = tmpSprite.yPos() + tSpeed;
+                    var tx = tmpSprite.xPos() - wSpeed;
+                    tmpSprite.position(tx, ty);
+                } else {
+                    tmpSprite.position(tox, toy);
+                }
+            }
+        };
+        p.update = function() {};
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene.element");
     var ElText = ns.ElText;
     if (!ns.ElScene1Text) {
         var ElScene1Text = function ElTScene1ext(txt, txtSettings, x, y, z, toX, toY) {
@@ -12827,6 +12926,7 @@ TWEEN.Interpolation = {
     var ElRadarBoatSide = ns.element.ElRadarBoatSide;
     var ElDescription = ns.element.ElDescription;
     var ElRadar = ns.element.ElRadar;
+    var ElRain = ns.element.ElRain;
     var FrameTween = MKK.getNamespace("app.animation").FrameTween;
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene2) {
@@ -12907,7 +13007,9 @@ TWEEN.Interpolation = {
             this.clouds.addSprite("storm_clouds_04.png", 0, 309);
             this.clouds.addSprite("storm_clouds_05.png", 618, 309);
             this.clouds.addSprite("storm_clouds_06.png", 1239, 309);
+            this.rainer = new ElRain(0, 3e3, 0, 400, 0, 150);
             this.thundercloud = this.clouds.addSprite("storm-cloud-thunder.png", tT.thunderCloudX0, 160);
+            this.clouds.addElement(this.rainer.container);
             this.drillcloud = this.clouds.addSprite("storm_clouds-sign.png", tT.drillCloudX0, 100);
             this.greycloud = this.clouds.addSprite("storm-cloud-grey.png", tT.greyCloudX0, 400);
             var tweenSmallShipBound = ListenerFunctions.createListenerFunction(this, this.tweenSmallShip);
@@ -13114,6 +13216,9 @@ TWEEN.Interpolation = {
             casing.endFill();
         };
         p.close = function() {};
+        p.animate = function() {
+            this.rainer.animate();
+        };
         p.update = function(frame) {
             this._update(frame);
             var cFrame = this.localCurFrame(frame);
@@ -13179,6 +13284,11 @@ TWEEN.Interpolation = {
                 this.radar2.hide();
                 this.radarpuller.show();
                 this.clouds.hide();
+            }
+            if (cFrame >= 6800 && cFrame < 8100) {
+                this.rainer.show();
+            } else {
+                this.rainer.hide();
             }
             this.level[0].update(cFrame);
             this.level[1].update(cFrame);

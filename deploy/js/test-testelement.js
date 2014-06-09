@@ -152,6 +152,10 @@
 			this.scroller.update();
 		}
 
+		p.animate = function() {
+
+		}
+
 		p.render = function() {
 
 			if (!this.loaded) return;

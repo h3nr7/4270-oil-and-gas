@@ -185,6 +185,11 @@
 			this.scroller.update();
 		}
 
+		p.animate = function() {
+
+			this.scene2.animate();
+		}
+
 		p.render = function() {
 
 			if (!this.loaded) return;
@@ -192,6 +197,7 @@
 			this.stats.begin();
 			//render code starts here
 			this.update();
+			this.animate();
 			
 			this.renderer.render(this.stage);
 

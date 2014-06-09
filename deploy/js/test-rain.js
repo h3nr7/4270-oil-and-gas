@@ -11,6 +11,7 @@
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 	var AbScene = MKK.getNamespace('app.scene').AbScene;
 	var StaticLevel = MKK.getNamespace('app.scene.level').StaticLevel;
+	var ElRain = MKK.getNamespace('app.scene.element').ElRain;
 
 	if(!ns.rainy) {
 
@@ -30,22 +31,9 @@
 			this.staticlevel.setup(0, 0, 0);
 			this.container.addChild(this.staticlevel.container);
 
-			this.numRain = 1000;
-			this.rainArr = [];
-			for(var i=0; i<this.numRain; i++) {
-				var xX = Math.random() * 1500;
-				var yY = -400 - Math.random() *-300;
-				var size = 0.2 + Math.random() * 0.8;
-				var velo = 7 + 5 * Math.random();
-				var tmp = this.staticlevel.addSprite("rain-drop.png", xX, yY, 0.5, 0.5);
-				tmp.rotate(0.06);
-				tmp.scale(size);
-				this.rainArr[i] = { ox: xX, oy: yY, sprite: tmp, speed: velo };
+			this.rainer = new ElRain(0, 3000, 200, 200, 0, 150);
 
-			}
-			
-
-			// this.staticlevel.addElement(this.raindrop);
+			this.staticlevel.addElement(this.rainer.container);
 
 
 
@@ -66,27 +54,7 @@
 			// if(this.rainArr)
 				// console.log(this.rainArr[1]);
 
-			for(var i=0; i<this.numRain; i++) {
-
-				if(this.rainArr[i].sprite.yPos()<-200 || this.rainArr[i].sprite.yPos()>768) {
-					this.rainArr[i].sprite.hide();
-				}
-				else {
-					this.rainArr[i].sprite.show();
-				}
-
-				if(this.rainArr[i].sprite.yPos()<=768) {
-					var ty = this.rainArr[i].sprite.yPos()+(this.rainArr[i].speed);
-
-					var yRatio = ty/768
-					var tx = this.rainArr[i].sprite.xPos() - (2);
-
-					this.rainArr[i].sprite.position(tx, ty);
-				}
-				else {
-					this.rainArr[i].sprite.position(this.rainArr[i].ox, this.rainArr[i].oy);
-				}
-			}			
+			this.rainer.animate();		
 		}
 
 
@@ -287,6 +255,7 @@
 
 			//add debugger for other libs
 			this.scroller.debug(this.gui);
+
 		}
 
 	}

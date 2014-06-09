@@ -22,6 +22,8 @@
 	var ElRadarBoatSide = ns.element.ElRadarBoatSide;
 	var ElDescription= ns.element.ElDescription;
 	var ElRadar = ns.element.ElRadar;
+	var ElRain = ns.element.ElRain;
+
 
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 	var TweenEach = MKK.getNamespace('app.animation').TweenEach;
@@ -173,10 +175,18 @@
 			this.clouds.addSprite('storm_clouds_04.png', 0,309);
 			this.clouds.addSprite('storm_clouds_05.png', 618, 309);
 			this.clouds.addSprite('storm_clouds_06.png', 1239,309);
+
+			//add rain
+			this.rainer = new ElRain(0, 3000, 0, 400, 0, 150);
+
 			//paralax clouds
 			this.thundercloud = this.clouds.addSprite('storm-cloud-thunder.png', tT.thunderCloudX0, 160);
+			//rain
+			this.clouds.addElement(this.rainer.container);
+
 			this.drillcloud = this.clouds.addSprite('storm_clouds-sign.png', tT.drillCloudX0, 100);
 			this.greycloud = this.clouds.addSprite('storm-cloud-grey.png', tT.greyCloudX0, 400);
+
 			
 			// ----------------------------
 			// ship tween to zoom
@@ -397,6 +407,10 @@
 
 		}
 
+		p.animate = function() {
+			this.rainer.animate();		
+		}
+
 		p.update = function(frame) {
 
 			this._update(frame);
@@ -486,6 +500,12 @@
 			}
 
 
+			if(cFrame>=6800 && cFrame<8100) {
+				this.rainer.show();
+			}
+			else {
+				this.rainer.hide();
+			}
 
 
 			

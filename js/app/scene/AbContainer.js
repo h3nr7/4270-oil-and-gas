@@ -24,6 +24,7 @@
 			this.curFrame = 0;
 			this.duration = 0;
 			this.maskObj = null;
+			this.element = [];
 
 		}
 
