@@ -9,8 +9,10 @@
 	var Scene1 = MKK.getNamespace('app.scene').Scene1;
 	var Scene2 = MKK.getNamespace('app.scene').Scene2;
 	var Scene3 = MKK.getNamespace('app.scene').Scene3;
-	var Scene4= MKK.getNamespace('app.scene').Scene4;
+	var Scene4 = MKK.getNamespace('app.scene').Scene4;
+	var Scene6 = MKK.getNamespace('app.scene').Scene6;
 	var Scene7 = MKK.getNamespace('app.scene').Scene7;
+	var Scene8 = MKK.getNamespace('app.scene').Scene8;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
@@ -68,11 +70,17 @@
 			this.scene1 = new Scene1();
 			this.scene1.setup(0, 4000/*695*/, 0, 0);
 			this.scene2 = new Scene2();
-			this.scene2.setup(3300,7200/*695*/, 0, 0);
+			this.scene2.setup(3300,8200/*695*/, 0, 0);
 			this.scene3 = new Scene3();
-			this.scene3.setup((4000+7200),(4000+7200+4700), 0, 0);
+			this.scene3.setup((4000+7200),(6800), 0, 0);
 			this.scene4 = new Scene4();
-			this.scene4.setup((4000+7200+4700)/*4700*/,(4000+15000), 0, 0);			
+			this.scene4.setup((4000+7200+4700)/*4700*/,6223, 0, 0);	
+			this.scene6 = new Scene6();
+			this.scene6.setup((4000+7200+4700+6223)/*4700*/,2000, 0, 0);	
+			this.scene7 = new Scene7();
+			this.scene7.setup((4000+7200+4700+6223+2000)/*4700*/,2880, 0, 0);		
+			this.scene8 = new Scene8();
+			this.scene8.setup((4000+7200+4700+6223+2000+2880)/*4700*/,1000, 0, 0);			
 			// this.scene7 = new Scene7();
 			// this.scene7.setup(12000,15000/*695*/, 0, 0);
 			this.loadFonts();
@@ -83,8 +91,8 @@
 
 			// this.stage.addChild(this.scene1.container);
 			// this.stage.addChild(this.scene2.container);
-			this.stage.addChild(this.scene3.container);
-			this.stage.addChild(this.scene4.container);
+			// this.stage.addChild(this.scene3.container);
+			// this.stage.addChild(this.scene4.container);
 
 			// this.stage.addChild(this.scene7.container);
 
@@ -92,6 +100,9 @@
 			this.scene2.init(this.stage);
 			this.scene3.init(this.stage);
 			this.scene4.init(this.stage);
+			this.scene6.init(this.stage);
+			this.scene7.init(this.stage);
+			this.scene8.init(this.stage);
 			// this.scene7.init(this.stage);
 		}
 
@@ -179,7 +190,9 @@
 			this.scene2.update(frame);
 			this.scene3.update(frame);
 			this.scene4.update(frame);
-
+			this.scene6.update(frame);
+			this.scene7.update(frame);
+			this.scene8.update(frame);
 			// this.scene7.update(frame);
 
 			this.scroller.update();

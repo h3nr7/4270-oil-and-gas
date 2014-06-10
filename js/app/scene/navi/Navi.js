@@ -26,7 +26,7 @@
 			vTemp.style.paddingTop = "7px";
 			vTemp.style.width = "1024px";
 			vTemp.style.height = "40px";
-			vTemp.innerHTML = '<img style="position: absolute; left: 10px;" src="images/exxon_logo.png"/><img style="position: absolute; right: 10px;" src="images/mobile_logo.png"/>';
+			vTemp.innerHTML = '<a style="position: absolute; width: 1024px; height: 40px;" href="com.exxonmobil.mobilperformance://"><img style="position: absolute; left: 10px;" src="images/exxon_logo.png"/><img style="position: absolute; right: 10px;" src="images/mobile_logo.png"/></a>';
 
 			this.view = vTemp;
 		}

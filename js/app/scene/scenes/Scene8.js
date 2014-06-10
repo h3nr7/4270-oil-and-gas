@@ -29,6 +29,11 @@
 
 		var Scene8 = function Scene8() {
 
+			this.tweenTime = {
+				_speed: 250,
+
+				stackDelay: 100,
+			};
 		}
 
 
@@ -39,19 +44,79 @@
 		//open when init is completed
 		p.open = function() {
 
+			var tT = this.tweenTime;
 			//back
 			this.level1 = new StaticLevel('level1');
 			this.level1.setup(0, 0, 0);
 			this.addLevel(this.level1);	
 
+			var strapStyle = styledata.straplinegrey;
+			var smallStyle = styledata.endlineBody;
+			var replayStyle = styledata.replayGrey;
 			//strapline1
-			this.strap1 = new 
+			this.txt2 = new ElText("Get your productivity pumping", 512,300, 0, 0.5, 0.5);
+			this.txt2.setStyle(strapStyle);
+			this.txt2.opacity(0);
 
-			this.level1.addElement()
+			this.txt3 = new ElText("Speak to our specialists about advancing the productivity,\nsafety and environmental care of your oil and gas operations", 512,410, 0, 0.5, 0.5);
+			this.txt3.setStyle(smallStyle);
+			this.txt3.opacity(0);
+
+			this.txt4 = new ElText("Replay >", 512,620, 0, 0.5, 0.5);
+			this.txt4.setStyle(replayStyle);
+			this.txt4.opacity(0);
+
+			this.level1.addElement(this.txt2.container);
+			this.level1.addElement(this.txt3.container);
+			this.level1.addElement(this.txt4.container);
+
+
+			// ------------------------------------------------
+			// Tween
+			// ------------------------------------------------
+			//move into scene, left
+			var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
+			this.tween0 = new TweenEach({y:240})
+							.to({y: 300}, tT._speed)
+							.easing(TWEEN.Easing.Cubic.InOut)
+							.onUpdate(tween0Bound)
+							.delay(this.startFrame ).start();
+
+			var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
+			this.tween1 = new TweenEach({y:380})
+							.to({y: 410}, tT._speed)
+							.easing(TWEEN.Easing.Cubic.InOut)
+							.onUpdate(tween1Bound)
+							.delay(this.startFrame + tT.stackDelay).start();
+
+			var tween2Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc2);
+			this.tween2 = new TweenEach({y:560})
+							.to({y: 620}, tT._speed)
+							.easing(TWEEN.Easing.Cubic.InOut)
+							.onUpdate(tween2Bound)
+							.delay(this.startFrame + tT.stackDelay*2).start();
 
 		}
 
 
+		p.tweenFunc0 = function(e) {
+			var cObj = this.tween0.tweenVars();
+			this.txt2.opacity(e);
+			this.txt2.yPos(cObj.y);
+		}
+
+		p.tweenFunc1 = function(e) {
+			var cObj = this.tween1.tweenVars();
+			this.txt3.opacity(e);
+			this.txt3.yPos(cObj.y);
+		}
+
+		p.tweenFunc2 = function(e) {
+			var cObj = this.tween2.tweenVars();
+			this.txt4.opacity(e);
+			this.txt4.yPos(cObj.y);
+		}
+			
 		//close when destroyed
 		p.close = function() {
 

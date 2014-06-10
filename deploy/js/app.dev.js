@@ -10354,12 +10354,48 @@ TWEEN.Interpolation = {
 
 (function() {
     var ns = MKK.getNamespace("data");
-    if (!ns.copy) {
-        ns.copy = {
-            en: {
-                scene1: {},
-                scene2: {},
-                scene3: {}
+    if (!ns.copydata) {
+        ns.copydata = {
+            scene1: {
+                line1: "With over 100 years of experience\n as an Oil & Gas global leader",
+                line2: "With over 100 years of close collaboration\n with the world's leading equipment builders",
+                line3: "We know that 'productivity' means more to you than just the quantity of your output",
+                line4: "Our synthetic lubricants could help enable problem-free operation to help enhance",
+                line4b: "*Visit mobilindustrial.com to learn how certain Mobil branded lubricants may provide benefits to help minimize environmental impact. Actual benefits will depend upon product selected, operating conditions, and applications",
+                line5: "Our solutions help to:",
+                line6: "Reduce energy consumption",
+                line7: "Reduce downtime",
+                line8: "Increase equipment protection",
+                line9: "Optimize operating costs",
+                symbolline1: "Safety",
+                symbolline2: "Environmental Care",
+                symbolline3: "Productivity"
+            },
+            scene2: {},
+            scene3: {
+                desc1: {
+                    title: "Engines",
+                    txt: "Mobil Delvac 1™ 600\nMobil Delvac MX™ 600\nMobil Pegasus™",
+                    color: "blue"
+                },
+                desc2: {
+                    title: "Top Drive",
+                    txt: "Mobil SHC™\nMobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™",
+                    color: "blue"
+                },
+                desc3: {
+                    title: "Mud Pumps",
+                    txt: "Mobil SHC™ Gear\nMobil Polyrex™ EM",
+                    color: "blue"
+                },
+                desc4: {
+                    title: "Positioning Thruster",
+                    txt: "Mobil SHC™ 600\nMobilgear™ 600XP",
+                    color: "white"
+                }
+            },
+            scene4: {
+                desc1: {}
             }
         };
     }
@@ -10479,8 +10515,29 @@ TWEEN.Interpolation = {
                 wordWrap: "true",
                 wordWrapWidth: "800"
             },
-            disclaimgrey: {
-                font: "20px emprintw01-regular",
+            symbolTitle: {
+                font: "15px EMPrintW01-semibold",
+                fill: "#58595b",
+                align: "center",
+                wordWrap: "true",
+                wordWrapWidth: "200"
+            },
+            symbolTitle2: {
+                font: "18px EMPrintW01-regular",
+                fill: "#58595b",
+                align: "center",
+                wordWrap: "true",
+                wordWrapWidth: "400"
+            },
+            symbolTitle3: {
+                font: "28px EMPrintW01-semibold",
+                fill: "#58595b",
+                align: "center",
+                wordWrap: "true",
+                wordWrapWidth: "400"
+            },
+            disclaimTitle: {
+                font: "16px emprintw01-regular",
                 fill: "#58595b",
                 align: "center",
                 wordWrap: "true",
@@ -10545,6 +10602,20 @@ TWEEN.Interpolation = {
                 align: "left",
                 wordWrap: "true",
                 wordWrapWidth: "400"
+            },
+            endlineBody: {
+                font: "18px emprintw01-regular",
+                fill: "#58595b",
+                align: "center",
+                wordWrap: "true",
+                wordWrapWidth: "600"
+            },
+            replayGrey: {
+                font: "24px emprintw01-regular",
+                fill: "#58595b",
+                align: "center",
+                wordWrap: "true",
+                wordWrapWidth: "600"
             }
         };
     }
@@ -11114,8 +11185,10 @@ TWEEN.Interpolation = {
             this.__update();
         };
         p.__update = function(frame) {
+            var sT = this.startFrame;
+            var sD = this.startFrame + this.duration;
             this._update(frame);
-            if (frame <= this.startFrame) {
+            if (frame <= sT || frame > sD) {
                 this.container.visible = false;
             } else {
                 this.container.visible = true;
@@ -12300,7 +12373,7 @@ TWEEN.Interpolation = {
             this.z = z;
             this.numDrop = numDrop || 200;
             this.rainArr = [];
-            this.speed = 30;
+            this.speed = 24;
             this.dropSize = 1.5;
             this.windSpeed = 5;
             this.topMargin = -580;
@@ -12316,7 +12389,12 @@ TWEEN.Interpolation = {
         ns.ElRain = ElRain;
         var p = ElRain.prototype = new AbContainer();
         p.setup = function(sFrame, duration, x, y) {
-            this._setup(sFrame, duration, x, y);
+            this._preSetup(x, y);
+            this.container = new PIXI.SpriteBatch();
+            this.container.position = this.oPos.clone();
+            this.startFrame = sFrame;
+            this.duration = duration;
+            PIXI.SpriteBatch();
             this.setupRain();
         };
         p.setupRain = function() {
@@ -12346,16 +12424,20 @@ TWEEN.Interpolation = {
             }
         };
         p.show = function() {
-            this.container.visible = true;
             this.isRaining = true;
         };
         p.hide = function() {
-            this.container.visible = false;
             this.isRaining = false;
         };
         p.animate = function() {
-            if (!this.isRaining) return;
             var rainLen = this.rainArr.length;
+            if (!this.isRaining) {
+                for (var i = 0; i < rainLen; i++) {
+                    var tmpSprite = this.rainArr[i].sprite;
+                    tmpSprite.hide();
+                }
+                return;
+            }
             var rMargin = this.rightMargin;
             var tMargin = this.topMargin;
             var bMargin = this.bottomMargin;
@@ -12718,7 +12800,7 @@ TWEEN.Interpolation = {
             vTemp.style.paddingTop = "7px";
             vTemp.style.width = "1024px";
             vTemp.style.height = "40px";
-            vTemp.innerHTML = '<img style="position: absolute; left: 10px;" src="images/exxon_logo.png"/><img style="position: absolute; right: 10px;" src="images/mobile_logo.png"/>';
+            vTemp.innerHTML = '<a style="position: absolute; width: 1024px; height: 40px;" href="com.exxonmobil.mobilperformance://"><img style="position: absolute; left: 10px;" src="images/exxon_logo.png"/><img style="position: absolute; right: 10px;" src="images/mobile_logo.png"/></a>';
             this.view = vTemp;
         };
     }
@@ -12790,9 +12872,11 @@ TWEEN.Interpolation = {
 
 (function() {
     var ns = MKK.getNamespace("app.scene");
-    var scenedata = MKK.getNamespace("data").scenedata;
-    var styledata = MKK.getNamespace("data").styledata;
-    var settings = MKK.getNamespace("data").settings;
+    var data = MKK.getNamespace("data");
+    var copydata = data.copydata;
+    var scenedata = data.scenedata;
+    var styledata = data.styledata;
+    var settings = data.settings;
     var AbScene = ns.AbScene;
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
     var Scene1Level = ns.level.Scene1Level;
@@ -12813,6 +12897,11 @@ TWEEN.Interpolation = {
         p.open = function() {
             this.createLevels(scenedata.scene1.level, Scene1Level);
             var strapStyle = styledata.straplinegrey;
+            var symStyle = styledata.symbolTitle;
+            var symStyle2 = styledata.symbolTitle2;
+            var symStyle3 = styledata.symbolTitle3;
+            var disclaimStyle = styledata.disclaimTitle;
+            var copies = copydata.scene1;
             var cloud1 = new ElSprite("cloud_satellite.png", 100, 100, 0);
             var logo1 = new ElSprite("cloud_text1.png", 512, 374, 0, .5, .5);
             var arrow1 = new ElSprite("cloud_text1c.png", 512, 454, 0, .5, .5);
@@ -12820,14 +12909,16 @@ TWEEN.Interpolation = {
             txt1.setStyle({
                 font: "12px EMPrintW01-regular"
             });
-            var txt2 = new ElText("With over 100 years of experience\n as an Oil & Gas global leader", 512, 900, 0, .5, .5);
+            var txt2 = new ElText(copies.line1, 512, 900, 0, .5, .5);
             txt2.setStyle(strapStyle);
-            var txt3 = new ElText("With 100 years of close collaboration\n with the world's leading equipment builders", 512, 2e3, 0, .5, .5);
+            var txt3 = new ElText(copies.line2, 512, 2e3, 0, .5, .5);
             txt3.setStyle(strapStyle);
-            var txt4 = new ElText("We know that 'productivity' means more to you than just the quantity of your output", 512, 2e3, 0, .5, .5);
+            var txt4 = new ElText(copies.line3, 512, 2e3, 0, .5, .5);
             txt4.setStyle(strapStyle);
-            var txt5 = new ElText("Our synthetic lubricants can enable\n problem-free operation to help enhance...", 512, 3600, 0, .5, .5);
+            var txt5 = new ElText(copies.line4, 512, 3600, 0, .5, .5);
             txt5.setStyle(strapStyle);
+            var disclaimTxt1 = new ElText(copies.line4b, 512, 4100, 0, .5, .5);
+            disclaimTxt1.setStyle(disclaimStyle);
             var cloud2 = new ElSprite("cloud_blue1.png", 100, 580, 0);
             var cloud3 = new ElSprite("cloud_grey1.png", 600, 1280, 0);
             var cloud4 = new ElSprite("cloud_white1.png", 630, 1520, 0);
@@ -12836,42 +12927,21 @@ TWEEN.Interpolation = {
             var symbol1 = new ElSprite("cloud_icon_safety.png", 322, 3730, 0);
             var symbol2 = new ElSprite("cloud_icon_environmental.png", 470, 3730, 0);
             var symbol3 = new ElSprite("cloud_icon_productivity.png", 622, 3730, 0);
-            var symStyle = {
-                font: "15px EMPrintW01-semibold",
-                fill: "#58595b",
-                align: "center",
-                wordWrap: "true",
-                wordWrapWidth: "200"
-            };
-            this.symTxt1 = new ElText("Safety", 357, 3820, 0, .5, .5);
-            this.symTxt2 = new ElText("Environmental Care", 506, 3820, 0, .5, .5);
-            this.symTxt3 = new ElText("Productivity", 655, 3820, 0, .5, .5);
+            this.symTxt1 = new ElText(copies.symbolline1, 357, 3820, 0, .5, .5);
+            this.symTxt2 = new ElText(copies.symbolline2, 506, 3820, 0, .5, .5);
+            this.symTxt3 = new ElText(copies.symbolline3, 655, 3820, 0, .5, .5);
             this.symTxt1.setStyle(symStyle);
             this.symTxt2.setStyle(symStyle);
             this.symTxt3.setStyle(symStyle);
             var logo2 = new ElSprite("mobile_shc_small.png", 180, 4280, 0, .5, .5);
             var logo3 = new ElSprite("mobile_grease_small.png", 518, 4280, 0, .5, .5);
             var logo4 = new ElSprite("signum_small.png", 850, 4295, 0, .5, .5);
-            var symStyle2 = {
-                font: "18px EMPrintW01-regular",
-                fill: "#58595b",
-                align: "center",
-                wordWrap: "true",
-                wordWrapWidth: "400"
-            };
-            var symTxt4 = new ElText("Our solutions help to:", 512, 4400, 0, .5, .5);
+            var symTxt4 = new ElText(copies.line5, 512, 4400, 0, .5, .5);
             symTxt4.setStyle(symStyle2);
-            var symStyle3 = {
-                font: "28px EMPrintW01-semibold",
-                fill: "#58595b",
-                align: "center",
-                wordWrap: "true",
-                wordWrapWidth: "400"
-            };
-            var symTxt5 = new ElText("Reduce energy consumption", 512, 4470, 0, .5, .5);
-            var symTxt6 = new ElText("Reduce downtime", 512, 4540, 0, .5, .5);
-            var symTxt7 = new ElText("Increase equipment protection", 512, 4610, 0, .5, .5);
-            var symTxt8 = new ElText("Optimize operating costs", 512, 4680, 0, .5, .5);
+            var symTxt5 = new ElText(copies.line6, 512, 4470, 0, .5, .5);
+            var symTxt6 = new ElText(copies.line7, 512, 4540, 0, .5, .5);
+            var symTxt7 = new ElText(copies.line8, 512, 4610, 0, .5, .5);
+            var symTxt8 = new ElText(copies.line9, 512, 4680, 0, .5, .5);
             symTxt5.setStyle(symStyle3);
             symTxt6.setStyle(symStyle3);
             symTxt7.setStyle(symStyle3);
@@ -12889,6 +12959,7 @@ TWEEN.Interpolation = {
             this.level[1].addElement(cloud3.container);
             this.level[1].addElement(txt3.container);
             this.level[1].addElement(txt5.container);
+            this.level[1].addElement(disclaimTxt1.container);
             this.level[1].addElement(symbol1.container);
             this.level[1].addElement(symbol2.container);
             this.level[1].addElement(symbol3.container);
@@ -13036,7 +13107,7 @@ TWEEN.Interpolation = {
             this.clouds.addSprite("storm_clouds_04.png", 0, 309);
             this.clouds.addSprite("storm_clouds_05.png", 618, 309);
             this.clouds.addSprite("storm_clouds_06.png", 1239, 309);
-            this.rainer = new ElRain(0, 3e3, 0, 400, 0, 150);
+            this.rainer = new ElRain(0, 3400, 500, 400, 0, 200);
             this.thundercloud = this.clouds.addSprite("storm-cloud-thunder.png", tT.thunderCloudX0, 160);
             this.clouds.addElement(this.rainer.container);
             this.drillcloud = this.clouds.addSprite("storm_clouds-sign.png", tT.drillCloudX0, 100);
@@ -13331,8 +13402,10 @@ TWEEN.Interpolation = {
 (function() {
     var ns = MKK.getNamespace("app.scene");
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
-    var scenedata = MKK.getNamespace("data").scenedata;
-    var styledata = MKK.getNamespace("data").styledata;
+    var data = MKK.getNamespace("data");
+    var scenedata = data.scenedata;
+    var styledata = data.styledata;
+    var copydata = data.copydata;
     var AbScene = ns.AbScene;
     var Scene1Level = ns.level.Scene1Level;
     var StaticLevel = ns.level.StaticLevel;
@@ -13539,13 +13612,14 @@ TWEEN.Interpolation = {
         };
         p.addDescriptionTxt = function() {
             var txtTime = this.txtTime;
-            this.desc = new ElDescription("Engines", "Mobil Delvac 1™ 600\nMobil Delvac MX™ 600\nMobil Pegasus™", "", "blue", this.startFrame + txtTime.txt1Start, 800, 50, 400, 0);
+            var copies = copydata.scene3;
+            this.desc = new ElDescription(copies.desc1.title, copies.desc1.txt, "", copies.desc1.color, this.startFrame + txtTime.txt1Start, 800, 50, 400, 0);
             this.txtlevel.addElement(this.desc.container);
-            this.desc2 = new ElDescription("Top Drive", "Mobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™", "", "blue", this.startFrame + txtTime.txt2Start, 800, 470, 70, 0);
+            this.desc2 = new ElDescription(copies.desc2.title, copies.desc2.txt, "", copies.desc2.color, this.startFrame + txtTime.txt2Start, 800, 470, 70, 0);
             this.txtlevel.addElement(this.desc2.container);
-            this.desc3 = new ElDescription("Mud Pumps", "Mobil SHC™ Gear\nMobil Polyrex™ EM", "", "blue", this.startFrame + txtTime.txt3Start, 800, 600, 240, 0);
+            this.desc3 = new ElDescription(copies.desc3.title, copies.desc3.txt, "", copies.desc3.color, this.startFrame + txtTime.txt3Start, 800, 600, 240, 0);
             this.txtlevel.addElement(this.desc3.container);
-            this.desc4 = new ElDescription("Positioning Thruster", "Mobil SHC™ 600\nMobilgear™ 600XP", "", "white", this.startFrame + txtTime.txt4Start, 800, 630, 500, 0);
+            this.desc4 = new ElDescription(copies.desc4.title, copies.desc4.txt, "", copies.desc4.color, this.startFrame + txtTime.txt4Start, 800, 630, 500, 0);
             this.txtlevel.addElement(this.desc4.container);
         };
         p.addbgPipe = function(x, scale) {
@@ -13608,8 +13682,10 @@ TWEEN.Interpolation = {
 (function() {
     var ns = MKK.getNamespace("app.scene");
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
-    var scenedata = MKK.getNamespace("data").scenedata;
-    var styledata = MKK.getNamespace("data").styledata;
+    var data = MKK.getNamespace("data");
+    var scenedata = data.scenedata;
+    var styledata = data.styledata;
+    var copydata = data.copydata;
     var AbScene = ns.AbScene;
     var StaticLevel = ns.level.StaticLevel;
     var ElSprite = ns.element.ElSprite;
@@ -13638,6 +13714,7 @@ TWEEN.Interpolation = {
                 txtTime1: 1200,
                 txtTime2: 1660,
                 txtTime3: 2965,
+                txtTime4: 5600,
                 dropTime: 1730,
                 helicopterFromXPos: -400,
                 helicopterFromYPos: 100,
@@ -13658,6 +13735,7 @@ TWEEN.Interpolation = {
         var p = Scene4.prototype = new AbScene();
         p.open = function() {
             var tT = this.tweenTime;
+            var copies = copydata.scene3;
             this.backlevel = new StaticLevel("staticsback");
             this.backlevel.setup(0, 0, 0);
             this.addLevel(this.backlevel);
@@ -13675,6 +13753,10 @@ TWEEN.Interpolation = {
             this.seabg2 = new ElSeaBG("seabg", 4596, 708, 0, 0, 0, 4096, 1524);
             this.seabed = new ElSeaBed(0, 0, 4690, 1800, 0, 4096);
             this.seafloor = new ElSeaFloor("seafloor", 4556, 1800, 0, 0, 0, 3072, 80);
+            this.seaslope = new ElSprite("seabed-slope.png", 6144, 1506, 0, 0, 0);
+            this.seaslope2 = new ElSprite("seabed-slope.png", 6644, 1217, 0, 0, 0);
+            this.seaslope3 = new ElSprite("seabed-slope.png", 7144, 928, 0, 0, 0);
+            this.seaslope4 = new ElSprite("seabed-slope.png", 7644, 639, 0, 0, 0);
             this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 366, 0, 0, 0);
             this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 349, 0, 0, 0);
             this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 366, 0, 0, 0);
@@ -13682,6 +13764,9 @@ TWEEN.Interpolation = {
             this.fpso = new ElFpso(0, 4e3, 2770, 335, 0);
             this.productionrig = new ElProductionRig(0, 4e3, 1324, -40, 0);
             this.submarine = new ElSubmarine(0, 3e3, 5080, 1200, 0);
+            this.cross1 = new ElSprite("underwater-cross-blue.png", 4800, 1630, 0, 0, 0);
+            this.cross2 = new ElSprite("underwater-cross-blue.png", 5300, 1630, 0, 0, 0);
+            this.cross3 = new ElSprite("underwater-cross-blue.png", 5900, 1640, 0, 0, 0);
             this.fpsosign = new ElSprite("fpso-sign.png", 4880, 200, 0, 0, 0);
             this.fpsomover = new ElSprite("fpso-mover.png", 4965, 498, 0, 0);
             this.fpsomask = this.createMask(4870, 523, 230, 2e3);
@@ -13693,7 +13778,14 @@ TWEEN.Interpolation = {
             this.frontlevel.addElement(this.seabg.container);
             this.frontlevel.addElement(this.seabg2.container);
             this.frontlevel.addElement(this.seabed.container);
+            this.frontlevel.addElement(this.cross1.container);
+            this.frontlevel.addElement(this.cross2.container);
+            this.frontlevel.addElement(this.cross3.container);
             this.frontlevel.addElement(this.seafloor.container);
+            this.frontlevel.addElement(this.seaslope.container);
+            this.frontlevel.addElement(this.seaslope2.container);
+            this.frontlevel.addElement(this.seaslope3.container);
+            this.frontlevel.addElement(this.seaslope4.container);
             this.frontlevel.addElement(this.fpsosign.container);
             this.frontlevel.addElement(this.fpsomask);
             this.frontlevel.addElement(this.fpsomover.container);
@@ -13707,6 +13799,8 @@ TWEEN.Interpolation = {
             this.txtlevel.addElement(this.desc2.container);
             this.desc3 = new ElDescription("Deck Machinery", "Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798", "", "blue", this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
             this.txtlevel.addElement(this.desc3.container);
+            this.desc4 = new ElDescription("Turbines, compressors\nand other applications", "Mobil Pegasus™\nMobiljet™ Oil\nMobil RarusSHC™", "", "white", this.startFrame + tT.txtTime4, 800, 100, 300, 0);
+            this.txtlevel.addElement(this.desc4.container);
             var tweenInBound = ListenerFunctions.createListenerFunction(this, this.tweenInFunc);
             this.tweenIn = new TweenEach({
                 y: tT.tweenInY0
@@ -13738,7 +13832,7 @@ TWEEN.Interpolation = {
                 x: -4700,
                 y: -1100
             }).to({
-                x: [ -6500, -6500, -8e3 ],
+                x: [ -6500, -6500, -7400 ],
                 y: [ -1100, -1100, 50 ]
             }, 750).interpolation(TWEEN.Interpolation.Bezier).onUpdate(tweenLandBound).easing(TWEEN.Easing.Cubic.InOut).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime).start();
             var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
@@ -13872,7 +13966,9 @@ TWEEN.Interpolation = {
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene6) {
         var Scene6 = function Scene6() {
-            this.tweenTime = {};
+            this.tweenTime = {
+                _completespeed: 3600
+            };
         };
         ns.Scene6 = Scene6;
         var p = Scene6.prototype = new AbScene();
@@ -13881,6 +13977,9 @@ TWEEN.Interpolation = {
             this.backlevel = new StaticLevel("staticsback");
             this.backlevel.setup(0, 0, 0);
             this.addLevel(this.backlevel);
+            this.mid2level = new StaticLevel("staticsmid2");
+            this.mid2level.setup(0, 0, 0);
+            this.addLevel(this.mid2level);
             this.midlevel = new StaticLevel("staticsmid");
             this.midlevel.setup(0, 0, 0);
             this.addLevel(this.midlevel);
@@ -13890,13 +13989,42 @@ TWEEN.Interpolation = {
             this.txtlevel = new StaticLevel("staticstxt");
             this.txtlevel.setup(0, 0, 0);
             this.addLevel(this.txtlevel);
-            this.mountain1 = new ElSprite("mountain_blue_mid.png", 200, 505, 0, 0, 0);
-            this.mountain2 = new ElSprite("mountain_green_small.png", 0, 505, 0, 0, 0);
-            this.seafloor = new ElSeaFloor("seafloor", 0, 705, 0, 0, 0, 5120, 80);
+            this.mountain1 = new ElSprite("mountain_blue_mid.png", 100, 505, 0, 0, 0);
+            this.mountain2 = new ElSprite("mountain_green_small.png", 0, 605, 0, 0, 0);
+            this.frontProp1 = new ElSprite("processing-front_07.png", 200, 480, 0, 0, 0);
+            this.frontProp2 = new ElSprite("processing-front_02.png", 400, 365, 0, 0, 0);
+            this.frontProp3 = new ElSprite("processing-front_05.png", 1100, 485, 0, 0, 0);
+            this.frontProp4 = new ElSprite("processing-front_09.png", 1500, 495, 0, 0, 0);
+            this.midProp1 = new ElSprite("processing-mid.png", 500, 340, 0, 0, 0);
+            this.midProp2 = new ElSprite("processing-mid2.png", 900, 405, 0, 0, 0);
+            this.midProp3 = new ElSprite("processing-mid.png", 1200, 340, 0, 0, 0);
+            this.mid2Prop1 = new ElSprite("processing-mid3.png", 350, 580, 0, 0, 0);
+            this.mid2Prop2 = new ElSprite("processing-mid3.png", 800, 620, 0, 0, 0);
+            this.backProp1 = new ElSprite("processing-back.png", 700, 475, 0, 0, 0);
+            this.backProp2 = new ElSprite("processing-back.png", 1100, 510, 0, 0, 0);
+            this.seafloor = new ElSeaFloor("seafloor", 0, 705, 0, 0, 0, 4096, 80);
+            this.desc = new ElDescription("Turbines", "Mobil SHC™ 800\nMobil DTE™ 932 GT\nMobil DTE™ 800\n", "", "blue", this.startFrame, 700, 50, 100, 0);
+            this.desc2 = new ElDescription("Compressors", "Mobil Rarus SHC™ 1000\nMobil Rarus™ 800", "", "blue", this.startFrame + 500, 700, 50, 100, 0);
+            this.desc3 = new ElDescription("Pumps", "Mobil SHC™ 100", "", "blue", this.startFrame + 1e3, 700, 50, 100, 0);
+            this.desc4 = new ElDescription("Gears", "Mobil SHC™ 600", "", "blue", this.startFrame + 1100, 700, 50, 200, 0);
             this.backlevel.addElement(this.mountain1.container);
             this.backlevel.addElement(this.mountain2.container);
-            this.midlevel.addElement(this.seafloor.container);
-            this.midlevel.addElement(this.seafloor.container);
+            this.backlevel.addElement(this.backProp1.container);
+            this.backlevel.addElement(this.backProp2.container);
+            this.midlevel.addElement(this.midProp1.container);
+            this.midlevel.addElement(this.midProp2.container);
+            this.midlevel.addElement(this.midProp3.container);
+            this.mid2level.addElement(this.mid2Prop1.container);
+            this.mid2level.addElement(this.mid2Prop2.container);
+            this.frontlevel.addElement(this.frontProp1.container);
+            this.frontlevel.addElement(this.frontProp2.container);
+            this.frontlevel.addElement(this.frontProp3.container);
+            this.frontlevel.addElement(this.frontProp4.container);
+            this.frontlevel.addElement(this.seafloor.container);
+            this.txtlevel.addElement(this.desc.container);
+            this.txtlevel.addElement(this.desc2.container);
+            this.txtlevel.addElement(this.desc3.container);
+            this.txtlevel.addElement(this.desc4.container);
             var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
             this.tween0 = new TweenEach({
                 x: 600
@@ -13906,9 +14034,10 @@ TWEEN.Interpolation = {
         };
         p.tweenFunc0 = function(e) {
             var cObj = this.tween0.tweenVars();
-            this.frontlevel.xPos(cObj.x);
+            this.backlevel.xPos(cObj.x * .7);
+            this.mid2level.xPos(cObj.x * .8);
             this.midlevel.xPos(cObj.x * .9);
-            this.backlevel.xPos(cObj.x * .8);
+            this.frontlevel.xPos(cObj.x);
         };
         p.close = function() {};
         p.update = function(frame) {
@@ -13916,6 +14045,7 @@ TWEEN.Interpolation = {
             var cFrame = this.localCurFrame(frame);
             this.backlevel.update(cFrame);
             this.midlevel.update(cFrame);
+            this.mid2level.update(cFrame);
             this.frontlevel.update(cFrame);
             this.txtlevel.update(cFrame);
         };
@@ -13953,6 +14083,7 @@ TWEEN.Interpolation = {
                 _speed: 250,
                 _speed1: 500,
                 _speed2: 750,
+                delayStart: 500,
                 tween1Start: 750,
                 tween2Start: 1e3,
                 tween3Start: 1500,
@@ -14095,7 +14226,7 @@ TWEEN.Interpolation = {
         };
         p.close = function() {};
         p.update = function(frame) {
-            this._update(frame);
+            this.__update(frame);
             var cFrame = this.localCurFrame(frame);
             this.backlevel.update(cFrame);
             this.midlevel.update(cFrame);
@@ -14252,14 +14383,67 @@ TWEEN.Interpolation = {
     var FrameTween = MKK.getNamespace("app.animation").FrameTween;
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene8) {
-        var Scene8 = function Scene8() {};
+        var Scene8 = function Scene8() {
+            this.tweenTime = {
+                _speed: 250,
+                stackDelay: 100
+            };
+        };
         ns.Scene8 = Scene8;
         var p = Scene8.prototype = new AbScene();
         p.open = function() {
+            var tT = this.tweenTime;
             this.level1 = new StaticLevel("level1");
             this.level1.setup(0, 0, 0);
             this.addLevel(this.level1);
-            this.strap1 = new this.level1.addElement();
+            var strapStyle = styledata.straplinegrey;
+            var smallStyle = styledata.endlineBody;
+            var replayStyle = styledata.replayGrey;
+            this.txt2 = new ElText("Get your productivity pumping", 512, 300, 0, .5, .5);
+            this.txt2.setStyle(strapStyle);
+            this.txt2.opacity(0);
+            this.txt3 = new ElText("Speak to our specialists about advancing the productivity,\nsafety and environmental care of your oil and gas operations", 512, 410, 0, .5, .5);
+            this.txt3.setStyle(smallStyle);
+            this.txt3.opacity(0);
+            this.txt4 = new ElText("Replay >", 512, 620, 0, .5, .5);
+            this.txt4.setStyle(replayStyle);
+            this.txt4.opacity(0);
+            this.level1.addElement(this.txt2.container);
+            this.level1.addElement(this.txt3.container);
+            this.level1.addElement(this.txt4.container);
+            var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
+            this.tween0 = new TweenEach({
+                y: 240
+            }).to({
+                y: 300
+            }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween0Bound).delay(this.startFrame).start();
+            var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
+            this.tween1 = new TweenEach({
+                y: 380
+            }).to({
+                y: 410
+            }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween1Bound).delay(this.startFrame + tT.stackDelay).start();
+            var tween2Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc2);
+            this.tween2 = new TweenEach({
+                y: 560
+            }).to({
+                y: 620
+            }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween2Bound).delay(this.startFrame + tT.stackDelay * 2).start();
+        };
+        p.tweenFunc0 = function(e) {
+            var cObj = this.tween0.tweenVars();
+            this.txt2.opacity(e);
+            this.txt2.yPos(cObj.y);
+        };
+        p.tweenFunc1 = function(e) {
+            var cObj = this.tween1.tweenVars();
+            this.txt3.opacity(e);
+            this.txt3.yPos(cObj.y);
+        };
+        p.tweenFunc2 = function(e) {
+            var cObj = this.tween2.tweenVars();
+            this.txt4.opacity(e);
+            this.txt4.yPos(cObj.y);
         };
         p.close = function() {};
         p.update = function(frame) {

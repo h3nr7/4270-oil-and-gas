@@ -39,6 +39,7 @@
 				_speed2: 750,
 
 				//start time
+				delayStart: 500,
 				tween1Start: 750,
 				tween2Start: 1000,
 				tween3Start: 1500,
@@ -47,12 +48,12 @@
 				tween6Start: 2700,
 
 				//position
-				tweenStartX0: 1024,
+				tweenStartX0: 2024,
 				tweenStartX1: -2000,
 				tweenStartX2: 0,
 
 				//road position
-				roadX0: 1500,
+				roadX0: 3000,
 				roadX1: -2500,
 
 				//sea
@@ -165,7 +166,7 @@
 			// midlevel
 			this.midlevel.addElement(this.backmountain2.container);
 			this.midlevel.addElement(this.backmountain3.container);
-			this.midlevel.addElement(this.floor.container);
+			// this.midlevel.addElement(this.floor.container);
 			this.midlevel.addElement(this.road);
 			this.midlevel.addElement(this.towngrass);
 			this.midlevel.addElement(this.frontroad.container);
@@ -193,6 +194,13 @@
 			// ------------------------------------------------
 			// Tween
 			// ------------------------------------------------
+			var tweenTruckBound = ListenerFunctions.createListenerFunction(this, this.tweenTruckFunc);
+			this.tweenTruck = new TweenEach({x: 1000})
+							.to({x: tT.truckX0 }, 160)
+							// .easing(TWEEN.Easing.Cubic.Out)
+							.onUpdate(tweenTruckBound)
+							.delay(this.startFrame ).start();
+
 			//move into scene, left
 			var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
 			this.tween0 = new TweenEach({x: tT.tweenStartX0, roadx: tT.roadX0 })
@@ -252,7 +260,7 @@
 		}
 
 		p.update = function(frame) {
-			
+
 			this.__update(frame);
 			var cFrame = this.localCurFrame(frame);		
 
@@ -279,6 +287,11 @@
 		// ------------------------------------------------
 		// Tween func
 		// ------------------------------------------------		
+		p.tweenTruckFunc = function(e) {
+			cObj = this.tweenTruck.tweenVars();
+			this.trucksmall.xPos(cObj.x);
+		}
+
 		p.tweenFunc0 = function(e) {
 			cObj = this.tween0.tweenVars();
 			this.backlevel.xPos(cObj.x*0.7);

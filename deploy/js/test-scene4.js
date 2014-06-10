@@ -58,7 +58,7 @@
 
 			//setup scenes
 			this.scene4 = new Scene4();
-			this.scene4.setup(0, 5000/*695*/, 0, 0);
+			this.scene4.setup(0, 7000/*695*/, 0, 0);
 
 			this.loadFonts();
 		}

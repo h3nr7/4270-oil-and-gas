@@ -2,8 +2,10 @@
 
 	var ns = MKK.getNamespace('app.scene');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
-	var scenedata = MKK.getNamespace('data').scenedata;
-	var styledata = MKK.getNamespace('data').styledata;
+	var data =  MKK.getNamespace('data');
+	var scenedata = data.scenedata;
+	var styledata = data.styledata;
+	var copydata = data.copydata;
 	var AbScene = ns.AbScene;
 
 	var Scene1Level = ns.level.Scene1Level;
@@ -98,8 +100,11 @@
 			//add levels
 			this.addLevels();
 
-			//tweenTIme
+			// ----------------------------
+			// tweenTIme
+			// ----------------------------
 			var tTime = this.tweenTime;
+
 
 			//create seabg
 			this.seabg = new ElSeaBG('seabg', tTime.waveX0, tTime.waveY0,0,0,0, 1024, 1024);
@@ -297,17 +302,18 @@
 		p.addDescriptionTxt = function() {
 
 			var txtTime = this.txtTime;
+			var copies = copydata.scene3;
 			//txt
-			this.desc = new ElDescription ('Engines', 'Mobil Delvac 1™ 600\nMobil Delvac MX™ 600\nMobil Pegasus™', '', 'blue', this.startFrame+txtTime.txt1Start, 800, 50, 400, 0);
+			this.desc = new ElDescription (copies.desc1.title, copies.desc1.txt, '', copies.desc1.color, this.startFrame+txtTime.txt1Start, 800, 50, 400, 0);
 			this.txtlevel.addElement(this.desc.container);
 
-			this.desc2 = new ElDescription ('Top Drive', 'Mobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™', '', 'blue', this.startFrame+txtTime.txt2Start, 800, 470, 70, 0);
+			this.desc2 = new ElDescription (copies.desc2.title, copies.desc2.txt, '', copies.desc2.color, this.startFrame+txtTime.txt2Start, 800, 470, 70, 0);
 			this.txtlevel.addElement(this.desc2.container);
 
-			this.desc3 = new ElDescription ('Mud Pumps', 'Mobil SHC™ Gear\nMobil Polyrex™ EM', '', 'blue', this.startFrame+txtTime.txt3Start, 800, 600, 240, 0);
+			this.desc3 = new ElDescription (copies.desc3.title, copies.desc3.txt, '', copies.desc3.color, this.startFrame+txtTime.txt3Start, 800, 600, 240, 0);
 			this.txtlevel.addElement(this.desc3.container);
 
-			this.desc4 = new ElDescription ('Positioning Thruster', 'Mobil SHC™ 600\nMobilgear™ 600XP', '', 'white', this.startFrame+txtTime.txt4Start, 800, 630, 500, 0);
+			this.desc4 = new ElDescription (copies.desc4.title, copies.desc4.txt, '', copies.desc4.color, this.startFrame+txtTime.txt4Start, 800, 630, 500, 0);
 			this.txtlevel.addElement(this.desc4.container);
 		}
 

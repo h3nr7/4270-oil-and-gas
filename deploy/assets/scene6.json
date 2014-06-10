@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"image": "scene6.png",
-		"size": {"w":1270,"h":1154},
+		"size": {"w":1758,"h":950},
 		"scale": "1"
 	},
 	"frames": {
@@ -45,9 +45,17 @@
             "spriteSourceSize": {"x":0,"y":0,"w":629,"h":277},
             "sourceSize": {"w":629,"h":277}
 		},
+		"processing-mid3.png":
+		{
+            "frame": {"x":1078,"y":0,"w":680,"h":250},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":680,"h":250},
+            "sourceSize": {"w":680,"h":250}
+		},
 		"yellow_sub.png":
 		{
-            "frame": {"x":597,"y":348,"w":404,"h":244},
+            "frame": {"x":1078,"y":250,"w":404,"h":244},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":404,"h":244},
@@ -55,31 +63,31 @@
 		},
 		"processing-front_05.png":
 		{
-            "frame": {"x":218,"y":404,"w":241,"h":227},
+            "frame": {"x":1482,"y":250,"w":241,"h":227},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":241,"h":227},
             "sourceSize": {"w":241,"h":227}
 		},
-		"processing-front_07.png":
-		{
-            "frame": {"x":901,"y":646,"w":155,"h":226},
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":155,"h":226},
-            "sourceSize": {"w":155,"h":226}
-		},
 		"processing-front_09.png":
 		{
-            "frame": {"x":1078,"y":0,"w":192,"h":226},
+            "frame": {"x":1078,"y":494,"w":192,"h":226},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":192,"h":226},
             "sourceSize": {"w":192,"h":226}
 		},
+		"processing-front_07.png":
+		{
+            "frame": {"x":1270,"y":494,"w":155,"h":226},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":155,"h":226},
+            "sourceSize": {"w":155,"h":226}
+		},
 		"processing-back.png":
 		{
-            "frame": {"x":0,"y":950,"w":303,"h":204},
+            "frame": {"x":1425,"y":494,"w":303,"h":204},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":303,"h":204},
@@ -87,7 +95,7 @@
 		},
 		"mountain_green_small.png":
 		{
-            "frame": {"x":303,"y":950,"w":416,"h":184},
+            "frame": {"x":1078,"y":720,"w":416,"h":184},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":416,"h":184},
@@ -95,7 +103,7 @@
 		},
 		"fpso-mover.png":
 		{
-            "frame": {"x":1078,"y":226,"w":50,"h":36},
+            "frame": {"x":1494,"y":720,"w":50,"h":36},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":50,"h":36},
@@ -103,7 +111,7 @@
 		},
 		"s6_1px.png":
 		{
-            "frame": {"x":1128,"y":226,"w":1,"h":1},
+            "frame": {"x":1723,"y":250,"w":1,"h":1},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},

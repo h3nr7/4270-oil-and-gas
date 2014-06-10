@@ -13,7 +13,7 @@
 			this.numDrop = numDrop || 200;
 			this.rainArr = [];
 
-			this.speed = 30;
+			this.speed = 24;
 			this.dropSize = 1.5;
 			this.windSpeed = 5;
 			this.topMargin = -580;
@@ -39,7 +39,15 @@
 
 		p.setup = function(sFrame, duration, x, y) {
 
-			this._setup(sFrame, duration, x,y);
+
+			this._preSetup(x, y);
+
+			this.container = new PIXI.SpriteBatch();
+			this.container.position = this.oPos.clone();
+			this.startFrame = sFrame;
+			this.duration = duration;	
+
+			PIXI.SpriteBatch()
 
 			this.setupRain();
 
@@ -73,21 +81,24 @@
 
 
 		p.show = function() {
-			this.container.visible = true
 			this.isRaining = true;
 			// this.beginTime = Date.now();
 		}
 
 		p.hide = function() {
-			this.container.visible = false;
 			this.isRaining = false;
 		}
 
 		p.animate = function() {
 
-
-			if (!this.isRaining) return;
 			var rainLen = this.rainArr.length;
+
+			if (!this.isRaining) {
+
+				for(var i=0; i<rainLen; i++) { var tmpSprite = this.rainArr[i].sprite; tmpSprite.hide(); }
+				return;
+			}
+
 			var rMargin = this.rightMargin;
 			var tMargin = this.topMargin;
 			var bMargin = this.bottomMargin;

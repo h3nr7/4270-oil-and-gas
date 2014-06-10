@@ -52,6 +52,11 @@
 			this.backlevel.setup(0, 0, 0);
 			this.addLevel(this.backlevel);		
 
+			//mid2
+			this.mid2level = new StaticLevel('staticsmid2');
+			this.mid2level.setup(0, 0, 0);
+			this.addLevel(this.mid2level);	
+
 			//mid
 			this.midlevel = new StaticLevel('staticsmid');
 			this.midlevel.setup(0, 0, 0);
@@ -81,11 +86,13 @@
 			this.midProp2 = new ElSprite('processing-mid2.png', 900, 405, 0, 0,0);
 			this.midProp3 = new ElSprite('processing-mid.png', 1200, 340, 0, 0,0);
 
+			this.mid2Prop1 = new ElSprite('processing-mid3.png', 350, 580, 0, 0,0);
+			this.mid2Prop2 = new ElSprite('processing-mid3.png', 800, 620, 0, 0,0);
+
 			this.backProp1 = new ElSprite('processing-back.png', 700, 475, 0, 0,0);
-			this.backProp2 = new ElSprite('processing-back.png', 1100, 475, 0, 0,0);
+			this.backProp2 = new ElSprite('processing-back.png', 1100, 510, 0, 0,0);
 
 			this.seafloor = new ElSeaFloor('seafloor', 0, 705, 0, 0, 0, 4096, 80);
-
 
 			//description
 			// this.desc = new ElDescription ('Turbine, compressors\nand other applications', 'Mobil Pegasus™\nMobiljet™ Oil\nMobil Rarus SHC™', '', 'blue', this.startFrame, 1000, 50, 50, 0);
@@ -107,6 +114,8 @@
 			this.midlevel.addElement(this.midProp2.container);
 			this.midlevel.addElement(this.midProp3.container);
 
+			this.mid2level.addElement(this.mid2Prop1.container);
+			this.mid2level.addElement(this.mid2Prop2.container);
 
 			this.frontlevel.addElement(this.frontProp1.container);
 			this.frontlevel.addElement(this.frontProp2.container);
@@ -122,7 +131,7 @@
 
 			//move iscene lef to right
 			var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
-			this.tween0 = new TweenEach({x: 600})
+			this.tween0 = new TweenEach({x: 1424})
 							.to({x: -4700/*-5120*/}, tT._completespeed)
 							// .easing(TWEEN.Easing.Cubic.Out)
 							.onUpdate(tween0Bound)
@@ -134,7 +143,8 @@
 
 		p.tweenFunc0 = function(e) {
 			var cObj = this.tween0.tweenVars();
-			this.backlevel.xPos(cObj.x*0.8);
+			this.backlevel.xPos(cObj.x*0.7);
+			this.mid2level.xPos(cObj.x*0.8);
 			this.midlevel.xPos(cObj.x*0.9);
 			this.frontlevel.xPos(cObj.x);
 		}
@@ -150,6 +160,7 @@
 
 			this.backlevel.update(cFrame);
 			this.midlevel.update(cFrame);
+			this.mid2level.update(cFrame);
 			this.frontlevel.update(cFrame);
 			this.txtlevel.update(cFrame);				
 		}

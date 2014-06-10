@@ -59,10 +59,10 @@
 
 			//setup scenes
 			this.scene6 = new Scene6();
-			this.scene6.setup(0, 2000/*695*/, 0, 0);
+			this.scene6.setup(0, 3000/*695*/, 0, 0);
 
 			this.scene7 = new Scene7();
-			this.scene7.setup(1200, 5000/*695*/, 0, 0);
+			this.scene7.setup(2000, 7000/*695*/, 0, 0);
 			this.loadFonts();
 		}
 

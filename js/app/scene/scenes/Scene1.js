@@ -1,9 +1,11 @@
 (function() {
 
 	var ns = MKK.getNamespace('app.scene');
-	var scenedata = MKK.getNamespace('data').scenedata;
-	var styledata = MKK.getNamespace('data').styledata;
-	var settings = MKK.getNamespace('data').settings;
+	var data = MKK.getNamespace('data');
+	var copydata = data.copydata;
+	var scenedata = data.scenedata;
+	var styledata = data.styledata;
+	var settings = data.settings;
 	var AbScene = ns.AbScene;
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
 
@@ -39,10 +41,21 @@
 
 			this.createLevels(scenedata.scene1.level, Scene1Level);
 
+
+			// ----------------------------------------
+			//Styling text
+			// ----------------------------------------
 			var strapStyle = styledata.straplinegrey;
+			var symStyle = styledata.symbolTitle;
+			var symStyle2 = styledata.symbolTitle2;
+			var symStyle3 = styledata.symbolTitle3;
+			var disclaimStyle = styledata.disclaimTitle;
+
+			//copy scene1
+			var copies = copydata.scene1;
+
 
 			//create elements
-
 			var cloud1 = new ElSprite("cloud_satellite.png", 100,100, 0);
 			var logo1 = new ElSprite("cloud_text1.png", 512,374, 0, 0.5, 0.5);
 			var arrow1 = new ElSprite("cloud_text1c.png", 512,454, 0, 0.5, 0.5);
@@ -51,18 +64,21 @@
 			txt1.setStyle({"font":"12px EMPrintW01-regular"});
 
 
-			var txt2 = new ElText("With over 100 years of experience\n as an Oil & Gas global leader", 512,900, 0, 0.5, 0.5);
+			var txt2 = new ElText(copies.line1, 512,900, 0, 0.5, 0.5);
 			txt2.setStyle(strapStyle);
 
-			var txt3 = new ElText("With 100 years of close collaboration\n with the world's leading equipment builders", 512,2000, 0, 0.5, 0.5);
+			var txt3 = new ElText(copies.line2, 512,2000, 0, 0.5, 0.5);
 			txt3.setStyle(strapStyle);
 
 
-			var txt4 = new ElText("We know that 'productivity' means more to you than just the quantity of your output", 512,2000, 0, 0.5, 0.5);
+			var txt4 = new ElText(copies.line3, 512,2000, 0, 0.5, 0.5);
 			txt4.setStyle(strapStyle);
 
-			var txt5 = new ElText("Our synthetic lubricants can enable\n problem-free operation to help enhance...", 512,3600, 0, 0.5, 0.5);
+			var txt5 = new ElText(copies.line4, 512,3600, 0, 0.5, 0.5);
 			txt5.setStyle(strapStyle);
+
+			var disclaimTxt1 = new ElText(copies.line4b, 512,4100, 0, 0.5, 0.5);
+			disclaimTxt1.setStyle(disclaimStyle);
 
 
 			var cloud2 = new ElSprite("cloud_blue1.png", 100,580, 0);
@@ -76,10 +92,9 @@
 			var symbol2 = new ElSprite("cloud_icon_environmental.png", 470,3730, 0);
 			var symbol3 = new ElSprite("cloud_icon_productivity.png", 622,3730, 0);
 
-			var symStyle = {"font":"15px EMPrintW01-semibold", "fill": "#58595b", "align":"center", "wordWrap":"true", "wordWrapWidth":"200"};
-			this.symTxt1 = new ElText("Safety", 357,3820, 0, 0.5, 0.5);
-			this.symTxt2 = new ElText("Environmental Care", 506,3820, 0, 0.5, 0.5);
-			this.symTxt3 = new ElText("Productivity", 655,3820, 0, 0.5, 0.5);
+			this.symTxt1 = new ElText(copies.symbolline1, 357,3820, 0, 0.5, 0.5);
+			this.symTxt2 = new ElText(copies.symbolline2, 506,3820, 0, 0.5, 0.5);
+			this.symTxt3 = new ElText(copies.symbolline3, 655,3820, 0, 0.5, 0.5);
 			this.symTxt1.setStyle(symStyle);
 			this.symTxt2.setStyle(symStyle);
 			this.symTxt3.setStyle(symStyle);
@@ -88,15 +103,13 @@
 			var logo3 = new ElSprite("mobile_grease_small.png", 518,4280, 0, 0.5, 0.5);
 			var logo4 = new ElSprite("signum_small.png", 850,4295, 0, 0.5, 0.5);
 
-			var symStyle2 = {"font":"18px EMPrintW01-regular", "fill": "#58595b", "align":"center", "wordWrap":"true", "wordWrapWidth":"400"};
-			var symTxt4 = new ElText("Our solutions help to:", 512,4400, 0, 0.5, 0.5);
+			var symTxt4 = new ElText(copies.line5, 512,4400, 0, 0.5, 0.5);
 			symTxt4.setStyle(symStyle2);
 
-			var symStyle3 = {"font":"28px EMPrintW01-semibold", "fill": "#58595b", "align":"center", "wordWrap":"true", "wordWrapWidth":"400"};
-			var symTxt5 = new ElText("Reduce energy consumption", 512,4470, 0, 0.5, 0.5);
-			var symTxt6 = new ElText("Reduce downtime", 512,4540, 0, 0.5, 0.5);
-			var symTxt7 = new ElText("Increase equipment protection", 512,4610, 0, 0.5, 0.5);
-			var symTxt8 = new ElText("Optimize operating costs", 512,4680, 0, 0.5, 0.5);
+			var symTxt5 = new ElText(copies.line6, 512,4470, 0, 0.5, 0.5);
+			var symTxt6 = new ElText(copies.line7, 512,4540, 0, 0.5, 0.5);
+			var symTxt7 = new ElText(copies.line8, 512,4610, 0, 0.5, 0.5);
+			var symTxt8 = new ElText(copies.line9, 512,4680, 0, 0.5, 0.5);
 			symTxt5.setStyle(symStyle3);
 			symTxt6.setStyle(symStyle3);
 			symTxt7.setStyle(symStyle3);
@@ -114,14 +127,13 @@
 			this.level[0].addElement(cloud8.container);
 			this.level[0].addElement(cloud10.container);
 
-
-
 			//add to level 2
 			this.level[1].addElement(logo1.container);
 			this.level[1].addElement(txt1.container);
 			this.level[1].addElement(cloud3.container);
 			this.level[1].addElement(txt3.container);
 			this.level[1].addElement(txt5.container);
+			this.level[1].addElement(disclaimTxt1.container);
 			//symbols
 			this.level[1].addElement(symbol1.container);
 			this.level[1].addElement(symbol2.container);

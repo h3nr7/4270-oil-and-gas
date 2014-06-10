@@ -2,8 +2,10 @@
 
 	var ns = MKK.getNamespace('app.scene');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
-	var scenedata = MKK.getNamespace('data').scenedata;
-	var styledata = MKK.getNamespace('data').styledata;
+	var data =  MKK.getNamespace('data');
+	var scenedata = data.scenedata;
+	var styledata = data.styledata;
+	var copydata = data.copydata;
 	var AbScene = ns.AbScene;
 
 	var StaticLevel = ns.level.StaticLevel;
@@ -40,6 +42,7 @@
 				txtTime1: 1200,
 				txtTime2: 1660,
 				txtTime3: 2965,
+				txtTime4: 5600,
 
 				dropTime: 1730,
 
@@ -71,6 +74,7 @@
 		p.open = function() {
 
 			var tT = this.tweenTime;
+			var copies = copydata.scene3;
 
 			//back
 			this.backlevel = new StaticLevel('staticsback');
@@ -102,6 +106,12 @@
 			this.seabed = new ElSeaBed(0,0, 4690, 1800, 0, 4096);
 			this.seafloor = new ElSeaFloor('seafloor', 4556, 1800, 0, 0, 0, 3072, 80);
 
+			//289, 500
+			this.seaslope = new ElSprite("seabed-slope.png", 6144, 1506, 0, 0, 0);
+			this.seaslope2 = new ElSprite("seabed-slope.png", 6644, 1217, 0, 0, 0);
+			this.seaslope3 = new ElSprite("seabed-slope.png", 7144, 928, 0, 0, 0);
+			this.seaslope4 = new ElSprite("seabed-slope.png", 7644, 639, 0, 0, 0);
+			// this.seaslope3 = new ElSprite("seabed-slope.png", 8180, 1566, 0, 0, 0);
 			// ----------------------------
 			// create iceberg
 			// ----------------------------
@@ -131,6 +141,13 @@
 			this.submarine = new ElSubmarine(0,3000, 5080, 1200, 0);
 
 			// ----------------------------
+			// create cross
+			// ----------------------------
+			this.cross1 = new ElSprite("underwater-cross-blue.png", 4800, 1630, 0, 0, 0);
+			this.cross2 = new ElSprite("underwater-cross-blue.png", 5300, 1630, 0, 0, 0);
+			this.cross3 = new ElSprite("underwater-cross-blue.png", 5900, 1640, 0, 0, 0);
+
+			// ----------------------------
 			// fpso sign
 			// ----------------------------		
 			this.fpsosign = new ElSprite("fpso-sign.png", 4880, 200, 0, 0,0);
@@ -152,7 +169,18 @@
 			this.frontlevel.addElement(this.seabg.container);
 			this.frontlevel.addElement(this.seabg2.container)
 			this.frontlevel.addElement(this.seabed.container);
+
+			this.frontlevel.addElement(this.cross1.container);
+			this.frontlevel.addElement(this.cross2.container);
+			this.frontlevel.addElement(this.cross3.container);
+
 			this.frontlevel.addElement(this.seafloor.container);
+
+			this.frontlevel.addElement(this.seaslope.container);
+			this.frontlevel.addElement(this.seaslope2.container);
+			this.frontlevel.addElement(this.seaslope3.container);
+			this.frontlevel.addElement(this.seaslope4.container);
+
 			this.frontlevel.addElement(this.fpsosign.container);
 			this.frontlevel.addElement(this.fpsomask);
 			
@@ -170,7 +198,8 @@
 			this.txtlevel.addElement(this.desc2.container);
 			this.desc3 = new ElDescription ('Deck Machinery', 'Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798', '', 'blue', this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
 			this.txtlevel.addElement(this.desc3.container);
-
+			this.desc4 = new ElDescription ('Turbines, compressors\nand other applications', 'Mobil Pegasus™\nMobiljet™ Oil\nMobil RarusSHC™', '', 'white', this.startFrame + tT.txtTime4, 800, 100, 300, 0);
+			this.txtlevel.addElement(this.desc4.container);
 			// ------------------------------------------------
 			// Tween
 			// ------------------------------------------------
@@ -206,7 +235,7 @@
 
 			var tweenLandBound = ListenerFunctions.createListenerFunction(this, this.tweenLandFunc);
 			this.tweenland = new TweenEach({x:-4700, y: -1100})
-							.to({x:[-6500, -6500, -8000], y:[-1100, -1100, 50] }, 750)
+							.to({x:[-6500, -6500, -7400], y:[-1100, -1100, 50] }, 750)
 							.interpolation( TWEEN.Interpolation.Bezier)
 							.onUpdate(tweenLandBound)
 							.easing(TWEEN.Easing.Cubic.InOut)
