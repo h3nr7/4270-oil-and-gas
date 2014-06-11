@@ -113,8 +113,6 @@
 			this.desc4 = new ElDescription (copies.desc4.title, copies.desc4.txt, '', copies.desc4.color, this.startFrame+1100, 700, 50, 200, 0);
 
 
-
-
 			this.backlevel.addElement(this.mountain1.container);
 			this.backlevel.addElement(this.mountain2.container);
 			this.backlevel.addElement(this.backProp1.container);

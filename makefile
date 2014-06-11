@@ -17,6 +17,7 @@ OUTPATH=deploy/assets
 ##############################
 SSFORMAT="pixi.js"
 TRIM="false"
+GAP="true"
 
 ##############################
 #UGLIFY VARS
@@ -95,31 +96,31 @@ buildCss:
 
 
 global:
-	${SPRITESHEET} -n global -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/global/*.png
+	${SPRITESHEET} -n global -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/global/*.png
 scene1:
-	${SPRITESHEET} -n scene1 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene1/*.png
+	${SPRITESHEET} -n scene1 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene1/*.png
 scene2:
-	${SPRITESHEET} -n scene2 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene2/*.png
+	${SPRITESHEET} -n scene2 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene2/*.png
 scene2b:
-	${SPRITESHEET} -n scene2b -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene2b/*.png
+	${SPRITESHEET} -n scene2b -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene2b/*.png
 scene2c:
-	${SPRITESHEET} -n scene2c -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene2c/*.png
+	${SPRITESHEET} -n scene2c -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene2c/*.png
 scene3:
-	${SPRITESHEET} -n scene3 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene3/*.png
+	${SPRITESHEET} -n scene3 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene3/*.png
 scene3b:
-	${SPRITESHEET} -n scene3b -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene3b/*.png
+	${SPRITESHEET} -n scene3b -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene3b/*.png
 scene4:
-	${SPRITESHEET} -n scene4 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene4/*.png
+	${SPRITESHEET} -n scene4 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene4/*.png
 scene5:
-	${SPRITESHEET} -n scene5 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene5/*.png
+	${SPRITESHEET} -n scene5 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene5/*.png
 scene6:
-	${SPRITESHEET} -n scene6 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene6/*.png
+	${SPRITESHEET} -n scene6 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene6/*.png
 scene7:
-	${SPRITESHEET} -n scene7 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene7/*.png
+	${SPRITESHEET} -n scene7 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene7/*.png
 scene8:
-	${SPRITESHEET} -n scene8 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/scene8/*.png
+	${SPRITESHEET} -n scene8 -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/scene8/*.png
 sceneend:
-	${SPRITESHEET} -n sceneend -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} ${ASSETSPATH}/sceneend/*.png
+	${SPRITESHEET} -n sceneend -p ${OUTPATH} -f ${SSFORMAT} --trim ${TRIM} --gap2px ${GAP} ${ASSETSPATH}/sceneend/*.png
 
 assets: global scene1 scene2 scene2b scene2c scene3 scene3b scene4 scene5 scene6 scene7 scene8 sceneend
 

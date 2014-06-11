@@ -12,9 +12,9 @@
 			this.width = width;
 			this.textures = [];
 			assetName = [
-				{name: "seaplant_02.png", height: 180},
-				{name: "seaplant_03.png", height: 125},
-				{name: "seaplant_01.png", height: 43},
+				{name: "seaplant_02.png", height: 146, ypos: -180},
+				{name: "seaplant_03.png", height: 120, ypos: -120},
+				{name: "seaplant_01.png", height: 43, ypos: -43},
 
 			];
 			this.z = z;
@@ -37,10 +37,14 @@
 			for(var i=0; i<assetName.length; i++) {
 				var texture = PIXI.Texture.fromFrame(assetName[i].name);
 				var background = new PIXI.TilingSprite(texture, this.width, assetName[i].height);
-				background.position.y = -assetName[i].height;
+				background.position.y = assetName[i].ypos;
 				this.textures.push(background);
 				this.container.addChild(background);
 			}
+		}
+
+		p.createMask = function(x, y, w, h) {
+			
 		}
 
 		p.update = function() {

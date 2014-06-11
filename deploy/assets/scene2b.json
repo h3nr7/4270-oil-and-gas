@@ -1,57 +1,57 @@
 {
 	"meta": {
 		"image": "scene2b.png",
-		"size": {"w":1967,"h":1400},
+		"size": {"w":1979,"h":1408},
 		"scale": "1"
 	},
 	"frames": {
 		"exploration_inner_bg_01.png":
 		{
-            "frame": {"x":0,"y":0,"w":655,"h":700},
+            "frame": {"x":2,"y":2,"w":651,"h":696},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":655,"h":700},
-            "sourceSize": {"w":655,"h":700}
+            "spriteSourceSize": {"x":0,"y":0,"w":651,"h":696},
+            "sourceSize": {"w":651,"h":696}
 		},
 		"exploration_inner_bg_02.png":
 		{
-            "frame": {"x":655,"y":0,"w":657,"h":700},
+            "frame": {"x":661,"y":2,"w":653,"h":696},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":657,"h":700},
-            "sourceSize": {"w":657,"h":700}
+            "spriteSourceSize": {"x":0,"y":0,"w":653,"h":696},
+            "sourceSize": {"w":653,"h":696}
 		},
 		"exploration_inner_bg_03.png":
 		{
-            "frame": {"x":1312,"y":0,"w":655,"h":700},
+            "frame": {"x":1322,"y":2,"w":651,"h":696},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":655,"h":700},
-            "sourceSize": {"w":655,"h":700}
+            "spriteSourceSize": {"x":0,"y":0,"w":651,"h":696},
+            "sourceSize": {"w":651,"h":696}
 		},
 		"exploration_inner_bg_04.png":
 		{
-            "frame": {"x":0,"y":700,"w":657,"h":700},
+            "frame": {"x":2,"y":706,"w":653,"h":696},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":657,"h":700},
-            "sourceSize": {"w":657,"h":700}
+            "spriteSourceSize": {"x":0,"y":0,"w":653,"h":696},
+            "sourceSize": {"w":653,"h":696}
 		},
 		"oilrig-cave-mask.png":
 		{
-            "frame": {"x":657,"y":700,"w":1024,"h":390},
+            "frame": {"x":663,"y":706,"w":1020,"h":386},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1024,"h":390},
-            "sourceSize": {"w":1024,"h":390}
+            "spriteSourceSize": {"x":0,"y":0,"w":1020,"h":386},
+            "sourceSize": {"w":1020,"h":386}
 		},
 		"oilrig-cave-oil.png":
 		{
-            "frame": {"x":657,"y":1090,"w":1200,"h":60},
+            "frame": {"x":663,"y":1100,"w":1196,"h":56},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1200,"h":60},
-            "sourceSize": {"w":1200,"h":60}
+            "spriteSourceSize": {"x":0,"y":0,"w":1196,"h":56},
+            "sourceSize": {"w":1196,"h":56}
 		}
 	}
 }

@@ -10371,16 +10371,32 @@ TWEEN.Interpolation = {
                 symbolline2: "Environmental Care",
                 symbolline3: "Productivity"
             },
-            scene2: {},
+            scene2: {
+                desc1: {
+                    title: "Gear Applications",
+                    txt: "Outstanding protection for gears operating in extreme conditions\n\nMobil SHC™ 600\nMobilgear™ Gear\nMobil SHC™ 600XP",
+                    color: "white"
+                },
+                desc2: {
+                    title: "Engines",
+                    txt: "Advanced engine cleanliness and extended oil drain intervals\n\nMobil Delvac 1™\nMobil Delvac MX™\nMobil Pegasus™",
+                    color: "white"
+                },
+                desc3: {
+                    title: "Propulsion &\nThrusters",
+                    txt: "Excellent load carrying and anti-wear properties\n\nMobil SHC™ Gear\nMobil DTE 10 Excel™",
+                    color: "white"
+                }
+            },
             scene3: {
                 desc1: {
                     title: "Engines",
-                    txt: "Mobil Delvac 1™ 600\nMobil Delvac MX™ 600\nMobil Pegasus™",
+                    txt: "Mobil Delvac 1™\nMobil Delvac MX™\nMobil Pegasus™",
                     color: "blue"
                 },
                 desc2: {
                     title: "Top Drive",
-                    txt: "Mobil SHC™\nMobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™",
+                    txt: "Mobil SHC™\nMobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™\nMobilith SHC™",
                     color: "blue"
                 },
                 desc3: {
@@ -10390,12 +10406,60 @@ TWEEN.Interpolation = {
                 },
                 desc4: {
                     title: "Positioning Thruster",
-                    txt: "Mobil SHC™ 600\nMobilgear™ 600XP",
+                    txt: "Mobil SHC™ Gear\nMobilgear™ 600XP",
                     color: "white"
                 }
             },
             scene4: {
-                desc1: {}
+                desc1: {
+                    title: "Turbines",
+                    txt: "Excellent anti-oxidation and air release properties\n\nMobil SHC™ 800\nMobil DTE™ 932 GT",
+                    color: "blue"
+                },
+                desc2: {
+                    title: "Compressors",
+                    txt: "Can help provide outstanding cleanliness and reduced deposit formation\n\nMobil Rarus SHC™ 1020\nMobil Rarus™ 800",
+                    color: "blue"
+                },
+                desc3: {
+                    title: "Deck Machinery",
+                    txt: "Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798",
+                    color: "blue"
+                },
+                desc4: {
+                    title: "Turbines, compressors\nand other applications",
+                    txt: "Mobil Pegasus™\nMobiljet™ Oil\nMobil Rarus SHC™",
+                    color: "white"
+                }
+            },
+            scene5: {},
+            scene6: {
+                desc1: {
+                    title: "Turbines",
+                    txt: "Mobil SHC™ 800\nMobil DTE™ 932 GT\nMobil DTE™ 800\n",
+                    color: "blue"
+                },
+                desc2: {
+                    title: "Compressors",
+                    txt: "Mobil Rarus SHC™ 1000\nMobil Rarus™ 800",
+                    color: "blue"
+                },
+                desc3: {
+                    title: "Pumps",
+                    txt: "Mobil SHC™ 100",
+                    color: "blue"
+                },
+                desc4: {
+                    title: "Gears",
+                    txt: "Mobil SHC™ 600",
+                    color: "blue"
+                }
+            },
+            scene7: {},
+            scene8: {
+                line1: "Get your productivity pumping",
+                line2: "Speak to our specialists about advancing the productivity,\nsafety and environmental care of your oil and gas operations",
+                line3: "Replay >"
             }
         };
     }
@@ -10467,8 +10531,48 @@ TWEEN.Interpolation = {
             scene4: {},
             scene5: {},
             scene6: {},
-            scene7: {},
-            scene8: {}
+            scene7: {
+                tweenTime: {
+                    _fast: 150,
+                    _speed: 250,
+                    _speed1: 500,
+                    _speed2: 750,
+                    delayStart: 500,
+                    tween1Start: 750,
+                    tween2Start: 1e3,
+                    tween3Start: 1500,
+                    tween4Start: 2e3,
+                    tween5Start: 2250,
+                    tween6Start: 2700,
+                    tweenStartX0: 2024,
+                    tweenStartX1: -2e3,
+                    tweenStartX2: 0,
+                    roadX0: 3e3,
+                    roadX1: -2500,
+                    seaY0: 700,
+                    seaY1: 670,
+                    truckX0: 100,
+                    truckX1: 2e3,
+                    fronttruckX0: 512,
+                    fronttruckY0: 400,
+                    fronttruckY1: 340
+                }
+            },
+            scene8: {
+                tweenTime: {
+                    _speed: 250,
+                    stackDelay: 100,
+                    txt2X0: 512,
+                    txt2Y0: 240,
+                    txt3X0: 512,
+                    txt3Y0: 360,
+                    txt4X0: 512,
+                    txt4Y0: 540,
+                    txt2Y1: 300,
+                    txt3Y1: 380,
+                    txt4Y1: 600
+                }
+            }
         };
     }
 })();
@@ -10584,21 +10688,6 @@ TWEEN.Interpolation = {
             descriptionBodyBlue: {
                 font: "16px emprintw01-regular",
                 fill: "#174c8f",
-                align: "left",
-                wordWrap: "true",
-                wordWrapWidth: "400"
-            },
-            descriptionTitleRed: {
-                font: "40px emprintw01-semibold",
-                fill: "#aa1816",
-                align: "left",
-                wordWrap: "true",
-                wordWrapWidth: "800",
-                lineHeight: 12
-            },
-            descriptionBodyRed: {
-                font: "16px emprintw01-regular",
-                fill: "#aa1816",
                 align: "left",
                 wordWrap: "true",
                 wordWrapWidth: "400"
@@ -12536,13 +12625,16 @@ TWEEN.Interpolation = {
             this.textures = [];
             assetName = [ {
                 name: "seaplant_02.png",
-                height: 180
+                height: 146,
+                ypos: -180
             }, {
                 name: "seaplant_03.png",
-                height: 125
+                height: 120,
+                ypos: -120
             }, {
                 name: "seaplant_01.png",
-                height: 43
+                height: 43,
+                ypos: -43
             } ];
             this.z = z;
             this.setup(sFrame, duration, x, y);
@@ -12556,11 +12648,12 @@ TWEEN.Interpolation = {
             for (var i = 0; i < assetName.length; i++) {
                 var texture = PIXI.Texture.fromFrame(assetName[i].name);
                 var background = new PIXI.TilingSprite(texture, this.width, assetName[i].height);
-                background.position.y = -assetName[i].height;
+                background.position.y = assetName[i].ypos;
                 this.textures.push(background);
                 this.container.addChild(background);
             }
         };
+        p.createMask = function(x, y, w, h) {};
         p.update = function() {};
     }
 })();
@@ -13007,8 +13100,10 @@ TWEEN.Interpolation = {
 (function() {
     var ns = MKK.getNamespace("app.scene");
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
-    var scenedata = MKK.getNamespace("data").scenedata;
-    var styledata = MKK.getNamespace("data").styledata;
+    var data = MKK.getNamespace("data");
+    var copydata = data.copydata;
+    var scenedata = data.scenedata;
+    var styledata = data.styledata;
     var AbScene = ns.AbScene;
     var StaticLevel = ns.level.StaticLevel;
     var Scene2Level = ns.level.Scene2Level;
@@ -13064,14 +13159,15 @@ TWEEN.Interpolation = {
             this.txtLevel.push(oLevel);
         };
         p.open = function() {
-            tT = this.tweenTime;
+            var tT = this.tweenTime;
+            var copies = copydata.scene2;
             this.createLevels(scenedata.scene2.level, Scene2Level);
             this.staticlevel = new StaticLevel("statictxt");
             this.staticlevel.setup(0, 0, 0);
             this.addTxtLevel(this.staticlevel);
-            this.desc = new ElDescription("Gear Applications", "Outstanding protection for gears opearting in extreme conditions\n\nMobil SHC™ 600\nMobilgear™ Gear\nMobil SHC™ 600XP", "", "white", this.startFrame + 1380, 1e3, 50, 50, 0);
-            this.desc2 = new ElDescription("Engines", "Advanced engine cleaniness and extended oil drain intervals\n\nMobil Gard™ SHC\nMobil Delvac 1™\nMobil Delvac 1™ 600\nMobilGard™ M\nMobilGard™ HSD", "", "white", this.startFrame + 1950, 1e3, 50, 300, 0);
-            this.desc3 = new ElDescription("Propulsion &\nThrusters", "Excellent load carrying and anti-wear properties\n\nMobil SHC™ Gear\nMobil DTE 10 Excel™", "", "white", this.startFrame + 3700, 1e3, 342, 280, 0);
+            this.desc = new ElDescription(copies.desc1.title, copies.desc1.txt, "", copies.desc1.color, this.startFrame + 1380, 1e3, 50, 50, 0);
+            this.desc2 = new ElDescription(copies.desc2.title, copies.desc2.txt, "", copies.desc2.color, this.startFrame + 1950, 1e3, 50, 300, 0);
+            this.desc3 = new ElDescription(copies.desc3.title, copies.desc3.txt, "", copies.desc3.color, this.startFrame + 3700, 1e3, 342, 280, 0);
             this.seabg = new ElSeaBG("seabg", 0, 1050, 0, 0, 0, 1024, 1024);
             this.seawave = new ElSeaWave("seawave", 0, 1050, 0, 0, 0, 1024);
             this.smallship = new ElSprite("explorer-ship-small.png", 100, 930, 0, 0);
@@ -13407,7 +13503,6 @@ TWEEN.Interpolation = {
     var styledata = data.styledata;
     var copydata = data.copydata;
     var AbScene = ns.AbScene;
-    var Scene1Level = ns.level.Scene1Level;
     var StaticLevel = ns.level.StaticLevel;
     var ElSprite = ns.element.ElSprite;
     var ElSpriteContainer = ns.element.ElSpriteContainer;
@@ -13735,7 +13830,7 @@ TWEEN.Interpolation = {
         var p = Scene4.prototype = new AbScene();
         p.open = function() {
             var tT = this.tweenTime;
-            var copies = copydata.scene3;
+            var copies = copydata.scene4;
             this.backlevel = new StaticLevel("staticsback");
             this.backlevel.setup(0, 0, 0);
             this.addLevel(this.backlevel);
@@ -13793,13 +13888,13 @@ TWEEN.Interpolation = {
             this.frontlevel.addElement(this.iceberg3.container);
             this.frontlevel.addElement(this.seawave.container);
             this.frontlevel.addElement(this.submarine.container);
-            this.desc = new ElDescription("Turbines", "Excellent anti-oxdation and air release properties\n\nMobil Delvac 1™ 600\nMobil SHC™ 800\nMobil DTE™ 932 GT", "", "blue", this.startFrame + tT.txtTime1, 700, 100, 50, 0);
+            this.desc = new ElDescription(copies.desc1.title, copies.desc1.txt, "", copies.desc1.color, this.startFrame + tT.txtTime1, 700, 100, 50, 0);
             this.txtlevel.addElement(this.desc.container);
-            this.desc2 = new ElDescription("Compressors", "Outstanding cleanliness and reduced deposit formations\n\nMobil Rarus SHC™ 1020\nMobil Rarus™ 800\nMobil Pegasus™", "", "blue", this.startFrame + tT.txtTime2, 700, 100, 50, 0);
+            this.desc2 = new ElDescription(copies.desc2.title, copies.desc2.txt, "", copies.desc2.color, this.startFrame + tT.txtTime2, 700, 100, 50, 0);
             this.txtlevel.addElement(this.desc2.container);
-            this.desc3 = new ElDescription("Deck Machinery", "Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798", "", "blue", this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
+            this.desc3 = new ElDescription(copies.desc3.title, copies.desc3.txt, "", copies.desc3.color, this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
             this.txtlevel.addElement(this.desc3.container);
-            this.desc4 = new ElDescription("Turbines, compressors\nand other applications", "Mobil Pegasus™\nMobiljet™ Oil\nMobil RarusSHC™", "", "white", this.startFrame + tT.txtTime4, 800, 100, 300, 0);
+            this.desc4 = new ElDescription(copies.desc4.title, copies.desc4.txt, "", copies.desc4.color, this.startFrame + tT.txtTime4, 800, 100, 300, 0);
             this.txtlevel.addElement(this.desc4.container);
             var tweenInBound = ListenerFunctions.createListenerFunction(this, this.tweenInFunc);
             this.tweenIn = new TweenEach({
@@ -13917,7 +14012,6 @@ TWEEN.Interpolation = {
     var styledata = MKK.getNamespace("data").styledata;
     var AbScene = ns.AbScene;
     var StaticLevel = ns.level.StaticLevel;
-    var Scene2Level = ns.level.Scene2Level;
     var ElSprite = ns.element.ElSprite;
     var ElSpriteContainer = ns.element.ElSpriteContainer;
     var ElText = ns.element.ElText;
@@ -13945,11 +14039,12 @@ TWEEN.Interpolation = {
 (function() {
     var ns = MKK.getNamespace("app.scene");
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
-    var scenedata = MKK.getNamespace("data").scenedata;
-    var styledata = MKK.getNamespace("data").styledata;
+    var data = MKK.getNamespace("data");
+    var scenedata = data.scenedata;
+    var styledata = data.styledata;
+    var copydata = data.copydata;
     var AbScene = ns.AbScene;
     var StaticLevel = ns.level.StaticLevel;
-    var Scene2Level = ns.level.Scene2Level;
     var ElSprite = ns.element.ElSprite;
     var ElSpriteContainer = ns.element.ElSpriteContainer;
     var ElText = ns.element.ElText;
@@ -13974,6 +14069,7 @@ TWEEN.Interpolation = {
         var p = Scene6.prototype = new AbScene();
         p.open = function() {
             var tT = this.tweenTime;
+            var copies = copydata.scene6;
             this.backlevel = new StaticLevel("staticsback");
             this.backlevel.setup(0, 0, 0);
             this.addLevel(this.backlevel);
@@ -14003,10 +14099,10 @@ TWEEN.Interpolation = {
             this.backProp1 = new ElSprite("processing-back.png", 700, 475, 0, 0, 0);
             this.backProp2 = new ElSprite("processing-back.png", 1100, 510, 0, 0, 0);
             this.seafloor = new ElSeaFloor("seafloor", 0, 705, 0, 0, 0, 4096, 80);
-            this.desc = new ElDescription("Turbines", "Mobil SHC™ 800\nMobil DTE™ 932 GT\nMobil DTE™ 800\n", "", "blue", this.startFrame, 700, 50, 100, 0);
-            this.desc2 = new ElDescription("Compressors", "Mobil Rarus SHC™ 1000\nMobil Rarus™ 800", "", "blue", this.startFrame + 500, 700, 50, 100, 0);
-            this.desc3 = new ElDescription("Pumps", "Mobil SHC™ 100", "", "blue", this.startFrame + 1e3, 700, 50, 100, 0);
-            this.desc4 = new ElDescription("Gears", "Mobil SHC™ 600", "", "blue", this.startFrame + 1100, 700, 50, 200, 0);
+            this.desc = new ElDescription(copies.desc1.title, copies.desc1.txt, "", copies.desc1.color, this.startFrame, 700, 50, 100, 0);
+            this.desc2 = new ElDescription(copies.desc2.title, copies.desc2.txt, "", copies.desc2.color, this.startFrame + 500, 700, 50, 100, 0);
+            this.desc3 = new ElDescription(copies.desc3.title, copies.desc3.txt, "", copies.desc3.color, this.startFrame + 1e3, 700, 50, 100, 0);
+            this.desc4 = new ElDescription(copies.desc4.title, copies.desc4.txt, "", copies.desc4.color, this.startFrame + 1100, 700, 50, 200, 0);
             this.backlevel.addElement(this.mountain1.container);
             this.backlevel.addElement(this.mountain2.container);
             this.backlevel.addElement(this.backProp1.container);
@@ -14027,7 +14123,7 @@ TWEEN.Interpolation = {
             this.txtlevel.addElement(this.desc4.container);
             var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
             this.tween0 = new TweenEach({
-                x: 600
+                x: 1424
             }).to({
                 x: -4700
             }, tT._completespeed).onUpdate(tween0Bound).delay(this.startFrame).start();
@@ -14078,31 +14174,7 @@ TWEEN.Interpolation = {
     if (!ns.Scene7) {
         var Scene7 = function Scene7() {
             this.buildings = [];
-            this.tweenTime = {
-                _fast: 150,
-                _speed: 250,
-                _speed1: 500,
-                _speed2: 750,
-                delayStart: 500,
-                tween1Start: 750,
-                tween2Start: 1e3,
-                tween3Start: 1500,
-                tween4Start: 2e3,
-                tween5Start: 2250,
-                tween6Start: 2700,
-                tweenStartX0: 1024,
-                tweenStartX1: -2e3,
-                tweenStartX2: 0,
-                roadX0: 1500,
-                roadX1: -2500,
-                seaY0: 700,
-                seaY1: 670,
-                truckX0: 100,
-                truckX1: 2e3,
-                fronttruckX0: 512,
-                fronttruckY0: 400,
-                fronttruckY1: 340
-            };
+            this.tweenTime = scenedata.scene7.tweenTime;
             this.buildingVars = [ {
                 x: 0,
                 y: 0,
@@ -14157,7 +14229,6 @@ TWEEN.Interpolation = {
             this.backlevel.addElement(this.sea);
             this.midlevel.addElement(this.backmountain2.container);
             this.midlevel.addElement(this.backmountain3.container);
-            this.midlevel.addElement(this.floor.container);
             this.midlevel.addElement(this.road);
             this.midlevel.addElement(this.towngrass);
             this.midlevel.addElement(this.frontroad.container);
@@ -14171,6 +14242,12 @@ TWEEN.Interpolation = {
             this.endlevel.addElement(this.theend.container);
             this.maskCircle = this.createMask();
             this.container.addChild(this.maskCircle);
+            var tweenTruckBound = ListenerFunctions.createListenerFunction(this, this.tweenTruckFunc);
+            this.tweenTruck = new TweenEach({
+                x: 1e3
+            }).to({
+                x: tT.truckX0
+            }, 240).onUpdate(tweenTruckBound).delay(this.startFrame).start();
             var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
             this.tween0 = new TweenEach({
                 x: tT.tweenStartX0,
@@ -14244,6 +14321,10 @@ TWEEN.Interpolation = {
                 this.maskbg.visible = false;
                 this.container.mask = null;
             }
+        };
+        p.tweenTruckFunc = function(e) {
+            cObj = this.tweenTruck.tweenVars();
+            this.trucksmall.xPos(cObj.x);
         };
         p.tweenFunc0 = function(e) {
             cObj = this.tween0.tweenVars();
@@ -14363,8 +14444,10 @@ TWEEN.Interpolation = {
 (function() {
     var ns = MKK.getNamespace("app.scene");
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
-    var scenedata = MKK.getNamespace("data").scenedata;
-    var styledata = MKK.getNamespace("data").styledata;
+    var data = MKK.getNamespace("data");
+    var copydata = data.copydata;
+    var scenedata = data.scenedata;
+    var styledata = data.styledata;
     var AbScene = ns.AbScene;
     var StaticLevel = ns.level.StaticLevel;
     var Scene2Level = ns.level.Scene2Level;
@@ -14384,28 +14467,26 @@ TWEEN.Interpolation = {
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Scene8) {
         var Scene8 = function Scene8() {
-            this.tweenTime = {
-                _speed: 250,
-                stackDelay: 100
-            };
+            this.tweenTime = scenedata.scene8.tweenTime;
         };
         ns.Scene8 = Scene8;
         var p = Scene8.prototype = new AbScene();
         p.open = function() {
             var tT = this.tweenTime;
+            var copies = copydata.scene8;
             this.level1 = new StaticLevel("level1");
             this.level1.setup(0, 0, 0);
             this.addLevel(this.level1);
             var strapStyle = styledata.straplinegrey;
             var smallStyle = styledata.endlineBody;
             var replayStyle = styledata.replayGrey;
-            this.txt2 = new ElText("Get your productivity pumping", 512, 300, 0, .5, .5);
+            this.txt2 = new ElText(copies.line1, tT.txt2X0, tT.txt2Y0, 0, .5, .5);
             this.txt2.setStyle(strapStyle);
             this.txt2.opacity(0);
-            this.txt3 = new ElText("Speak to our specialists about advancing the productivity,\nsafety and environmental care of your oil and gas operations", 512, 410, 0, .5, .5);
+            this.txt3 = new ElText(copies.line2, tT.txt3X0, tT.txt3Y0, 0, .5, .5);
             this.txt3.setStyle(smallStyle);
             this.txt3.opacity(0);
-            this.txt4 = new ElText("Replay >", 512, 620, 0, .5, .5);
+            this.txt4 = new ElText(copies.line3, tT.txt4X0, tT.txt4Y0, 0, .5, .5);
             this.txt4.setStyle(replayStyle);
             this.txt4.opacity(0);
             this.level1.addElement(this.txt2.container);
@@ -14413,21 +14494,21 @@ TWEEN.Interpolation = {
             this.level1.addElement(this.txt4.container);
             var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
             this.tween0 = new TweenEach({
-                y: 240
+                y: tT.txt2Y0
             }).to({
-                y: 300
+                y: tT.txt2Y1
             }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween0Bound).delay(this.startFrame).start();
             var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
             this.tween1 = new TweenEach({
-                y: 380
+                y: tT.txt3Y0
             }).to({
-                y: 410
+                y: tT.txt3Y1
             }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween1Bound).delay(this.startFrame + tT.stackDelay).start();
             var tween2Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc2);
             this.tween2 = new TweenEach({
-                y: 560
+                y: tT.txt4Y0
             }).to({
-                y: 620
+                y: tT.txt4Y1
             }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween2Bound).delay(this.startFrame + tT.stackDelay * 2).start();
         };
         p.tweenFunc0 = function(e) {

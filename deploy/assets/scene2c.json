@@ -1,73 +1,73 @@
 {
 	"meta": {
 		"image": "scene2c.png",
-		"size": {"w":1524,"h":1272},
+		"size": {"w":1532,"h":1284},
 		"scale": "1"
 	},
 	"frames": {
 		"seabed.png":
 		{
-            "frame": {"x":0,"y":0,"w":500,"h":800},
+            "frame": {"x":2,"y":2,"w":496,"h":796},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":500,"h":800},
-            "sourceSize": {"w":500,"h":800}
+            "spriteSourceSize": {"x":0,"y":0,"w":496,"h":796},
+            "sourceSize": {"w":496,"h":796}
 		},
 		"radar_boat1_01.png":
 		{
-            "frame": {"x":500,"y":0,"w":1024,"h":342},
+            "frame": {"x":506,"y":2,"w":1020,"h":338},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1024,"h":342},
-            "sourceSize": {"w":1024,"h":342}
+            "spriteSourceSize": {"x":0,"y":0,"w":1020,"h":338},
+            "sourceSize": {"w":1020,"h":338}
 		},
 		"radar_boat1_02.png":
 		{
-            "frame": {"x":500,"y":342,"w":1024,"h":326},
+            "frame": {"x":506,"y":348,"w":1020,"h":322},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1024,"h":326},
-            "sourceSize": {"w":1024,"h":326}
+            "spriteSourceSize": {"x":0,"y":0,"w":1020,"h":322},
+            "sourceSize": {"w":1020,"h":322}
 		},
 		"radar_boat1_04.png":
 		{
-            "frame": {"x":0,"y":800,"w":1024,"h":271},
+            "frame": {"x":2,"y":806,"w":1020,"h":267},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1024,"h":271},
-            "sourceSize": {"w":1024,"h":271}
+            "spriteSourceSize": {"x":0,"y":0,"w":1020,"h":267},
+            "sourceSize": {"w":1020,"h":267}
 		},
 		"radar_boat1_03.png":
 		{
-            "frame": {"x":0,"y":1071,"w":1024,"h":201},
+            "frame": {"x":2,"y":1081,"w":1020,"h":197},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1024,"h":201},
-            "sourceSize": {"w":1024,"h":201}
+            "spriteSourceSize": {"x":0,"y":0,"w":1020,"h":197},
+            "sourceSize": {"w":1020,"h":197}
 		},
 		"radar_boat1_propeller.png":
 		{
-            "frame": {"x":1024,"y":800,"w":160,"h":160},
+            "frame": {"x":1030,"y":806,"w":156,"h":156},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":160,"h":160},
-            "sourceSize": {"w":160,"h":160}
+            "spriteSourceSize": {"x":0,"y":0,"w":156,"h":156},
+            "sourceSize": {"w":156,"h":156}
 		},
 		"radar_boat_small_01.png":
 		{
-            "frame": {"x":1184,"y":800,"w":320,"h":140},
+            "frame": {"x":1194,"y":806,"w":316,"h":136},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":320,"h":140},
-            "sourceSize": {"w":320,"h":140}
+            "spriteSourceSize": {"x":0,"y":0,"w":316,"h":136},
+            "sourceSize": {"w":316,"h":136}
 		},
 		"radar_boat_small_02.png":
 		{
-            "frame": {"x":500,"y":668,"w":390,"h":90},
+            "frame": {"x":506,"y":678,"w":386,"h":86},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":390,"h":90},
-            "sourceSize": {"w":390,"h":90}
+            "spriteSourceSize": {"x":0,"y":0,"w":386,"h":86},
+            "sourceSize": {"w":386,"h":86}
 		}
 	}
 }

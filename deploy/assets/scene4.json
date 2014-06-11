@@ -1,89 +1,89 @@
 {
 	"meta": {
 		"image": "scene4.png",
-		"size": {"w":1230,"h":1060},
+		"size": {"w":1242,"h":1068},
 		"scale": "1"
 	},
 	"frames": {
 		"productionrig-bg2.png":
 		{
-            "frame": {"x":0,"y":0,"w":619,"h":628},
+            "frame": {"x":2,"y":2,"w":615,"h":624},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":619,"h":628},
-            "sourceSize": {"w":619,"h":628}
+            "spriteSourceSize": {"x":0,"y":0,"w":615,"h":624},
+            "sourceSize": {"w":615,"h":624}
 		},
 		"productionrig_02.png":
 		{
-            "frame": {"x":619,"y":0,"w":204,"h":432},
+            "frame": {"x":625,"y":2,"w":200,"h":428},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":204,"h":432},
-            "sourceSize": {"w":204,"h":432}
+            "spriteSourceSize": {"x":0,"y":0,"w":200,"h":428},
+            "sourceSize": {"w":200,"h":428}
 		},
 		"productionrig_03.png":
 		{
-            "frame": {"x":823,"y":0,"w":407,"h":432},
+            "frame": {"x":833,"y":2,"w":403,"h":428},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":407,"h":432},
-            "sourceSize": {"w":407,"h":432}
+            "spriteSourceSize": {"x":0,"y":0,"w":403,"h":428},
+            "sourceSize": {"w":403,"h":428}
 		},
 		"productionrig_04.png":
 		{
-            "frame": {"x":0,"y":628,"w":519,"h":432},
+            "frame": {"x":2,"y":634,"w":515,"h":428},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":519,"h":432},
-            "sourceSize": {"w":519,"h":432}
+            "spriteSourceSize": {"x":0,"y":0,"w":515,"h":428},
+            "sourceSize": {"w":515,"h":428}
 		},
 		"productionrig-bg1.png":
 		{
-            "frame": {"x":519,"y":628,"w":409,"h":363},
+            "frame": {"x":525,"y":634,"w":405,"h":359},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":409,"h":363},
-            "sourceSize": {"w":409,"h":363}
+            "spriteSourceSize": {"x":0,"y":0,"w":405,"h":359},
+            "sourceSize": {"w":405,"h":359}
 		},
 		"helicopter-sign.png":
 		{
-            "frame": {"x":928,"y":628,"w":284,"h":226},
+            "frame": {"x":938,"y":634,"w":280,"h":222},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":284,"h":226},
-            "sourceSize": {"w":284,"h":226}
+            "spriteSourceSize": {"x":0,"y":0,"w":280,"h":222},
+            "sourceSize": {"w":280,"h":222}
 		},
 		"helicopter.png":
 		{
-            "frame": {"x":823,"y":432,"w":354,"h":90},
+            "frame": {"x":833,"y":438,"w":350,"h":86},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":354,"h":90},
-            "sourceSize": {"w":354,"h":90}
+            "spriteSourceSize": {"x":0,"y":0,"w":350,"h":86},
+            "sourceSize": {"w":350,"h":86}
 		},
 		"helicopter_blade.png":
 		{
-            "frame": {"x":823,"y":522,"w":54,"h":54},
+            "frame": {"x":833,"y":532,"w":50,"h":50},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":54,"h":54},
-            "sourceSize": {"w":54,"h":54}
+            "spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+            "sourceSize": {"w":50,"h":50}
 		},
 		"productionrig_fan.png":
 		{
-            "frame": {"x":877,"y":522,"w":54,"h":54},
+            "frame": {"x":891,"y":532,"w":50,"h":50},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":54,"h":54},
-            "sourceSize": {"w":54,"h":54}
+            "spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+            "sourceSize": {"w":50,"h":50}
 		},
 		"s4_1px.png":
 		{
-            "frame": {"x":1177,"y":432,"w":1,"h":1},
+            "frame": {"x":1191,"y":438,"w":-3,"h":-3},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},
-            "sourceSize": {"w":1,"h":1}
+            "spriteSourceSize": {"x":0,"y":0,"w":-3,"h":-3},
+            "sourceSize": {"w":-3,"h":-3}
 		}
 	}
 }

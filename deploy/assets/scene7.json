@@ -1,89 +1,81 @@
 {
 	"meta": {
 		"image": "scene7.png",
-		"size": {"w":2109,"h":1004},
+		"size": {"w":1799,"h":1004},
 		"scale": "1"
 	},
 	"frames": {
 		"seabed-slope.png":
 		{
-            "frame": {"x":0,"y":0,"w":507,"h":1004},
+            "frame": {"x":2,"y":2,"w":499,"h":996},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":507,"h":1004},
-            "sourceSize": {"w":507,"h":1004}
+            "spriteSourceSize": {"x":0,"y":0,"w":499,"h":996},
+            "sourceSize": {"w":499,"h":996}
 		},
 		"truck_02.png":
 		{
-            "frame": {"x":507,"y":0,"w":560,"h":810},
+            "frame": {"x":509,"y":2,"w":556,"h":806},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":560,"h":810},
-            "sourceSize": {"w":560,"h":810}
-		},
-		"tree_big.png":
-		{
-            "frame": {"x":1067,"y":0,"w":318,"h":604},
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":318,"h":604},
-            "sourceSize": {"w":318,"h":604}
+            "spriteSourceSize": {"x":0,"y":0,"w":556,"h":806},
+            "sourceSize": {"w":556,"h":806}
 		},
 		"road.png":
 		{
-            "frame": {"x":1385,"y":0,"w":724,"h":406},
+            "frame": {"x":1073,"y":2,"w":720,"h":402},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":724,"h":406},
-            "sourceSize": {"w":724,"h":406}
+            "spriteSourceSize": {"x":0,"y":0,"w":720,"h":402},
+            "sourceSize": {"w":720,"h":402}
 		},
 		"house.png":
 		{
-            "frame": {"x":1385,"y":406,"w":204,"h":180},
+            "frame": {"x":1073,"y":412,"w":200,"h":176},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":204,"h":180},
-            "sourceSize": {"w":204,"h":180}
+            "spriteSourceSize": {"x":0,"y":0,"w":200,"h":176},
+            "sourceSize": {"w":200,"h":176}
 		},
 		"tree_small.png":
 		{
-            "frame": {"x":1589,"y":406,"w":82,"h":154},
+            "frame": {"x":1281,"y":412,"w":78,"h":150},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":82,"h":154},
-            "sourceSize": {"w":82,"h":154}
-		},
-		"flat.png":
-		{
-            "frame": {"x":1671,"y":406,"w":97,"h":100},
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":97,"h":100},
-            "sourceSize": {"w":97,"h":100}
+            "spriteSourceSize": {"x":0,"y":0,"w":78,"h":150},
+            "sourceSize": {"w":78,"h":150}
 		},
 		"underwater-cross-blue.png":
 		{
-            "frame": {"x":1768,"y":406,"w":79,"h":100},
+            "frame": {"x":1367,"y":412,"w":77,"h":97},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":79,"h":100},
-            "sourceSize": {"w":79,"h":100}
+            "spriteSourceSize": {"x":0,"y":0,"w":77,"h":97},
+            "sourceSize": {"w":77,"h":97}
+		},
+		"flat.png":
+		{
+            "frame": {"x":1452,"y":412,"w":93,"h":96},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":93,"h":96},
+            "sourceSize": {"w":93,"h":96}
 		},
 		"truck_01.png":
 		{
-            "frame": {"x":1847,"y":406,"w":204,"h":94},
+            "frame": {"x":1553,"y":412,"w":200,"h":90},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":204,"h":94},
-            "sourceSize": {"w":204,"h":94}
+            "spriteSourceSize": {"x":0,"y":0,"w":200,"h":90},
+            "sourceSize": {"w":200,"h":90}
 		},
 		"s7_1px.png":
 		{
-            "frame": {"x":2051,"y":406,"w":1,"h":1},
+            "frame": {"x":1761,"y":412,"w":-3,"h":-3},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},
-            "sourceSize": {"w":1,"h":1}
+            "spriteSourceSize": {"x":0,"y":0,"w":-3,"h":-3},
+            "sourceSize": {"w":-3,"h":-3}
 		}
 	}
 }
