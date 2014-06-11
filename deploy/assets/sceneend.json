@@ -1,73 +1,73 @@
 {
 	"meta": {
 		"image": "sceneend.png",
-		"size": {"w":1162,"h":713},
+		"size": {"w":1156,"h":709},
 		"scale": "1"
 	},
 	"frames": {
 		"trees.png":
 		{
-            "frame": {"x":2,"y":2,"w":296,"h":568},
+            "frame": {"x":2,"y":2,"w":300,"h":572},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":296,"h":568},
-            "sourceSize": {"w":296,"h":568}
+            "spriteSourceSize": {"x":0,"y":0,"w":300,"h":572},
+            "sourceSize": {"w":300,"h":572}
 		},
 		"apartment.png":
 		{
-            "frame": {"x":306,"y":2,"w":446,"h":458},
+            "frame": {"x":304,"y":2,"w":450,"h":462},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":446,"h":458},
-            "sourceSize": {"w":446,"h":458}
+            "spriteSourceSize": {"x":0,"y":0,"w":450,"h":462},
+            "sourceSize": {"w":450,"h":462}
 		},
 		"house.png":
 		{
-            "frame": {"x":2,"y":578,"w":146,"h":129},
+            "frame": {"x":2,"y":576,"w":150,"h":133},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":146,"h":129},
-            "sourceSize": {"w":146,"h":129}
+            "spriteSourceSize": {"x":0,"y":0,"w":150,"h":133},
+            "sourceSize": {"w":150,"h":133}
 		},
 		"trees_small.png":
 		{
-            "frame": {"x":306,"y":468,"w":46,"h":91},
+            "frame": {"x":304,"y":466,"w":50,"h":95},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":46,"h":91},
-            "sourceSize": {"w":46,"h":91}
+            "spriteSourceSize": {"x":0,"y":0,"w":50,"h":95},
+            "sourceSize": {"w":50,"h":95}
 		},
 		"mountain_darkgreen_small.png":
 		{
-            "frame": {"x":360,"y":468,"w":196,"h":82},
+            "frame": {"x":356,"y":466,"w":200,"h":86},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":196,"h":82},
-            "sourceSize": {"w":196,"h":82}
+            "spriteSourceSize": {"x":0,"y":0,"w":200,"h":86},
+            "sourceSize": {"w":200,"h":86}
 		},
 		"mountain_green_small.png":
 		{
-            "frame": {"x":156,"y":578,"w":196,"h":82},
+            "frame": {"x":154,"y":576,"w":200,"h":86},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":196,"h":82},
-            "sourceSize": {"w":196,"h":82}
+            "spriteSourceSize": {"x":0,"y":0,"w":200,"h":86},
+            "sourceSize": {"w":200,"h":86}
 		},
 		"sceneend_houses.png":
 		{
-            "frame": {"x":760,"y":2,"w":396,"h":71},
+            "frame": {"x":756,"y":2,"w":400,"h":75},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":396,"h":71},
-            "sourceSize": {"w":396,"h":71}
+            "spriteSourceSize": {"x":0,"y":0,"w":400,"h":75},
+            "sourceSize": {"w":400,"h":75}
 		},
 		"house_small.png":
 		{
-            "frame": {"x":760,"y":81,"w":46,"h":40},
+            "frame": {"x":756,"y":79,"w":50,"h":44},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":46,"h":40},
-            "sourceSize": {"w":46,"h":40}
+            "spriteSourceSize": {"x":0,"y":0,"w":50,"h":44},
+            "sourceSize": {"w":50,"h":44}
 		}
 	}
 }

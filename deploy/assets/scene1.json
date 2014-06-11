@@ -1,153 +1,153 @@
 {
 	"meta": {
 		"image": "scene1.png",
-		"size": {"w":1046,"h":1408},
+		"size": {"w":1040,"h":1406},
 		"scale": "1"
 	},
 	"frames": {
 		"radar_line.png":
 		{
-            "frame": {"x":2,"y":2,"w":2,"h":1400},
+            "frame": {"x":2,"y":2,"w":6,"h":1404},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":2,"h":1400},
-            "sourceSize": {"w":2,"h":1400}
+            "spriteSourceSize": {"x":0,"y":0,"w":6,"h":1404},
+            "sourceSize": {"w":6,"h":1404}
 		},
 		"radar-line.png":
 		{
-            "frame": {"x":12,"y":2,"w":458,"h":900},
+            "frame": {"x":10,"y":2,"w":462,"h":904},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":458,"h":900},
-            "sourceSize": {"w":458,"h":900}
+            "spriteSourceSize": {"x":0,"y":0,"w":462,"h":904},
+            "sourceSize": {"w":462,"h":904}
 		},
 		"cloud_white1.png":
 		{
-            "frame": {"x":478,"y":2,"w":562,"h":365},
+            "frame": {"x":474,"y":2,"w":566,"h":369},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":562,"h":365},
-            "sourceSize": {"w":562,"h":365}
+            "spriteSourceSize": {"x":0,"y":0,"w":566,"h":369},
+            "sourceSize": {"w":566,"h":369}
 		},
 		"radar-large.png":
 		{
-            "frame": {"x":478,"y":375,"w":250,"h":330},
+            "frame": {"x":474,"y":373,"w":254,"h":334},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":250,"h":330},
-            "sourceSize": {"w":250,"h":330}
+            "spriteSourceSize": {"x":0,"y":0,"w":254,"h":334},
+            "sourceSize": {"w":254,"h":334}
 		},
 		"cloud_grey2.png":
 		{
-            "frame": {"x":478,"y":713,"w":479,"h":305},
+            "frame": {"x":474,"y":709,"w":483,"h":309},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":479,"h":305},
-            "sourceSize": {"w":479,"h":305}
+            "spriteSourceSize": {"x":0,"y":0,"w":483,"h":309},
+            "sourceSize": {"w":483,"h":309}
 		},
 		"cloud_grey1.png":
 		{
-            "frame": {"x":478,"y":1026,"w":479,"h":287},
+            "frame": {"x":474,"y":1020,"w":483,"h":291},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":479,"h":287},
-            "sourceSize": {"w":479,"h":287}
+            "spriteSourceSize": {"x":0,"y":0,"w":483,"h":291},
+            "sourceSize": {"w":483,"h":291}
 		},
 		"cloud_white2.png":
 		{
-            "frame": {"x":12,"y":910,"w":349,"h":226},
+            "frame": {"x":10,"y":908,"w":353,"h":230},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":349,"h":226},
-            "sourceSize": {"w":349,"h":226}
+            "spriteSourceSize": {"x":0,"y":0,"w":353,"h":230},
+            "sourceSize": {"w":353,"h":230}
 		},
 		"cloud_satellite.png":
 		{
-            "frame": {"x":736,"y":375,"w":250,"h":127},
+            "frame": {"x":730,"y":373,"w":254,"h":131},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":250,"h":127},
-            "sourceSize": {"w":250,"h":127}
+            "spriteSourceSize": {"x":0,"y":0,"w":254,"h":131},
+            "sourceSize": {"w":254,"h":131}
 		},
 		"cloud_icon_safety.png":
 		{
-            "frame": {"x":736,"y":510,"w":60,"h":60},
+            "frame": {"x":730,"y":506,"w":64,"h":64},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":60,"h":60},
-            "sourceSize": {"w":60,"h":60}
+            "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+            "sourceSize": {"w":64,"h":64}
 		},
 		"cloud_icon_productivity.png":
 		{
-            "frame": {"x":804,"y":510,"w":60,"h":60},
+            "frame": {"x":796,"y":506,"w":64,"h":64},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":60,"h":60},
-            "sourceSize": {"w":60,"h":60}
+            "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+            "sourceSize": {"w":64,"h":64}
 		},
 		"cloud_icon_environmental.png":
 		{
-            "frame": {"x":872,"y":510,"w":60,"h":60},
+            "frame": {"x":862,"y":506,"w":64,"h":64},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":60,"h":60},
-            "sourceSize": {"w":60,"h":60}
+            "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
+            "sourceSize": {"w":64,"h":64}
 		},
 		"cloud_blue1.png":
 		{
-            "frame": {"x":940,"y":510,"w":93,"h":50},
+            "frame": {"x":928,"y":506,"w":97,"h":54},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":93,"h":50},
-            "sourceSize": {"w":93,"h":50}
+            "spriteSourceSize": {"x":0,"y":0,"w":97,"h":54},
+            "sourceSize": {"w":97,"h":54}
 		},
 		"signum_small.png":
 		{
-            "frame": {"x":736,"y":578,"w":191,"h":47},
+            "frame": {"x":730,"y":572,"w":195,"h":51},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":191,"h":47},
-            "sourceSize": {"w":191,"h":47}
+            "spriteSourceSize": {"x":0,"y":0,"w":195,"h":51},
+            "sourceSize": {"w":195,"h":51}
 		},
 		"mobile_grease_small.png":
 		{
-            "frame": {"x":736,"y":633,"w":304,"h":40},
+            "frame": {"x":730,"y":625,"w":308,"h":44},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":304,"h":40},
-            "sourceSize": {"w":304,"h":40}
+            "spriteSourceSize": {"x":0,"y":0,"w":308,"h":44},
+            "sourceSize": {"w":308,"h":44}
 		},
 		"mobile_grease.png":
 		{
-            "frame": {"x":478,"y":1321,"w":304,"h":40},
+            "frame": {"x":474,"y":1313,"w":308,"h":44},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":304,"h":40},
-            "sourceSize": {"w":304,"h":40}
+            "spriteSourceSize": {"x":0,"y":0,"w":308,"h":44},
+            "sourceSize": {"w":308,"h":44}
 		},
 		"mobile_shc_small.png":
 		{
-            "frame": {"x":790,"y":1321,"w":234,"h":38},
+            "frame": {"x":784,"y":1313,"w":238,"h":42},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":234,"h":38},
-            "sourceSize": {"w":234,"h":38}
+            "spriteSourceSize": {"x":0,"y":0,"w":238,"h":42},
+            "sourceSize": {"w":238,"h":42}
 		},
 		"cloud_text1.png":
 		{
-            "frame": {"x":12,"y":1144,"w":203,"h":35},
+            "frame": {"x":474,"y":1359,"w":207,"h":39},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":203,"h":35},
-            "sourceSize": {"w":203,"h":35}
+            "spriteSourceSize": {"x":0,"y":0,"w":207,"h":39},
+            "sourceSize": {"w":207,"h":39}
 		},
 		"cloud_text1c.png":
 		{
-            "frame": {"x":994,"y":375,"w":16,"h":6},
+            "frame": {"x":986,"y":373,"w":20,"h":10},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":16,"h":6},
-            "sourceSize": {"w":16,"h":6}
+            "spriteSourceSize": {"x":0,"y":0,"w":20,"h":10},
+            "sourceSize": {"w":20,"h":10}
 		}
 	}
 }

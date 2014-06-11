@@ -1,129 +1,129 @@
 {
 	"meta": {
 		"image": "global.png",
-		"size": {"w":896,"h":1454},
+		"size": {"w":888,"h":1452},
 		"scale": "1"
 	},
 	"frames": {
 		"pipe-bg.png":
 		{
-            "frame": {"x":2,"y":2,"w":258,"h":1446},
+            "frame": {"x":2,"y":2,"w":262,"h":1450},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":258,"h":1446},
-            "sourceSize": {"w":258,"h":1446}
+            "spriteSourceSize": {"x":0,"y":0,"w":262,"h":1450},
+            "sourceSize": {"w":262,"h":1450}
 		},
 		"sea_gradient.png":
 		{
-            "frame": {"x":268,"y":2,"w":1,"h":1021},
+            "frame": {"x":266,"y":2,"w":5,"h":1025},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1021},
-            "sourceSize": {"w":1,"h":1021}
+            "spriteSourceSize": {"x":0,"y":0,"w":5,"h":1025},
+            "sourceSize": {"w":5,"h":1025}
 		},
 		"cloud_small_white.png":
 		{
-            "frame": {"x":277,"y":2,"w":209,"h":160},
+            "frame": {"x":273,"y":2,"w":213,"h":164},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":209,"h":160},
-            "sourceSize": {"w":209,"h":160}
+            "spriteSourceSize": {"x":0,"y":0,"w":213,"h":164},
+            "sourceSize": {"w":213,"h":164}
 		},
 		"seaplant_02.png":
 		{
-            "frame": {"x":494,"y":2,"w":396,"h":146},
+            "frame": {"x":488,"y":2,"w":400,"h":150},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":396,"h":146},
-            "sourceSize": {"w":396,"h":146}
+            "spriteSourceSize": {"x":0,"y":0,"w":400,"h":150},
+            "sourceSize": {"w":400,"h":150}
 		},
 		"seaplant_03.png":
 		{
-            "frame": {"x":494,"y":156,"w":396,"h":136},
+            "frame": {"x":488,"y":154,"w":400,"h":140},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":396,"h":136},
-            "sourceSize": {"w":396,"h":136}
+            "spriteSourceSize": {"x":0,"y":0,"w":400,"h":140},
+            "sourceSize": {"w":400,"h":140}
 		},
 		"engine-base.png":
 		{
-            "frame": {"x":494,"y":300,"w":210,"h":112},
+            "frame": {"x":488,"y":296,"w":214,"h":116},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":210,"h":112},
-            "sourceSize": {"w":210,"h":112}
+            "spriteSourceSize": {"x":0,"y":0,"w":214,"h":116},
+            "sourceSize": {"w":214,"h":116}
 		},
 		"engine-base_blue.png":
 		{
-            "frame": {"x":494,"y":420,"w":210,"h":112},
+            "frame": {"x":488,"y":414,"w":214,"h":116},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":210,"h":112},
-            "sourceSize": {"w":210,"h":112}
+            "spriteSourceSize": {"x":0,"y":0,"w":214,"h":116},
+            "sourceSize": {"w":214,"h":116}
 		},
 		"rain-drop.png":
 		{
-            "frame": {"x":712,"y":300,"w":4,"h":100},
+            "frame": {"x":704,"y":296,"w":8,"h":104},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":4,"h":100},
-            "sourceSize": {"w":4,"h":100}
+            "spriteSourceSize": {"x":0,"y":0,"w":8,"h":104},
+            "sourceSize": {"w":8,"h":104}
 		},
 		"engine-piston.png":
 		{
-            "frame": {"x":724,"y":300,"w":26,"h":74},
+            "frame": {"x":714,"y":296,"w":30,"h":78},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":26,"h":74},
-            "sourceSize": {"w":26,"h":74}
+            "spriteSourceSize": {"x":0,"y":0,"w":30,"h":78},
+            "sourceSize": {"w":30,"h":78}
 		},
 		"engine-piston_blue.png":
 		{
-            "frame": {"x":758,"y":300,"w":26,"h":74},
+            "frame": {"x":746,"y":296,"w":30,"h":78},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":26,"h":74},
-            "sourceSize": {"w":26,"h":74}
+            "spriteSourceSize": {"x":0,"y":0,"w":30,"h":78},
+            "sourceSize": {"w":30,"h":78}
 		},
 		"seaplant_01.png":
 		{
-            "frame": {"x":494,"y":540,"w":396,"h":40},
+            "frame": {"x":488,"y":532,"w":400,"h":44},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":396,"h":40},
-            "sourceSize": {"w":396,"h":40}
+            "spriteSourceSize": {"x":0,"y":0,"w":400,"h":44},
+            "sourceSize": {"w":400,"h":44}
 		},
 		"engine-drive_blue.png":
 		{
-            "frame": {"x":792,"y":300,"w":8,"h":28},
+            "frame": {"x":778,"y":296,"w":12,"h":32},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":8,"h":28},
-            "sourceSize": {"w":8,"h":28}
+            "spriteSourceSize": {"x":0,"y":0,"w":12,"h":32},
+            "sourceSize": {"w":12,"h":32}
 		},
 		"engine-drive.png":
 		{
-            "frame": {"x":808,"y":300,"w":8,"h":28},
+            "frame": {"x":792,"y":296,"w":12,"h":32},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":8,"h":28},
-            "sourceSize": {"w":8,"h":28}
+            "spriteSourceSize": {"x":0,"y":0,"w":12,"h":32},
+            "sourceSize": {"w":12,"h":32}
 		},
 		"sea_wave.png":
 		{
-            "frame": {"x":712,"y":420,"w":116,"h":26},
+            "frame": {"x":704,"y":414,"w":120,"h":30},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":116,"h":26},
-            "sourceSize": {"w":116,"h":26}
+            "spriteSourceSize": {"x":0,"y":0,"w":120,"h":30},
+            "sourceSize": {"w":120,"h":30}
 		},
 		"fish.png":
 		{
-            "frame": {"x":824,"y":300,"w":34,"h":12},
+            "frame": {"x":806,"y":296,"w":38,"h":16},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":34,"h":12},
-            "sourceSize": {"w":34,"h":12}
+            "spriteSourceSize": {"x":0,"y":0,"w":38,"h":16},
+            "sourceSize": {"w":38,"h":16}
 		}
 	}
 }

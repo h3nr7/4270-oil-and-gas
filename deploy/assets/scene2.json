@@ -1,73 +1,73 @@
 {
 	"meta": {
 		"image": "scene2.png",
-		"size": {"w":1978,"h":1735},
+		"size": {"w":1974,"h":1731},
 		"scale": "1"
 	},
 	"frames": {
 		"explorer-ship-bottom1.png":
 		{
-            "frame": {"x":2,"y":2,"w":1497,"h":1213},
+            "frame": {"x":2,"y":2,"w":1501,"h":1217},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":1497,"h":1213},
-            "sourceSize": {"w":1497,"h":1213}
+            "spriteSourceSize": {"x":0,"y":0,"w":1501,"h":1217},
+            "sourceSize": {"w":1501,"h":1217}
 		},
 		"explorer-ship-top1.png":
 		{
-            "frame": {"x":1507,"y":2,"w":465,"h":639},
+            "frame": {"x":1505,"y":2,"w":469,"h":643},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":465,"h":639},
-            "sourceSize": {"w":465,"h":639}
+            "spriteSourceSize": {"x":0,"y":0,"w":469,"h":643},
+            "sourceSize": {"w":469,"h":643}
 		},
 		"sonar_bg1.png":
 		{
-            "frame": {"x":2,"y":1223,"w":506,"h":506},
+            "frame": {"x":2,"y":1221,"w":510,"h":510},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":506,"h":506},
-            "sourceSize": {"w":506,"h":506}
+            "spriteSourceSize": {"x":0,"y":0,"w":510,"h":510},
+            "sourceSize": {"w":510,"h":510}
 		},
 		"engine_hook.png":
 		{
-            "frame": {"x":1507,"y":649,"w":92,"h":316},
+            "frame": {"x":1505,"y":647,"w":96,"h":320},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":92,"h":316},
-            "sourceSize": {"w":92,"h":316}
+            "spriteSourceSize": {"x":0,"y":0,"w":96,"h":320},
+            "sourceSize": {"w":96,"h":320}
 		},
 		"explorer-ship-small.png":
 		{
-            "frame": {"x":1607,"y":649,"w":266,"h":116},
+            "frame": {"x":1603,"y":647,"w":270,"h":120},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":266,"h":116},
-            "sourceSize": {"w":266,"h":116}
+            "spriteSourceSize": {"x":0,"y":0,"w":270,"h":120},
+            "sourceSize": {"w":270,"h":120}
 		},
 		"engine_gear_1.png":
 		{
-            "frame": {"x":1881,"y":649,"w":80,"h":80},
+            "frame": {"x":1875,"y":647,"w":84,"h":84},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":84,"h":84},
+            "sourceSize": {"w":84,"h":84}
+		},
+		"engine_fan_2.png":
+		{
+            "frame": {"x":1603,"y":769,"w":80,"h":80},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":80,"h":80},
             "sourceSize": {"w":80,"h":80}
 		},
-		"engine_fan_2.png":
-		{
-            "frame": {"x":1607,"y":773,"w":76,"h":76},
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":76,"h":76},
-            "sourceSize": {"w":76,"h":76}
-		},
 		"radar_ping.png":
 		{
-            "frame": {"x":1691,"y":773,"w":36,"h":36},
+            "frame": {"x":1685,"y":769,"w":40,"h":40},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":36,"h":36},
-            "sourceSize": {"w":36,"h":36}
+            "spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
+            "sourceSize": {"w":40,"h":40}
 		}
 	}
 }

@@ -1,161 +1,161 @@
 {
 	"meta": {
 		"image": "scene3.png",
-		"size": {"w":1940,"h":1432},
+		"size": {"w":1932,"h":1426},
 		"scale": "1"
 	},
 	"frames": {
 		"oilrig-drill-hole.png":
 		{
-            "frame": {"x":2,"y":2,"w":46,"h":781},
+            "frame": {"x":2,"y":2,"w":50,"h":785},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":46,"h":781},
-            "sourceSize": {"w":46,"h":781}
+            "spriteSourceSize": {"x":0,"y":0,"w":50,"h":785},
+            "sourceSize": {"w":50,"h":785}
 		},
 		"oilrig_01.png":
 		{
-            "frame": {"x":56,"y":2,"w":602,"h":689},
+            "frame": {"x":54,"y":2,"w":606,"h":693},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":602,"h":689},
-            "sourceSize": {"w":602,"h":689}
+            "spriteSourceSize": {"x":0,"y":0,"w":606,"h":693},
+            "sourceSize": {"w":606,"h":693}
 		},
 		"oilrig_02.png":
 		{
-            "frame": {"x":666,"y":2,"w":630,"h":689},
+            "frame": {"x":662,"y":2,"w":634,"h":693},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":630,"h":689},
-            "sourceSize": {"w":630,"h":689}
+            "spriteSourceSize": {"x":0,"y":0,"w":634,"h":693},
+            "sourceSize": {"w":634,"h":693}
 		},
 		"oilrig_04.png":
 		{
-            "frame": {"x":2,"y":791,"w":630,"h":377},
+            "frame": {"x":2,"y":789,"w":634,"h":381},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":630,"h":377},
-            "sourceSize": {"w":630,"h":377}
+            "spriteSourceSize": {"x":0,"y":0,"w":634,"h":381},
+            "sourceSize": {"w":634,"h":381}
 		},
 		"oilrig_03.png":
 		{
-            "frame": {"x":640,"y":791,"w":602,"h":377},
+            "frame": {"x":638,"y":789,"w":606,"h":381},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":602,"h":377},
-            "sourceSize": {"w":602,"h":377}
+            "spriteSourceSize": {"x":0,"y":0,"w":606,"h":381},
+            "sourceSize": {"w":606,"h":381}
 		},
 		"oilrig_06.png":
 		{
-            "frame": {"x":1304,"y":2,"w":630,"h":281},
+            "frame": {"x":1298,"y":2,"w":634,"h":285},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":630,"h":281},
-            "sourceSize": {"w":630,"h":281}
+            "spriteSourceSize": {"x":0,"y":0,"w":634,"h":285},
+            "sourceSize": {"w":634,"h":285}
 		},
 		"oilrig_07.png":
 		{
-            "frame": {"x":1304,"y":291,"w":602,"h":279},
+            "frame": {"x":1298,"y":289,"w":606,"h":283},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":602,"h":279},
-            "sourceSize": {"w":602,"h":279}
+            "spriteSourceSize": {"x":0,"y":0,"w":606,"h":283},
+            "sourceSize": {"w":606,"h":283}
 		},
 		"oilrig_05.png":
 		{
-            "frame": {"x":1304,"y":578,"w":602,"h":279},
+            "frame": {"x":1298,"y":574,"w":606,"h":283},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":602,"h":279},
-            "sourceSize": {"w":602,"h":279}
+            "spriteSourceSize": {"x":0,"y":0,"w":606,"h":283},
+            "sourceSize": {"w":606,"h":283}
 		},
 		"oilrig_08.png":
 		{
-            "frame": {"x":1304,"y":865,"w":630,"h":277},
+            "frame": {"x":1298,"y":859,"w":634,"h":281},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":630,"h":277},
-            "sourceSize": {"w":630,"h":277}
+            "spriteSourceSize": {"x":0,"y":0,"w":634,"h":281},
+            "sourceSize": {"w":634,"h":281}
 		},
 		"diver-large.png":
 		{
-            "frame": {"x":2,"y":1176,"w":71,"h":250},
+            "frame": {"x":2,"y":1172,"w":75,"h":254},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":71,"h":250},
-            "sourceSize": {"w":71,"h":250}
+            "spriteSourceSize": {"x":0,"y":0,"w":75,"h":254},
+            "sourceSize": {"w":75,"h":254}
 		},
 		"oilrig-large-drill-dynamic.png":
 		{
-            "frame": {"x":1250,"y":791,"w":46,"h":178},
+            "frame": {"x":1246,"y":789,"w":50,"h":182},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":46,"h":178},
-            "sourceSize": {"w":46,"h":178}
+            "spriteSourceSize": {"x":0,"y":0,"w":50,"h":182},
+            "sourceSize": {"w":50,"h":182}
 		},
 		"oilrig_wave.png":
 		{
-            "frame": {"x":81,"y":1176,"w":256,"h":166},
+            "frame": {"x":79,"y":1172,"w":260,"h":170},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":256,"h":166},
-            "sourceSize": {"w":256,"h":166}
+            "spriteSourceSize": {"x":0,"y":0,"w":260,"h":170},
+            "sourceSize": {"w":260,"h":170}
 		},
 		"oilrig-large-drill-dynamic-holder.png":
 		{
-            "frame": {"x":1250,"y":977,"w":34,"h":135},
+            "frame": {"x":1246,"y":973,"w":38,"h":139},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":34,"h":135},
-            "sourceSize": {"w":34,"h":135}
+            "spriteSourceSize": {"x":0,"y":0,"w":38,"h":139},
+            "sourceSize": {"w":38,"h":139}
 		},
 		"oilrig_engine_shadow.png":
 		{
-            "frame": {"x":345,"y":1176,"w":130,"h":130},
+            "frame": {"x":341,"y":1172,"w":134,"h":134},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":130,"h":130},
-            "sourceSize": {"w":130,"h":130}
+            "spriteSourceSize": {"x":0,"y":0,"w":134,"h":134},
+            "sourceSize": {"w":134,"h":134}
 		},
 		"diver-small.png":
 		{
-            "frame": {"x":483,"y":1176,"w":25,"h":96},
+            "frame": {"x":477,"y":1172,"w":29,"h":100},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":25,"h":96},
-            "sourceSize": {"w":25,"h":96}
+            "spriteSourceSize": {"x":0,"y":0,"w":29,"h":100},
+            "sourceSize": {"w":29,"h":100}
 		},
 		"oilrig_fan_1.png":
 		{
-            "frame": {"x":666,"y":699,"w":76,"h":76},
+            "frame": {"x":662,"y":697,"w":80,"h":80},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":76,"h":76},
-            "sourceSize": {"w":76,"h":76}
+            "spriteSourceSize": {"x":0,"y":0,"w":80,"h":80},
+            "sourceSize": {"w":80,"h":80}
 		},
 		"oilrig_needle.png":
 		{
-            "frame": {"x":750,"y":699,"w":56,"h":56},
+            "frame": {"x":744,"y":697,"w":60,"h":60},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":56,"h":56},
-            "sourceSize": {"w":56,"h":56}
+            "spriteSourceSize": {"x":0,"y":0,"w":60,"h":60},
+            "sourceSize": {"w":60,"h":60}
 		},
 		"oilrig_pipe_oil.png":
 		{
-            "frame": {"x":814,"y":699,"w":26,"h":26},
+            "frame": {"x":806,"y":697,"w":30,"h":30},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":26,"h":26},
-            "sourceSize": {"w":26,"h":26}
+            "spriteSourceSize": {"x":0,"y":0,"w":30,"h":30},
+            "sourceSize": {"w":30,"h":30}
 		},
 		"oilrig-large-drill-dynamic-spiral.png":
 		{
-            "frame": {"x":1304,"y":1150,"w":34,"h":14},
+            "frame": {"x":1298,"y":1142,"w":38,"h":18},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":34,"h":14},
-            "sourceSize": {"w":34,"h":14}
+            "spriteSourceSize": {"x":0,"y":0,"w":38,"h":18},
+            "sourceSize": {"w":38,"h":18}
 		}
 	}
 }

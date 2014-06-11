@@ -11829,10 +11829,10 @@ TWEEN.Interpolation = {
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
             this.addSprite("fpso_01.png", 0, 0, 0, 0, 0);
-            this.addSprite("fpso_02.png", 217, 0, 0, 0, 0);
-            this.addSprite("fpso_03.png", 555, 0, 0, 0, 0);
-            this.addSprite("fpso_04.png", 919, 0, 0, 0, 0);
-            this.addSprite("fpso_05.png", 1500, 0, 0, 0, 0);
+            this.addSprite("fpso_02.png", 213, 0, 0, 0, 0);
+            this.addSprite("fpso_03.png", 547, 0, 0, 0, 0);
+            this.addSprite("fpso_04.png", 902, 0, 0, 0, 0);
+            this.addSprite("fpso_05.png", 1480, 0, 0, 0, 0);
         };
         p.update = function() {};
         p.addSprite = function(name, x, y, z, aX, aY) {
@@ -12222,8 +12222,8 @@ TWEEN.Interpolation = {
             this.bg2 = this.addSprite("productionrig-bg2.png", 0, 0, 0, 0, 0);
             this.bg1 = this.addSprite("productionrig-bg1.png", 400, 210, 0, 0, 0);
             this.addSprite("productionrig_02.png", 0, 320, 0, 0, 0);
-            this.addSprite("productionrig_03.png", 204, 320, 0, 0, 0);
-            this.addSprite("productionrig_04.png", 611, 320, 0, 0, 0);
+            this.addSprite("productionrig_03.png", 201, 320, 0, 0, 0);
+            this.addSprite("productionrig_04.png", 606, 320, 0, 0, 0);
             this.fan = new ElRotatingSprite("productionrig_fan.png", 154, 476, 0, 2e3, .5, .5);
             this.fan.start();
             this.container.addChild(this.fan.container);
@@ -12703,7 +12703,7 @@ TWEEN.Interpolation = {
         var ElSeaWave = function ElSeaWave(name, x, y, z, aX, aY, texWidth) {
             var assetName = "sea_wave.png";
             var texHeight = 30;
-            var offset = 8;
+            var offset = 6;
             this.name = name;
             this.z = z;
             this.waveOffset = offset;
@@ -13852,11 +13852,11 @@ TWEEN.Interpolation = {
             this.seaslope2 = new ElSprite("seabed-slope.png", 6644, 1217, 0, 0, 0);
             this.seaslope3 = new ElSprite("seabed-slope.png", 7144, 928, 0, 0, 0);
             this.seaslope4 = new ElSprite("seabed-slope.png", 7644, 639, 0, 0, 0);
-            this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 366, 0, 0, 0);
-            this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 349, 0, 0, 0);
-            this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 366, 0, 0, 0);
+            this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 370, 0, 0, 0);
+            this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 353, 0, 0, 0);
+            this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 370, 0, 0, 0);
             this.helicopter = new ElHelicopter(0, 4e3, -400, 0);
-            this.fpso = new ElFpso(0, 4e3, 2770, 335, 0);
+            this.fpso = new ElFpso(0, 4e3, 2770, 340, 0);
             this.productionrig = new ElProductionRig(0, 4e3, 1324, -40, 0);
             this.submarine = new ElSubmarine(0, 3e3, 5080, 1200, 0);
             this.cross1 = new ElSprite("underwater-cross-blue.png", 4800, 1630, 0, 0, 0);

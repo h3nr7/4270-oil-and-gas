@@ -76,7 +76,7 @@
 			this.scene4 = new Scene4();
 			this.scene4.setup((4000+7200+4700)/*4700*/,6223, 0, 0);	
 			this.scene6 = new Scene6();
-			this.scene6.setup((4000+7200+4700+6223)/*4700*/,2000, 0, 0);	
+			this.scene6.setup((4000+7200+4700+6223)/*4700*/,3000, 0, 0);	
 			this.scene7 = new Scene7();
 			this.scene7.setup((4000+7200+4700+6223+2000)/*4700*/,2880, 0, 0);		
 			this.scene8 = new Scene8();

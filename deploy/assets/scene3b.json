@@ -1,81 +1,81 @@
 {
 	"meta": {
 		"image": "scene3b.png",
-		"size": {"w":1880,"h":1233},
+		"size": {"w":1874,"h":1227},
 		"scale": "1"
 	},
 	"frames": {
 		"storm_clouds_04.png":
 		{
-            "frame": {"x":2,"y":2,"w":615,"h":466},
+            "frame": {"x":2,"y":2,"w":619,"h":470},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":615,"h":466},
-            "sourceSize": {"w":615,"h":466}
+            "spriteSourceSize": {"x":0,"y":0,"w":619,"h":470},
+            "sourceSize": {"w":619,"h":470}
 		},
 		"storm_clouds_05.png":
 		{
-            "frame": {"x":625,"y":2,"w":620,"h":465},
+            "frame": {"x":623,"y":2,"w":624,"h":469},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":620,"h":465},
-            "sourceSize": {"w":620,"h":465}
+            "spriteSourceSize": {"x":0,"y":0,"w":624,"h":469},
+            "sourceSize": {"w":624,"h":469}
 		},
 		"storm_clouds_06.png":
 		{
-            "frame": {"x":2,"y":476,"w":561,"h":465},
+            "frame": {"x":2,"y":474,"w":565,"h":469},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":561,"h":465},
-            "sourceSize": {"w":561,"h":465}
+            "spriteSourceSize": {"x":0,"y":0,"w":565,"h":469},
+            "sourceSize": {"w":565,"h":469}
 		},
 		"storm_clouds-sign.png":
 		{
-            "frame": {"x":571,"y":476,"w":600,"h":390},
+            "frame": {"x":569,"y":474,"w":604,"h":394},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":600,"h":390},
-            "sourceSize": {"w":600,"h":390}
+            "spriteSourceSize": {"x":0,"y":0,"w":604,"h":394},
+            "sourceSize": {"w":604,"h":394}
 		},
 		"storm_clouds_02.png":
 		{
-            "frame": {"x":1253,"y":2,"w":621,"h":307},
+            "frame": {"x":1249,"y":2,"w":625,"h":311},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":621,"h":307},
-            "sourceSize": {"w":621,"h":307}
+            "spriteSourceSize": {"x":0,"y":0,"w":625,"h":311},
+            "sourceSize": {"w":625,"h":311}
 		},
 		"storm_clouds_03.png":
 		{
-            "frame": {"x":1253,"y":317,"w":560,"h":307},
+            "frame": {"x":1249,"y":315,"w":564,"h":311},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":560,"h":307},
-            "sourceSize": {"w":560,"h":307}
+            "spriteSourceSize": {"x":0,"y":0,"w":564,"h":311},
+            "sourceSize": {"w":564,"h":311}
 		},
 		"storm_clouds_01.png":
 		{
-            "frame": {"x":1253,"y":632,"w":615,"h":306},
+            "frame": {"x":1249,"y":628,"w":619,"h":310},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":615,"h":306},
-            "sourceSize": {"w":615,"h":306}
+            "spriteSourceSize": {"x":0,"y":0,"w":619,"h":310},
+            "sourceSize": {"w":619,"h":310}
 		},
 		"storm-cloud-thunder.png":
 		{
-            "frame": {"x":2,"y":949,"w":373,"h":278},
+            "frame": {"x":2,"y":945,"w":377,"h":282},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":373,"h":278},
-            "sourceSize": {"w":373,"h":278}
+            "spriteSourceSize": {"x":0,"y":0,"w":377,"h":282},
+            "sourceSize": {"w":377,"h":282}
 		},
 		"storm-cloud-grey.png":
 		{
-            "frame": {"x":383,"y":949,"w":246,"h":160},
+            "frame": {"x":381,"y":945,"w":250,"h":164},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":246,"h":160},
-            "sourceSize": {"w":246,"h":160}
+            "spriteSourceSize": {"x":0,"y":0,"w":250,"h":164},
+            "sourceSize": {"w":250,"h":164}
 		}
 	}
 }

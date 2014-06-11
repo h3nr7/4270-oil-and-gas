@@ -30,10 +30,10 @@
 			this._setup(sFrame, duration, x, y);
 
 			this.addSprite('fpso_01.png', 0,0,0, 0,0);
-			this.addSprite('fpso_02.png', 217,0,0, 0,0);
-			this.addSprite('fpso_03.png', 555,0,0, 0,0);
-			this.addSprite('fpso_04.png', 919,0,0, 0,0);
-			this.addSprite('fpso_05.png', 1500,0,0, 0,0);
+			this.addSprite('fpso_02.png', 213,0,0, 0,0);
+			this.addSprite('fpso_03.png', 547,0,0, 0,0);
+			this.addSprite('fpso_04.png', 902,0,0, 0,0);
+			this.addSprite('fpso_05.png', 1480,0,0, 0,0);
 		}
 
 		p.update = function() {

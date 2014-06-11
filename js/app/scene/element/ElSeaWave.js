@@ -9,7 +9,7 @@
 
 			var assetName = "sea_wave.png"
 			var texHeight = 30;
-			var offset = 8;
+			var offset = 6;
 			this.name = name;
 			this.z = z;
 			this.waveOffset = offset;

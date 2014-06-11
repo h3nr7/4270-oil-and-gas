@@ -39,8 +39,8 @@
 
 
 			this.addSprite('productionrig_02.png', 0,320,0, 0,0);
-			this.addSprite('productionrig_03.png', 204,320,0, 0,0);
-			this.addSprite('productionrig_04.png', 611,320,0, 0,0);
+			this.addSprite('productionrig_03.png', 201,320,0, 0,0);
+			this.addSprite('productionrig_04.png', 606,320,0, 0,0);
 
 			this.fan = new ElRotatingSprite('productionrig_fan.png', 154, 476, 0, 2000, 0.5, 0.5);
 			this.fan.start();

@@ -124,9 +124,9 @@
 			// create iceberg
 			// ----------------------------
 			//iceberg 1
-			this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 366, 0, 0, 0);
-			this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 349, 0, 0, 0);
-			this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 366, 0, 0, 0);
+			this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 370, 0, 0, 0);
+			this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 353, 0, 0, 0);
+			this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 370, 0, 0, 0);
 
 			// ----------------------------
 			// create helicopter
@@ -136,7 +136,7 @@
 			// ----------------------------
 			// create helicopter
 			// ----------------------------
-			this.fpso = new ElFpso(0, 4000, 2770, 335, 0)
+			this.fpso = new ElFpso(0, 4000, 2770, 340, 0)
 
 			// ----------------------------
 			// create production rig
