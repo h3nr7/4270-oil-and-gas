@@ -57,12 +57,12 @@
 
 		p.update = function() {
 
-			if (this.dragging) {
-				// this.speed *= this.speedDamper;
-			}
-			else {
+			// if (this.dragging) {
+			// 	// this.speed *= this.speedDamper;
+			// }
+			// else {
 				this.speed *= this.speedDamper;
-			}
+			// }
 
 			if(Math.abs(this.speed) < 1) this.speed=0;
 		}
@@ -73,29 +73,24 @@
 			this.touchStartX = e.touches[0].pageX;
 			this.touchStartY = e.touches[0].pageY;
 			this.touchDate = Date.now();
-			console.log('start Drag');
-
 		}
 
 		p.endDrag = function(e) {
 			if(this.locked) return;
 			this.dragging = false;
-			console.log('end Drag');
-			this.touchDate = Date.now();
-			console.log(this.speed);
+			this.touchDate = null;
+			// console.log(this.speed);
 		}
 
 		p.updateDrag = function(e) {
-			if(this.locked) return;
-			console.log('update Drag');
+			if(this.locked || !this.touchDate) return;
 			var offset = {};
 			offset.x = this.touchStartX - e.touches[0].pageX;
 			var t = Date.now() - this.touchDate;
 			// Get distance finger has moved since swipe begin:
 			offset.y = this.touchStartY - e.touches[0].pageY;
-			console.log('time', t);
-			this.speed = offset.y/(t/200);
-			console.log(offset.y);
+			this.speed = ( Math.abs(offset.y)>0 ) ? ( offset.y/(t/200) ) : 0; //if statement ti avoid division by 0
+			// console.log(this.touchStartY, e.touches[0].pageY, t, this.touchDate, this.speed);
 		}
 
 

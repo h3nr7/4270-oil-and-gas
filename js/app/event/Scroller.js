@@ -3,6 +3,7 @@
 	var EventDispatcher = MKK.getNamespace('mkk.event').EventDispatcher;
 	var ns = MKK.getNamespace('app.event');
 	var Trackpad = MKK.getNamespace('mkk.event').Trackpad;
+	var MathBase = MKK.getNamespace('mkk.math').MathBase;
 
 
 	if (!ns.Scroller) {
@@ -13,9 +14,11 @@
 			this.view = null;
 			this.isStop = false;
 			this.isDebug = false;
-			this.scrollSpeed = 0.03;
+			this.scrollSpeedDamper = 0.03;
 			this.distance = 0;
-			this.speedRange = 10000;
+			this.maxSpeed = 200;
+			this.minSpeed = -200;
+			// this.speedRange = 10000;
 		}
 
 		ns.Scroller = Scroller;
@@ -28,7 +31,7 @@
 			this.gui = gui;
 			this.isDebug = true;
 			this.f1 = this.gui.addFolder('Easing & Interpolation');
-			this.f1.add(this, 'scrollSpeed', 0.01, 0.2);
+			this.f1.add(this, 'scrollSpeedDamper', 0.01, 0.2);
 
 			// this.f1.open();
 
@@ -68,17 +71,17 @@
 
 			if (this.isDebug) this.scrollDisplay.innerHTML = Math.round(this.distance) + 'px';
 
-			if(!this.isStop) {
-				// console.log(this.distance, this.tp.speed)
-				this.distance += (this.tp.speed*this.scrollSpeed);
-				if (this.distance<0) {
-					this.distance = 0;
-				}
-				else if (this.distance>=this.scrollMax) {
-					this.distance = this.scrollMax;
-				}
-				this.tp.update();
+			var dist = this.distance;
+			var speed = MathBase.Clamp(this.tp.speed, this.minSpeed, this.maxSpeed);
+			var scDamp = this.scrollSpeedDamper;
+			var sMax = this.scrollMax;
 
+			if(!this.isStop) {
+				dist += (speed*scDamp);
+				if (dist<0) { dist = 0; }
+				else if (dist>=sMax) { dist = sMax; }
+				this.distance = dist;
+				this.tp.update();
 			}
 		}	
 

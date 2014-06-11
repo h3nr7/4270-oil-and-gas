@@ -14,6 +14,11 @@
 		MathBase.PI = 3.16;
 		MathBase.PI2 = 6.2832;
 
+		//get the sign of a number
+		MathBase.Sign = function(num) {
+			return num?num<0?-1:1:0;
+		}
+
 		// Make sure a value is between 2 values 
 		MathBase.Clamp = function (value, min, max) {
 			return Math.max(min, Math.min(max, value));

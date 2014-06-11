@@ -10208,9 +10208,7 @@ TWEEN.Interpolation = {
             this.locked = true;
         };
         p.update = function() {
-            if (this.dragging) {} else {
-                this.speed *= this.speedDamper;
-            }
+            this.speed *= this.speedDamper;
             if (Math.abs(this.speed) < 1) this.speed = 0;
         };
         p.startDrag = function(e) {
@@ -10219,25 +10217,21 @@ TWEEN.Interpolation = {
             this.touchStartX = e.touches[0].pageX;
             this.touchStartY = e.touches[0].pageY;
             this.touchDate = Date.now();
-            console.log("start Drag");
         };
         p.endDrag = function(e) {
             if (this.locked) return;
             this.dragging = false;
-            console.log("end Drag");
-            this.touchDate = Date.now();
+            this.touchDate = null;
             console.log(this.speed);
         };
         p.updateDrag = function(e) {
-            if (this.locked) return;
-            console.log("update Drag");
+            if (this.locked || !this.touchDate) return;
             var offset = {};
             offset.x = this.touchStartX - e.touches[0].pageX;
             var t = Date.now() - this.touchDate;
             offset.y = this.touchStartY - e.touches[0].pageY;
-            console.log("time", t);
-            this.speed = offset.y / (t / 200);
-            console.log(offset.y);
+            this.speed = Math.abs(offset.y) > 0 ? offset.y / (t / 200) : 0;
+            console.log(this.touchStartY, e.touches[0].pageY, t, this.touchDate, this.speed);
         };
         p.mousewheelHandler = function(e) {
             e.preventDefault();
@@ -13228,7 +13222,7 @@ TWEEN.Interpolation = {
                 y: -2200,
                 ix: -500,
                 iy: 1500
-            }).onUpdate(tweenShipBound).delay(this.startFrame + 792).start();
+            }, 1e3).onUpdate(tweenShipBound).delay(this.startFrame + 792).start();
             var tweenInnerMaskBound = ListenerFunctions.createListenerFunction(this, this.tweenInnerMask);
             this.tween2 = new TweenEach({
                 x: 300,
@@ -13343,8 +13337,8 @@ TWEEN.Interpolation = {
         p.tweenShip = function(e) {
             var ship = this.ship;
             var cObj = this.tween1.tweenVars();
-            ship.scale(cObj.scale);
             ship.position(cObj.x, cObj.y);
+            ship.scale(cObj.scale);
             this.shipinner.yPos(cObj.iy);
         };
         p.tweenInnerMask = function(e) {

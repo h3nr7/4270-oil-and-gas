@@ -212,8 +212,7 @@
 
 			var tweenShipBound = ListenerFunctions.createListenerFunction(this, this.tweenShip);
 			this.tween1 = new TweenEach({scale:1, x: 0, y:0, ix: -500, iy:1150})
-							.to({scale:3, x: -560, y:-2200, ix: -500, iy: 1500})
-
+							.to({scale:3, x: -560, y:-2200, ix: -500, iy: 1500},1000)
 							.onUpdate(tweenShipBound)
 							.delay(this.startFrame+792).start();
 
@@ -328,8 +327,8 @@
 		p.tweenShip = function(e) {
 				var ship = this.ship;
 				var cObj = this.tween1.tweenVars();
-				ship.scale(cObj.scale);
 				ship.position(cObj.x, cObj.y);
+				ship.scale(cObj.scale);
 
 				this.shipinner.yPos(cObj.iy);
 
