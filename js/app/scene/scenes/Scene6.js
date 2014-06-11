@@ -1,13 +1,18 @@
 (function() {
-
+	
+	// ------------------------------------
+	// LIBRARIES
+	// ------------------------------------
 	var ns = MKK.getNamespace('app.scene');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
-	var scenedata = MKK.getNamespace('data').scenedata;
-	var styledata = MKK.getNamespace('data').styledata;
+	var data = MKK.getNamespace('data');
+	var scenedata = data.scenedata;
+	var styledata = data.styledata;
+	var copydata = data.copydata;
 	var AbScene = ns.AbScene;
 
 	var StaticLevel = ns.level.StaticLevel;
-	var Scene2Level = ns.level.Scene2Level;
+	// var Scene2Level = ns.level.Scene2Level;
 	var ElSprite = ns.element.ElSprite;
 	var ElSpriteContainer = ns.element.ElSpriteContainer;
 	var ElText = ns.element.ElText;
@@ -27,6 +32,9 @@
 
 	if(!ns.Scene6) {
 
+		// ------------------------------------
+		// CONSTRUCTOR
+		// ------------------------------------
 		var Scene6 = function Scene6() {
 
 			this.tweenTime = {
@@ -39,13 +47,16 @@
 
 
 		ns.Scene6 = Scene6;
-
 		var p = Scene6.prototype = new AbScene();
 
+		// ------------------------------------
+		// FUNCTIONS
+		// ------------------------------------
 		//open when init is completed
 		p.open = function() {
 
 			var tT = this.tweenTime;
+			var copies = copydata.scene6;
 
 			//back
 			this.backlevel = new StaticLevel('staticsback');
@@ -96,10 +107,10 @@
 
 			//description
 			// this.desc = new ElDescription ('Turbine, compressors\nand other applications', 'Mobil Pegasus™\nMobiljet™ Oil\nMobil Rarus SHC™', '', 'blue', this.startFrame, 1000, 50, 50, 0);
-			this.desc = new ElDescription ('Turbines', 'Mobil SHC™ 800\nMobil DTE™ 932 GT\nMobil DTE™ 800\n', '', 'blue', this.startFrame, 700, 50, 100, 0);
-			this.desc2 = new ElDescription ('Compressors', 'Mobil Rarus SHC™ 1000\nMobil Rarus™ 800', '', 'blue', this.startFrame+500, 700, 50, 100, 0);
-			this.desc3 = new ElDescription ('Pumps', 'Mobil SHC™ 100', '', 'blue', this.startFrame+1000, 700, 50, 100, 0);
-			this.desc4 = new ElDescription ('Gears', 'Mobil SHC™ 600', '', 'blue', this.startFrame+1100, 700, 50, 200, 0);
+			this.desc = new ElDescription (copies.desc1.title, copies.desc1.txt, '', copies.desc1.color, this.startFrame, 700, 50, 100, 0);
+			this.desc2 = new ElDescription (copies.desc2.title, copies.desc2.txt, '', copies.desc2.color, this.startFrame+500, 700, 50, 100, 0);
+			this.desc3 = new ElDescription (copies.desc3.title, copies.desc3.txt, '', copies.desc3.color, this.startFrame+1000, 700, 50, 100, 0);
+			this.desc4 = new ElDescription (copies.desc4.title, copies.desc4.txt, '', copies.desc4.color, this.startFrame+1100, 700, 50, 200, 0);
 
 
 

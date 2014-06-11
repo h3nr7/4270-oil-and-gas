@@ -6,6 +6,7 @@
 
 		ns.settings = {
 
+			//DIMENSIONS
 			defaultWidth:1024,
 			defaultHeight:768,
 			depthLevel:0.1,
@@ -16,8 +17,12 @@
 				wordWrap: true, 
 				wordWrapWidth: 800
 			},
+
+			//TEXT and FONTS
 			defaultDescriptionGap: 20, 
 			defaultDescriptionLineHeight: 40,
+
+			//COLORS
 			defaultOilRigBlue: 0x174c8f,
 			defaultOilRigLightBlue: 0x1fbcee,
 			defaultBGColor: 0xe7e7e7,

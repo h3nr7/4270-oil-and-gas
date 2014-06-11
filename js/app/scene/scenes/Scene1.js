@@ -1,5 +1,8 @@
 (function() {
-
+	
+	// ------------------------------------
+	// LIBRARIES
+	// ------------------------------------
 	var ns = MKK.getNamespace('app.scene');
 	var data = MKK.getNamespace('data');
 	var copydata = data.copydata;
@@ -21,6 +24,9 @@
 
 	if(!ns.Scene1) {
 
+		// ------------------------------------
+		// CONSTRUCTOR
+		// ------------------------------------
 		var Scene1 = function Scene1() {
 
 			this.tweenTime = {
@@ -31,11 +37,12 @@
 
 		}
 
-
 		ns.Scene1 = Scene1;
-
 		var p = Scene1.prototype = new AbScene();
 
+		// ------------------------------------
+		// FUNCTIONS
+		// ------------------------------------
 		//open when init is completed
 		p.open = function() {
 

@@ -23,18 +23,44 @@
 			},
 
 			scene2: {
-
+				desc1: {title: 'Gear Applications',txt: 'Outstanding protection for gears operating in extreme conditions\n\nMobil SHC™ 600\nMobilgear™ Gear\nMobil SHC™ 600XP',color: 'white'},
+				desc2: {title: 'Engines',txt:'Advanced engine cleanliness and extended oil drain intervals\n\nMobil Delvac 1™\nMobil Delvac MX™\nMobil Pegasus™',color: 'white'},
+				desc3: {title: 'Propulsion &\nThrusters',txt: 'Excellent load carrying and anti-wear properties\n\nMobil SHC™ Gear\nMobil DTE 10 Excel™',color: 'white'},
 			},
 
 			scene3: {
-				desc1: {title: 'Engines', txt: 'Mobil Delvac 1™ 600\nMobil Delvac MX™ 600\nMobil Pegasus™', color: 'blue'},
-				desc2: {title: 'Top Drive', txt: 'Mobil SHC™\nMobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™', color: 'blue'},
+				desc1: {title: 'Engines', txt: 'Mobil Delvac 1™\nMobil Delvac MX™\nMobil Pegasus™', color: 'blue'},
+				desc2: {title: 'Top Drive', txt: 'Mobil SHC™\nMobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™\nMobilith SHC™', color: 'blue'},
 				desc3: {title: 'Mud Pumps', txt: 'Mobil SHC™ Gear\nMobil Polyrex™ EM', color: 'blue'},
-				desc4: {title: 'Positioning Thruster', txt: 'Mobil SHC™ 600\nMobilgear™ 600XP', color: 'white'}
+				desc4: {title: 'Positioning Thruster', txt: 'Mobil SHC™ Gear\nMobilgear™ 600XP', color: 'white'}
 			},
 
 			scene4: {
-				desc1:{}
+				desc1:{title: 'Turbines',txt: 'Excellent anti-oxidation and air release properties\n\nMobil SHC™ 800\nMobil DTE™ 932 GT',color: 'blue'},
+				desc2:{title: 'Compressors',txt: 'Can help provide outstanding cleanliness and reduced deposit formation\n\nMobil Rarus SHC™ 1020\nMobil Rarus™ 800',color: 'blue'},
+				desc3:{title: 'Deck Machinery',txt: 'Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798',color: 'blue'},
+				desc4:{title: 'Turbines, compressors\nand other applications',txt: 'Mobil Pegasus™\nMobiljet™ Oil\nMobil Rarus SHC™',color: 'white'},
+			},
+
+			scene5: {
+
+			},
+
+			scene6: {
+				desc1:{title: 'Turbines',txt: 'Mobil SHC™ 800\nMobil DTE™ 932 GT\nMobil DTE™ 800\n',color: 'blue'},
+				desc2:{title: 'Compressors',txt: 'Mobil Rarus SHC™ 1000\nMobil Rarus™ 800',color: 'blue'},
+				desc3:{title: 'Pumps',txt: 'Mobil SHC™ 100',color: 'blue'},
+				desc4:{title: 'Gears',txt: 'Mobil SHC™ 600',color: 'blue'},
+			},
+
+			scene7: {
+
+			},
+
+			scene8: {
+				line1: "Get your productivity pumping",
+				line2: "Speak to our specialists about advancing the productivity,\nsafety and environmental care of your oil and gas operations",
+				line3: "Replay >",
 			}
 		};
 	}

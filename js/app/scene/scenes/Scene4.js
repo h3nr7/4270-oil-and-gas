@@ -1,5 +1,8 @@
 (function() {
-
+	
+	// ------------------------------------
+	// LIBRARIES
+	// ------------------------------------
 	var ns = MKK.getNamespace('app.scene');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
 	var data =  MKK.getNamespace('data');
@@ -30,6 +33,9 @@
 
 	if(!ns.Scene4) {
 
+		// ------------------------------------
+		// CONSTRUCTOR
+		// ------------------------------------
 		var Scene4 = function Scene4() {
 
 			this.tweenTime = {
@@ -67,14 +73,16 @@
 
 
 		ns.Scene4 = Scene4;
-
 		var p = Scene4.prototype = new AbScene();
 
+		// ------------------------------------
+		// FUNCTIONS
+		// ------------------------------------
 		//open when init is completed
 		p.open = function() {
 
 			var tT = this.tweenTime;
-			var copies = copydata.scene3;
+			var copies = copydata.scene4;
 
 			//back
 			this.backlevel = new StaticLevel('staticsback');
@@ -192,13 +200,13 @@
 			this.frontlevel.addElement(this.submarine.container);
 
 			//text
-			this.desc = new ElDescription ('Turbines', 'Excellent anti-oxdation and air release properties\n\nMobil Delvac 1™ 600\nMobil SHC™ 800\nMobil DTE™ 932 GT', '', 'blue', this.startFrame + tT.txtTime1, 700, 100, 50, 0);
+			this.desc = new ElDescription (copies.desc1.title, copies.desc1.txt, '', copies.desc1.color, this.startFrame + tT.txtTime1, 700, 100, 50, 0);
 			this.txtlevel.addElement(this.desc.container);
-			this.desc2 = new ElDescription ('Compressors', 'Outstanding cleanliness and reduced deposit formations\n\nMobil Rarus SHC™ 1020\nMobil Rarus™ 800\nMobil Pegasus™', '', 'blue', this.startFrame + tT.txtTime2, 700, 100, 50, 0);
+			this.desc2 = new ElDescription (copies.desc2.title, copies.desc2.txt, '', copies.desc2.color, this.startFrame + tT.txtTime2, 700, 100, 50, 0);
 			this.txtlevel.addElement(this.desc2.container);
-			this.desc3 = new ElDescription ('Deck Machinery', 'Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798', '', 'blue', this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
+			this.desc3 = new ElDescription (copies.desc3.title, copies.desc3.txt, '', copies.desc3.color, this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
 			this.txtlevel.addElement(this.desc3.container);
-			this.desc4 = new ElDescription ('Turbines, compressors\nand other applications', 'Mobil Pegasus™\nMobiljet™ Oil\nMobil RarusSHC™', '', 'white', this.startFrame + tT.txtTime4, 800, 100, 300, 0);
+			this.desc4 = new ElDescription (copies.desc4.title, copies.desc4.txt, '', copies.desc4.color, this.startFrame + tT.txtTime4, 800, 100, 300, 0);
 			this.txtlevel.addElement(this.desc4.container);
 			// ------------------------------------------------
 			// Tween
@@ -286,6 +294,9 @@
 			}
 		}
 
+		// ------------------------------------------------
+		// TWEEN FUNCTIONS
+		// ------------------------------------------------
 		p.tweenInFunc = function(e) {
 			var cObj = this.tweenIn.tweenVars();
 			this.yPos(cObj.y);

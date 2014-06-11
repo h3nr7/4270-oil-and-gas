@@ -1,9 +1,14 @@
 (function() {
 
+	// ------------------------------------
+	// LIBRARIES
+	// ------------------------------------
 	var ns = MKK.getNamespace('app.scene');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
-	var scenedata = MKK.getNamespace('data').scenedata;
-	var styledata = MKK.getNamespace('data').styledata;
+	var data = MKK.getNamespace('data');
+	var copydata = data.copydata;
+	var scenedata = data.scenedata;
+	var styledata = data.styledata;
 	var AbScene = ns.AbScene;
 
 	var StaticLevel = ns.level.StaticLevel;
@@ -27,24 +32,27 @@
 
 	if(!ns.Scene8) {
 
+		// ------------------------------------
+		// CONSTRUCTOR
+		// ------------------------------------
 		var Scene8 = function Scene8() {
 
-			this.tweenTime = {
-				_speed: 250,
-
-				stackDelay: 100,
-			};
+			this.tweenTime = scenedata.scene8.tweenTime;
 		}
 
 
 		ns.Scene8 = Scene8;
-
 		var p = Scene8.prototype = new AbScene();
 
+		// ------------------------------------
+		// FUNCTIONS
+		// ------------------------------------
 		//open when init is completed
 		p.open = function() {
 
 			var tT = this.tweenTime;
+			var copies = copydata.scene8;
+
 			//back
 			this.level1 = new StaticLevel('level1');
 			this.level1.setup(0, 0, 0);
@@ -54,15 +62,15 @@
 			var smallStyle = styledata.endlineBody;
 			var replayStyle = styledata.replayGrey;
 			//strapline1
-			this.txt2 = new ElText("Get your productivity pumping", 512,300, 0, 0.5, 0.5);
+			this.txt2 = new ElText(copies.line1, tT.txt2X0, tT.txt2Y0, 0, 0.5, 0.5);
 			this.txt2.setStyle(strapStyle);
 			this.txt2.opacity(0);
 
-			this.txt3 = new ElText("Speak to our specialists about advancing the productivity,\nsafety and environmental care of your oil and gas operations", 512,410, 0, 0.5, 0.5);
+			this.txt3 = new ElText(copies.line2, tT.txt3X0, tT.txt3Y0, 0, 0.5, 0.5);
 			this.txt3.setStyle(smallStyle);
 			this.txt3.opacity(0);
 
-			this.txt4 = new ElText("Replay >", 512,620, 0, 0.5, 0.5);
+			this.txt4 = new ElText(copies.line3, tT.txt4X0, tT.txt4Y0, 0, 0.5, 0.5);
 			this.txt4.setStyle(replayStyle);
 			this.txt4.opacity(0);
 
@@ -76,29 +84,31 @@
 			// ------------------------------------------------
 			//move into scene, left
 			var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
-			this.tween0 = new TweenEach({y:240})
-							.to({y: 300}, tT._speed)
+			this.tween0 = new TweenEach({y:tT.txt2Y0})
+							.to({y: tT.txt2Y1}, tT._speed)
 							.easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tween0Bound)
 							.delay(this.startFrame ).start();
 
 			var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
-			this.tween1 = new TweenEach({y:380})
-							.to({y: 410}, tT._speed)
+			this.tween1 = new TweenEach({y:tT.txt3Y0})
+							.to({y: tT.txt3Y1}, tT._speed)
 							.easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tween1Bound)
 							.delay(this.startFrame + tT.stackDelay).start();
 
 			var tween2Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc2);
-			this.tween2 = new TweenEach({y:560})
-							.to({y: 620}, tT._speed)
+			this.tween2 = new TweenEach({y:tT.txt4Y0})
+							.to({y: tT.txt4Y1}, tT._speed)
 							.easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tween2Bound)
 							.delay(this.startFrame + tT.stackDelay*2).start();
 
 		}
 
-
+		// ------------------------------------------------
+		// TWEEN FUNCTIONS
+		// ------------------------------------------------
 		p.tweenFunc0 = function(e) {
 			var cObj = this.tween0.tweenVars();
 			this.txt2.opacity(e);

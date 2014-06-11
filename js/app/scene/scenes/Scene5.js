@@ -1,5 +1,8 @@
 (function() {
-
+	
+	// ------------------------------------
+	// LIBRARIES
+	// ------------------------------------
 	var ns = MKK.getNamespace('app.scene');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
 	var scenedata = MKK.getNamespace('data').scenedata;
@@ -7,7 +10,7 @@
 	var AbScene = ns.AbScene;
 
 	var StaticLevel = ns.level.StaticLevel;
-	var Scene2Level = ns.level.Scene2Level;
+	// var Scene2Level = ns.level.Scene2Level;
 	var ElSprite = ns.element.ElSprite;
 	var ElSpriteContainer = ns.element.ElSpriteContainer;
 	var ElText = ns.element.ElText;
@@ -27,15 +30,20 @@
 
 	if(!ns.Scene5) {
 
+		// ------------------------------------
+		// CONSTRUCTOR
+		// ------------------------------------
 		var Scene5 = function Scene5() {
 
 		}
 
 
 		ns.Scene5 = Scene5;
-
 		var p = Scene5.prototype = new AbScene();
 
+		// ------------------------------------
+		// FUNCTIONS
+		// ------------------------------------
 		//open when init is completed
 		p.open = function() {
 

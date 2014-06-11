@@ -1,5 +1,8 @@
 (function() {
-
+	
+	// ------------------------------------
+	// LIBRARIES
+	// ------------------------------------
 	var ns = MKK.getNamespace('app.scene');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
 	var scenedata = MKK.getNamespace('data').scenedata;
@@ -27,46 +30,13 @@
 
 	if(!ns.Scene7) {
 
+		// ------------------------------------
+		// CONSTRUCTOR
+		// ------------------------------------
 		var Scene7 = function Scene7() {
 
 			this.buildings = [];
-			this.tweenTime = {
-
-				//speed
-				_fast: 150,
-				_speed: 250,
-				_speed1: 500,
-				_speed2: 750,
-
-				//start time
-				delayStart: 500,
-				tween1Start: 750,
-				tween2Start: 1000,
-				tween3Start: 1500,
-				tween4Start: 2000,
-				tween5Start: 2250,
-				tween6Start: 2700,
-
-				//position
-				tweenStartX0: 2024,
-				tweenStartX1: -2000,
-				tweenStartX2: 0,
-
-				//road position
-				roadX0: 3000,
-				roadX1: -2500,
-
-				//sea
-				seaY0: 700,
-				seaY1: 670,
-
-				//truck
-				truckX0: 100,
-				truckX1: 2000,
-				fronttruckX0: 512,
-				fronttruckY0: 400,
-				fronttruckY1: 340
-			}
+			this.tweenTime = scenedata.scene7.tweenTime;
 
 			this.buildingVars = [
 				{x:0, y:0, type: 'house'}
@@ -75,9 +45,11 @@
 
 
 		ns.Scene7 = Scene7;
-
 		var p = Scene7.prototype = new AbScene();
 
+		// ------------------------------------
+		// FUNCTIONS
+		// ------------------------------------
 		//open when init is completed
 		p.open = function() {
 
@@ -196,7 +168,7 @@
 			// ------------------------------------------------
 			var tweenTruckBound = ListenerFunctions.createListenerFunction(this, this.tweenTruckFunc);
 			this.tweenTruck = new TweenEach({x: 1000})
-							.to({x: tT.truckX0 }, 160)
+							.to({x: tT.truckX0 }, 240)
 							// .easing(TWEEN.Easing.Cubic.Out)
 							.onUpdate(tweenTruckBound)
 							.delay(this.startFrame ).start();
@@ -285,8 +257,8 @@
 		}
 
 		// ------------------------------------------------
-		// Tween func
-		// ------------------------------------------------		
+		// TWEEN FUNCTIONS
+		// ------------------------------------------------
 		p.tweenTruckFunc = function(e) {
 			cObj = this.tweenTruck.tweenVars();
 			this.trucksmall.xPos(cObj.x);

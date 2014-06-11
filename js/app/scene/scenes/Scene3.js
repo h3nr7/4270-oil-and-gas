@@ -1,5 +1,8 @@
 (function() {
-
+	
+	// ------------------------------------
+	// LIBRARIES
+	// ------------------------------------
 	var ns = MKK.getNamespace('app.scene');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
 	var data =  MKK.getNamespace('data');
@@ -8,7 +11,7 @@
 	var copydata = data.copydata;
 	var AbScene = ns.AbScene;
 
-	var Scene1Level = ns.level.Scene1Level;
+	// var Scene1Level = ns.level.Scene1Level;
 	var StaticLevel = ns.level.StaticLevel;
 	var ElSprite = ns.element.ElSprite;
 	var ElSpriteContainer = ns.element.ElSpriteContainer;
@@ -37,6 +40,9 @@
 
 	if(!ns.Scene3) {
 
+		// ------------------------------------
+		// CONSTRUCTOR
+		// ------------------------------------
 		var Scene3 = function Scene3() {
 
 			this.tweenTime= {
@@ -91,9 +97,11 @@
 
 
 		ns.Scene3 = Scene3;
-
 		var p = Scene3.prototype = new AbScene();
 
+		// ------------------------------------
+		// FUNCTIONS
+		// ------------------------------------
 		//open when init is completed
 		p.open = function() {
 
@@ -326,9 +334,9 @@
 		}
 
 
-		// ----------------------------
-		// TWEENING
-		// ----------------------------
+		// ------------------------------------------------
+		// TWEEN FUNCTIONS
+		// ------------------------------------------------
 		p.tweenStarting = function(e) {
 			var cObj = this.tween0.tweenVars();
 			this.staticlevel.position(cObj.x, cObj.y);

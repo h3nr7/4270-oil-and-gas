@@ -1,9 +1,14 @@
 (function() {
-
+	
+	// ------------------------------------
+	// LIBRARIES
+	// ------------------------------------
 	var ns = MKK.getNamespace('app.scene');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
-	var scenedata = MKK.getNamespace('data').scenedata;
-	var styledata = MKK.getNamespace('data').styledata;
+	var data =  MKK.getNamespace('data');
+	var copydata = data.copydata;
+	var scenedata = data.scenedata;
+	var styledata = data.styledata;
 	var AbScene = ns.AbScene;
 
 	var StaticLevel = ns.level.StaticLevel;
@@ -31,6 +36,9 @@
 
 	if(!ns.Scene2) {
 
+		// ------------------------------------
+		// CONSTRUCTOR
+		// ------------------------------------
 		var Scene2 = function Scene2() {
 
 
@@ -54,6 +62,9 @@
 
 		var p = Scene2.prototype = new AbScene();
 
+		// ------------------------------------
+		// FUNCTIONS
+		// ------------------------------------
 		// ==============================================================
 		// override setup for some silly hacky shit from earlier
 		// FIX LATER IF TIME ALLOWS!!!
@@ -90,16 +101,17 @@
 		//open when init is completed
 		p.open = function() {
 
-			tT = this.tweenTime;
+			var tT = this.tweenTime;
+			var copies = copydata.scene2;
 
 			this.createLevels(scenedata.scene2.level, Scene2Level);
 			this.staticlevel = new StaticLevel('statictxt');
 			this.staticlevel.setup(0, 0, 0);
 			this.addTxtLevel(this.staticlevel);
 
-			this.desc = new ElDescription ('Gear Applications', 'Outstanding protection for gears opearting in extreme conditions\n\nMobil SHC™ 600\nMobilgear™ Gear\nMobil SHC™ 600XP', '', 'white', this.startFrame+1380, 1000, 50, 50, 0);
-			this.desc2 = new ElDescription ('Engines', 'Advanced engine cleaniness and extended oil drain intervals\n\nMobil Gard™ SHC\nMobil Delvac 1™\nMobil Delvac 1™ 600\nMobilGard™ M\nMobilGard™ HSD', '', 'white', this.startFrame+1950, 1000, 50, 300, 0);
-			this.desc3 = new ElDescription ('Propulsion &\nThrusters', 'Excellent load carrying and anti-wear properties\n\nMobil SHC™ Gear\nMobil DTE 10 Excel™', '', 'white', this.startFrame+3700, 1000, 342, 280, 0);
+			this.desc = new ElDescription ( copies.desc1.title, copies.desc1.txt, '', copies.desc1.color, this.startFrame+1380, 1000, 50, 50, 0);
+			this.desc2 = new ElDescription ( copies.desc2.title, copies.desc2.txt, '', copies.desc2.color, this.startFrame+1950, 1000, 50, 300, 0);
+			this.desc3 = new ElDescription ( copies.desc3.title, copies.desc3.txt, '', copies.desc3.color, this.startFrame+3700, 1000, 342, 280, 0);
 
 
 			// ----------------------------
@@ -303,9 +315,9 @@
 
 		}
 
-		// ----------------------------
-		// all tweening funcitons
-		// ----------------------------
+		// ------------------------------------------------
+		// TWEEN FUNCTIONS
+		// ------------------------------------------------
 		p.tweenSmallShip = function(e) {
 				var smallship = this.smallship;
 				var cObj = this.tween0.tweenVars();

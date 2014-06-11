@@ -46,8 +46,6 @@
 				wordWrapWidth:"900"				
 			},
 
-
-
 			descriptionTitle:{
 				font:"40px emprintw01-semibold", 
 				fill: "#58595b", 
@@ -93,21 +91,21 @@
 				wordWrap:"true", 
 				wordWrapWidth:"400"
 			},
-			descriptionTitleRed:{
-				font:"40px emprintw01-semibold", 
-				fill: "#aa1816", 
-				align:"left", 
-				wordWrap:"true", 
-				wordWrapWidth:"800",
-				lineHeight: 12
-			},
-			descriptionBodyRed:{
-				font:"16px emprintw01-regular", 
-				fill: "#aa1816", 
-				align:"left", 
-				wordWrap:"true", 
-				wordWrapWidth:"400"
-			},
+			// descriptionTitleRed:{
+			// 	font:"40px emprintw01-semibold", 
+			// 	fill: "#aa1816", 
+			// 	align:"left", 
+			// 	wordWrap:"true", 
+			// 	wordWrapWidth:"800",
+			// 	lineHeight: 12
+			// },
+			// descriptionBodyRed:{
+			// 	font:"16px emprintw01-regular", 
+			// 	fill: "#aa1816", 
+			// 	align:"left", 
+			// 	wordWrap:"true", 
+			// 	wordWrapWidth:"400"
+			// },
 			endlineBody:{
 				font:"18px emprintw01-regular", 
 				fill: "#58595b", 
@@ -122,16 +120,6 @@
 				wordWrap:"true", 
 				wordWrapWidth:"600"		
 			}
-			
-
-
-
-
-
-
-
-
-
 		}
 
 	}
