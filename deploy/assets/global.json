@@ -45,33 +45,49 @@
             "spriteSourceSize": {"x":0,"y":0,"w":400,"h":140},
             "sourceSize": {"w":400,"h":140}
 		},
-		"engine-base.png":
+		"dinosaur1.png":
 		{
-            "frame": {"x":488,"y":296,"w":214,"h":116},
+            "frame": {"x":488,"y":296,"w":200,"h":121},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":214,"h":116},
-            "sourceSize": {"w":214,"h":116}
+            "spriteSourceSize": {"x":0,"y":0,"w":200,"h":121},
+            "sourceSize": {"w":200,"h":121}
 		},
 		"engine-base_blue.png":
 		{
-            "frame": {"x":488,"y":414,"w":214,"h":116},
+            "frame": {"x":488,"y":419,"w":214,"h":116},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":214,"h":116},
             "sourceSize": {"w":214,"h":116}
 		},
-		"engine-piston.png":
+		"engine-base.png":
 		{
-            "frame": {"x":704,"y":296,"w":30,"h":78},
+            "frame": {"x":488,"y":537,"w":214,"h":116},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":214,"h":116},
+            "sourceSize": {"w":214,"h":116}
+		},
+		"dinosaur2.png":
+		{
+            "frame": {"x":488,"y":655,"w":260,"h":101},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":260,"h":101},
+            "sourceSize": {"w":260,"h":101}
+		},
+		"engine-piston_blue.png":
+		{
+            "frame": {"x":690,"y":296,"w":30,"h":78},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":30,"h":78},
             "sourceSize": {"w":30,"h":78}
 		},
-		"engine-piston_blue.png":
+		"engine-piston.png":
 		{
-            "frame": {"x":736,"y":296,"w":30,"h":78},
+            "frame": {"x":722,"y":296,"w":30,"h":78},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":30,"h":78},
@@ -79,7 +95,7 @@
 		},
 		"rain-drop.png":
 		{
-            "frame": {"x":768,"y":296,"w":32,"h":72},
+            "frame": {"x":754,"y":296,"w":32,"h":72},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":32,"h":72},
@@ -87,7 +103,7 @@
 		},
 		"seaplant_01.png":
 		{
-            "frame": {"x":488,"y":532,"w":400,"h":44},
+            "frame": {"x":488,"y":758,"w":400,"h":44},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":400,"h":44},
@@ -95,7 +111,7 @@
 		},
 		"engine-drive_blue.png":
 		{
-            "frame": {"x":802,"y":296,"w":12,"h":32},
+            "frame": {"x":788,"y":296,"w":12,"h":32},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":12,"h":32},
@@ -103,7 +119,7 @@
 		},
 		"engine-drive.png":
 		{
-            "frame": {"x":816,"y":296,"w":12,"h":32},
+            "frame": {"x":802,"y":296,"w":12,"h":32},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":12,"h":32},
@@ -111,7 +127,7 @@
 		},
 		"sea_wave.png":
 		{
-            "frame": {"x":704,"y":376,"w":120,"h":30},
+            "frame": {"x":690,"y":376,"w":120,"h":30},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":120,"h":30},
@@ -119,7 +135,7 @@
 		},
 		"fish.png":
 		{
-            "frame": {"x":830,"y":296,"w":38,"h":16},
+            "frame": {"x":816,"y":296,"w":38,"h":16},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":38,"h":16},

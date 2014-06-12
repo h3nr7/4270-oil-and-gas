@@ -10,11 +10,23 @@
 
 		var Navi = function Navi() {
 
+			this.buttonLinks = [
+
+				{id:1, name: '', frame:0},
+				{id:2, name: '', frame:0},
+				{id:3, name: '', frame:0},
+				{id:4, name: '', frame:0},
+				{id:5, name: '', frame:0},
+				{id:6, name: '', frame:0},
+				{id:7, name: '', frame:0},
+				{id:8, name: '', frame:0}
+			]
 			this.tweenTime = {
 
 				_speed: 250,
 				sideHideX: -100,
 				sideShowX: 50,
+
 			};
 
 			this.view = null;
@@ -61,7 +73,8 @@
 			vTemp.style.width = "26px";
 			vTemp.style.height = "500px";
 
-			for (var i=0; i<7; i++) {
+			var butLen = this.buttonLinks.length;
+			for (var i=0; i<butLen; i++) {
 				var tBut = this.createButtons(i*70, i);
 				vTemp.appendChild(tBut);
 			}
@@ -75,6 +88,20 @@
 			vTemp.style.position = 'absolute';
 			vTemp.style.left = '0px';
 			vTemp.style.top = y + 'px';
+			vTemp.style.background = 'url(images/nav-ball-red.png) center center no-repeat';
+			vTemp.style.backgroundSize = '26px 26px'; 
+			vTemp.style.width = "26px";
+			vTemp.style.height = "26px";
+			vTemp.style.cursor = 'pointer';
+			return vTemp;
+		}
+
+		p.createlines = function() {
+			var vTemp = document.createElement('div');
+			vTemp.id = id;
+			vTemp.style.position = 'absolute';
+			vTemp.style.left = '0px';
+			vTemp.style.top = '5px';
 			vTemp.style.background = 'url(images/nav-ball-red.png) center center no-repeat';
 			vTemp.style.backgroundSize = '26px 26px'; 
 			vTemp.style.width = "26px";

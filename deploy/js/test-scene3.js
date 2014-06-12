@@ -45,7 +45,8 @@
 			// Navigator
 			// --------------------------------------------------	
 			this.navi = new Navi();
-			document.body.appendChild(this.navi.view);
+			document.body.appendChild(this.navi.topview);
+			document.body.appendChild(this.navi.sideview);
 
 			// --------------------------------------------------
 			// SCROLLER Setup

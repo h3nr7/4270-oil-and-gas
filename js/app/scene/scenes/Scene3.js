@@ -121,7 +121,8 @@
 			this.oilcave = new ElOilCave('oilcave', 0,0, 0, 2044, 0,0);
 			this.oilcave.updateLevel(0);
 			this.oilhole = new ElOilHole('oilhole', 0,-210, -5, 1534, 0,0);
-
+			this.dino1 = new ElSprite('dinosaur1.png', 230, 1974);
+			this.dino2 = new ElSprite('dinosaur2.png', 630, 1950);
 			//iceberg 1
 			this.divers = new ElSpriteContainer('divers', 0, 0, 0, 0, 0);
 			this.bgpipe1 = this.addbgPipe(450, 0.75);
@@ -137,7 +138,8 @@
 			this.seabglevel.addElement(this.oilcave.container);
 			this.seabglevel.addElement(this.divers.container);
 			this.seabglevel.addElement(this.oilhole.container);
-
+			this.seabglevel.addElement(this.dino1.container);
+			this.seabglevel.addElement(this.dino2.container);
 			//create oilrig
 			this.oilrig = new ElOilrig(0,5000, 0, 0, 0 );
 			this.staticlevel.addElement(this.oilrig.container)
