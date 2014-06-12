@@ -19,9 +19,6 @@
 			// graphics.lineStyle(5, 0xFF0000);
 			this.container.drawRect(this.cPos.x, this.cPos.y, this.width, this.height);
 			this.container.endFill();
-			console.log('lala');
-
-
 		}
 
 		ns.ElRect = ElRect;

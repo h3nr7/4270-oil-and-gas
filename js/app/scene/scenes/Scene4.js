@@ -144,7 +144,7 @@
 			// ----------------------------
 			// create sub
 			// ----------------------------
-			this.submarine = new ElSubmarine(0,3000, 5080, 1200, 0);
+			this.submarine = new ElSubmarine(0,3000, 6200, 1200, 0);
 
 			// ----------------------------
 			// create cross
@@ -249,7 +249,7 @@
 
 			var tweenLandEndBound = ListenerFunctions.createListenerFunction(this, this.tweenLandEndFunc);
 			this.tweenlandend = new TweenEach({x: -7092})
-							.to({x: -8116}, 601)
+							.to({x: -8122}, 605)
 							.onUpdate(tweenLandEndBound)
 							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime + 750).start();
 

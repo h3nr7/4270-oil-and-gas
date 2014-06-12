@@ -10025,6 +10025,12 @@ TWEEN.Interpolation = {
             this._eventListeners = null;
         };
         ns.EventDispatcher = EventDispatcher;
+        var supportsCustomEvents = true;
+        try {
+            var newTestCustomEvent = document.createEvent("CustomEvent");
+        } catch (e) {
+            supportsCustomEvents = false;
+        }
         var p = EventDispatcher.prototype;
         p.addEventListener = function(aEventType, aFunction) {
             if (this._eventListeners === null) {
@@ -10176,16 +10182,22 @@ TWEEN.Interpolation = {
     var ns = MKK.getNamespace("mkk.event");
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
     var EventDispatcher = MKK.getNamespace("mkk.event").EventDispatcher;
+    var Mathbase = MKK.getNamespace("mkk.math").MathBase;
     if (!ns.Trackpad) {
         var Trackpad = function Trackpad(target) {
             this.target = target;
             this.speedDamper = .92;
+            this.swipespeedDamper = .92;
             this.dragOffset = 0;
             this.dragging;
             this.speed = 0;
             this.touchStartX = 0;
             this.touchStartY = 0;
             this.touchDate = 0;
+            this.minSwipeSpeed = 2.5;
+            this.maxSwipeSpeed = 10;
+            this.maxSwipeTime = 700;
+            this.minSwipeXDistance = 150;
         };
         ns.Trackpad = Trackpad;
         var p = Trackpad.prototype = new EventDispatcher();
@@ -10220,6 +10232,22 @@ TWEEN.Interpolation = {
         };
         p.endDrag = function(e) {
             if (this.locked) return;
+            var tT = Date.now() - this.touchDate;
+            this.swipeXDistance = e.changedTouches[0].pageX - this.touchStartX;
+            this.swipeXspeed = this.swipeXDistance / tT;
+            var absSwipeDistance = Math.abs(this.swipeXDistance);
+            var absSwipeSpeed = Math.abs(this.swipeXspeed);
+            if (tT <= this.maxSwipeTime) {
+                if (absSwipeSpeed > this.minSwipeSpeed && absSwipeSpeed < this.maxSwipeSpeed && absSwipeDistance > this.minSwipeXDistance) {
+                    console.log("me swiped", this.swipeXDistance);
+                    var sign = Mathbase.Sign(this.swipeXDistance);
+                    if (sign > 0) {
+                        this.dispatchCustomEvent("swiperight");
+                    } else {
+                        this.dispatchCustomEvent("swipeleft");
+                    }
+                }
+            }
             this.dragging = false;
             this.touchDate = null;
         };
@@ -10233,7 +10261,8 @@ TWEEN.Interpolation = {
         };
         p.mousewheelHandler = function(e) {
             e.preventDefault();
-            this.speed = e.wheelDelta * this.speedDamper;
+            this.speed = e.wheelDeltaY * this.speedDamper;
+            this.swipespeed = e.wheelDeltaX * this.swipespeedDamper;
         };
         p.onArrowHandler = function(event) {
             if (event.keyCode == 38) {
@@ -10746,8 +10775,8 @@ TWEEN.Interpolation = {
         };
         p.setup = function(view) {
             this.view = view;
-            this.tp = new Trackpad(this.view);
-            this.tp.setup();
+            this.trackpad = new Trackpad(this.view);
+            this.trackpad.setup();
         };
         p.start = function() {
             this.isStop = false;
@@ -10761,7 +10790,7 @@ TWEEN.Interpolation = {
         p.update = function() {
             if (this.isDebug) this.scrollDisplay.innerHTML = Math.round(this.distance) + "px";
             var dist = this.distance;
-            var speed = MathBase.Clamp(this.tp.speed, this.minSpeed, this.maxSpeed);
+            var speed = MathBase.Clamp(this.trackpad.speed, this.minSpeed, this.maxSpeed);
             var scDamp = this.scrollSpeedDamper;
             var sMax = this.scrollMax;
             if (!this.isStop) {
@@ -10772,7 +10801,7 @@ TWEEN.Interpolation = {
                     dist = sMax;
                 }
                 this.distance = dist;
-                this.tp.update();
+                this.trackpad.update();
             }
         };
     }
@@ -11323,7 +11352,6 @@ TWEEN.Interpolation = {
             this.container.beginFill(this.color);
             this.container.drawRect(this.cPos.x, this.cPos.y, this.width, this.height);
             this.container.endFill();
-            console.log("lala");
         };
         ns.ElRect = ElRect;
         var p = ElRect.prototype = new AbElement();
@@ -12465,7 +12493,7 @@ TWEEN.Interpolation = {
             this.numDrop = numDrop || 200;
             this.rainArr = [];
             this.speed = 24;
-            this.dropSize = 1.5;
+            this.dropSize = 2.2;
             this.windSpeed = 5;
             this.topMargin = -580;
             this.bottomMargin = 768;
@@ -13366,7 +13394,7 @@ TWEEN.Interpolation = {
             this.clouds.addSprite("storm_clouds_04.png", 0, 309);
             this.clouds.addSprite("storm_clouds_05.png", 618, 309);
             this.clouds.addSprite("storm_clouds_06.png", 1239, 309);
-            this.rainer = new ElRain(0, 3400, 500, 400, 0, 200);
+            this.rainer = new ElRain(0, 3400, 500, 400, 0, 120);
             this.thundercloud = this.clouds.addSprite("storm-cloud-thunder.png", tT.thunderCloudX0, 160);
             this.clouds.addElement(this.rainer.container);
             this.drillcloud = this.clouds.addSprite("storm_clouds-sign.png", tT.drillCloudX0, 100);
@@ -14019,7 +14047,7 @@ TWEEN.Interpolation = {
             this.helicopter = new ElHelicopter(0, 4e3, -400, 0);
             this.fpso = new ElFpso(0, 4e3, 2770, 340, 0);
             this.productionrig = new ElProductionRig(0, 4e3, 1324, -40, 0);
-            this.submarine = new ElSubmarine(0, 3e3, 5080, 1200, 0);
+            this.submarine = new ElSubmarine(0, 3e3, 6200, 1200, 0);
             this.cross1 = new ElSprite("underwater-cross-blue.png", 4800, 1630, 0, 0, 0);
             this.cross2 = new ElSprite("underwater-cross-blue.png", 5300, 1630, 0, 0, 0);
             this.cross3 = new ElSprite("underwater-cross-blue.png", 5900, 1640, 0, 0, 0);
@@ -14092,8 +14120,8 @@ TWEEN.Interpolation = {
             this.tweenlandend = new TweenEach({
                 x: -7092
             }).to({
-                x: -8116
-            }, 601).onUpdate(tweenLandEndBound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime + 750).start();
+                x: -8122
+            }, 605).onUpdate(tweenLandEndBound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime + 750).start();
             var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
             this.tween1 = new TweenEach({
                 x: tT.helicopterFromXPos,

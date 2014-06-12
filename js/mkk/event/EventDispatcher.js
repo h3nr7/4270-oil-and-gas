@@ -10,6 +10,14 @@
 
 		ns.EventDispatcher = EventDispatcher;
 
+		// Check if this browser supports Custom Events
+		var supportsCustomEvents = true;
+		try {
+			var newTestCustomEvent = document.createEvent("CustomEvent");
+		} catch(e){
+			supportsCustomEvents = false;
+		}
+
 		var p = EventDispatcher.prototype;
 
 		p.addEventListener = function(aEventType, aFunction) {

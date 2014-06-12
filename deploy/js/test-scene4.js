@@ -59,10 +59,10 @@
 
 			//setup scenes
 			this.scene4 = new Scene4();
-			this.scene4.setup(0, 8000/*695*/, 0, 0);
+			this.scene4.setup(0, 6860/*695*/, 0, 0);
 
 			this.scene6 = new Scene6();
-			this.scene6.setup(6250-236, 10000, 0, 0);
+			this.scene6.setup(6014/*6250-236*/, 10000, 0, 0);
 
 			this.loadFonts();
 		}
@@ -75,6 +75,13 @@
 			this.scene6.init(this.stage);
 			this.scene4.init(this.stage);
 			
+			//scroller swipe detector
+			this.swipeLeftFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeLeftFunc);
+			this.swipeRightFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeRightFunc);
+
+			this.scroller.trackpad.addEventListener('swipeleft', this.swipeLeftFuncBound);
+			this.scroller.trackpad.addEventListener('swiperight', this.swipeRightFuncBound);
+
 		}
 
 

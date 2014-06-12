@@ -14,7 +14,7 @@
 			this.rainArr = [];
 
 			this.speed = 24;
-			this.dropSize = 1.5;
+			this.dropSize = 2.2;
 			this.windSpeed = 5;
 			this.topMargin = -580;
 			this.bottomMargin = 768;

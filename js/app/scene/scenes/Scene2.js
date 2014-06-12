@@ -189,7 +189,7 @@
 			this.clouds.addSprite('storm_clouds_06.png', 1239,309);
 
 			//add rain
-			this.rainer = new ElRain(0, 3400, 500, 400, 0, 200);
+			this.rainer = new ElRain(0, 3400, 500, 400, 0, 120);
 
 			//paralax clouds
 			this.thundercloud = this.clouds.addSprite('storm-cloud-thunder.png', tT.thunderCloudX0, 160);

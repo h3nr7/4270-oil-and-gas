@@ -55,8 +55,8 @@
 
 		p.setup = function(view) {
 			this.view = view;
-			this.tp = new Trackpad(this.view);
-			this.tp.setup();
+			this.trackpad = new Trackpad(this.view);
+			this.trackpad.setup();
 		}
 
 
@@ -72,7 +72,7 @@
 			if (this.isDebug) this.scrollDisplay.innerHTML = Math.round(this.distance) + 'px';
 
 			var dist = this.distance;
-			var speed = MathBase.Clamp(this.tp.speed, this.minSpeed, this.maxSpeed);
+			var speed = MathBase.Clamp(this.trackpad.speed, this.minSpeed, this.maxSpeed);
 			var scDamp = this.scrollSpeedDamper;
 			var sMax = this.scrollMax;
 
@@ -81,7 +81,7 @@
 				if (dist<0) { dist = 0; }
 				else if (dist>=sMax) { dist = sMax; }
 				this.distance = dist;
-				this.tp.update();
+				this.trackpad.update();
 			}
 		}	
 

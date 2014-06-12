@@ -80,13 +80,13 @@
 			this.scene3 = new Scene3();
 			this.scene3.setup((4000+7200),(6800), 0, 0);
 			this.scene4 = new Scene4();
-			this.scene4.setup((4000+7200+4700)/*4700*/,6223, 0, 0);	
+			this.scene4.setup((4000+7200+4700)/*4700*/,6860, 0, 0);	
 			this.scene6 = new Scene6();
-			this.scene6.setup((4000+7200+4700+6223)/*4700*/,3000, 0, 0);	
+			this.scene6.setup((4000+7200+4700+6014)/*4700*/,3000, 0, 0);	
 			this.scene7 = new Scene7();
-			this.scene7.setup((4000+7200+4700+6223+2000)/*4700*/,2880, 0, 0);		
+			this.scene7.setup((4000+7200+4700+6014+2000)/*4700*/,2880, 0, 0);		
 			this.scene8 = new Scene8();
-			this.scene8.setup((4000+7200+4700+6223+2000+2880)/*4700*/,1000, 0, 0);			
+			this.scene8.setup((4000+7200+4700+6014+2000+2880)/*4700*/,1000, 0, 0);			
 			// this.scene7 = new Scene7();
 			// this.scene7.setup(12000,15000/*695*/, 0, 0);
 			this.loadFonts();
@@ -105,8 +105,11 @@
 			this.scene1.init(this.stage);
 			this.scene2.init(this.stage);
 			this.scene3.init(this.stage);
-			this.scene4.init(this.stage);
+
+			//scene 6 to go on top of scene 4
 			this.scene6.init(this.stage);
+			this.scene4.init(this.stage);
+			
 			this.scene7.init(this.stage);
 			this.scene8.init(this.stage);
 

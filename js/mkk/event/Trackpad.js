@@ -3,6 +3,7 @@
 	var ns = MKK.getNamespace('mkk.event');
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
 	var EventDispatcher = MKK.getNamespace('mkk.event').EventDispatcher;
+	var Mathbase = MKK.getNamespace('mkk.math').MathBase;
 
 	if (!ns.Trackpad) {
 
@@ -11,12 +12,17 @@
 			//vars
 			this.target = target;
 			this.speedDamper = 0.92;
+			this.swipespeedDamper = 0.92;
 			this.dragOffset = 0;;
 			this.dragging;
 			this.speed = 0;
 			this.touchStartX = 0;
 			this.touchStartY = 0;
 			this.touchDate = 0;
+			this.minSwipeSpeed = 2.5;
+			this.maxSwipeSpeed = 10;
+			this.maxSwipeTime = 700;
+			this.minSwipeXDistance = 150;
 		}
 
 
@@ -77,9 +83,31 @@
 
 		p.endDrag = function(e) {
 			if(this.locked) return;
+
+			var tT = Date.now() - this.touchDate;
+			this.swipeXDistance = e.changedTouches[0].pageX - this.touchStartX;
+			this.swipeXspeed = this.swipeXDistance / tT;
+			var absSwipeDistance = Math.abs(this.swipeXDistance);
+			var absSwipeSpeed = Math.abs(this.swipeXspeed);
+			//swipe detect
+			if(tT<=this.maxSwipeTime) {
+				if(absSwipeSpeed>this.minSwipeSpeed 
+					&& absSwipeSpeed<this.maxSwipeSpeed
+					&& absSwipeDistance>this.minSwipeXDistance
+				) {
+					console.log('me swiped', this.swipeXDistance);
+					var sign = Mathbase.Sign(this.swipeXDistance);
+					if(sign>0) {
+						this.dispatchCustomEvent('swiperight');
+					}
+					else {
+						this.dispatchCustomEvent('swipeleft');
+					}
+				}
+			}
+
 			this.dragging = false;
 			this.touchDate = null;
-			// console.log(this.speed);
 		}
 
 		p.updateDrag = function(e) {
@@ -103,8 +131,8 @@
 
 		p.mousewheelHandler = function(e) {
 			e.preventDefault();
-			this.speed = e.wheelDelta * this.speedDamper;
-			
+			this.speed = e.wheelDeltaY * this.speedDamper;
+			this.swipespeed = e.wheelDeltaX * this.swipespeedDamper;
 		}
 
 		p.onArrowHandler = function(event) {
