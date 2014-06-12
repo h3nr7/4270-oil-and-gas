@@ -33,7 +33,7 @@ MKK.CORE.IN = ${JSSOURCE}/mkk/core/*.js
 MKK.MATH.IN = ${JSSOURCE}/mkk/math/*.js
 MKK.PHYS.IN = ${JSSOURCE}/mkk/physics/*.js
 
-MKK.IN = ${MKK.EVENT.IN} ${MKK.CORE.IN} ${MKK.MATH.IN} ${MKK.PHYS.IN}
+MKK.IN = ${MKK.MATH.IN} ${MKK.EVENT.IN} ${MKK.CORE.IN} ${MKK.PHYS.IN}
 
 ##############################
 #APP 

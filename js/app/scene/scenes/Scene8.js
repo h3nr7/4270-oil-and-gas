@@ -73,6 +73,10 @@
 			this.txt4 = new ElText(copies.line3, tT.txt4X0, tT.txt4Y0, 0, 0.5, 0.5);
 			this.txt4.setStyle(replayStyle);
 			this.txt4.opacity(0);
+			this.txt4.container.interactive = true;
+			this.txt4.container.tap = function(e) {
+				console.log('me tapped');
+			};
 
 			this.level1.addElement(this.txt2.container);
 			this.level1.addElement(this.txt3.container);

@@ -46,7 +46,8 @@
 			// Navigator
 			// --------------------------------------------------	
 			this.navi = new Navi();
-			document.body.appendChild(this.navi.view);
+			document.body.appendChild(this.navi.topview);
+			document.body.appendChild(this.navi.sideview);
 
 			// --------------------------------------------------
 			// SCROLLER Setup
@@ -75,13 +76,25 @@
 			this.scene6.init(this.stage);
 			this.scene4.init(this.stage);
 			
-			//scroller swipe detector
+			// --------------------------
+			// scroller swipe detector
+			// --------------------------
 			this.swipeLeftFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeLeftFunc);
 			this.swipeRightFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeRightFunc);
 
 			this.scroller.trackpad.addEventListener('swipeleft', this.swipeLeftFuncBound);
 			this.scroller.trackpad.addEventListener('swiperight', this.swipeRightFuncBound);
 
+		}
+
+		p.swipeLeftFunc = function(e) {
+			console.log('swipe left man', e);
+			this.navi.hideSide();
+		}
+
+		p.swipeRightFunc = function(e) {
+			console.log('swipe right man', e);
+			this.navi.showSide();
 		}
 
 

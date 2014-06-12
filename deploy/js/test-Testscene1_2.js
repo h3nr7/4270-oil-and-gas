@@ -59,7 +59,8 @@
 			// Navigator
 			// --------------------------------------------------	
 			this.navi = new Navi();
-			document.body.appendChild(this.navi.view);
+			document.body.appendChild(this.navi.topview);
+			document.body.appendChild(this.navi.sideview);
 
 			// --------------------------------------------------
 			// SCROLLER Setup
@@ -71,8 +72,6 @@
 			if (this.isDebug) this.debug();
 
 			//setup scenes
-			// this.testEl = new TestElement();
-			// this.testEl.setup(0, 5000/*695*/, 0, 0);
 			this.scene1 = new Scene1();
 			this.scene1.setup(0, 4000/*695*/, 0, 0);
 			this.scene2 = new Scene2();
@@ -87,25 +86,15 @@
 			this.scene7.setup((4000+7200+4700+6014+2000)/*4700*/,2880, 0, 0);		
 			this.scene8 = new Scene8();
 			this.scene8.setup((4000+7200+4700+6014+2000+2880)/*4700*/,1000, 0, 0);			
-			// this.scene7 = new Scene7();
-			// this.scene7.setup(12000,15000/*695*/, 0, 0);
+
 			this.loadFonts();
 		}
 
 		p.init = function() {
-			console.log('init test-scene 1');
-
-			// this.stage.addChild(this.scene1.container);
-			// this.stage.addChild(this.scene2.container);
-			// this.stage.addChild(this.scene3.container);
-			// this.stage.addChild(this.scene4.container);
-
-			// this.stage.addChild(this.scene7.container);
 
 			this.scene1.init(this.stage);
 			this.scene2.init(this.stage);
 			this.scene3.init(this.stage);
-
 			//scene 6 to go on top of scene 4
 			this.scene6.init(this.stage);
 			this.scene4.init(this.stage);
@@ -113,8 +102,28 @@
 			this.scene7.init(this.stage);
 			this.scene8.init(this.stage);
 
-			//fadeout loader
+			// --------------------------			
+			// fadeout loader
+			// --------------------------
 			this.loader.fadeout();
+
+
+			// --------------------------
+			// scroller swipe detector
+			// --------------------------
+			this.swipeLeftFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeLeftFunc);
+			this.swipeRightFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeRightFunc);
+
+			this.scroller.trackpad.addEventListener('swipeleft', this.swipeLeftFuncBound);
+			this.scroller.trackpad.addEventListener('swiperight', this.swipeRightFuncBound);
+		}
+
+		p.swipeLeftFunc = function(e) {
+
+		}
+
+		p.swipeRightFunc = function(e) {
+
 		}
 
 
@@ -219,7 +228,7 @@
 
 			if (!this.loaded) return;
 
-			this.stats.begin();
+			if (this.stats) { this.stats.begin() };
 			//render code starts here
 			this.update();
 			this.animate();
@@ -227,7 +236,7 @@
 			this.renderer.render(this.stage);
 
 			//render code ends here
-			this.stats.end();
+			if (this.stats) { this.stats.end() };
 		}
 
 

@@ -10019,6 +10019,72 @@ TWEEN.Interpolation = {
 })(window);
 
 (function() {
+    var ns = MKK.getNamespace("mkk.math");
+    if (!ns.Easing) {
+        var Easing = function Easing() {};
+        ns.Easing = Easing;
+        Easing._tweens = [];
+        Easing.time = null;
+        Easing.add = function(tween) {
+            Easing._tweens.push(tween);
+        };
+        Easing.remove = function(tween) {
+            var i = _tweens.indexOf(tween);
+            if (i !== -1) {
+                _tweens.splice(i, 1);
+            }
+        };
+        Easing.update = function(time) {
+            Easing.time = time !== undefined ? time : typeof window !== "undefined" && window.performance !== undefined && window.performance.now !== undefined ? window.performance.now() : Date.now();
+            while (i < _tweens.length) {
+                if (_tweens[i].update(time)) {
+                    i++;
+                } else {
+                    _tweens.splice(i, 1);
+                }
+            }
+        };
+        Easing.linear = function(t, obj, callback) {
+            return t;
+        };
+        Easing.inQuad = function(t, obj, callback) {};
+        Easing.outQuad = function() {};
+        Easing.inCubic = function() {};
+        Easing.outCubic = function() {};
+        Easing.Interpolation = {};
+        Easing.Interpolation.linear = function() {};
+        Easing.Interpolation.bezier = function() {};
+        Easing.Interpolation.catMullRom = function() {};
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("mkk.math");
+    if (!ns.MathBase) {
+        var MathBase = function MathBase() {};
+        ns.MathBase = MathBase;
+        MathBase.PI = 3.16;
+        MathBase.PI2 = 6.2832;
+        MathBase.Sign = function(num) {
+            return num ? num < 0 ? -1 : 1 : 0;
+        };
+        MathBase.Clamp = function(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        };
+        MathBase.Clamp01 = function(value) {
+            return Math.max(0, Math.min(1, value));
+        };
+        MathBase.Fit = function(value, inMin, inMax, outMin, outMax) {
+            value = Math.max(inMin, Math.min(inMax, value));
+            return (value - inMin) / (inMax - inMin) * (outMax - outMin) + outMin;
+        };
+        MathBase.Fit01 = function(value, min, max) {
+            return value * (max - min) + min;
+        };
+    }
+})();
+
+(function() {
     var ns = MKK.getNamespace("mkk.event");
     if (!ns.EventDispatcher) {
         var EventDispatcher = function EventDispatcher() {
@@ -10311,72 +10377,6 @@ TWEEN.Interpolation = {
 })();
 
 (function() {
-    var ns = MKK.getNamespace("mkk.math");
-    if (!ns.Easing) {
-        var Easing = function Easing() {};
-        ns.Easing = Easing;
-        Easing._tweens = [];
-        Easing.time = null;
-        Easing.add = function(tween) {
-            Easing._tweens.push(tween);
-        };
-        Easing.remove = function(tween) {
-            var i = _tweens.indexOf(tween);
-            if (i !== -1) {
-                _tweens.splice(i, 1);
-            }
-        };
-        Easing.update = function(time) {
-            Easing.time = time !== undefined ? time : typeof window !== "undefined" && window.performance !== undefined && window.performance.now !== undefined ? window.performance.now() : Date.now();
-            while (i < _tweens.length) {
-                if (_tweens[i].update(time)) {
-                    i++;
-                } else {
-                    _tweens.splice(i, 1);
-                }
-            }
-        };
-        Easing.linear = function(t, obj, callback) {
-            return t;
-        };
-        Easing.inQuad = function(t, obj, callback) {};
-        Easing.outQuad = function() {};
-        Easing.inCubic = function() {};
-        Easing.outCubic = function() {};
-        Easing.Interpolation = {};
-        Easing.Interpolation.linear = function() {};
-        Easing.Interpolation.bezier = function() {};
-        Easing.Interpolation.catMullRom = function() {};
-    }
-})();
-
-(function() {
-    var ns = MKK.getNamespace("mkk.math");
-    if (!ns.MathBase) {
-        var MathBase = function MathBase() {};
-        ns.MathBase = MathBase;
-        MathBase.PI = 3.16;
-        MathBase.PI2 = 6.2832;
-        MathBase.Sign = function(num) {
-            return num ? num < 0 ? -1 : 1 : 0;
-        };
-        MathBase.Clamp = function(value, min, max) {
-            return Math.max(min, Math.min(max, value));
-        };
-        MathBase.Clamp01 = function(value) {
-            return Math.max(0, Math.min(1, value));
-        };
-        MathBase.Fit = function(value, inMin, inMax, outMin, outMax) {
-            value = Math.max(inMin, Math.min(inMax, value));
-            return (value - inMin) / (inMax - inMin) * (outMax - outMin) + outMin;
-        };
-        MathBase.Fit01 = function(value, min, max) {
-            return value * (max - min) + min;
-        };
-    }
-})();
-
-(function() {
     var ns = MKK.getNamespace("data");
     if (!ns.copydata) {
         ns.copydata = {
@@ -10584,14 +10584,14 @@ TWEEN.Interpolation = {
             },
             scene8: {
                 tweenTime: {
-                    _speed: 250,
+                    _speed: 150,
                     stackDelay: 100,
                     txt2X0: 512,
                     txt2Y0: 240,
                     txt3X0: 512,
                     txt3Y0: 360,
                     txt4X0: 512,
-                    txt4Y0: 540,
+                    txt4Y0: 570,
                     txt2Y1: 300,
                     txt3Y1: 380,
                     txt4Y1: 600
@@ -14685,6 +14685,10 @@ TWEEN.Interpolation = {
             this.txt4 = new ElText(copies.line3, tT.txt4X0, tT.txt4Y0, 0, .5, .5);
             this.txt4.setStyle(replayStyle);
             this.txt4.opacity(0);
+            this.txt4.container.interactive = true;
+            this.txt4.container.tap = function(e) {
+                console.log("me tapped");
+            };
             this.level1.addElement(this.txt2.container);
             this.level1.addElement(this.txt3.container);
             this.level1.addElement(this.txt4.container);

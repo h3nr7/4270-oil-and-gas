@@ -6,6 +6,9 @@
 
 		ns.scenedata = {
 
+			navi: {
+				tweenTime:{}
+			},
 			scene1:{
 
 				startFrame: 0,
@@ -92,7 +95,7 @@
 			scene8:{
 				tweenTime:{
 					//timing
-					_speed: 250,
+					_speed: 150,
 					stackDelay: 100,
 
 					//positioning
@@ -103,7 +106,7 @@
 					txt3Y0: 360,
 
 					txt4X0: 512,
-					txt4Y0: 540,
+					txt4Y0: 570,
 
 					txt2Y1: 300,
 					txt3Y1: 380,
