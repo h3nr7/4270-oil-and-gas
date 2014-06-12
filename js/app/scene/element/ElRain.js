@@ -47,8 +47,6 @@
 			this.startFrame = sFrame;
 			this.duration = duration;	
 
-			PIXI.SpriteBatch()
-
 			this.setupRain();
 
 		}
@@ -67,12 +65,10 @@
 
 			for(var i=0; i<rainLen; i++) {
 				var xX = Math.random() * rMargin;
-				var yY = tMargin*( .5 + Math.random() *.5);
-
+				var yY = tMargin*Math.random();
 				var size = dSize * (1-sDeviation) + Math.random() * dSize * sDeviation;
 				var velo = .5*( this.speed + Math.random());
 				var tmp = this.addSprite(tname, xX, yY, 0.5, 0.5);
-				tmp.rotate(0.06);
 				tmp.scale(size);
 				this.rainArr[i] = { ox: xX, oy: yY, sprite: tmp, speed: velo, starttime: tDeviation*i };			
 
@@ -105,10 +101,10 @@
 			var sDeviation = this.sizeDeviation;
 			var wSpeed = this.windSpeed;
 			var bTime = this.beginTime;
+			var tmpTime = Date.now();
 
 			for(var i=0; i<rainLen; i++) {
 
-				var tmpTime = Date.now();
 				var stTime =  this.rainArr[i].starttime ;
 				if( tmpTime < bTime+stTime ) return;
 				var tmpSprite = this.rainArr[i].sprite;

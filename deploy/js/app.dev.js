@@ -12485,7 +12485,6 @@ TWEEN.Interpolation = {
             this.container.position = this.oPos.clone();
             this.startFrame = sFrame;
             this.duration = duration;
-            PIXI.SpriteBatch();
             this.setupRain();
         };
         p.setupRain = function() {
@@ -12503,7 +12502,6 @@ TWEEN.Interpolation = {
                 var size = dSize * (1 - sDeviation) + Math.random() * dSize * sDeviation;
                 var velo = .5 * (this.speed + Math.random());
                 var tmp = this.addSprite(tname, xX, yY, .5, .5);
-                tmp.rotate(.06);
                 tmp.scale(size);
                 this.rainArr[i] = {
                     ox: xX,
@@ -12705,7 +12703,7 @@ TWEEN.Interpolation = {
         var ElSeaWave = function ElSeaWave(name, x, y, z, aX, aY, texWidth) {
             var assetName = "sea_wave.png";
             var texHeight = 30;
-            var offset = 6;
+            var offset = 7;
             this.name = name;
             this.z = z;
             this.waveOffset = offset;
@@ -12844,6 +12842,56 @@ TWEEN.Interpolation = {
         p.update = function(frame) {
             console.log("me working", this.cPos, this.offPos, this.container.y);
         };
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.scene.element");
+    var settings = MKK.getNamespace("data").settings;
+    var AbContainer = MKK.getNamespace("app.scene").AbContainer;
+    var ElSprite = MKK.getNamespace("app.scene.element").ElSprite;
+    if (!ns.ElSlope) {
+        var ElSlope = function ElSlope(sFrame, duration, x, y, z, width) {
+            this.name = name;
+            this.width = width || 2e3;
+            this.z = z;
+            this.setup(sFrame, duration, x, y);
+            this.container = new PIXI.DisplayObjectContainer();
+            this.container.position = this.cPos;
+            this.slopeWidth = 499;
+            this.slopeHeight = 288;
+            this.offsetY = 100;
+            this.extraHeight = 85;
+            this.slopeNum = Math.ceil(this.width / this.slopeWidth);
+            this.element = [];
+            this.createTexture();
+        };
+        ns.ElSlope = ElSlope;
+        var p = ElSlope.prototype = new AbContainer();
+        p.createTexture = function() {
+            var sNum = this.slopeNum;
+            var sw = this.slopeWidth;
+            var sh = this.slopeHeight;
+            for (var i = 0; i < sNum; i++) {
+                var tmp = new ElSprite("seabed-slope.png", i * sw, -(i * sh), 0, 0, 0);
+                this.element.push(tmp);
+                this.container.addChild(tmp.container);
+            }
+            this.masker = this.createMask(0, sh + this.offsetY, this.width, sNum * sh + this.extraHeight);
+            this.container.addChild(this.masker);
+            this.container.mask = this.masker;
+        };
+        p.createMask = function(x, y, w, h) {
+            var casing = new PIXI.Graphics();
+            casing.clear();
+            casing.beginFill(13421772, 1);
+            casing.drawRect(0, 0, w, -h);
+            casing.endFill();
+            casing.position.x = x;
+            casing.position.y = y;
+            return casing;
+        };
+        p.update = function() {};
     }
 })();
 
@@ -13905,6 +13953,7 @@ TWEEN.Interpolation = {
     var ElSeaBG = ns.element.ElSeaBG;
     var ElSeaWave = ns.element.ElSeaWave;
     var ElSeaBed = ns.element.ElSeaBed;
+    var ElSlope = ns.element.ElSlope;
     var ElSeaFloor = ns.element.ElSeaFloor;
     var ElSeaFloor = ns.element.ElSeaFloor;
     var ElProductionRig = ns.element.ElProductionRig;
@@ -13959,14 +14008,11 @@ TWEEN.Interpolation = {
             this.txtlevel.setup(0, 0, 0);
             this.addLevel(this.txtlevel);
             this.seabg = new ElSeaBG("seabg", 1024, 708, 0, 0, 0, 4096, 70);
-            this.seawave = new ElSeaWave("seawave", 0, 708, 0, 0, 0, 9144);
-            this.seabg2 = new ElSeaBG("seabg", 4596, 708, 0, 0, 0, 4096, 1524);
+            this.seawave = new ElSeaWave("seawave", 0, 708, 0, 0, 0, 8041);
+            this.seabg2 = new ElSeaBG("seabg", 4596, 708, 0, 0, 0, 3496, 1524);
             this.seabed = new ElSeaBed(0, 0, 4690, 1800, 0, 4096);
             this.seafloor = new ElSeaFloor("seafloor", 4556, 1800, 0, 0, 0, 3072, 80);
-            this.seaslope = new ElSprite("seabed-slope.png", 6144, 1506, 0, 0, 0);
-            this.seaslope2 = new ElSprite("seabed-slope.png", 6644, 1217, 0, 0, 0);
-            this.seaslope3 = new ElSprite("seabed-slope.png", 7144, 928, 0, 0, 0);
-            this.seaslope4 = new ElSprite("seabed-slope.png", 7644, 639, 0, 0, 0);
+            this.seaslope = new ElSlope(0, 6e3, 6144, 1510, 0, 1974);
             this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 370, 0, 0, 0);
             this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 353, 0, 0, 0);
             this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 370, 0, 0, 0);
@@ -13993,9 +14039,6 @@ TWEEN.Interpolation = {
             this.frontlevel.addElement(this.cross3.container);
             this.frontlevel.addElement(this.seafloor.container);
             this.frontlevel.addElement(this.seaslope.container);
-            this.frontlevel.addElement(this.seaslope2.container);
-            this.frontlevel.addElement(this.seaslope3.container);
-            this.frontlevel.addElement(this.seaslope4.container);
             this.frontlevel.addElement(this.fpsosign.container);
             this.frontlevel.addElement(this.fpsomask);
             this.frontlevel.addElement(this.fpsomover.container);
@@ -14009,7 +14052,7 @@ TWEEN.Interpolation = {
             this.txtlevel.addElement(this.desc2.container);
             this.desc3 = new ElDescription(copies.desc3.title, copies.desc3.txt, "", copies.desc3.color, this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
             this.txtlevel.addElement(this.desc3.container);
-            this.desc4 = new ElDescription(copies.desc4.title, copies.desc4.txt, "", copies.desc4.color, this.startFrame + tT.txtTime4, 800, 100, 300, 0);
+            this.desc4 = new ElDescription(copies.desc4.title, copies.desc4.txt, "", copies.desc4.color, this.startFrame + tT.txtTime4, 700, 50, 300, 0);
             this.txtlevel.addElement(this.desc4.container);
             var tweenInBound = ListenerFunctions.createListenerFunction(this, this.tweenInFunc);
             this.tweenIn = new TweenEach({
@@ -14042,9 +14085,15 @@ TWEEN.Interpolation = {
                 x: -4700,
                 y: -1100
             }).to({
-                x: [ -6500, -6500, -7400 ],
+                x: [ -6500, -6500, -7092 ],
                 y: [ -1100, -1100, 50 ]
             }, 750).interpolation(TWEEN.Interpolation.Bezier).onUpdate(tweenLandBound).easing(TWEEN.Easing.Cubic.InOut).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime).start();
+            var tweenLandEndBound = ListenerFunctions.createListenerFunction(this, this.tweenLandEndFunc);
+            this.tweenlandend = new TweenEach({
+                x: -7092
+            }).to({
+                x: -8116
+            }, 601).onUpdate(tweenLandEndBound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime + 750).start();
             var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
             this.tween1 = new TweenEach({
                 x: tT.helicopterFromXPos,
@@ -14103,6 +14152,10 @@ TWEEN.Interpolation = {
         p.tweenLandFunc = function(e) {
             var cObj = this.tweenland.tweenVars();
             this.frontlevel.position(cObj.x, cObj.y);
+        };
+        p.tweenLandEndFunc = function(e) {
+            var cObj = this.tweenlandend.tweenVars();
+            this.frontlevel.xPos(cObj.x);
         };
         p.tweenFunc2 = function(e) {
             this.productionrig.parallaxing(e);

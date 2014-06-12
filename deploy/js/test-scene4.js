@@ -7,6 +7,7 @@
 	var Navi = MKK.getNamespace('app.scene').Navi;
 	var ns = MKK.getNamespace('app');
 	var Scene4 = MKK.getNamespace('app.scene').Scene4;
+	var Scene6 = MKK.getNamespace('app.scene').Scene6;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
@@ -58,7 +59,10 @@
 
 			//setup scenes
 			this.scene4 = new Scene4();
-			this.scene4.setup(0, 7000/*695*/, 0, 0);
+			this.scene4.setup(0, 8000/*695*/, 0, 0);
+
+			this.scene6 = new Scene6();
+			this.scene6.setup(6250-236, 10000, 0, 0);
 
 			this.loadFonts();
 		}
@@ -68,7 +72,9 @@
 
 			this.stage.addChild(this.scene4.container);
 
+			this.scene6.init(this.stage);
 			this.scene4.init(this.stage);
+			
 		}
 
 
@@ -143,6 +149,7 @@
 			TWEEN.update();
 			
 			this.scene4.update(frame);
+			this.scene6.update(frame);
 
 			this.scroller.update();
 		}

@@ -19,6 +19,7 @@
 	var ElSeaBG = ns.element.ElSeaBG;
 	var ElSeaWave = ns.element.ElSeaWave;
 	var ElSeaBed = ns.element.ElSeaBed;
+	var ElSlope = ns.element.ElSlope;
 	var ElSeaFloor = ns.element.ElSeaFloor;
 	var ElSeaFloor = ns.element.ElSeaFloor;
 	var ElProductionRig = ns.element.ElProductionRig;
@@ -108,18 +109,15 @@
 			// create sea
 			// ----------------------------
 			this.seabg = new ElSeaBG('seabg', 1024,708, 0, 0,0,4096, 70);
-			this.seawave = new ElSeaWave('seawave', 0, 708, 0, 0,0, 9144);
+			this.seawave = new ElSeaWave('seawave', 0, 708, 0, 0,0, 8041);
 
-			this.seabg2 = new ElSeaBG('seabg', 4596,708, 0, 0,0,4096, 1524);
+			this.seabg2 = new ElSeaBG('seabg', 4596,708, 0, 0,0,3496, 1524);
 			this.seabed = new ElSeaBed(0,0, 4690, 1800, 0, 4096);
 			this.seafloor = new ElSeaFloor('seafloor', 4556, 1800, 0, 0, 0, 3072, 80);
 
 			//289, 500
-			this.seaslope = new ElSprite("seabed-slope.png", 6144, 1506, 0, 0, 0);
-			this.seaslope2 = new ElSprite("seabed-slope.png", 6644, 1217, 0, 0, 0);
-			this.seaslope3 = new ElSprite("seabed-slope.png", 7144, 928, 0, 0, 0);
-			this.seaslope4 = new ElSprite("seabed-slope.png", 7644, 639, 0, 0, 0);
-			// this.seaslope3 = new ElSprite("seabed-slope.png", 8180, 1566, 0, 0, 0);
+			this.seaslope = new ElSlope(0,6000, 6144, 1510, 0, 1974);
+
 			// ----------------------------
 			// create iceberg
 			// ----------------------------
@@ -185,9 +183,9 @@
 			this.frontlevel.addElement(this.seafloor.container);
 
 			this.frontlevel.addElement(this.seaslope.container);
-			this.frontlevel.addElement(this.seaslope2.container);
-			this.frontlevel.addElement(this.seaslope3.container);
-			this.frontlevel.addElement(this.seaslope4.container);
+			// this.frontlevel.addElement(this.seaslope2.container);
+			// this.frontlevel.addElement(this.seaslope3.container);
+			// this.frontlevel.addElement(this.seaslope4.container);
 
 			this.frontlevel.addElement(this.fpsosign.container);
 			this.frontlevel.addElement(this.fpsomask);
@@ -206,7 +204,7 @@
 			this.txtlevel.addElement(this.desc2.container);
 			this.desc3 = new ElDescription (copies.desc3.title, copies.desc3.txt, '', copies.desc3.color, this.startFrame + tT.txtTime3, 1500, 100, 50, 0);
 			this.txtlevel.addElement(this.desc3.container);
-			this.desc4 = new ElDescription (copies.desc4.title, copies.desc4.txt, '', copies.desc4.color, this.startFrame + tT.txtTime4, 800, 100, 300, 0);
+			this.desc4 = new ElDescription (copies.desc4.title, copies.desc4.txt, '', copies.desc4.color, this.startFrame + tT.txtTime4, 700, 50, 300, 0);
 			this.txtlevel.addElement(this.desc4.container);
 			// ------------------------------------------------
 			// Tween
@@ -243,11 +241,17 @@
 
 			var tweenLandBound = ListenerFunctions.createListenerFunction(this, this.tweenLandFunc);
 			this.tweenland = new TweenEach({x:-4700, y: -1100})
-							.to({x:[-6500, -6500, -7400], y:[-1100, -1100, 50] }, 750)
+							.to({x:[-6500, -6500, -7092], y:[-1100, -1100, 50] }, 750)
 							.interpolation( TWEEN.Interpolation.Bezier)
 							.onUpdate(tweenLandBound)
 							.easing(TWEEN.Easing.Cubic.InOut)
 							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime).start();
+
+			var tweenLandEndBound = ListenerFunctions.createListenerFunction(this, this.tweenLandEndFunc);
+			this.tweenlandend = new TweenEach({x: -7092})
+							.to({x: -8116}, 601)
+							.onUpdate(tweenLandEndBound)
+							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime + 750).start();
 
 			//move into scene, left
 			var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
@@ -332,6 +336,11 @@
 			var cObj = this.tweenland.tweenVars();
 			this.frontlevel.position(cObj.x, cObj.y);
 			// this.midlevel.position(cObj.x*0.9, cObj.y);
+		}
+
+		p.tweenLandEndFunc = function(e) {
+			var cObj = this.tweenlandend.tweenVars();
+			this.frontlevel.xPos(cObj.x);
 		}
 
 		p.tweenFunc2 = function(e) {
