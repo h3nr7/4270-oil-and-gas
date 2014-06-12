@@ -7,6 +7,7 @@
 	var Navi = MKK.getNamespace('app.scene').Navi;
 	var ns = MKK.getNamespace('app');
 	var Scene2 = MKK.getNamespace('app.scene').Scene2;
+	var Loader = MKK.getNamespace('app.loader').Loader;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
@@ -43,6 +44,12 @@
 
 
 			// --------------------------------------------------
+			// Loader
+			// --------------------------------------------------	
+			this.loader = new Loader();
+			document.body.appendChild(this.loader.view);
+
+			// --------------------------------------------------
 			// Navigator
 			// --------------------------------------------------	
 			this.navi = new Navi();
@@ -70,6 +77,9 @@
 			this.stage.addChild(this.scene2.container);
 
 			this.scene2.init(this.stage);
+
+			//fadeout loader
+			this.loader.fadeout();
 		}
 
 
@@ -79,7 +89,7 @@
             var fontActiveBound = ListenerFunctions.createListenerFunction(this, this.fontActive);
         	WebFont.load({
 	            custom: {
-	                families: ['EMPrintW01-light', 'EMPrintW01-regular', 'EMPrintW01-semibold'],
+	                families: ['EMPrintW01-regular', 'EMPrintW01-semibold'],
 	                urls: ['css/main.css']
 	            },
 	            loading: fontLoadingBound,

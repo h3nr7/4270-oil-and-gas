@@ -51,7 +51,8 @@ APPSCENE.IN = ${APPSCENE.PATH}/AbElement.js ${APPSCENE.PATH}/AbSprite.js ${APPSC
 APPELEMENTBASE.IN = ${JSSOURCE}/app/scene/element/base/*.js
 APPELEMENT.IN = ${JSSOURCE}/app/scene/element/*js
 
-#APP Navigation, Levels & Scenes
+#APP Loader, Navigation, Levels & Scenes
+APPLOADER.IN = ${JSSOURCE}/app/loader/*.js
 APPNAVI.IN = ${JSSOURCE}/app/scene/navi/*.js
 APPNLEVEL.IN = ${JSSOURCE}/app/scene/level/*.js
 APPNSCENEALL.IN = ${JSSOURCE}/app/scene/scenes/*.js
@@ -62,7 +63,7 @@ APPTESTING.PATH = ${JSSOURCE}/app/scene/scenes/testing
 APPTESTING.IN = ${APPTESTING.PATH}/*.js
 
 #APP TO be output
-MAINJS.IN = ${APPEVENT.IN} ${APPANIM.IN} ${APPSCENE.IN} ${APPELEMENTBASE.IN} ${APPELEMENT.IN} ${APPNAVI.IN} ${APPNLEVEL.IN} ${APPNSCENEALL.IN} ${JSSOURCE}/app.js
+MAINJS.IN = ${APPEVENT.IN} ${APPANIM.IN} ${APPSCENE.IN} ${APPELEMENTBASE.IN} ${APPELEMENT.IN} ${APPLOADER.IN} ${APPNAVI.IN} ${APPNLEVEL.IN} ${APPNSCENEALL.IN} ${JSSOURCE}/app.js
 
 ##############################
 #DATA

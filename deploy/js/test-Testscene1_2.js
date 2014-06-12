@@ -14,6 +14,7 @@
 	var Scene7 = MKK.getNamespace('app.scene').Scene7;
 	var Scene8 = MKK.getNamespace('app.scene').Scene8;
 	var Scroller = MKK.getNamespace('app.event').Scroller;
+	var Loader = MKK.getNamespace('app.loader').Loader;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 
 	if(!ns.app) {
@@ -48,6 +49,11 @@
 			// add the renderer view element to the DOM
 			document.body.appendChild(this.renderer.view);
 
+			// --------------------------------------------------
+			// Loader
+			// --------------------------------------------------	
+			this.loader = new Loader();
+			document.body.appendChild(this.loader.view);
 
 			// --------------------------------------------------
 			// Navigator
@@ -103,7 +109,9 @@
 			this.scene6.init(this.stage);
 			this.scene7.init(this.stage);
 			this.scene8.init(this.stage);
-			// this.scene7.init(this.stage);
+
+			//fadeout loader
+			this.loader.fadeout();
 		}
 
 
@@ -125,9 +133,10 @@
     //     	});
 
 			//dummy font loader
+			var that = this;
 			this.tweener = new TWEEN.Tween({rotation:0})
 								.to({ rotation: 1 }, 3000)
-								.onUpdate(function(e){ console.log('Load Progress: ' + e*100 + '%') })
+								.onUpdate(function(e){ that.loader.waveYPos(e); })
 								.onComplete(fontActiveBound).start();
         }
 

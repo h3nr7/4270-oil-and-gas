@@ -10222,7 +10222,6 @@ TWEEN.Interpolation = {
             if (this.locked) return;
             this.dragging = false;
             this.touchDate = null;
-            console.log(this.speed);
         };
         p.updateDrag = function(e) {
             if (this.locked || !this.touchDate) return;
@@ -10231,7 +10230,6 @@ TWEEN.Interpolation = {
             var t = Date.now() - this.touchDate;
             offset.y = this.touchStartY - e.touches[0].pageY;
             this.speed = Math.abs(offset.y) > 0 ? offset.y / (t / 200) : 0;
-            console.log(this.touchStartY, e.touches[0].pageY, t, this.touchDate, this.speed);
         };
         p.mousewheelHandler = function(e) {
             e.preventDefault();
@@ -10330,6 +10328,9 @@ TWEEN.Interpolation = {
         ns.MathBase = MathBase;
         MathBase.PI = 3.16;
         MathBase.PI2 = 6.2832;
+        MathBase.Sign = function(num) {
+            return num ? num < 0 ? -1 : 1 : 0;
+        };
         MathBase.Clamp = function(value, min, max) {
             return Math.max(min, Math.min(max, value));
         };
@@ -10708,15 +10709,17 @@ TWEEN.Interpolation = {
     var EventDispatcher = MKK.getNamespace("mkk.event").EventDispatcher;
     var ns = MKK.getNamespace("app.event");
     var Trackpad = MKK.getNamespace("mkk.event").Trackpad;
+    var MathBase = MKK.getNamespace("mkk.math").MathBase;
     if (!ns.Scroller) {
         var Scroller = function Scroller() {
             this.gui = null;
             this.view = null;
             this.isStop = false;
             this.isDebug = false;
-            this.scrollSpeed = .03;
+            this.scrollSpeedDamper = .03;
             this.distance = 0;
-            this.speedRange = 1e4;
+            this.maxSpeed = 200;
+            this.minSpeed = -200;
         };
         ns.Scroller = Scroller;
         var p = Scroller.prototype = new EventDispatcher();
@@ -10725,7 +10728,7 @@ TWEEN.Interpolation = {
             this.gui = gui;
             this.isDebug = true;
             this.f1 = this.gui.addFolder("Easing & Interpolation");
-            this.f1.add(this, "scrollSpeed", .01, .2);
+            this.f1.add(this, "scrollSpeedDamper", .01, .2);
             this.scrollDisplay = document.createElement("div");
             this.scrollDisplay.style.background = "rgb(0, 0, 34)";
             this.scrollDisplay.style.width = "60px";
@@ -10757,13 +10760,18 @@ TWEEN.Interpolation = {
         };
         p.update = function() {
             if (this.isDebug) this.scrollDisplay.innerHTML = Math.round(this.distance) + "px";
+            var dist = this.distance;
+            var speed = MathBase.Clamp(this.tp.speed, this.minSpeed, this.maxSpeed);
+            var scDamp = this.scrollSpeedDamper;
+            var sMax = this.scrollMax;
             if (!this.isStop) {
-                this.distance += this.tp.speed * this.scrollSpeed;
-                if (this.distance < 0) {
-                    this.distance = 0;
-                } else if (this.distance >= this.scrollMax) {
-                    this.distance = this.scrollMax;
+                dist += speed * scDamp;
+                if (dist < 0) {
+                    dist = 0;
+                } else if (dist >= sMax) {
+                    dist = sMax;
                 }
+                this.distance = dist;
                 this.tp.update();
             }
         };
@@ -12864,6 +12872,119 @@ TWEEN.Interpolation = {
             this.element.push(tmp);
             this.container.addChild(tmp.container);
             return tmp;
+        };
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.loader");
+    var EventDispatcher = MKK.getNamespace("mkk.event.EventDispatcher");
+    var MathBase = MKK.getNamespace("mkk.math").MathBase;
+    if (!ns.Loader) {
+        var Loader = function Loader() {
+            this._view = null;
+            this.setup();
+        };
+        ns.Loader = Loader;
+        var p = Loader.prototype = new EventDispatcher();
+        p.setup = function() {
+            this.view = this.createView();
+        };
+        p.createView = function() {
+            var vtmp = document.createElement("div");
+            vtmp.style.position = "absolute";
+            vtmp.style.width = "1024px";
+            vtmp.style.height = "768px";
+            vtmp.style.left = "0px";
+            vtmp.style.top = "0px";
+            vtmp.style.background = "#e7e7e7";
+            this.container = this.createContainer();
+            vtmp.appendChild(this.container);
+            var txt = this.createTxt();
+            this.txt = vtmp.appendChild(txt);
+            this.waveYPos(0);
+            return vtmp;
+        };
+        p.createContainer = function() {
+            var vtmp = document.createElement("div");
+            vtmp.style.position = "absolute";
+            vtmp.style.width = "124px";
+            vtmp.style.height = "124px";
+            vtmp.style.left = "450px";
+            vtmp.style.top = "316px";
+            vtmp.style.overflow = "hidden";
+            var wave = this.createWave();
+            this.wave = vtmp.appendChild(wave);
+            var masker = this.createMask();
+            this.masker = vtmp.appendChild(masker);
+            return vtmp;
+        };
+        p.createMask = function() {
+            var vtmp = document.createElement("div");
+            vtmp.style.position = "absolute";
+            vtmp.style.width = "124px";
+            vtmp.style.height = "124px";
+            vtmp.style.left = "0px";
+            vtmp.style.top = "0px";
+            vtmp.style.overflow = "hidden";
+            vtmp.style.background = "url(images/loader-front.png) center center no-repeat";
+            return vtmp;
+        };
+        p.createWave = function() {
+            var vtmp = document.createElement("div");
+            vtmp.style.position = "absolute";
+            vtmp.style.width = "124px";
+            vtmp.style.height = "124px";
+            vtmp.style.left = "0px";
+            vtmp.style.top = "15px";
+            vtmp.style.overflow = "hidden";
+            vtmp.style.background = "url(images/loader-wave.png) left top no-repeat";
+            return vtmp;
+        };
+        p.createTxt = function() {
+            var vtmp = document.createElement("div");
+            vtmp.style.position = "absolute";
+            vtmp.style.width = "124px";
+            vtmp.style.height = "30px";
+            vtmp.style.left = "450px";
+            vtmp.style.top = "440px";
+            vtmp.style.textAlign = "center";
+            vtmp.style.fontFamily = "EMPrintW01-regular, sans-serif";
+            vtmp.style.fontSize = "13px";
+            vtmp.style.color = "#666666";
+            vtmp.innerHTML = "LOADING...";
+            return vtmp;
+        };
+        p.waveYPos = function(e) {
+            var pos = MathBase.Fit01(e, 90, 15);
+            this.wave.style.top = pos + "px";
+        };
+        p.containerYPos = function(y) {
+            this.container.style.top = y + "px";
+        };
+        p.fadeout = function() {
+            var that = this;
+            var fadeTween = function(e) {
+                that.fadeoutTweenFunc(e, this);
+            };
+            var fadeTweenComplete = function(e) {
+                that.fadeoutTweenCompleteFunc(e);
+            };
+            this.tweener = new TWEEN.Tween({
+                y: 306
+            }).to({
+                y: 276
+            }, 500).onUpdate(fadeTween).easing(TWEEN.Easing.Cubic.Out).delay(250).onComplete(fadeTweenComplete).start();
+        };
+        p.fadeoutTweenFunc = function(e, obj) {
+            this.containerYPos(obj.y);
+            this.view.style.opacity = 1 - e;
+        };
+        p.fadeoutTweenCompleteFunc = function(e, obj) {
+            console.log("fadetweener complete");
+            this.view.style.width = "0px";
+            this.view.style.height = "0px";
+            this.view.style.display = "none";
         };
     }
 })();
