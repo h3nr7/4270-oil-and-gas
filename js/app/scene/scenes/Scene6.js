@@ -84,8 +84,6 @@
 			this.addLevel(this.txtlevel);		
 
 
-			this.sign = new ElSprite('processing-sign.png', 160, 350, 0.5, 1);
-
 			this.mountain1 = new ElSprite('mountain_blue_mid.png', 100, 505, 0, 0,0);
 			this.mountain2 = new ElSprite('mountain_green_small.png', 0, 605, 0, 0,0);
 
@@ -140,7 +138,6 @@
 
 			this.frontlevel.addElement(this.seafloor.container);
 
-			this.frontlevel.addElement(this.sign.container);
 
 			this.txtlevel.addElement(this.desc.container);
 			this.txtlevel.addElement(this.desc2.container);

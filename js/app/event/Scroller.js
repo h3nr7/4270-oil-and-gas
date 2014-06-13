@@ -18,6 +18,7 @@
 			this.distance = 0;
 			this.maxSpeed = 200;
 			this.minSpeed = -200;
+			this.isAutoScrolling = false;
 			// this.speedRange = 10000;
 		}
 
@@ -68,8 +69,38 @@
 			return Math.round(this.distance*1000)/1000;
 		}
 
+		p.scrollto = function(curr, toPos, duratiom) {
+
+			this.isAutoScrolling = true;
+			var _speed = duration || 2000;
+			var that = this;
+			var updateBound = function(e) { that.scrollUpdateFunc(e,this) };
+			var completeBound = function(e) { that.scrollCompleteFunc(e, this) };
+			this.autoTween = TWEEN.Tween({y:cur})
+								.to({y:toPos}, _speed)
+								.easing(Tween.Easing.Cubic.InOut)
+								.onUpdate(updateBound)
+								.onComplete(completeBound)
+								.start();
+		}
+
+		p.scrollUpdateFunc = function(e, obj) {
+			this.isAutoScrolling =true;
+		}
+
+		p.scrollCompleteFunc = function(e, obj) {
+			this.isAutoScrolling = false;
+		}
+
+		p.stopScroll = function() {
+			if(this.autoTween) { return this.autoTween.stop(); }
+			else { return false };
+		}
+
 		p.update = function() {
 
+
+			if(this.isAutoScrolling) return;
 			if (this.isDebug) this.scrollDisplay.innerHTML = Math.round(this.distance) + 'px';
 
 			var dist = this.distance;

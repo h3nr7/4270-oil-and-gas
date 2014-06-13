@@ -10819,7 +10819,7 @@ TWEEN.Interpolation = {
             this.isStop = true;
         };
         p.getDistance = function() {
-            return Math.round(this.distance);
+            return Math.round(this.distance * 1e3) / 1e3;
         };
         p.update = function() {
             if (this.isDebug) this.scrollDisplay.innerHTML = Math.round(this.distance) + "px";
@@ -13103,54 +13103,53 @@ TWEEN.Interpolation = {
     var ns = MKK.getNamespace("app.scene");
     var EventDispatcher = MKK.getNamespace("mkk.event.EventDispatcher");
     var settings = MKK.getNamespace("data").settings;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    var MathBase = MKK.getNamespace("mkk.math").MathBase;
     var FrameTween = MKK.getNamespace("app.animation").FrameTween;
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Navi) {
         var Navi = function Navi() {
+            this.totalFrame = scenedata.totalFrame;
             this.buttonLinks = [ {
                 id: 1,
-                name: "",
-                frame: 0
+                name: scenedata.scene1.name,
+                frame: scenedata.scene1.cuepoint
             }, {
                 id: 2,
-                name: "",
-                frame: 0
+                name: scenedata.scene2.name,
+                frame: scenedata.scene2.cuepoint
             }, {
                 id: 3,
-                name: "",
-                frame: 0
+                name: scenedata.scene3.name,
+                frame: scenedata.scene3.cuepoint
             }, {
                 id: 4,
-                name: "",
-                frame: 0
+                name: scenedata.scene4.name,
+                frame: scenedata.scene4.cuepoint
             }, {
                 id: 5,
-                name: "",
-                frame: 0
+                name: scenedata.scene5.name,
+                frame: scenedata.scene5.cuepoint
             }, {
                 id: 6,
-                name: "",
-                frame: 0
+                name: scenedata.scene6.name,
+                frame: scenedata.scene6.cuepoint
             }, {
                 id: 7,
-                name: "",
-                frame: 0
-            }, {
-                id: 8,
-                name: "",
-                frame: 0
+                name: scenedata.scene8.name,
+                frame: scenedata.scene8.cuepoint
             } ];
             this.tweenTime = {
                 _speed: 250,
                 sideHideX: -100,
                 sideShowX: 50,
                 buttonDistance: 70,
-                buttonVertGap: 5
+                buttonVertGap: 3
             };
             this.maxBarHeight = (this.buttonLinks.length - 1) * this.tweenTime.buttonDistance - this.tweenTime.buttonVertGap;
             this.view = null;
             this.setup();
-            this.updateProcess(.5);
+            this.updateProcess(.96);
             this.isAnimating = false;
             this.isSideHidden = false;
         };
@@ -13183,7 +13182,7 @@ TWEEN.Interpolation = {
             vTemp.style.left = this.tweenTime.sideShowX + "px";
             vTemp.style.top = "100px";
             vTemp.style.width = "26px";
-            vTemp.style.height = "500px";
+            vTemp.style.height = this.maxBarHeight + this.tweenTime.buttonVertGap * 2 + "px";
             var redbar = this.createlines(this.maxBarHeight, settings.defaultBrandRed, false);
             var bluebar = this.createlines(this.maxBarHeight, settings.defaultBrandBlue, true);
             this.bluebar = vTemp.appendChild(bluebar);
@@ -13280,7 +13279,22 @@ TWEEN.Interpolation = {
             this.isAnimating = false;
             this.isSideHidden = false;
         };
-        p.update = function(frame) {};
+        p.update = function(frame) {
+            var tot = this.totalFrame;
+            var blLen = this.buttonLinks.length;
+            var output = 0;
+            for (var i = 0; i < blLen; i++) {
+                var bl = this.buttonLinks[i].frame;
+                var bln = tot;
+                if (i + 1 < blLen) {
+                    bln = this.buttonLinks[i + 1].frame;
+                }
+                if (frame >= bl && frame < bln) {
+                    var output = MathBase.Fit(frame, bl, bln, i * .165, (i + 1) * .165);
+                }
+            }
+            this.updateProcess(1 - output);
+        };
     }
 })();
 
@@ -14485,32 +14499,38 @@ TWEEN.Interpolation = {
             this.frontProp1 = new ElSprite("processing-front_07.png", 200, 480, 0, 0, 0);
             this.frontProp2 = new ElSprite("processing-front_02.png", 400, 365, 0, 0, 0);
             this.frontProp3 = new ElSprite("processing-front_05.png", 1100, 485, 0, 0, 0);
-            this.frontProp4 = new ElSprite("processing-front_09.png", 1500, 495, 0, 0, 0);
+            this.frontProp4 = new ElSprite("processing-front_02.png", 1700, 365, 0, 0, 0);
+            this.frontProp5 = new ElSprite("processing-front_09.png", 2150, 495, 0, 0, 0);
             this.midProp1 = new ElSprite("processing-mid.png", 500, 340, 0, 0, 0);
             this.midProp2 = new ElSprite("processing-mid2.png", 900, 405, 0, 0, 0);
             this.midProp3 = new ElSprite("processing-mid.png", 1200, 340, 0, 0, 0);
+            this.midProp4 = new ElSprite("processing-mid2.png", 1700, 405, 0, 0, 0);
             this.mid2Prop1 = new ElSprite("processing-mid3.png", 350, 580, 0, 0, 0);
             this.mid2Prop2 = new ElSprite("processing-mid3.png", 800, 620, 0, 0, 0);
             this.backProp1 = new ElSprite("processing-back.png", 700, 475, 0, 0, 0);
             this.backProp2 = new ElSprite("processing-back.png", 1100, 510, 0, 0, 0);
+            this.backProp3 = new ElSprite("processing-back.png", 1300, 515, 0, 0, 0);
             this.seafloor = new ElSeaFloor("seafloor", 0, 705, 0, 0, 0, 4096, 80);
-            this.desc = new ElDescription(copies.desc1.title, copies.desc1.txt, "", copies.desc1.color, this.startFrame, 700, 50, 100, 0);
-            this.desc2 = new ElDescription(copies.desc2.title, copies.desc2.txt, "", copies.desc2.color, this.startFrame + 500, 700, 50, 100, 0);
-            this.desc3 = new ElDescription(copies.desc3.title, copies.desc3.txt, "", copies.desc3.color, this.startFrame + 1e3, 700, 50, 100, 0);
-            this.desc4 = new ElDescription(copies.desc4.title, copies.desc4.txt, "", copies.desc4.color, this.startFrame + 1100, 700, 50, 200, 0);
+            this.desc = new ElDescription(copies.desc1.title, copies.desc1.txt, "", copies.desc1.color, this.startFrame + 700, 700, 50, 100, 0);
+            this.desc2 = new ElDescription(copies.desc2.title, copies.desc2.txt, "", copies.desc2.color, this.startFrame + 500 + 700, 700, 50, 100, 0);
+            this.desc3 = new ElDescription(copies.desc3.title, copies.desc3.txt, "", copies.desc3.color, this.startFrame + 1e3 + 700, 700, 50, 100, 0);
+            this.desc4 = new ElDescription(copies.desc4.title, copies.desc4.txt, "", copies.desc4.color, this.startFrame + 1100 + 700, 700, 50, 200, 0);
             this.backlevel.addElement(this.mountain1.container);
             this.backlevel.addElement(this.mountain2.container);
             this.backlevel.addElement(this.backProp1.container);
             this.backlevel.addElement(this.backProp2.container);
+            this.backlevel.addElement(this.backProp3.container);
             this.midlevel.addElement(this.midProp1.container);
             this.midlevel.addElement(this.midProp2.container);
             this.midlevel.addElement(this.midProp3.container);
+            this.midlevel.addElement(this.midProp4.container);
             this.mid2level.addElement(this.mid2Prop1.container);
             this.mid2level.addElement(this.mid2Prop2.container);
             this.frontlevel.addElement(this.frontProp1.container);
             this.frontlevel.addElement(this.frontProp2.container);
             this.frontlevel.addElement(this.frontProp3.container);
             this.frontlevel.addElement(this.frontProp4.container);
+            this.frontlevel.addElement(this.frontProp5.container);
             this.frontlevel.addElement(this.seafloor.container);
             this.frontlevel.addElement(this.sign.container);
             this.txtlevel.addElement(this.desc.container);

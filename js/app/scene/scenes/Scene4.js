@@ -115,8 +115,11 @@
 			this.seabed = new ElSeaBed(0,0, 4690, 1800, 0, 4096);
 			this.seafloor = new ElSeaFloor('seafloor', 4556, 1800, 0, 0, 0, 3072, 80);
 
-			//289, 500
+			// ----------------------------
+			// create slope and sign
+			// ----------------------------
 			this.seaslope = new ElSlope(0,6000, 6144, 1510, 0, 1974);
+			this.sign = new ElSprite('processing-sign.png', 8280, 350, 0.5, 1);
 
 			// ----------------------------
 			// create iceberg
@@ -183,6 +186,7 @@
 			this.frontlevel.addElement(this.seafloor.container);
 
 			this.frontlevel.addElement(this.seaslope.container);
+			this.frontlevel.addElement(this.sign.container);
 			// this.frontlevel.addElement(this.seaslope2.container);
 			// this.frontlevel.addElement(this.seaslope3.container);
 			// this.frontlevel.addElement(this.seaslope4.container);

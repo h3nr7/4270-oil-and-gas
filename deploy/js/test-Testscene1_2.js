@@ -220,9 +220,9 @@
 			this.scene6.update(frame);
 			this.scene7.update(frame);
 			this.scene8.update(frame);
-			// this.scene7.update(frame);
 
 			this.scroller.update();
+			this.navi.update(frame);
 		}
 
 		p.animate = function() {

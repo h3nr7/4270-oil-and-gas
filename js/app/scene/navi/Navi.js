@@ -7,6 +7,7 @@
 	var EventDispatcher = MKK.getNamespace('mkk.event.EventDispatcher');
 	var settings = MKK.getNamespace('data').settings;
 	var scenedata = MKK.getNamespace('data').scenedata;
+	var MathBase = MKK.getNamespace('mkk.math').MathBase;
 
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 	var TweenEach = MKK.getNamespace('app.animation').TweenEach;
@@ -15,6 +16,7 @@
 
 		var Navi = function Navi() {
 
+			this.totalFrame = scenedata.totalFrame;
 			this.buttonLinks = [
 
 				{ id:1, name: scenedata.scene1.name, frame:scenedata.scene1.cuepoint },
@@ -26,13 +28,17 @@
 				{ id:7, name: scenedata.scene8.name, frame:scenedata.scene8.cuepoint }
 			];
 
+			this.redButs = [];
+			this.blueButs = [];
+
 			this.tweenTime = {
 
 				_speed: 250,
 				sideHideX: -100,
 				sideShowX: 50,
 				buttonDistance: 70,
-				buttonVertGap: 5,
+				buttonVertGap: 3,
+				butSize: 26
 
 			};
 
@@ -53,16 +59,14 @@
 
 		var p = Navi.prototype = new EventDispatcher();
 
+		// ----------------------------
+		// setup
+		// ----------------------------
 		p.setup = function() {
 
 
 			this.topview = this.setupTop();
 			this.sideview = this.setupSide();
-		}
-
-		p.updateProcess = function(e) {
-
-			this.redbar.style.height = this.maxBarHeight * e + 'px';
 		}
 
 		p.setupTop = function() {
@@ -98,15 +102,18 @@
 			var butLen = this.buttonLinks.length;
 			for (var i=0; i<butLen; i++) {
 				var bBut = this.createButton(i*70, i, false);
-				vTemp.appendChild(bBut);
-
+				this.blueButs.push( vTemp.appendChild(bBut) )
 				var rBut = this.createButton(i*70, i, true);
-				vTemp.appendChild(rBut);
+				this.redButs.push( vTemp.appendChild(rBut) );
 			}
 
 			return vTemp;
 		}
 
+
+		// ----------------------------
+		// create assets
+		// ----------------------------
 		p.createButton = function(y, id, isRed) {
 			var vTemp = document.createElement('div');
 			vTemp.id = id;
@@ -143,6 +150,9 @@
 			return vTemp;
 		}
 
+		// ----------------------------
+		// SHOW and HIDE the nav
+		// ----------------------------
 		p.hideSide = function() {
 
 			if(this.isAnimating || this.isSideHidden) return;
@@ -172,7 +182,6 @@
 								.onComplete( completeBound ).start();
 		}
 
-
 		p.hideUpdate = function(e, obj) {
 			this.isAnimating = true;
 			this.sideview.style.left = obj.x + 'px';
@@ -194,11 +203,38 @@
 			this.isSideHidden = false;
 		}
 
-		p.update = function(frame) {
-			// console.log(frame);
+		// ----------------------------
+		// UPDATE and ANIMATE
+		// ----------------------------
+		p.updateProcess = function(e) {
+
+			this.redbar.style.height = this.maxBarHeight * e + 'px';
 		}
 
+		p.update = function(frame) {
+			var tot = this.totalFrame;
+			var blLen = this.buttonLinks.length;
+			var output = 0;
+			for(var i=0; i<blLen; i++) {
 
+				//move and scale lines
+				var bl = this.buttonLinks[i].frame;
+				var bln = tot;
+				if( (i+1) < blLen ) { bln = this.buttonLinks[i+1].frame };
+				if(frame>=bl && frame<bln) {
+					var output = MathBase.Fit(frame, bl, bln, i*0.165, (i+1)*0.165);
+				}
+				//change buttons
+				if(frame>=bl) {
+					this.redButs[i].style.opacity = 0;
+				}
+				else {
+					this.redButs[i].style.opacity = 1;
+				}
+
+			}
+			this.updateProcess(1-output);
+		}
 
 	}
 
