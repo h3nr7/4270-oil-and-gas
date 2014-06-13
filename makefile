@@ -85,7 +85,7 @@ DEPLOY.OUT = deploy/js/app.min.js
 ##############################
 #DEPLOYMENT
 ##############################
-default: development deploy
+default: deploy
 
 development:
 	OUTPATH=deploy/assets
@@ -128,9 +128,8 @@ assets: global scene1 scene2 scene2b scene2c scene3 scene3b scene4 scene5 scene6
 development: assets
 	${UGLIFY} ${LIB.DEBUG.IN} ${LIB.IN} ${SITEMANAGER.IN} ${MKK.IN} ${DATA.IN} ${MAINJS.IN} ${APPTESTING.IN} ${FLAGS} -o ${DEVELOP.OUT}
 
-deploy: assets
-	${UGLIFY} ${LIB.IN} ${SITEMANAGER.IN} ${MKK.IN} ${DATA.IN} ${MAINJS.IN} -o ${DEPLOY.OUT}
+deploy: development
+	${UGLIFY} ${LIB.DEBUG.IN} ${LIB.IN} ${SITEMANAGER.IN} ${MKK.IN} ${DATA.IN} ${MAINJS.IN} ${APPTESTING.IN} -o ${DEPLOY.OUT}
 
-all: development deploy
 
 

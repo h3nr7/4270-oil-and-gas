@@ -69,16 +69,22 @@
 			return Math.round(this.distance*1000)/1000;
 		}
 
-		p.scrollto = function(curr, toPos, duratiom) {
+
+
+		p.scrollto = function(toPos) {
 
 			this.isAutoScrolling = true;
-			var _speed = duration || 2000;
+			var current = this.getDistance();
+			//work out safe speed 
+			var distance = Math.abs(toPos - current);
+			if(distance<1) return;
+			var _time = Math.ceil ( distance * 1.3 );
 			var that = this;
 			var updateBound = function(e) { that.scrollUpdateFunc(e,this) };
 			var completeBound = function(e) { that.scrollCompleteFunc(e, this) };
-			this.autoTween = TWEEN.Tween({y:cur})
-								.to({y:toPos}, _speed)
-								.easing(Tween.Easing.Cubic.InOut)
+			this.autoTween = new TWEEN.Tween({y:current})
+								.to({ y:toPos }, _time)
+								.easing(TWEEN.Easing.Quadratic.InOut)
 								.onUpdate(updateBound)
 								.onComplete(completeBound)
 								.start();
@@ -86,10 +92,12 @@
 
 		p.scrollUpdateFunc = function(e, obj) {
 			this.isAutoScrolling =true;
+			this.tweenDistance = obj.y;
 		}
 
 		p.scrollCompleteFunc = function(e, obj) {
 			this.isAutoScrolling = false;
+			this.tweenDistance = 0;
 		}
 
 		p.stopScroll = function() {
@@ -99,8 +107,6 @@
 
 		p.update = function() {
 
-
-			if(this.isAutoScrolling) return;
 			if (this.isDebug) this.scrollDisplay.innerHTML = Math.round(this.distance) + 'px';
 
 			var dist = this.distance;
@@ -114,6 +120,10 @@
 				else if (dist>=sMax) { dist = sMax; }
 				this.distance = dist;
 				this.trackpad.update();
+			}
+
+			if(this.isAutoScrolling) {
+				this.distance = this.tweenDistance;
 			}
 		}	
 

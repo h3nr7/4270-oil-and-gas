@@ -69,6 +69,15 @@
 			this.stage.addChild(this.scene8.container);
 
 			this.scene8.init(this.stage);
+
+
+			this.replayFuncBound = ListenerFunctions.createListenerFunction(this, this.replayFunc);
+			this.scene8.addEventListener('replay', this.replayFuncBound);
+		}
+
+		p.replayFunc = function(e) {
+			console.log('lalalala scene 8 tap');
+			this.scroller.scrollto(0);
 		}
 
 

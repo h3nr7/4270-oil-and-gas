@@ -9,6 +9,7 @@
 	var scenedata = MKK.getNamespace('data').scenedata;
 	var MathBase = MKK.getNamespace('mkk.math').MathBase;
 
+	var TouchEvent = MKK.getNamespace('mkk.event').TouchEvent;
 	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
 	var TweenEach = MKK.getNamespace('app.animation').TweenEach;
 
@@ -19,13 +20,13 @@
 			this.totalFrame = scenedata.totalFrame;
 			this.buttonLinks = [
 
-				{ id:1, name: scenedata.scene1.name, frame:scenedata.scene1.cuepoint },
-				{ id:2, name: scenedata.scene2.name, frame:scenedata.scene2.cuepoint },
-				{ id:3, name: scenedata.scene3.name, frame:scenedata.scene3.cuepoint },
-				{ id:4, name: scenedata.scene4.name, frame:scenedata.scene4.cuepoint },
-				{ id:5, name: scenedata.scene5.name, frame:scenedata.scene5.cuepoint },
-				{ id:6, name: scenedata.scene6.name, frame:scenedata.scene6.cuepoint },
-				{ id:7, name: scenedata.scene8.name, frame:scenedata.scene8.cuepoint }
+				{ id:0, name: scenedata.scene1.name, frame:scenedata.scene1.cuepoint },
+				{ id:1, name: scenedata.scene2.name, frame:scenedata.scene2.cuepoint },
+				{ id:2, name: scenedata.scene3.name, frame:scenedata.scene3.cuepoint },
+				{ id:3, name: scenedata.scene4.name, frame:scenedata.scene4.cuepoint },
+				{ id:4, name: scenedata.scene5.name, frame:scenedata.scene5.cuepoint },
+				{ id:5, name: scenedata.scene6.name, frame:scenedata.scene6.cuepoint },
+				{ id:6, name: scenedata.scene8.name, frame:scenedata.scene8.cuepoint }
 			];
 
 			this.redButs = [];
@@ -37,13 +38,13 @@
 				sideHideX: -100,
 				sideShowX: 50,
 				buttonDistance: 70,
-				buttonVertGap: 3,
+				buttonVertGap: 5,
 				butSize: 26
 
 			};
 
 			//calculate the max bar height
-			this.maxBarHeight = ( (this.buttonLinks.length-1)*this.tweenTime.buttonDistance - this.tweenTime.buttonVertGap);
+			this.maxBarHeight = ( (this.buttonLinks.length-1)*this.tweenTime.buttonDistance);
 
 			this.view = null;
 			this.setup();
@@ -99,24 +100,35 @@
 			this.bluebar = vTemp.appendChild(bluebar);
 			this.redbar = vTemp.appendChild(redbar);
 
+			var that = this;
 			var butLen = this.buttonLinks.length;
 			for (var i=0; i<butLen; i++) {
 				var bBut = this.createButton(i*70, i, false);
 				this.blueButs.push( vTemp.appendChild(bBut) )
 				var rBut = this.createButton(i*70, i, true);
 				this.redButs.push( vTemp.appendChild(rBut) );
+
+				var rbBound = function(e) { that.buttonTapFunc(e, i, this) };
+				var tT = new TouchEvent( this.redButs[i], 'tap', rbBound );
 			}
 
 			return vTemp;
 		}
 
 
+		p.buttonTapFunc = function(e, i, obj) {
+			// var dist = this.buttonLinks[i]
+			var navNum = parseInt( obj.target.id.replace('navbut', '') );
+			console.log(e, i, navNum);
+			this.dispatchCustomEvent('navitap', {distance: this.buttonLinks[navNum].frame});
+		}
+
 		// ----------------------------
 		// create assets
 		// ----------------------------
 		p.createButton = function(y, id, isRed) {
 			var vTemp = document.createElement('div');
-			vTemp.id = id;
+			vTemp.id = 'navbut'+id;
 			vTemp.style.position = 'absolute';
 			vTemp.style.left = '0px';
 			vTemp.style.top = y + 'px';
@@ -134,15 +146,17 @@
 
 		p.createlines = function(height, color, isAlignTop) {
 			var vTemp = document.createElement('div');
-			vTemp.id = 'redbar';
+
 			vTemp.style.position = 'absolute';
 			vTemp.style.left = '9px';
 			//check if it should align from top or bottom
 			if(isAlignTop) {
 				vTemp.style.top = this.tweenTime.buttonVertGap + 'px';
+				vTemp.id = 'redbar';
 			}
 			else {
 				vTemp.style.bottom = this.tweenTime.buttonVertGap + 'px';
+				vTemp.id = 'bluebar';
 			}
 			vTemp.style.background = color;
 			vTemp.style.width = '7px';

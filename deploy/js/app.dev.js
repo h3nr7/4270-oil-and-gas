@@ -10249,6 +10249,43 @@ TWEEN.Interpolation = {
     var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
     var EventDispatcher = MKK.getNamespace("mkk.event").EventDispatcher;
     var Mathbase = MKK.getNamespace("mkk.math").MathBase;
+    if (!ns.TouchEvent) {
+        var TouchEvent = function TouchEvent(target, type, callback) {
+            this.target = target;
+            this.type = type;
+            this.callback = callback;
+            switch (this.type) {
+              case "tap":
+              default:
+                this.setupTap();
+                break;
+            }
+        };
+        ns.TouchEvent = TouchEvent;
+        var p = TouchEvent.prototype = new EventDispatcher();
+        p.setupTap = function() {
+            var downEvent = "ontouchstart" in window ? "touchstart" : "mousedown";
+            var upEvent = "ontouchend" in window ? "touchend" : "mouseup";
+            var downBound = ListenerFunctions.createListenerFunction(this, this.downHandler);
+            this.target.addEventListener(downEvent, downBound);
+            var upBound = ListenerFunctions.createListenerFunction(this, this.upHandler);
+            this.target.addEventListener(upEvent, upBound);
+        };
+        p.downHandler = function(e) {
+            console.log("me down");
+        };
+        p.upHandler = function(e) {
+            console.log("me up");
+            this.callback.call(e);
+        };
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("mkk.event");
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var EventDispatcher = MKK.getNamespace("mkk.event").EventDispatcher;
+    var Mathbase = MKK.getNamespace("mkk.math").MathBase;
     if (!ns.Trackpad) {
         var Trackpad = function Trackpad(target) {
             this.target = target;
@@ -10783,6 +10820,7 @@ TWEEN.Interpolation = {
             this.distance = 0;
             this.maxSpeed = 200;
             this.minSpeed = -200;
+            this.isAutoScrolling = false;
         };
         ns.Scroller = Scroller;
         var p = Scroller.prototype = new EventDispatcher();
@@ -10821,6 +10859,40 @@ TWEEN.Interpolation = {
         p.getDistance = function() {
             return Math.round(this.distance * 1e3) / 1e3;
         };
+        p.scrollto = function(toPos) {
+            this.isAutoScrolling = true;
+            var current = this.getDistance();
+            var distance = Math.abs(toPos - current);
+            if (distance < 1) return;
+            var _time = Math.ceil(distance * 1.3);
+            var that = this;
+            var updateBound = function(e) {
+                that.scrollUpdateFunc(e, this);
+            };
+            var completeBound = function(e) {
+                that.scrollCompleteFunc(e, this);
+            };
+            this.autoTween = new TWEEN.Tween({
+                y: current
+            }).to({
+                y: toPos
+            }, _time).easing(TWEEN.Easing.Quadratic.InOut).onUpdate(updateBound).onComplete(completeBound).start();
+        };
+        p.scrollUpdateFunc = function(e, obj) {
+            this.isAutoScrolling = true;
+            this.tweenDistance = obj.y;
+        };
+        p.scrollCompleteFunc = function(e, obj) {
+            this.isAutoScrolling = false;
+            this.tweenDistance = 0;
+        };
+        p.stopScroll = function() {
+            if (this.autoTween) {
+                return this.autoTween.stop();
+            } else {
+                return false;
+            }
+        };
         p.update = function() {
             if (this.isDebug) this.scrollDisplay.innerHTML = Math.round(this.distance) + "px";
             var dist = this.distance;
@@ -10836,6 +10908,9 @@ TWEEN.Interpolation = {
                 }
                 this.distance = dist;
                 this.trackpad.update();
+            }
+            if (this.isAutoScrolling) {
+                this.distance = this.tweenDistance;
             }
         };
     }
@@ -13105,48 +13180,52 @@ TWEEN.Interpolation = {
     var settings = MKK.getNamespace("data").settings;
     var scenedata = MKK.getNamespace("data").scenedata;
     var MathBase = MKK.getNamespace("mkk.math").MathBase;
+    var TouchEvent = MKK.getNamespace("mkk.event").TouchEvent;
     var FrameTween = MKK.getNamespace("app.animation").FrameTween;
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Navi) {
         var Navi = function Navi() {
             this.totalFrame = scenedata.totalFrame;
             this.buttonLinks = [ {
-                id: 1,
+                id: 0,
                 name: scenedata.scene1.name,
                 frame: scenedata.scene1.cuepoint
             }, {
-                id: 2,
+                id: 1,
                 name: scenedata.scene2.name,
                 frame: scenedata.scene2.cuepoint
             }, {
-                id: 3,
+                id: 2,
                 name: scenedata.scene3.name,
                 frame: scenedata.scene3.cuepoint
             }, {
-                id: 4,
+                id: 3,
                 name: scenedata.scene4.name,
                 frame: scenedata.scene4.cuepoint
             }, {
-                id: 5,
+                id: 4,
                 name: scenedata.scene5.name,
                 frame: scenedata.scene5.cuepoint
             }, {
-                id: 6,
+                id: 5,
                 name: scenedata.scene6.name,
                 frame: scenedata.scene6.cuepoint
             }, {
-                id: 7,
+                id: 6,
                 name: scenedata.scene8.name,
                 frame: scenedata.scene8.cuepoint
             } ];
+            this.redButs = [];
+            this.blueButs = [];
             this.tweenTime = {
                 _speed: 250,
                 sideHideX: -100,
                 sideShowX: 50,
                 buttonDistance: 70,
-                buttonVertGap: 3
+                buttonVertGap: 5,
+                butSize: 26
             };
-            this.maxBarHeight = (this.buttonLinks.length - 1) * this.tweenTime.buttonDistance - this.tweenTime.buttonVertGap;
+            this.maxBarHeight = (this.buttonLinks.length - 1) * this.tweenTime.buttonDistance;
             this.view = null;
             this.setup();
             this.updateProcess(.96);
@@ -13158,9 +13237,6 @@ TWEEN.Interpolation = {
         p.setup = function() {
             this.topview = this.setupTop();
             this.sideview = this.setupSide();
-        };
-        p.updateProcess = function(e) {
-            this.redbar.style.height = this.maxBarHeight * e + "px";
         };
         p.setupTop = function() {
             var vTemp = document.createElement("div");
@@ -13187,18 +13263,30 @@ TWEEN.Interpolation = {
             var bluebar = this.createlines(this.maxBarHeight, settings.defaultBrandBlue, true);
             this.bluebar = vTemp.appendChild(bluebar);
             this.redbar = vTemp.appendChild(redbar);
+            var that = this;
             var butLen = this.buttonLinks.length;
             for (var i = 0; i < butLen; i++) {
                 var bBut = this.createButton(i * 70, i, false);
-                vTemp.appendChild(bBut);
+                this.blueButs.push(vTemp.appendChild(bBut));
                 var rBut = this.createButton(i * 70, i, true);
-                vTemp.appendChild(rBut);
+                this.redButs.push(vTemp.appendChild(rBut));
+                var rbBound = function(e) {
+                    that.buttonTapFunc(e, i, this);
+                };
+                var tT = new TouchEvent(this.redButs[i], "tap", rbBound);
             }
             return vTemp;
         };
+        p.buttonTapFunc = function(e, i, obj) {
+            var navNum = parseInt(obj.target.id.replace("navbut", ""));
+            console.log(e, i, navNum);
+            this.dispatchCustomEvent("navitap", {
+                distance: this.buttonLinks[navNum].frame
+            });
+        };
         p.createButton = function(y, id, isRed) {
             var vTemp = document.createElement("div");
-            vTemp.id = id;
+            vTemp.id = "navbut" + id;
             vTemp.style.position = "absolute";
             vTemp.style.left = "0px";
             vTemp.style.top = y + "px";
@@ -13215,13 +13303,14 @@ TWEEN.Interpolation = {
         };
         p.createlines = function(height, color, isAlignTop) {
             var vTemp = document.createElement("div");
-            vTemp.id = "redbar";
             vTemp.style.position = "absolute";
             vTemp.style.left = "9px";
             if (isAlignTop) {
                 vTemp.style.top = this.tweenTime.buttonVertGap + "px";
+                vTemp.id = "redbar";
             } else {
                 vTemp.style.bottom = this.tweenTime.buttonVertGap + "px";
+                vTemp.id = "bluebar";
             }
             vTemp.style.background = color;
             vTemp.style.width = "7px";
@@ -13279,6 +13368,9 @@ TWEEN.Interpolation = {
             this.isAnimating = false;
             this.isSideHidden = false;
         };
+        p.updateProcess = function(e) {
+            this.redbar.style.height = this.maxBarHeight * e + "px";
+        };
         p.update = function(frame) {
             var tot = this.totalFrame;
             var blLen = this.buttonLinks.length;
@@ -13291,6 +13383,11 @@ TWEEN.Interpolation = {
                 }
                 if (frame >= bl && frame < bln) {
                     var output = MathBase.Fit(frame, bl, bln, i * .165, (i + 1) * .165);
+                }
+                if (frame >= bl) {
+                    this.redButs[i].style.opacity = 0;
+                } else {
+                    this.redButs[i].style.opacity = 1;
                 }
             }
             this.updateProcess(1 - output);
@@ -14253,6 +14350,7 @@ TWEEN.Interpolation = {
             this.seabed = new ElSeaBed(0, 0, 4690, 1800, 0, 4096);
             this.seafloor = new ElSeaFloor("seafloor", 4556, 1800, 0, 0, 0, 3072, 80);
             this.seaslope = new ElSlope(0, 6e3, 6144, 1510, 0, 1974);
+            this.sign = new ElSprite("processing-sign.png", 8280, 350, .5, 1);
             this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 370, 0, 0, 0);
             this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 353, 0, 0, 0);
             this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 370, 0, 0, 0);
@@ -14279,6 +14377,7 @@ TWEEN.Interpolation = {
             this.frontlevel.addElement(this.cross3.container);
             this.frontlevel.addElement(this.seafloor.container);
             this.frontlevel.addElement(this.seaslope.container);
+            this.frontlevel.addElement(this.sign.container);
             this.frontlevel.addElement(this.fpsosign.container);
             this.frontlevel.addElement(this.fpsomask);
             this.frontlevel.addElement(this.fpsomover.container);
@@ -14493,7 +14592,6 @@ TWEEN.Interpolation = {
             this.txtlevel = new StaticLevel("staticstxt");
             this.txtlevel.setup(0, 0, 0);
             this.addLevel(this.txtlevel);
-            this.sign = new ElSprite("processing-sign.png", 160, 350, .5, 1);
             this.mountain1 = new ElSprite("mountain_blue_mid.png", 100, 505, 0, 0, 0);
             this.mountain2 = new ElSprite("mountain_green_small.png", 0, 605, 0, 0, 0);
             this.frontProp1 = new ElSprite("processing-front_07.png", 200, 480, 0, 0, 0);
@@ -14532,7 +14630,6 @@ TWEEN.Interpolation = {
             this.frontlevel.addElement(this.frontProp4.container);
             this.frontlevel.addElement(this.frontProp5.container);
             this.frontlevel.addElement(this.seafloor.container);
-            this.frontlevel.addElement(this.sign.container);
             this.txtlevel.addElement(this.desc.container);
             this.txtlevel.addElement(this.desc2.container);
             this.txtlevel.addElement(this.desc3.container);
@@ -14906,8 +15003,10 @@ TWEEN.Interpolation = {
             this.txt4.setStyle(replayStyle);
             this.txt4.opacity(0);
             this.txt4.container.interactive = true;
+            var that = this;
             this.txt4.container.tap = function(e) {
-                console.log("me tapped");
+                console.log("aa tester");
+                that.dispatchCustomEvent("replay");
             };
             this.level1.addElement(this.txt2.container);
             this.level1.addElement(this.txt3.container);
@@ -14956,7 +15055,173 @@ TWEEN.Interpolation = {
 })();
 
 (function() {
-    document.addEventListener("DOMContentLoaded", function() {});
+    var scenedata = MKK.getNamespace("data").scenedata;
+    var Core = MKK.getNamespace("mkk.core").Core;
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var Trackpad = MKK.getNamespace("mkk.event").Trackpad;
+    var AssetsLoader = MKK.getNamespace("app.loader").AssetsLoader;
+    var Navi = MKK.getNamespace("app.scene").Navi;
+    var ns = MKK.getNamespace("app");
+    var Scene1 = MKK.getNamespace("app.scene").Scene1;
+    var Scene2 = MKK.getNamespace("app.scene").Scene2;
+    var Scene3 = MKK.getNamespace("app.scene").Scene3;
+    var Scene4 = MKK.getNamespace("app.scene").Scene4;
+    var Scene6 = MKK.getNamespace("app.scene").Scene6;
+    var Scene7 = MKK.getNamespace("app.scene").Scene7;
+    var Scene8 = MKK.getNamespace("app.scene").Scene8;
+    var Scroller = MKK.getNamespace("app.event").Scroller;
+    var Loader = MKK.getNamespace("app.loader").Loader;
+    var FrameTween = MKK.getNamespace("app.animation").FrameTween;
+    if (!ns.app) {
+        var App = function() {
+            this.isDebug = true;
+            this.loaded = false;
+        };
+        ns.App = App;
+        var p = App.prototype = new Core();
+        var s = Core.prototype;
+        p.setup = function() {
+            this._setup();
+            this.stage = new PIXI.Stage(15198183);
+            this.renderer = new PIXI.CanvasRenderer(1024, 768);
+            this.renderer.roundPixels = true;
+            document.body.appendChild(this.renderer.view);
+            this.loader = new Loader();
+            document.body.appendChild(this.loader.view);
+            this.navi = new Navi();
+            document.body.appendChild(this.navi.topview);
+            document.body.appendChild(this.navi.sideview);
+            this.scroller = new Scroller();
+            this.scroller.setup(this.renderer.view);
+            if (this.isDebug) this.debug();
+            this.scene1 = new Scene1();
+            this.scene1.setup(scenedata.scene1.startFrame, scenedata.scene1.duration, 0, 0);
+            this.scene2 = new Scene2();
+            this.scene2.setup(scenedata.scene2.startFrame, scenedata.scene2.duration, 0, 0);
+            this.scene3 = new Scene3();
+            this.scene3.setup(scenedata.scene3.startFrame, scenedata.scene3.duration, 0, 0);
+            this.scene4 = new Scene4();
+            this.scene4.setup(scenedata.scene4.startFrame, scenedata.scene4.duration, 0, 0);
+            this.scene6 = new Scene6();
+            this.scene6.setup(scenedata.scene6.startFrame, scenedata.scene6.duration, 0, 0);
+            this.scene7 = new Scene7();
+            this.scene7.setup(scenedata.scene7.startFrame, scenedata.scene7.duration, 0, 0);
+            this.scene8 = new Scene8();
+            this.scene8.setup(scenedata.scene8.startFrame, scenedata.scene8.duration, 0, 0);
+            this.loadFonts();
+        };
+        p.init = function() {
+            this.scene1.init(this.stage);
+            this.scene2.init(this.stage);
+            this.scene3.init(this.stage);
+            this.scene6.init(this.stage);
+            this.scene4.init(this.stage);
+            this.scene7.init(this.stage);
+            this.scene8.init(this.stage);
+            this.loader.fadeout();
+            this.swipeLeftFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeLeftFunc);
+            this.swipeRightFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeRightFunc);
+            this.scroller.trackpad.addEventListener("swipeleft", this.swipeLeftFuncBound);
+            this.scroller.trackpad.addEventListener("swiperight", this.swipeRightFuncBound);
+            this.naviTapFuncBound = ListenerFunctions.createListenerFunction(this, this.naviTapFunc);
+            this.navi.addEventListener("navitap", this.naviTapFuncBound);
+            this.replayFuncBound = ListenerFunctions.createListenerFunction(this, this.replayFunc);
+            this.scene8.addEventListener("replay", this.replayFuncBound);
+        };
+        p.swipeLeftFunc = function(e) {
+            console.log("swipe left man", e);
+            this.navi.hideSide();
+        };
+        p.swipeRightFunc = function(e) {
+            console.log("swipe right man", e);
+            this.navi.showSide();
+        };
+        p.naviTapFunc = function(e) {
+            this.scroller.scrollto(e.detail.distance);
+        };
+        p.replayFunc = function(e) {
+            this.scroller.scrollto(0);
+        };
+        p.loadFonts = function() {
+            var fontActiveBound = ListenerFunctions.createListenerFunction(this, this.fontActive);
+            var that = this;
+            this.tweener = new TWEEN.Tween({
+                rotation: 0
+            }).to({
+                rotation: 1
+            }, 3e3).onUpdate(function(e) {
+                that.loader.waveYPos(e);
+            }).onComplete(fontActiveBound).start();
+        };
+        p.fontLoading = function() {
+            console.log("Web font loading");
+        };
+        p.fontActive = function() {
+            console.log("Web font Active");
+            this.load();
+        };
+        p.load = function() {
+            assetsToLoader = [ "assets/global.json", "assets/scene1.json", "assets/scene2.json", "assets/scene2b.json", "assets/scene2c.json", "assets/scene3.json", "assets/scene3b.json", "assets/scene4.json", "assets/scene5.json", "assets/scene6.json", "assets/scene7.json", "assets/scene8.json" ];
+            loader = new PIXI.AssetLoader(assetsToLoader);
+            var that = this;
+            loadComplete = function() {
+                that.loadComplete();
+            };
+            loader.onComplete = loadComplete;
+            loader.load();
+        };
+        p.loadComplete = function() {
+            this.loaded = true;
+            console.log("load complete");
+            this.init();
+        };
+        p.update = function() {
+            TWEEN.update();
+            if (!this.loaded) return;
+            var frame = this.scroller.getDistance();
+            FrameTween.update(frame);
+            this.scene1.update(frame);
+            this.scene2.update(frame);
+            this.scene3.update(frame);
+            this.scene4.update(frame);
+            this.scene6.update(frame);
+            this.scene7.update(frame);
+            this.scene8.update(frame);
+            this.scroller.update();
+            this.navi.update(frame);
+        };
+        p.animate = function() {
+            this.scene2.animate();
+        };
+        p.render = function() {
+            if (!this.loaded) return;
+            if (this.stats) {
+                this.stats.begin();
+            }
+            this.update();
+            this.animate();
+            this.renderer.render(this.stage);
+            if (this.stats) {
+                this.stats.end();
+            }
+        };
+        p.debug = function() {
+            this.gui = new dat.GUI({
+                autoPlace: false
+            });
+            this.stats = new Stats();
+            var dEle = this.stats.domElement;
+            dEle.style.position = "absolute";
+            dEle.style.right = "0px";
+            dEle.style.bottom = "0px";
+            this.gui.domElement.style.position = "absolute";
+            this.gui.domElement.style.right = "10px";
+            this.gui.domElement.style.top = "46px";
+            document.body.appendChild(this.stats.domElement);
+            document.body.appendChild(this.gui.domElement);
+            this.scroller.debug(this.gui);
+        };
+    }
 })();
 
 (function() {

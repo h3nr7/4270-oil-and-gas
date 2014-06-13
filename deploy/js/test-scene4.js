@@ -85,6 +85,9 @@
 			this.scroller.trackpad.addEventListener('swipeleft', this.swipeLeftFuncBound);
 			this.scroller.trackpad.addEventListener('swiperight', this.swipeRightFuncBound);
 
+			this.naviTapFuncBound = ListenerFunctions.createListenerFunction(this, this.naviTapFunc);
+			this.navi.addEventListener('navitap', this.naviTapFuncBound);
+
 		}
 
 		p.swipeLeftFunc = function(e) {
@@ -95,6 +98,10 @@
 		p.swipeRightFunc = function(e) {
 			console.log('swipe right man', e);
 			this.navi.showSide();
+		}
+
+		p.naviTapFunc = function(e) {
+			this.scroller.scrollto(e.detail.distance, 2000);
 		}
 
 

@@ -74,9 +74,8 @@
 			this.txt4.setStyle(replayStyle);
 			this.txt4.opacity(0);
 			this.txt4.container.interactive = true;
-			this.txt4.container.tap = function(e) {
-				console.log('me tapped');
-			};
+			var that = this;
+			this.txt4.container.tap = function(e) {console.log('aa tester'); that.dispatchCustomEvent('replay') };
 
 			this.level1.addElement(this.txt2.container);
 			this.level1.addElement(this.txt3.container);
