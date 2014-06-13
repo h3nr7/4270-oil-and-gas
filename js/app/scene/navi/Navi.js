@@ -31,15 +31,17 @@
 
 			this.redButs = [];
 			this.blueButs = [];
+			this.nametitle = [];
 
 			this.tweenTime = {
 
 				_speed: 250,
-				sideHideX: -100,
+				sideHideX: -300,
 				sideShowX: 50,
 				buttonDistance: 70,
 				buttonVertGap: 5,
-				butSize: 26
+				butSize: 26,
+				txtOffset: 5
 
 			};
 
@@ -52,7 +54,7 @@
 			this.updateProcess(0.96);
 
 			this.isAnimating = false;
-			this.isSideHidden = false;
+			this.isSideHidden = true;
 
 		}
 
@@ -90,7 +92,7 @@
 			var vTemp = document.createElement('div');
 			vTemp.id = 'navi-side';
 			vTemp.style.position = 'absolute';
-			vTemp.style.left = this.tweenTime.sideShowX + 'px';
+			vTemp.style.left = this.tweenTime.sideHideX + 'px';
 			vTemp.style.top = '100px';
 			vTemp.style.width = "26px";
 			vTemp.style.height = ( this.maxBarHeight + this.tweenTime.buttonVertGap*2 ) + "px";
@@ -103,13 +105,20 @@
 			var that = this;
 			var butLen = this.buttonLinks.length;
 			for (var i=0; i<butLen; i++) {
+
+				//create buttons
 				var bBut = this.createButton(i*70, i, false);
 				this.blueButs.push( vTemp.appendChild(bBut) )
 				var rBut = this.createButton(i*70, i, true);
 				this.redButs.push( vTemp.appendChild(rBut) );
-
+				//create button events
 				var rbBound = function(e) { that.buttonTapFunc(e, i, this) };
 				var tT = new TouchEvent( this.redButs[i], 'tap', rbBound );
+
+				//create title
+				var tTitle = this.createTitle( i*70, this.buttonLinks[i].name );
+				this.nametitle.push( vTemp.appendChild( tTitle ) );
+
 			}
 
 			return vTemp;
@@ -161,6 +170,18 @@
 			vTemp.style.background = color;
 			vTemp.style.width = '7px';
 			vTemp.style.height = ( height ) + 'px';
+			return vTemp;
+		}
+
+		p.createTitle = function(height, name) {
+			var vTemp = document.createElement('div');
+			vTemp.style.position = 'absolute';
+			vTemp.style.left = '32px';
+			vTemp.style.top = height + this.tweenTime.txtOffset + 'px';
+			vTemp.innerHTML = name;
+			vTemp.style.color = settings.defaultBrandRed;
+			vTemp.style.fontFamily = ' emprintw01-semibold ,sans-serif';
+
 			return vTemp;
 		}
 
@@ -239,11 +260,13 @@
 					var output = MathBase.Fit(frame, bl, bln, i*0.165, (i+1)*0.165);
 				}
 				//change buttons
-				if(frame>=bl) {
+				if(frame>=(bl-1) && frame>1) {
 					this.redButs[i].style.opacity = 0;
+					this.nametitle[i].style.color = settings.defaultBrandBlue;
 				}
 				else {
 					this.redButs[i].style.opacity = 1;
+					this.nametitle[i].style.color = settings.defaultBrandRed;
 				}
 
 			}

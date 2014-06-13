@@ -10864,7 +10864,7 @@ TWEEN.Interpolation = {
             var current = this.getDistance();
             var distance = Math.abs(toPos - current);
             if (distance < 1) return;
-            var _time = Math.ceil(distance * 1.3);
+            var _time = Math.ceil(distance * 1.8);
             var that = this;
             var updateBound = function(e) {
                 that.scrollUpdateFunc(e, this);
@@ -12343,6 +12343,51 @@ TWEEN.Interpolation = {
     var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     var AbContainer = MKK.getNamespace("app.scene").AbContainer;
     var ElSprite = ns.ElSprite;
+    var scenedata = MKK.getNamespace("data").scenedata;
+    if (!ns.ElPipe) {
+        var ElPipe = function ElPipe(sFrame, duration, x, y, z) {
+            this.name = name;
+            this.element = [];
+            this.container = new PIXI.DisplayObjectContainer();
+            this.setup(sFrame, duration, x, y);
+            this.z = z;
+            this.container.position = this.cPos;
+        };
+        ns.ElPipe = ElPipe;
+        var p = ElPipe.prototype = new AbContainer();
+        p.setup = function(sFrame, duration, x, y) {
+            this._setup(sFrame, duration, x, y);
+            this.slope = this.createStraight(0, 21, 300, 9);
+            this.slope2 = this.createStraight(360, 21, 140, 9);
+            this.addSprite("pipe-meter.png", 299, 30, 0, 0, 1);
+            this.addSprite("underwater-cross-black.png", 0, 140, 0, 0, 1);
+            this.addSprite("pipe-main-joint.png", 0, 140, 0, 0, 1);
+            this.addSprite("pipe-joint.png", 0, 21, 0, 0, 1);
+            this.container.addChild(this.slope);
+            this.container.addChild(this.slope2);
+        };
+        p.open = function() {};
+        p.createStraight = function(x, y, w, h) {
+            var casing = new PIXI.Graphics();
+            casing.clear();
+            casing.beginFill(0, 1);
+            casing.drawRect(0, 0, w, h);
+            casing.endFill();
+            casing.position.x = x;
+            casing.position.y = y;
+            return casing;
+        };
+    }
+})();
+
+(function() {
+    var MathBase = MKK.getNamespace("mkk.math").MathBase;
+    var ns = MKK.getNamespace("app.scene.element");
+    var settings = MKK.getNamespace("data").settings;
+    var ListenerFunctions = MKK.getNamespace("mkk.event").ListenerFunctions;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
+    var AbContainer = MKK.getNamespace("app.scene").AbContainer;
+    var ElSprite = ns.ElSprite;
     var ElRotatingSprite = ns.ElRotatingSprite;
     var scenedata = MKK.getNamespace("data").scenedata;
     if (!ns.ElProductionRig) {
@@ -12358,7 +12403,7 @@ TWEEN.Interpolation = {
         var p = ElProductionRig.prototype = new AbContainer();
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
-            this.bg2 = this.addSprite("productionrig-bg2.png", 0, 0, 0, 0, 0);
+            this.bg2 = this.addSprite("productionrig-bg2.png", 100, 0, 0, 0, 0);
             this.bg1 = this.addSprite("productionrig-bg1.png", 400, 210, 0, 0, 0);
             this.addSprite("productionrig_02.png", 0, 320, 0, 0, 0);
             this.addSprite("productionrig_03.png", 201, 320, 0, 0, 0);
@@ -12369,7 +12414,7 @@ TWEEN.Interpolation = {
         };
         p.open = function() {};
         p.parallaxing = function(e) {
-            this.bg2.xPos(MathBase.Fit01(e, -100, 280));
+            this.bg2.xPos(MathBase.Fit01(e, 0, 380));
             this.bg1.xPos(MathBase.Fit01(e, 210, 450));
         };
     }
@@ -13217,20 +13262,22 @@ TWEEN.Interpolation = {
             } ];
             this.redButs = [];
             this.blueButs = [];
+            this.nametitle = [];
             this.tweenTime = {
                 _speed: 250,
-                sideHideX: -100,
+                sideHideX: -300,
                 sideShowX: 50,
                 buttonDistance: 70,
                 buttonVertGap: 5,
-                butSize: 26
+                butSize: 26,
+                txtOffset: 5
             };
             this.maxBarHeight = (this.buttonLinks.length - 1) * this.tweenTime.buttonDistance;
             this.view = null;
             this.setup();
             this.updateProcess(.96);
             this.isAnimating = false;
-            this.isSideHidden = false;
+            this.isSideHidden = true;
         };
         ns.Navi = Navi;
         var p = Navi.prototype = new EventDispatcher();
@@ -13255,7 +13302,7 @@ TWEEN.Interpolation = {
             var vTemp = document.createElement("div");
             vTemp.id = "navi-side";
             vTemp.style.position = "absolute";
-            vTemp.style.left = this.tweenTime.sideShowX + "px";
+            vTemp.style.left = this.tweenTime.sideHideX + "px";
             vTemp.style.top = "100px";
             vTemp.style.width = "26px";
             vTemp.style.height = this.maxBarHeight + this.tweenTime.buttonVertGap * 2 + "px";
@@ -13274,6 +13321,8 @@ TWEEN.Interpolation = {
                     that.buttonTapFunc(e, i, this);
                 };
                 var tT = new TouchEvent(this.redButs[i], "tap", rbBound);
+                var tTitle = this.createTitle(i * 70, this.buttonLinks[i].name);
+                this.nametitle.push(vTemp.appendChild(tTitle));
             }
             return vTemp;
         };
@@ -13315,6 +13364,16 @@ TWEEN.Interpolation = {
             vTemp.style.background = color;
             vTemp.style.width = "7px";
             vTemp.style.height = height + "px";
+            return vTemp;
+        };
+        p.createTitle = function(height, name) {
+            var vTemp = document.createElement("div");
+            vTemp.style.position = "absolute";
+            vTemp.style.left = "32px";
+            vTemp.style.top = height + this.tweenTime.txtOffset + "px";
+            vTemp.innerHTML = name;
+            vTemp.style.color = settings.defaultBrandRed;
+            vTemp.style.fontFamily = " emprintw01-semibold ,sans-serif";
             return vTemp;
         };
         p.hideSide = function() {
@@ -13384,10 +13443,12 @@ TWEEN.Interpolation = {
                 if (frame >= bl && frame < bln) {
                     var output = MathBase.Fit(frame, bl, bln, i * .165, (i + 1) * .165);
                 }
-                if (frame >= bl) {
+                if (frame >= bl - 1 && frame > 1) {
                     this.redButs[i].style.opacity = 0;
+                    this.nametitle[i].style.color = settings.defaultBrandBlue;
                 } else {
                     this.redButs[i].style.opacity = 1;
+                    this.nametitle[i].style.color = settings.defaultBrandRed;
                 }
             }
             this.updateProcess(1 - output);
@@ -14294,6 +14355,7 @@ TWEEN.Interpolation = {
     var ElSeaFloor = ns.element.ElSeaFloor;
     var ElSeaFloor = ns.element.ElSeaFloor;
     var ElProductionRig = ns.element.ElProductionRig;
+    var ElPipe = ns.element.ElPipe;
     var ElHelicopter = ns.element.ElHelicopter;
     var ElSubmarine = ns.element.ElSubmarine;
     var ElFpso = ns.element.ElFpso;
@@ -14351,6 +14413,7 @@ TWEEN.Interpolation = {
             this.seafloor = new ElSeaFloor("seafloor", 4556, 1800, 0, 0, 0, 3072, 80);
             this.seaslope = new ElSlope(0, 6e3, 6144, 1510, 0, 1974);
             this.sign = new ElSprite("processing-sign.png", 8280, 350, .5, 1);
+            this.pipe = new ElPipe(0, 5e3, 5500, 1740, 0);
             this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 370, 0, 0, 0);
             this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 353, 0, 0, 0);
             this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 370, 0, 0, 0);
@@ -14377,6 +14440,7 @@ TWEEN.Interpolation = {
             this.frontlevel.addElement(this.cross3.container);
             this.frontlevel.addElement(this.seafloor.container);
             this.frontlevel.addElement(this.seaslope.container);
+            this.frontlevel.addElement(this.pipe.container);
             this.frontlevel.addElement(this.sign.container);
             this.frontlevel.addElement(this.fpsosign.container);
             this.frontlevel.addElement(this.fpsomask);
@@ -15138,6 +15202,7 @@ TWEEN.Interpolation = {
         };
         p.naviTapFunc = function(e) {
             this.scroller.scrollto(e.detail.distance);
+            this.navi.hideSide();
         };
         p.replayFunc = function(e) {
             this.scroller.scrollto(0);

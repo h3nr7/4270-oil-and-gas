@@ -78,7 +78,7 @@
 			//work out safe speed 
 			var distance = Math.abs(toPos - current);
 			if(distance<1) return;
-			var _time = Math.ceil ( distance * 1.3 );
+			var _time = Math.ceil ( distance * 1.8 );
 			var that = this;
 			var updateBound = function(e) { that.scrollUpdateFunc(e,this) };
 			var completeBound = function(e) { that.scrollCompleteFunc(e, this) };

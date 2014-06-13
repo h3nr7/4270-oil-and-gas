@@ -51,7 +51,7 @@
 			scene4:{
 				name: 'Production',
 				startFrame: 4000 + 7200 + 4700,
-				duration: 6860,
+				duration: 7180,
 				cuepoint: 17060,
 			},
 

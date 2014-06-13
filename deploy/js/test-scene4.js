@@ -60,7 +60,7 @@
 
 			//setup scenes
 			this.scene4 = new Scene4();
-			this.scene4.setup(0, 6860/*695*/, 0, 0);
+			this.scene4.setup(0, 7180/*695*/, 0, 0);
 
 			this.scene6 = new Scene6();
 			this.scene6.setup(6014/*6250-236*/, 10000, 0, 0);
@@ -148,6 +148,7 @@
 				"assets/scene6.json",
 				"assets/scene7.json",
 				"assets/scene8.json",
+				"assets/sceneend.json",
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);

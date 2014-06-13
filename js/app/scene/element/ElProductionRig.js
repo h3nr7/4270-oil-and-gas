@@ -34,7 +34,7 @@
 
 			this._setup(sFrame, duration, x, y);
 
-			this.bg2 = this.addSprite('productionrig-bg2.png', 0,0,0, 0,0);
+			this.bg2 = this.addSprite('productionrig-bg2.png', 100,0,0, 0,0);
 			this.bg1 = this.addSprite('productionrig-bg1.png', 400,210,0, 0,0);
 
 
@@ -53,7 +53,7 @@
 		}
 
 		p.parallaxing = function(e) {
-			this.bg2.xPos( MathBase.Fit01(e, -100, 280) );
+			this.bg2.xPos( MathBase.Fit01(e, 0, 380) );
 			this.bg1.xPos( MathBase.Fit01(e, 210, 450) );
 		}
 

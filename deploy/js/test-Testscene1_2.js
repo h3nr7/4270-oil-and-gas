@@ -200,6 +200,7 @@
 				"assets/scene6.json",
 				"assets/scene7.json",
 				"assets/scene8.json",
+				"assets/sceneend.json",
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);

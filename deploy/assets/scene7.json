@@ -29,9 +29,17 @@
             "spriteSourceSize": {"x":0,"y":0,"w":724,"h":406},
             "sourceSize": {"w":724,"h":406}
 		},
+		"underwater-cross-black.png":
+		{
+            "frame": {"x":1069,"y":410,"w":81,"h":250},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":81,"h":250},
+            "sourceSize": {"w":81,"h":250}
+		},
 		"house.png":
 		{
-            "frame": {"x":1069,"y":410,"w":204,"h":180},
+            "frame": {"x":1152,"y":410,"w":204,"h":180},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":204,"h":180},
@@ -39,7 +47,7 @@
 		},
 		"tree_small.png":
 		{
-            "frame": {"x":1275,"y":410,"w":82,"h":154},
+            "frame": {"x":1358,"y":410,"w":82,"h":154},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":82,"h":154},
@@ -47,7 +55,7 @@
 		},
 		"underwater-cross-blue.png":
 		{
-            "frame": {"x":1359,"y":410,"w":81,"h":101},
+            "frame": {"x":1442,"y":410,"w":81,"h":101},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":81,"h":101},
@@ -55,7 +63,7 @@
 		},
 		"flat.png":
 		{
-            "frame": {"x":1442,"y":410,"w":97,"h":100},
+            "frame": {"x":1525,"y":410,"w":97,"h":100},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":97,"h":100},
@@ -63,7 +71,7 @@
 		},
 		"truck_01.png":
 		{
-            "frame": {"x":1541,"y":410,"w":204,"h":94},
+            "frame": {"x":1069,"y":662,"w":204,"h":94},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":204,"h":94},
@@ -71,7 +79,7 @@
 		},
 		"s7_1px.png":
 		{
-            "frame": {"x":1747,"y":410,"w":1,"h":1},
+            "frame": {"x":1624,"y":410,"w":1,"h":1},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},

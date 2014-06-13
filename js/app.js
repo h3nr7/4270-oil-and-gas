@@ -142,6 +142,7 @@
 
 		p.naviTapFunc = function(e) {
 			this.scroller.scrollto(e.detail.distance);
+			this.navi.hideSide();
 		}
 
 		p.replayFunc = function(e) {

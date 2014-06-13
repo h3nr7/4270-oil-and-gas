@@ -23,6 +23,7 @@
 	var ElSeaFloor = ns.element.ElSeaFloor;
 	var ElSeaFloor = ns.element.ElSeaFloor;
 	var ElProductionRig = ns.element.ElProductionRig;
+	var ElPipe = ns.element.ElPipe;
 	var ElHelicopter = ns.element.ElHelicopter;
 	var ElSubmarine = ns.element.ElSubmarine;
 	var ElFpso = ns.element.ElFpso;
@@ -120,6 +121,8 @@
 			// ----------------------------
 			this.seaslope = new ElSlope(0,6000, 6144, 1510, 0, 1974);
 			this.sign = new ElSprite('processing-sign.png', 8280, 350, 0.5, 1);
+			this.pipe = new ElPipe(0, 5000, 5500, 1740, 0);
+
 
 			// ----------------------------
 			// create iceberg
@@ -186,6 +189,7 @@
 			this.frontlevel.addElement(this.seafloor.container);
 
 			this.frontlevel.addElement(this.seaslope.container);
+			this.frontlevel.addElement(this.pipe.container);
 			this.frontlevel.addElement(this.sign.container);
 			// this.frontlevel.addElement(this.seaslope2.container);
 			// this.frontlevel.addElement(this.seaslope3.container);
@@ -253,7 +257,7 @@
 
 			var tweenLandEndBound = ListenerFunctions.createListenerFunction(this, this.tweenLandEndFunc);
 			this.tweenlandend = new TweenEach({x: -7092})
-							.to({x: -8122}, 605)
+							.to({x: -8692}, 605+330)
 							.onUpdate(tweenLandEndBound)
 							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime + 750).start();
 

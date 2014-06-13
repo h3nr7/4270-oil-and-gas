@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"image": "sceneend.png",
-		"size": {"w":1156,"h":709},
+		"size": {"w":754,"h":709},
 		"scale": "1"
 	},
 	"frames": {
@@ -29,9 +29,25 @@
             "spriteSourceSize": {"x":0,"y":0,"w":150,"h":133},
             "sourceSize": {"w":150,"h":133}
 		},
+		"pipe-main-joint.png":
+		{
+            "frame": {"x":154,"y":576,"w":55,"h":120},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":55,"h":120},
+            "sourceSize": {"w":55,"h":120}
+		},
+		"pipe-meter.png":
+		{
+            "frame": {"x":304,"y":466,"w":62,"h":98},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":62,"h":98},
+            "sourceSize": {"w":62,"h":98}
+		},
 		"trees_small.png":
 		{
-            "frame": {"x":304,"y":466,"w":50,"h":95},
+            "frame": {"x":368,"y":466,"w":50,"h":95},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":50,"h":95},
@@ -39,7 +55,7 @@
 		},
 		"mountain_darkgreen_small.png":
 		{
-            "frame": {"x":356,"y":466,"w":200,"h":86},
+            "frame": {"x":420,"y":466,"w":200,"h":86},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":200,"h":86},
@@ -47,27 +63,27 @@
 		},
 		"mountain_green_small.png":
 		{
-            "frame": {"x":154,"y":576,"w":200,"h":86},
+            "frame": {"x":211,"y":576,"w":200,"h":86},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":200,"h":86},
             "sourceSize": {"w":200,"h":86}
 		},
-		"sceneend_houses.png":
-		{
-            "frame": {"x":756,"y":2,"w":400,"h":75},
-            "rotated": false,
-            "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":400,"h":75},
-            "sourceSize": {"w":400,"h":75}
-		},
 		"house_small.png":
 		{
-            "frame": {"x":756,"y":79,"w":50,"h":44},
+            "frame": {"x":622,"y":466,"w":50,"h":44},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":50,"h":44},
             "sourceSize": {"w":50,"h":44}
+		},
+		"pipe-joint.png":
+		{
+            "frame": {"x":674,"y":466,"w":7,"h":18},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":7,"h":18},
+            "sourceSize": {"w":7,"h":18}
 		}
 	}
 }
