@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"image": "scene8.png",
-		"size": {"w":1526,"h":1051},
+		"size": {"w":1526,"h":1387},
 		"scale": "1"
 	},
 	"frames": {
@@ -21,9 +21,17 @@
             "spriteSourceSize": {"x":0,"y":0,"w":1204,"h":522},
             "sourceSize": {"w":1204,"h":522}
 		},
+		"processing-sign.png":
+		{
+            "frame": {"x":2,"y":608,"w":341,"h":500},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":341,"h":500},
+            "sourceSize": {"w":341,"h":500}
+		},
 		"mountain_green_mid.png":
 		{
-            "frame": {"x":2,"y":608,"w":629,"h":277},
+            "frame": {"x":345,"y":608,"w":629,"h":277},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":629,"h":277},
@@ -31,7 +39,7 @@
 		},
 		"mountain_lightgreen_mid.png":
 		{
-            "frame": {"x":633,"y":608,"w":629,"h":277},
+            "frame": {"x":2,"y":1110,"w":629,"h":277},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":629,"h":277},
@@ -39,7 +47,7 @@
 		},
 		"mountain_twin_small.png":
 		{
-            "frame": {"x":2,"y":887,"w":424,"h":164},
+            "frame": {"x":976,"y":608,"w":424,"h":164},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":424,"h":164},

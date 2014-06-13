@@ -5,6 +5,11 @@
 	// ------------------------------------
 	var ns = MKK.getNamespace('app.scene');
 	var EventDispatcher = MKK.getNamespace('mkk.event.EventDispatcher');
+	var settings = MKK.getNamespace('data').settings;
+	var scenedata = MKK.getNamespace('data').scenedata;
+
+	var FrameTween = MKK.getNamespace('app.animation').FrameTween;
+	var TweenEach = MKK.getNamespace('app.animation').TweenEach;
 
 	if(!ns.Navi) {
 
@@ -12,25 +17,32 @@
 
 			this.buttonLinks = [
 
-				{id:1, name: '', frame:0},
-				{id:2, name: '', frame:0},
-				{id:3, name: '', frame:0},
-				{id:4, name: '', frame:0},
-				{id:5, name: '', frame:0},
-				{id:6, name: '', frame:0},
-				{id:7, name: '', frame:0},
-				{id:8, name: '', frame:0}
-			]
+				{ id:1, name: scenedata.scene1.name, frame:scenedata.scene1.cuepoint },
+				{ id:2, name: scenedata.scene2.name, frame:scenedata.scene2.cuepoint },
+				{ id:3, name: scenedata.scene3.name, frame:scenedata.scene3.cuepoint },
+				{ id:4, name: scenedata.scene4.name, frame:scenedata.scene4.cuepoint },
+				{ id:5, name: scenedata.scene5.name, frame:scenedata.scene5.cuepoint },
+				{ id:6, name: scenedata.scene6.name, frame:scenedata.scene6.cuepoint },
+				{ id:7, name: scenedata.scene8.name, frame:scenedata.scene8.cuepoint }
+			];
+
 			this.tweenTime = {
 
 				_speed: 250,
 				sideHideX: -100,
 				sideShowX: 50,
+				buttonDistance: 70,
+				buttonVertGap: 5,
 
 			};
 
+			//calculate the max bar height
+			this.maxBarHeight = ( (this.buttonLinks.length-1)*this.tweenTime.buttonDistance - this.tweenTime.buttonVertGap);
+
 			this.view = null;
 			this.setup();
+
+			this.updateProcess(0.96);
 
 			this.isAnimating = false;
 			this.isSideHidden = false;
@@ -46,6 +58,11 @@
 
 			this.topview = this.setupTop();
 			this.sideview = this.setupSide();
+		}
+
+		p.updateProcess = function(e) {
+
+			this.redbar.style.height = this.maxBarHeight * e + 'px';
 		}
 
 		p.setupTop = function() {
@@ -71,24 +88,36 @@
 			vTemp.style.left = this.tweenTime.sideShowX + 'px';
 			vTemp.style.top = '100px';
 			vTemp.style.width = "26px";
-			vTemp.style.height = "500px";
+			vTemp.style.height = ( this.maxBarHeight + this.tweenTime.buttonVertGap*2 ) + "px";
+
+			var redbar = this.createlines(this.maxBarHeight, settings.defaultBrandRed, false);
+			var bluebar = this.createlines(this.maxBarHeight, settings.defaultBrandBlue, true);
+			this.bluebar = vTemp.appendChild(bluebar);
+			this.redbar = vTemp.appendChild(redbar);
 
 			var butLen = this.buttonLinks.length;
 			for (var i=0; i<butLen; i++) {
-				var tBut = this.createButtons(i*70, i);
-				vTemp.appendChild(tBut);
+				var bBut = this.createButton(i*70, i, false);
+				vTemp.appendChild(bBut);
+
+				var rBut = this.createButton(i*70, i, true);
+				vTemp.appendChild(rBut);
 			}
 
 			return vTemp;
 		}
 
-		p.createButtons = function(y, id) {
+		p.createButton = function(y, id, isRed) {
 			var vTemp = document.createElement('div');
 			vTemp.id = id;
 			vTemp.style.position = 'absolute';
 			vTemp.style.left = '0px';
 			vTemp.style.top = y + 'px';
-			vTemp.style.background = 'url(images/nav-ball-red.png) center center no-repeat';
+			//specify colors
+			var color = 'red';
+			if(!isRed) { color = 'blue' }
+
+			vTemp.style.background = 'url(images/nav-ball-'+ color +'.png) center center no-repeat';
 			vTemp.style.backgroundSize = '26px 26px'; 
 			vTemp.style.width = "26px";
 			vTemp.style.height = "26px";
@@ -96,16 +125,21 @@
 			return vTemp;
 		}
 
-		p.createlines = function() {
+		p.createlines = function(height, color, isAlignTop) {
 			var vTemp = document.createElement('div');
-			vTemp.id = id;
+			vTemp.id = 'redbar';
 			vTemp.style.position = 'absolute';
-			vTemp.style.left = '0px';
-			vTemp.style.top = '5px';
-			vTemp.style.background = 'url(images/nav-ball-red.png) center center no-repeat';
-			vTemp.style.backgroundSize = '26px 26px'; 
-			vTemp.style.width = "26px";
-			vTemp.style.height = "26px";
+			vTemp.style.left = '9px';
+			//check if it should align from top or bottom
+			if(isAlignTop) {
+				vTemp.style.top = this.tweenTime.buttonVertGap + 'px';
+			}
+			else {
+				vTemp.style.bottom = this.tweenTime.buttonVertGap + 'px';
+			}
+			vTemp.style.background = color;
+			vTemp.style.width = '7px';
+			vTemp.style.height = ( height ) + 'px';
 			return vTemp;
 		}
 
@@ -158,6 +192,10 @@
 		p.showComplete = function(e, obj) {
 			this.isAnimating = false;
 			this.isSideHidden = false;
+		}
+
+		p.update = function(frame) {
+			// console.log(frame);
 		}
 
 

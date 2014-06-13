@@ -23,6 +23,10 @@
 			defaultDescriptionLineHeight: 40,
 
 			//COLORS
+			defaultBrandRed: '#e30420',
+			defaultBrandBlue: '#174c8f',
+
+			//HEX COLORS
 			defaultOilRigBlue: 0x174c8f,
 			defaultOilRigLightBlue: 0x1fbcee,
 			defaultBGColor: 0xe7e7e7,

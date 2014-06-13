@@ -172,6 +172,7 @@
 			this.scene6.update(frame);
 
 			this.scroller.update();
+			this.navi.update(frame);
 		}
 
 		p.render = function() {

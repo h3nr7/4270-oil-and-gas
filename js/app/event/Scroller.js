@@ -64,7 +64,8 @@
 		p.stop = function() { this.isStop = true; }
 
 		p.getDistance = function() {
-			return Math.round(this.distance);
+			//return distance in 3 decimal places for accurate scrolling
+			return Math.round(this.distance*1000)/1000;
 		}
 
 		p.update = function() {

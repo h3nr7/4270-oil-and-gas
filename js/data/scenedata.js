@@ -6,13 +6,15 @@
 
 		ns.scenedata = {
 
+			totalFrame: 27194,
 			navi: {
 				tweenTime:{}
 			},
 			scene1:{
-
+				name: 'Start',
 				startFrame: 0,
 				duration: 4000,
+				cuepoint: 0,
 				level:[
 					{name:"level0", x:0, y:0, z:0},
 					{name:"level1", x:0, y:0, z:5},
@@ -23,8 +25,10 @@
 				]
 			},
 			scene2:{
-				startFrame: 0,
-				duration: 4000,
+				name: 'Exploration',
+				startFrame: 3300,
+				duration: 8200,
+				cuepoint: 3580,
 				level:[
 					{name:"level0", x:0, y:0, z:0},
 					{name:"level1", x:0, y:0, z:1},
@@ -38,22 +42,34 @@
 			},
 
 			scene3:{
-
+				name: 'Drilling',
+				startFrame: 4000 + 7200,
+				duration: 6800,
+				cuepoint: 10920,
 			},
 
 			scene4:{
-
+				name: 'Production',
+				startFrame: 4000 + 7200 + 4700,
+				duration: 6860,
+				cuepoint: 17060,
 			},
 
 			scene5:{
-
+				name: 'Transmission',
+				cuepoint: 20700
 			},
 
 			scene6:{
-
+				name: 'Processing',
+				startFrame: 4000 + 7200 + 4700 + 6014,
+				duration: 3000,
+				cuepoint: 22370
 			},
 
 			scene7:{
+				startFrame: 4000+7200+4700+6014+2000,
+				duration: 2880,
 				tweenTime: {
 					//speed
 					_fast: 150,
@@ -93,6 +109,10 @@
 			},
 
 			scene8:{
+				name: 'End',
+				startFrame: 4000+7200+4700+6014+2000+2880,
+				duration: 400,
+				cuepoint: 27140,
 				tweenTime:{
 					//timing
 					_speed: 150,

@@ -10493,12 +10493,15 @@ TWEEN.Interpolation = {
     var ns = MKK.getNamespace("data");
     if (!ns.scenedata) {
         ns.scenedata = {
+            totalFrame: 27194,
             navi: {
                 tweenTime: {}
             },
             scene1: {
+                name: "Start",
                 startFrame: 0,
                 duration: 4e3,
+                cuepoint: 0,
                 level: [ {
                     name: "level0",
                     x: 0,
@@ -10518,8 +10521,10 @@ TWEEN.Interpolation = {
                 element: []
             },
             scene2: {
-                startFrame: 0,
-                duration: 4e3,
+                name: "Exploration",
+                startFrame: 3300,
+                duration: 8200,
+                cuepoint: 3580,
                 level: [ {
                     name: "level0",
                     x: 0,
@@ -10554,11 +10559,31 @@ TWEEN.Interpolation = {
                     }
                 }
             },
-            scene3: {},
-            scene4: {},
-            scene5: {},
-            scene6: {},
+            scene3: {
+                name: "Drilling",
+                startFrame: 4e3 + 7200,
+                duration: 6800,
+                cuepoint: 10920
+            },
+            scene4: {
+                name: "Production",
+                startFrame: 4e3 + 7200 + 4700,
+                duration: 6860,
+                cuepoint: 17060
+            },
+            scene5: {
+                name: "Transmission",
+                cuepoint: 20700
+            },
+            scene6: {
+                name: "Processing",
+                startFrame: 4e3 + 7200 + 4700 + 6014,
+                duration: 3e3,
+                cuepoint: 22370
+            },
             scene7: {
+                startFrame: 4e3 + 7200 + 4700 + 6014 + 2e3,
+                duration: 2880,
                 tweenTime: {
                     _fast: 150,
                     _speed: 250,
@@ -10586,6 +10611,10 @@ TWEEN.Interpolation = {
                 }
             },
             scene8: {
+                name: "End",
+                startFrame: 4e3 + 7200 + 4700 + 6014 + 2e3 + 2880,
+                duration: 400,
+                cuepoint: 27140,
                 tweenTime: {
                     _speed: 150,
                     stackDelay: 100,
@@ -10620,6 +10649,8 @@ TWEEN.Interpolation = {
             },
             defaultDescriptionGap: 20,
             defaultDescriptionLineHeight: 40,
+            defaultBrandRed: "#e30420",
+            defaultBrandBlue: "#174c8f",
             defaultOilRigBlue: 1526927,
             defaultOilRigLightBlue: 2079982,
             defaultBGColor: 15198183,
@@ -13071,6 +13102,9 @@ TWEEN.Interpolation = {
 (function() {
     var ns = MKK.getNamespace("app.scene");
     var EventDispatcher = MKK.getNamespace("mkk.event.EventDispatcher");
+    var settings = MKK.getNamespace("data").settings;
+    var FrameTween = MKK.getNamespace("app.animation").FrameTween;
+    var TweenEach = MKK.getNamespace("app.animation").TweenEach;
     if (!ns.Navi) {
         var Navi = function Navi() {
             this.buttonLinks = [ {
@@ -13109,10 +13143,14 @@ TWEEN.Interpolation = {
             this.tweenTime = {
                 _speed: 250,
                 sideHideX: -100,
-                sideShowX: 50
+                sideShowX: 50,
+                buttonDistance: 70,
+                buttonVertGap: 5
             };
+            this.maxBarHeight = (this.buttonLinks.length - 1) * this.tweenTime.buttonDistance - this.tweenTime.buttonVertGap;
             this.view = null;
             this.setup();
+            this.updateProcess(.5);
             this.isAnimating = false;
             this.isSideHidden = false;
         };
@@ -13121,6 +13159,9 @@ TWEEN.Interpolation = {
         p.setup = function() {
             this.topview = this.setupTop();
             this.sideview = this.setupSide();
+        };
+        p.updateProcess = function(e) {
+            this.redbar.style.height = this.maxBarHeight * e + "px";
         };
         p.setupTop = function() {
             var vTemp = document.createElement("div");
@@ -13143,36 +13184,49 @@ TWEEN.Interpolation = {
             vTemp.style.top = "100px";
             vTemp.style.width = "26px";
             vTemp.style.height = "500px";
+            var redbar = this.createlines(this.maxBarHeight, settings.defaultBrandRed, false);
+            var bluebar = this.createlines(this.maxBarHeight, settings.defaultBrandBlue, true);
+            this.bluebar = vTemp.appendChild(bluebar);
+            this.redbar = vTemp.appendChild(redbar);
             var butLen = this.buttonLinks.length;
             for (var i = 0; i < butLen; i++) {
-                var tBut = this.createButtons(i * 70, i);
-                vTemp.appendChild(tBut);
+                var bBut = this.createButton(i * 70, i, false);
+                vTemp.appendChild(bBut);
+                var rBut = this.createButton(i * 70, i, true);
+                vTemp.appendChild(rBut);
             }
             return vTemp;
         };
-        p.createButtons = function(y, id) {
+        p.createButton = function(y, id, isRed) {
             var vTemp = document.createElement("div");
             vTemp.id = id;
             vTemp.style.position = "absolute";
             vTemp.style.left = "0px";
             vTemp.style.top = y + "px";
-            vTemp.style.background = "url(images/nav-ball-red.png) center center no-repeat";
+            var color = "red";
+            if (!isRed) {
+                color = "blue";
+            }
+            vTemp.style.background = "url(images/nav-ball-" + color + ".png) center center no-repeat";
             vTemp.style.backgroundSize = "26px 26px";
             vTemp.style.width = "26px";
             vTemp.style.height = "26px";
             vTemp.style.cursor = "pointer";
             return vTemp;
         };
-        p.createlines = function() {
+        p.createlines = function(height, color, isAlignTop) {
             var vTemp = document.createElement("div");
-            vTemp.id = id;
+            vTemp.id = "redbar";
             vTemp.style.position = "absolute";
-            vTemp.style.left = "0px";
-            vTemp.style.top = "5px";
-            vTemp.style.background = "url(images/nav-ball-red.png) center center no-repeat";
-            vTemp.style.backgroundSize = "26px 26px";
-            vTemp.style.width = "26px";
-            vTemp.style.height = "26px";
+            vTemp.style.left = "9px";
+            if (isAlignTop) {
+                vTemp.style.top = this.tweenTime.buttonVertGap + "px";
+            } else {
+                vTemp.style.bottom = this.tweenTime.buttonVertGap + "px";
+            }
+            vTemp.style.background = color;
+            vTemp.style.width = "7px";
+            vTemp.style.height = height + "px";
             return vTemp;
         };
         p.hideSide = function() {
@@ -13226,6 +13280,7 @@ TWEEN.Interpolation = {
             this.isAnimating = false;
             this.isSideHidden = false;
         };
+        p.update = function(frame) {};
     }
 })();
 
@@ -14424,6 +14479,7 @@ TWEEN.Interpolation = {
             this.txtlevel = new StaticLevel("staticstxt");
             this.txtlevel.setup(0, 0, 0);
             this.addLevel(this.txtlevel);
+            this.sign = new ElSprite("processing-sign.png", 160, 350, .5, 1);
             this.mountain1 = new ElSprite("mountain_blue_mid.png", 100, 505, 0, 0, 0);
             this.mountain2 = new ElSprite("mountain_green_small.png", 0, 605, 0, 0, 0);
             this.frontProp1 = new ElSprite("processing-front_07.png", 200, 480, 0, 0, 0);
@@ -14456,6 +14512,7 @@ TWEEN.Interpolation = {
             this.frontlevel.addElement(this.frontProp3.container);
             this.frontlevel.addElement(this.frontProp4.container);
             this.frontlevel.addElement(this.seafloor.container);
+            this.frontlevel.addElement(this.sign.container);
             this.txtlevel.addElement(this.desc.container);
             this.txtlevel.addElement(this.desc2.container);
             this.txtlevel.addElement(this.desc3.container);

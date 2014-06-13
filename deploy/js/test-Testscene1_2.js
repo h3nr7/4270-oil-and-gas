@@ -1,5 +1,6 @@
 (function(){
 
+	var scenedata = MKK.getNamespace('data').scenedata;
 	var Core = MKK.getNamespace('mkk.core').Core;
 	var ListenerFunctions = MKK.getNamespace('mkk.event').ListenerFunctions;
 	var Trackpad = MKK.getNamespace('mkk.event').Trackpad;
@@ -73,19 +74,19 @@
 
 			//setup scenes
 			this.scene1 = new Scene1();
-			this.scene1.setup(0, 4000/*695*/, 0, 0);
+			this.scene1.setup(scenedata.scene1.startFrame, scenedata.scene1.duration, 0, 0);
 			this.scene2 = new Scene2();
-			this.scene2.setup(3300,8200/*695*/, 0, 0);
+			this.scene2.setup(scenedata.scene2.startFrame,scenedata.scene2.duration, 0, 0);
 			this.scene3 = new Scene3();
-			this.scene3.setup((4000+7200),(6800), 0, 0);
+			this.scene3.setup(scenedata.scene3.startFrame,scenedata.scene3.duration, 0, 0);
 			this.scene4 = new Scene4();
-			this.scene4.setup((4000+7200+4700)/*4700*/,6860, 0, 0);	
+			this.scene4.setup(scenedata.scene4.startFrame,scenedata.scene4.duration, 0, 0);	
 			this.scene6 = new Scene6();
-			this.scene6.setup((4000+7200+4700+6014)/*4700*/,3000, 0, 0);	
+			this.scene6.setup(scenedata.scene6.startFrame,scenedata.scene6.duration, 0, 0);	
 			this.scene7 = new Scene7();
-			this.scene7.setup((4000+7200+4700+6014+2000)/*4700*/,2880, 0, 0);		
+			this.scene7.setup(scenedata.scene7.startFrame,scenedata.scene7.duration, 0, 0);		
 			this.scene8 = new Scene8();
-			this.scene8.setup((4000+7200+4700+6014+2000+2880)/*4700*/,1000, 0, 0);			
+			this.scene8.setup(scenedata.scene8.startFrame,scenedata.scene8.duration, 0, 0);			
 
 			this.loadFonts();
 		}
@@ -118,12 +119,17 @@
 			this.scroller.trackpad.addEventListener('swiperight', this.swipeRightFuncBound);
 		}
 
+		// --------------------------
+		// SWIPE EVENT FUNCTIONS
+		// --------------------------
 		p.swipeLeftFunc = function(e) {
-
+			console.log('swipe left man', e);
+			this.navi.hideSide();
 		}
 
 		p.swipeRightFunc = function(e) {
-
+			console.log('swipe right man', e);
+			this.navi.showSide();
 		}
 
 
