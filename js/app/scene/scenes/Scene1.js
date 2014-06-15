@@ -99,9 +99,9 @@
 			var symbol2 = new ElSprite("cloud_icon_environmental.png", 470,3730, 0);
 			var symbol3 = new ElSprite("cloud_icon_productivity.png", 622,3730, 0);
 
-			this.symTxt1 = new ElText(copies.symbolline1, 357,3820, 0, 0.5, 0.5);
-			this.symTxt2 = new ElText(copies.symbolline2, 506,3820, 0, 0.5, 0.5);
-			this.symTxt3 = new ElText(copies.symbolline3, 655,3820, 0, 0.5, 0.5);
+			this.symTxt1 = new ElText(copies.symbolline1, 368,3835, 0, 0.5, 0.5);
+			this.symTxt2 = new ElText(copies.symbolline2, 517,3835, 0, 0.5, 0.5);
+			this.symTxt3 = new ElText(copies.symbolline3, 666,3840, 0, 0.5, 0.5);
 			this.symTxt1.setStyle(symStyle);
 			this.symTxt2.setStyle(symStyle);
 			this.symTxt3.setStyle(symStyle);

@@ -2123,6 +2123,695 @@ if (!window.requestAnimationFrame) {
     }();
 }
 
+(function(name, context, factory) {
+    if (typeof module !== "undefined" && module.exports) {
+        module.exports = factory();
+    } else if (typeof context.define === "function" && context.define.amd) {
+        define(name, [], factory);
+    } else {
+        context[name] = factory();
+    }
+})("buzz", this, function() {
+    var buzz = {
+        defaults: {
+            autoplay: false,
+            duration: 5e3,
+            formats: [],
+            loop: false,
+            placeholder: "--",
+            preload: "metadata",
+            volume: 80,
+            document: document
+        },
+        types: {
+            mp3: "audio/mpeg",
+            ogg: "audio/ogg",
+            wav: "audio/wav",
+            aac: "audio/aac",
+            m4a: "audio/x-m4a"
+        },
+        sounds: [],
+        el: document.createElement("audio"),
+        sound: function(src, options) {
+            options = options || {};
+            var doc = options.document || buzz.defaults.document;
+            var pid = 0, events = [], eventsOnce = {}, supported = buzz.isSupported();
+            this.load = function() {
+                if (!supported) {
+                    return this;
+                }
+                this.sound.load();
+                return this;
+            };
+            this.play = function() {
+                if (!supported) {
+                    return this;
+                }
+                this.sound.play();
+                return this;
+            };
+            this.togglePlay = function() {
+                if (!supported) {
+                    return this;
+                }
+                if (this.sound.paused) {
+                    this.sound.play();
+                } else {
+                    this.sound.pause();
+                }
+                return this;
+            };
+            this.pause = function() {
+                if (!supported) {
+                    return this;
+                }
+                this.sound.pause();
+                return this;
+            };
+            this.isPaused = function() {
+                if (!supported) {
+                    return null;
+                }
+                return this.sound.paused;
+            };
+            this.stop = function() {
+                if (!supported) {
+                    return this;
+                }
+                this.setTime(0);
+                this.sound.pause();
+                return this;
+            };
+            this.isEnded = function() {
+                if (!supported) {
+                    return null;
+                }
+                return this.sound.ended;
+            };
+            this.loop = function() {
+                if (!supported) {
+                    return this;
+                }
+                this.sound.loop = "loop";
+                this.bind("ended.buzzloop", function() {
+                    this.currentTime = 0;
+                    this.play();
+                });
+                return this;
+            };
+            this.unloop = function() {
+                if (!supported) {
+                    return this;
+                }
+                this.sound.removeAttribute("loop");
+                this.unbind("ended.buzzloop");
+                return this;
+            };
+            this.mute = function() {
+                if (!supported) {
+                    return this;
+                }
+                this.sound.muted = true;
+                return this;
+            };
+            this.unmute = function() {
+                if (!supported) {
+                    return this;
+                }
+                this.sound.muted = false;
+                return this;
+            };
+            this.toggleMute = function() {
+                if (!supported) {
+                    return this;
+                }
+                this.sound.muted = !this.sound.muted;
+                return this;
+            };
+            this.isMuted = function() {
+                if (!supported) {
+                    return null;
+                }
+                return this.sound.muted;
+            };
+            this.setVolume = function(volume) {
+                if (!supported) {
+                    return this;
+                }
+                if (volume < 0) {
+                    volume = 0;
+                }
+                if (volume > 100) {
+                    volume = 100;
+                }
+                this.volume = volume;
+                this.sound.volume = volume / 100;
+                return this;
+            };
+            this.getVolume = function() {
+                if (!supported) {
+                    return this;
+                }
+                return this.volume;
+            };
+            this.increaseVolume = function(value) {
+                return this.setVolume(this.volume + (value || 1));
+            };
+            this.decreaseVolume = function(value) {
+                return this.setVolume(this.volume - (value || 1));
+            };
+            this.setTime = function(time) {
+                if (!supported) {
+                    return this;
+                }
+                var set = true;
+                this.whenReady(function() {
+                    if (set === true) {
+                        set = false;
+                        this.sound.currentTime = time;
+                    }
+                });
+                return this;
+            };
+            this.getTime = function() {
+                if (!supported) {
+                    return null;
+                }
+                var time = Math.round(this.sound.currentTime * 100) / 100;
+                return isNaN(time) ? buzz.defaults.placeholder : time;
+            };
+            this.setPercent = function(percent) {
+                if (!supported) {
+                    return this;
+                }
+                return this.setTime(buzz.fromPercent(percent, this.sound.duration));
+            };
+            this.getPercent = function() {
+                if (!supported) {
+                    return null;
+                }
+                var percent = Math.round(buzz.toPercent(this.sound.currentTime, this.sound.duration));
+                return isNaN(percent) ? buzz.defaults.placeholder : percent;
+            };
+            this.setSpeed = function(duration) {
+                if (!supported) {
+                    return this;
+                }
+                this.sound.playbackRate = duration;
+                return this;
+            };
+            this.getSpeed = function() {
+                if (!supported) {
+                    return null;
+                }
+                return this.sound.playbackRate;
+            };
+            this.getDuration = function() {
+                if (!supported) {
+                    return null;
+                }
+                var duration = Math.round(this.sound.duration * 100) / 100;
+                return isNaN(duration) ? buzz.defaults.placeholder : duration;
+            };
+            this.getPlayed = function() {
+                if (!supported) {
+                    return null;
+                }
+                return timerangeToArray(this.sound.played);
+            };
+            this.getBuffered = function() {
+                if (!supported) {
+                    return null;
+                }
+                return timerangeToArray(this.sound.buffered);
+            };
+            this.getSeekable = function() {
+                if (!supported) {
+                    return null;
+                }
+                return timerangeToArray(this.sound.seekable);
+            };
+            this.getErrorCode = function() {
+                if (supported && this.sound.error) {
+                    return this.sound.error.code;
+                }
+                return 0;
+            };
+            this.getErrorMessage = function() {
+                if (!supported) {
+                    return null;
+                }
+                switch (this.getErrorCode()) {
+                  case 1:
+                    return "MEDIA_ERR_ABORTED";
+
+                  case 2:
+                    return "MEDIA_ERR_NETWORK";
+
+                  case 3:
+                    return "MEDIA_ERR_DECODE";
+
+                  case 4:
+                    return "MEDIA_ERR_SRC_NOT_SUPPORTED";
+
+                  default:
+                    return null;
+                }
+            };
+            this.getStateCode = function() {
+                if (!supported) {
+                    return null;
+                }
+                return this.sound.readyState;
+            };
+            this.getStateMessage = function() {
+                if (!supported) {
+                    return null;
+                }
+                switch (this.getStateCode()) {
+                  case 0:
+                    return "HAVE_NOTHING";
+
+                  case 1:
+                    return "HAVE_METADATA";
+
+                  case 2:
+                    return "HAVE_CURRENT_DATA";
+
+                  case 3:
+                    return "HAVE_FUTURE_DATA";
+
+                  case 4:
+                    return "HAVE_ENOUGH_DATA";
+
+                  default:
+                    return null;
+                }
+            };
+            this.getNetworkStateCode = function() {
+                if (!supported) {
+                    return null;
+                }
+                return this.sound.networkState;
+            };
+            this.getNetworkStateMessage = function() {
+                if (!supported) {
+                    return null;
+                }
+                switch (this.getNetworkStateCode()) {
+                  case 0:
+                    return "NETWORK_EMPTY";
+
+                  case 1:
+                    return "NETWORK_IDLE";
+
+                  case 2:
+                    return "NETWORK_LOADING";
+
+                  case 3:
+                    return "NETWORK_NO_SOURCE";
+
+                  default:
+                    return null;
+                }
+            };
+            this.set = function(key, value) {
+                if (!supported) {
+                    return this;
+                }
+                this.sound[key] = value;
+                return this;
+            };
+            this.get = function(key) {
+                if (!supported) {
+                    return null;
+                }
+                return key ? this.sound[key] : this.sound;
+            };
+            this.bind = function(types, func) {
+                if (!supported) {
+                    return this;
+                }
+                types = types.split(" ");
+                var self = this, efunc = function(e) {
+                    func.call(self, e);
+                };
+                for (var t = 0; t < types.length; t++) {
+                    var type = types[t], idx = type;
+                    type = idx.split(".")[0];
+                    events.push({
+                        idx: idx,
+                        func: efunc
+                    });
+                    this.sound.addEventListener(type, efunc, true);
+                }
+                return this;
+            };
+            this.unbind = function(types) {
+                if (!supported) {
+                    return this;
+                }
+                types = types.split(" ");
+                for (var t = 0; t < types.length; t++) {
+                    var idx = types[t], type = idx.split(".")[0];
+                    for (var i = 0; i < events.length; i++) {
+                        var namespace = events[i].idx.split(".");
+                        if (events[i].idx == idx || namespace[1] && namespace[1] == idx.replace(".", "")) {
+                            this.sound.removeEventListener(type, events[i].func, true);
+                            events.splice(i, 1);
+                        }
+                    }
+                }
+                return this;
+            };
+            this.bindOnce = function(type, func) {
+                if (!supported) {
+                    return this;
+                }
+                var self = this;
+                eventsOnce[pid++] = false;
+                this.bind(type + "." + pid, function() {
+                    if (!eventsOnce[pid]) {
+                        eventsOnce[pid] = true;
+                        func.call(self);
+                    }
+                    self.unbind(type + "." + pid);
+                });
+                return this;
+            };
+            this.trigger = function(types) {
+                if (!supported) {
+                    return this;
+                }
+                types = types.split(" ");
+                for (var t = 0; t < types.length; t++) {
+                    var idx = types[t];
+                    for (var i = 0; i < events.length; i++) {
+                        var eventType = events[i].idx.split(".");
+                        if (events[i].idx == idx || eventType[0] && eventType[0] == idx.replace(".", "")) {
+                            var evt = doc.createEvent("HTMLEvents");
+                            evt.initEvent(eventType[0], false, true);
+                            this.sound.dispatchEvent(evt);
+                        }
+                    }
+                }
+                return this;
+            };
+            this.fadeTo = function(to, duration, callback) {
+                if (!supported) {
+                    return this;
+                }
+                if (duration instanceof Function) {
+                    callback = duration;
+                    duration = buzz.defaults.duration;
+                } else {
+                    duration = duration || buzz.defaults.duration;
+                }
+                var from = this.volume, delay = duration / Math.abs(from - to), self = this;
+                this.play();
+                function doFade() {
+                    setTimeout(function() {
+                        if (from < to && self.volume < to) {
+                            self.setVolume(self.volume += 1);
+                            doFade();
+                        } else if (from > to && self.volume > to) {
+                            self.setVolume(self.volume -= 1);
+                            doFade();
+                        } else if (callback instanceof Function) {
+                            callback.apply(self);
+                        }
+                    }, delay);
+                }
+                this.whenReady(function() {
+                    doFade();
+                });
+                return this;
+            };
+            this.fadeIn = function(duration, callback) {
+                if (!supported) {
+                    return this;
+                }
+                return this.setVolume(0).fadeTo(100, duration, callback);
+            };
+            this.fadeOut = function(duration, callback) {
+                if (!supported) {
+                    return this;
+                }
+                return this.fadeTo(0, duration, callback);
+            };
+            this.fadeWith = function(sound, duration) {
+                if (!supported) {
+                    return this;
+                }
+                this.fadeOut(duration, function() {
+                    this.stop();
+                });
+                sound.play().fadeIn(duration);
+                return this;
+            };
+            this.whenReady = function(func) {
+                if (!supported) {
+                    return null;
+                }
+                var self = this;
+                if (this.sound.readyState === 0) {
+                    this.bind("canplay.buzzwhenready", function() {
+                        func.call(self);
+                    });
+                } else {
+                    func.call(self);
+                }
+            };
+            function timerangeToArray(timeRange) {
+                var array = [], length = timeRange.length - 1;
+                for (var i = 0; i <= length; i++) {
+                    array.push({
+                        start: timeRange.start(i),
+                        end: timeRange.end(i)
+                    });
+                }
+                return array;
+            }
+            function getExt(filename) {
+                return filename.split(".").pop();
+            }
+            function addSource(sound, src) {
+                var source = doc.createElement("source");
+                source.src = src;
+                if (buzz.types[getExt(src)]) {
+                    source.type = buzz.types[getExt(src)];
+                }
+                sound.appendChild(source);
+            }
+            if (supported && src) {
+                for (var i in buzz.defaults) {
+                    if (buzz.defaults.hasOwnProperty(i)) {
+                        options[i] = options[i] || buzz.defaults[i];
+                    }
+                }
+                this.sound = doc.createElement("audio");
+                if (src instanceof Array) {
+                    for (var j in src) {
+                        if (src.hasOwnProperty(j)) {
+                            addSource(this.sound, src[j]);
+                        }
+                    }
+                } else if (options.formats.length) {
+                    for (var k in options.formats) {
+                        if (options.formats.hasOwnProperty(k)) {
+                            addSource(this.sound, src + "." + options.formats[k]);
+                        }
+                    }
+                } else {
+                    addSource(this.sound, src);
+                }
+                if (options.loop) {
+                    this.loop();
+                }
+                if (options.autoplay) {
+                    this.sound.autoplay = "autoplay";
+                }
+                if (options.preload === true) {
+                    this.sound.preload = "auto";
+                } else if (options.preload === false) {
+                    this.sound.preload = "none";
+                } else {
+                    this.sound.preload = options.preload;
+                }
+                this.setVolume(options.volume);
+                buzz.sounds.push(this);
+            }
+        },
+        group: function(sounds) {
+            sounds = argsToArray(sounds, arguments);
+            this.getSounds = function() {
+                return sounds;
+            };
+            this.add = function(soundArray) {
+                soundArray = argsToArray(soundArray, arguments);
+                for (var a = 0; a < soundArray.length; a++) {
+                    sounds.push(soundArray[a]);
+                }
+            };
+            this.remove = function(soundArray) {
+                soundArray = argsToArray(soundArray, arguments);
+                for (var a = 0; a < soundArray.length; a++) {
+                    for (var i = 0; i < sounds.length; i++) {
+                        if (sounds[i] == soundArray[a]) {
+                            sounds.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+            };
+            this.load = function() {
+                fn("load");
+                return this;
+            };
+            this.play = function() {
+                fn("play");
+                return this;
+            };
+            this.togglePlay = function() {
+                fn("togglePlay");
+                return this;
+            };
+            this.pause = function(time) {
+                fn("pause", time);
+                return this;
+            };
+            this.stop = function() {
+                fn("stop");
+                return this;
+            };
+            this.mute = function() {
+                fn("mute");
+                return this;
+            };
+            this.unmute = function() {
+                fn("unmute");
+                return this;
+            };
+            this.toggleMute = function() {
+                fn("toggleMute");
+                return this;
+            };
+            this.setVolume = function(volume) {
+                fn("setVolume", volume);
+                return this;
+            };
+            this.increaseVolume = function(value) {
+                fn("increaseVolume", value);
+                return this;
+            };
+            this.decreaseVolume = function(value) {
+                fn("decreaseVolume", value);
+                return this;
+            };
+            this.loop = function() {
+                fn("loop");
+                return this;
+            };
+            this.unloop = function() {
+                fn("unloop");
+                return this;
+            };
+            this.setTime = function(time) {
+                fn("setTime", time);
+                return this;
+            };
+            this.set = function(key, value) {
+                fn("set", key, value);
+                return this;
+            };
+            this.bind = function(type, func) {
+                fn("bind", type, func);
+                return this;
+            };
+            this.unbind = function(type) {
+                fn("unbind", type);
+                return this;
+            };
+            this.bindOnce = function(type, func) {
+                fn("bindOnce", type, func);
+                return this;
+            };
+            this.trigger = function(type) {
+                fn("trigger", type);
+                return this;
+            };
+            this.fade = function(from, to, duration, callback) {
+                fn("fade", from, to, duration, callback);
+                return this;
+            };
+            this.fadeIn = function(duration, callback) {
+                fn("fadeIn", duration, callback);
+                return this;
+            };
+            this.fadeOut = function(duration, callback) {
+                fn("fadeOut", duration, callback);
+                return this;
+            };
+            function fn() {
+                var args = argsToArray(null, arguments), func = args.shift();
+                for (var i = 0; i < sounds.length; i++) {
+                    sounds[i][func].apply(sounds[i], args);
+                }
+            }
+            function argsToArray(array, args) {
+                return array instanceof Array ? array : Array.prototype.slice.call(args);
+            }
+        },
+        all: function() {
+            return new buzz.group(buzz.sounds);
+        },
+        isSupported: function() {
+            return !!buzz.el.canPlayType;
+        },
+        isOGGSupported: function() {
+            return !!buzz.el.canPlayType && buzz.el.canPlayType('audio/ogg; codecs="vorbis"');
+        },
+        isWAVSupported: function() {
+            return !!buzz.el.canPlayType && buzz.el.canPlayType('audio/wav; codecs="1"');
+        },
+        isMP3Supported: function() {
+            return !!buzz.el.canPlayType && buzz.el.canPlayType("audio/mpeg;");
+        },
+        isAACSupported: function() {
+            return !!buzz.el.canPlayType && (buzz.el.canPlayType("audio/x-m4a;") || buzz.el.canPlayType("audio/aac;"));
+        },
+        toTimer: function(time, withHours) {
+            var h, m, s;
+            h = Math.floor(time / 3600);
+            h = isNaN(h) ? "--" : h >= 10 ? h : "0" + h;
+            m = withHours ? Math.floor(time / 60 % 60) : Math.floor(time / 60);
+            m = isNaN(m) ? "--" : m >= 10 ? m : "0" + m;
+            s = Math.floor(time % 60);
+            s = isNaN(s) ? "--" : s >= 10 ? s : "0" + s;
+            return withHours ? h + ":" + m + ":" + s : m + ":" + s;
+        },
+        fromTimer: function(time) {
+            var splits = time.toString().split(":");
+            if (splits && splits.length == 3) {
+                time = parseInt(splits[0], 10) * 3600 + parseInt(splits[1], 10) * 60 + parseInt(splits[2], 10);
+            }
+            if (splits && splits.length == 2) {
+                time = parseInt(splits[0], 10) * 60 + parseInt(splits[1], 10);
+            }
+            return time;
+        },
+        toPercent: function(value, total, decimal) {
+            var r = Math.pow(10, decimal || 0);
+            return Math.round(value * 100 / total * r) / r;
+        },
+        fromPercent: function(percent, total, decimal) {
+            var r = Math.pow(10, decimal || 0);
+            return Math.round(total / 100 * percent * r) / r;
+        }
+    };
+    return buzz;
+});
+
 (function() {
     var root = this;
     var PIXI = PIXI || {};
@@ -8886,30 +9575,6 @@ if (!window.requestAnimationFrame) {
     };
 })();
 
-var ScrollDat = function() {
-    var body = document.getElementsByTagName("body")[0];
-    var container = document.createElement("div");
-    var indicator = document.createElement("div");
-    var currentY = 0;
-    var browserWidth = 0;
-    var browserHeight = 0;
-    container.style.cssText = [ "position: fixed;", "width: 80px;", "height: 40px;", "background: rgba(0,0,0,0.7);", "left: 0px;", "bottom: 0px;" ].join("");
-    indicator.style.cssText = [ "position: relative;", "width: 70px;", "height: auto;", "text-align: left;", "margin: 5px auto;", "color: rgb(0,255,255);", "font-family: helvetica, sans-serif;", "font-size: 10px;" ].join("");
-    container.appendChild(indicator);
-    return {
-        domElement: container,
-        end: function(yY) {
-            var w = window, d = document, e = d.documentElement, g = d.getElementsByTagName("body")[0];
-            browserWidth = w.innerWidth || e.clientWidth || g.clientWidth;
-            browserHeight = w.innerHeight || e.clientHeight || g.clientHeight;
-            indicator.innerHTML = "<p>s: " + yY + "px<p/><p>w: " + browserWidth + "px</p><p>h: " + browserHeight + "px</p>";
-        },
-        update: function(yY) {
-            this.end(yY);
-        }
-    };
-};
-
 if (Date.now === undefined) {
     Date.now = function() {
         return new Date().valueOf();
@@ -10297,10 +10962,10 @@ TWEEN.Interpolation = {
             this.touchStartX = 0;
             this.touchStartY = 0;
             this.touchDate = 0;
-            this.minSwipeSpeed = 2.5;
-            this.maxSwipeSpeed = 10;
+            this.minSwipeSpeed = 2;
+            this.maxSwipeSpeed = 15;
             this.maxSwipeTime = 700;
-            this.minSwipeXDistance = 150;
+            this.minSwipeDistance = 120;
         };
         ns.Trackpad = Trackpad;
         var p = Trackpad.prototype = new EventDispatcher();
@@ -10337,17 +11002,31 @@ TWEEN.Interpolation = {
             if (this.locked) return;
             var tT = Date.now() - this.touchDate;
             this.swipeXDistance = e.changedTouches[0].pageX - this.touchStartX;
+            this.swipeYDistance = e.changedTouches[0].pageY - this.touchStartY;
             this.swipeXspeed = this.swipeXDistance / tT;
-            var absSwipeDistance = Math.abs(this.swipeXDistance);
-            var absSwipeSpeed = Math.abs(this.swipeXspeed);
+            this.swipeYspeed = this.swipeYDistance / tT;
+            var absSwipeXDistance = Math.abs(this.swipeXDistance);
+            var absSwipeXSpeed = Math.abs(this.swipeXspeed);
+            var absSwipeYDistance = Math.abs(this.swipeYDistance);
+            var absSwipeYSpeed = Math.abs(this.swipeYspeed);
             if (tT <= this.maxSwipeTime) {
-                if (absSwipeSpeed > this.minSwipeSpeed && absSwipeSpeed < this.maxSwipeSpeed && absSwipeDistance > this.minSwipeXDistance) {
+                if (absSwipeXSpeed > this.minSwipeSpeed && absSwipeXSpeed < this.maxSwipeSpeed && absSwipeXDistance > this.minSwipeDistance) {
                     console.log("me swiped", this.swipeXDistance);
                     var sign = Mathbase.Sign(this.swipeXDistance);
                     if (sign > 0) {
                         this.dispatchCustomEvent("swiperight");
                     } else {
                         this.dispatchCustomEvent("swipeleft");
+                    }
+                }
+                if (absSwipeYSpeed > this.minSwipeSpeed && absSwipeYSpeed < this.maxSwipeSpeed && absSwipeYDistance > this.minSwipeDistance) {
+                    var sign = Mathbase.Sign(this.swipeYDistance);
+                    if (sign > 0) {
+                        console.log("me down");
+                        this.dispatchCustomEvent("swiperdown");
+                    } else {
+                        console.log("me up");
+                        this.dispatchCustomEvent("swipeup");
                     }
                 }
             }
@@ -10421,26 +11100,26 @@ TWEEN.Interpolation = {
                 line1: "With over 100 years of experience\n as an Oil & Gas global leader",
                 line2: "With over 100 years of close collaboration\n with the world's leading equipment builders",
                 line3: "We know that 'productivity' means more to you than just the quantity of your output",
-                line4: "Our synthetic lubricants could help enable problem-free operation to help enhance",
+                line4: "Our synthetic lubricants help enable problem-free operation to help",
                 line4b: "*Visit mobilindustrial.com to learn how certain Mobil branded lubricants may provide benefits to help minimize environmental impact. Actual benefits will depend upon product selected, operating conditions, and applications",
-                line5: "Our solutions help to:",
+                line5: "Our solutions can help to:",
                 line6: "Reduce energy consumption",
                 line7: "Reduce downtime",
                 line8: "Increase equipment protection",
                 line9: "Optimize operating costs",
                 symbolline1: "Safety",
-                symbolline2: "Environmental Care",
+                symbolline2: "Environmental Care*",
                 symbolline3: "Productivity"
             },
             scene2: {
                 desc1: {
                     title: "Gear Applications",
-                    txt: "Outstanding protection for gears operating in extreme conditions\n\nMobil SHC™ 600\nMobilgear™ Gear\nMobil SHC™ 600XP",
+                    txt: "Outstanding protection for gears operating in extreme conditions\n\nMobil SHC™ 600\nMobilgear™ Gear\nMobil SHC™ 600 XP",
                     color: "white"
                 },
                 desc2: {
                     title: "Engines",
-                    txt: "Advanced engine cleanliness and extended oil drain intervals\n\nMobil Delvac 1™\nMobil Delvac MX™\nMobil Pegasus™",
+                    txt: "Advanced engine cleanliness and extended oil drain intervals\n\nMobilGard 1™\nMobil Delvac 1™\nMobil Delvac™ M\nMobilGard™ HSD",
                     color: "white"
                 },
                 desc3: {
@@ -10457,7 +11136,7 @@ TWEEN.Interpolation = {
                 },
                 desc2: {
                     title: "Top Drive",
-                    txt: "Mobil SHC™\nMobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 EXCEL™\nMobilith SHC™",
+                    txt: "Mobil SHC™\nMobil SHC™ 600\nMobil SHC™ Gear\nMobil DTE 10 Excel™\nMobilith SHC™",
                     color: "blue"
                 },
                 desc3: {
@@ -10466,7 +11145,7 @@ TWEEN.Interpolation = {
                     color: "blue"
                 },
                 desc4: {
-                    title: "Positioning Thruster",
+                    title: "Positioning Thrusters",
                     txt: "Mobil SHC™ Gear\nMobilgear™ 600XP",
                     color: "white"
                 }
@@ -10479,12 +11158,12 @@ TWEEN.Interpolation = {
                 },
                 desc2: {
                     title: "Compressors",
-                    txt: "Can help provide outstanding cleanliness and reduced deposit formation\n\nMobil Rarus SHC™ 1020\nMobil Rarus™ 800",
+                    txt: "Exceptional cleanliness and stability characteristics at high temperatures reduce problems with deposit formation and allow for extended oil-drain intervals, reducing the need for frequent maintenance \n\nMobil Rarus SHC™ 1020\nMobil Rarus™ 800",
                     color: "blue"
                 },
                 desc3: {
                     title: "Deck Machinery",
-                    txt: "Swivel stacks, Cranes, Winches, Pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobil SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798",
+                    txt: "Swivel stacks, cranes, winches, pumps and more\n\nMobil SHC™ 600\nMobil DTE 10 Excel™\nMobilith SHC™\nMobil DTE™ Named\nMobil 375™ NC\nMobilarma™ 798",
                     color: "blue"
                 },
                 desc4: {
@@ -10520,7 +11199,8 @@ TWEEN.Interpolation = {
             scene8: {
                 line1: "Get your productivity pumping",
                 line2: "Speak to our specialists about advancing the productivity,\nsafety and environmental care of your oil and gas operations",
-                line3: "Replay >"
+                line3: "Replay >",
+                line4: "For detailed information on the products and their performance please visit MobilIndustrial.com"
             }
         };
     }
@@ -10605,7 +11285,7 @@ TWEEN.Interpolation = {
             scene4: {
                 name: "Production",
                 startFrame: 4e3 + 7200 + 4700,
-                duration: 6860,
+                duration: 7180,
                 cuepoint: 17060
             },
             scene5: {
@@ -10661,9 +11341,12 @@ TWEEN.Interpolation = {
                     txt3Y0: 360,
                     txt4X0: 512,
                     txt4Y0: 570,
+                    txt5X0: 512,
+                    txt5Y0: 600,
                     txt2Y1: 300,
                     txt3Y1: 380,
-                    txt4Y1: 600
+                    txt4Y1: 600,
+                    txt5Y0: 730
                 }
             }
         };
@@ -10811,16 +11494,17 @@ TWEEN.Interpolation = {
     var Trackpad = MKK.getNamespace("mkk.event").Trackpad;
     var MathBase = MKK.getNamespace("mkk.math").MathBase;
     if (!ns.Scroller) {
-        var Scroller = function Scroller() {
+        var Scroller = function Scroller(maxScroll) {
             this.gui = null;
             this.view = null;
             this.isStop = false;
             this.isDebug = false;
-            this.scrollSpeedDamper = .03;
+            this.scrollSpeedDamper = .05;
             this.distance = 0;
             this.maxSpeed = 200;
             this.minSpeed = -200;
             this.isAutoScrolling = false;
+            this.scrollMax = maxScroll || 1e3;
         };
         ns.Scroller = Scroller;
         var p = Scroller.prototype = new EventDispatcher();
@@ -12358,13 +13042,18 @@ TWEEN.Interpolation = {
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
             this.slope = this.createStraight(0, 21, 300, 9);
-            this.slope2 = this.createStraight(360, 21, 140, 9);
+            this.slope2 = this.createStraight(304, 21, 300, 9);
+            this.slope3 = this.createStraight(600, 21, 2325, 9);
+            this.slope3.rotation = -.52;
+            this.slope4 = this.createStraight(2600, -1125, 505, 9);
+            this.addSprite("pipe-main-joint.png", 3090, -1115, 0, 0, 1);
             this.addSprite("pipe-meter.png", 299, 30, 0, 0, 1);
             this.addSprite("underwater-cross-black.png", 0, 140, 0, 0, 1);
-            this.addSprite("pipe-main-joint.png", 0, 140, 0, 0, 1);
-            this.addSprite("pipe-joint.png", 0, 21, 0, 0, 1);
+            this.addSprite("pipe-joint.png", -2, 34, 0, 0, 1);
             this.container.addChild(this.slope);
             this.container.addChild(this.slope2);
+            this.container.addChild(this.slope3);
+            this.container.addChild(this.slope4);
         };
         p.open = function() {};
         p.createStraight = function(x, y, w, h) {
@@ -13082,6 +13771,7 @@ TWEEN.Interpolation = {
     var settings = MKK.getNamespace("data").settings;
     var ElSprite = ns.ElSprite;
     var AbContainer = MKK.getNamespace("app.scene").AbContainer;
+    var MathBase = MKK.getNamespace("mkk.math").MathBase;
     if (!ns.ElSubmarine) {
         var ElSubmarine = function ElSubmarine(startFrame, duration, x, y, z) {
             this.name = name;
@@ -13094,7 +13784,12 @@ TWEEN.Interpolation = {
         var p = ElSubmarine.prototype = new AbContainer();
         p.setup = function(sFrame, duration, x, y) {
             this._setup(sFrame, duration, x, y);
+            this.light = this.addSprite("yellow_sub-light.png", 50, 224, 0, .5, 0);
             this.addSprite("yellow_sub.png", 0, 0, 0, 0, 0);
+        };
+        p.rotateLight = function(e) {
+            var degree = MathBase.Fit01(e, -.4, .1);
+            this.light.rotate(degree);
         };
         p.update = function() {};
         p.addSprite = function(name, x, y, z, aX, aY) {
@@ -13378,7 +14073,6 @@ TWEEN.Interpolation = {
         };
         p.hideSide = function() {
             if (this.isAnimating || this.isSideHidden) return;
-            console.log("hide me");
             var tT = this.tweenTime;
             var that = this;
             var updateBound = function(e) {
@@ -13395,7 +14089,6 @@ TWEEN.Interpolation = {
         };
         p.showSide = function() {
             if (this.isAnimating || !this.isSideHidden) return;
-            console.log("show me");
             var tT = this.tweenTime;
             var that = this;
             var updateBound = function(e) {
@@ -13420,7 +14113,6 @@ TWEEN.Interpolation = {
         };
         p.showUpdate = function(e, obj) {
             this.isAnimating = true;
-            console.log(obj.x);
             this.sideview.style.left = obj.x + "px";
         };
         p.showComplete = function(e, obj) {
@@ -13577,9 +14269,9 @@ TWEEN.Interpolation = {
             var symbol1 = new ElSprite("cloud_icon_safety.png", 322, 3730, 0);
             var symbol2 = new ElSprite("cloud_icon_environmental.png", 470, 3730, 0);
             var symbol3 = new ElSprite("cloud_icon_productivity.png", 622, 3730, 0);
-            this.symTxt1 = new ElText(copies.symbolline1, 357, 3820, 0, .5, .5);
-            this.symTxt2 = new ElText(copies.symbolline2, 506, 3820, 0, .5, .5);
-            this.symTxt3 = new ElText(copies.symbolline3, 655, 3820, 0, .5, .5);
+            this.symTxt1 = new ElText(copies.symbolline1, 368, 3835, 0, .5, .5);
+            this.symTxt2 = new ElText(copies.symbolline2, 517, 3835, 0, .5, .5);
+            this.symTxt3 = new ElText(copies.symbolline3, 666, 3840, 0, .5, .5);
             this.symTxt1.setStyle(symStyle);
             this.symTxt2.setStyle(symStyle);
             this.symTxt3.setStyle(symStyle);
@@ -13820,10 +14512,14 @@ TWEEN.Interpolation = {
             this.tween4b = new TweenEach({
                 y: 0,
                 scale: 2,
+                shipscale: .3,
+                shipy: 4364,
                 y: 0
             }).to({
                 y: 25,
-                scale: .3
+                scale: .3,
+                shipscale: .2,
+                shipy: 4430
             }, 600).onUpdate(tweenRadar1bBound).easing(TWEEN.Easing.Circular.InOut).delay(this.startFrame + 4850).start();
             var tweenRadar2Bound = ListenerFunctions.createListenerFunction(this, this.tweenRadar2);
             this.tween5 = new TweenEach({
@@ -13923,6 +14619,8 @@ TWEEN.Interpolation = {
         };
         p.tweenRadar1b = function(e) {
             var cObj = this.tween4b.tweenVars();
+            this.radarboat.yPos(cObj.shipy);
+            this.radarboat.scale(cObj.shipscale);
             this.radarpuller.sprite[1].yPos(cObj.y);
             this.radarpuller.sprite[1].scale(cObj.scale);
         };
@@ -14414,6 +15112,7 @@ TWEEN.Interpolation = {
             this.seaslope = new ElSlope(0, 6e3, 6144, 1510, 0, 1974);
             this.sign = new ElSprite("processing-sign.png", 8280, 350, .5, 1);
             this.pipe = new ElPipe(0, 5e3, 5500, 1740, 0);
+            this.smallrig = new ElSprite("small-rig.png", 255, 254, 0, 0, 0);
             this.iceberg1 = new ElSprite("drilling_iceberg1.png", 0, 370, 0, 0, 0);
             this.iceberg2 = new ElSprite("drilling_iceberg2.png", 400, 353, 0, 0, 0);
             this.iceberg3 = new ElSprite("drilling_iceberg1.png", 2550, 370, 0, 0, 0);
@@ -14429,6 +15128,7 @@ TWEEN.Interpolation = {
             this.fpsomask = this.createMask(4870, 523, 230, 2e3);
             this.fpsosign.container.mask = this.fpsomask;
             this.backlevel.addElement(this.iceberg1.container);
+            this.backlevel.addElement(this.smallrig.container);
             this.midlevel.addElement(this.productionrig.container);
             this.midlevel.addElement(this.helicopter.container);
             this.midlevel.addElement(this.fpso.container);
@@ -14495,8 +15195,8 @@ TWEEN.Interpolation = {
             this.tweenlandend = new TweenEach({
                 x: -7092
             }).to({
-                x: -8122
-            }, 605).onUpdate(tweenLandEndBound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime + 750).start();
+                x: -8692
+            }, 605 + 330).onUpdate(tweenLandEndBound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveLandStartTime + 750).start();
             var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
             this.tween1 = new TweenEach({
                 x: tT.helicopterFromXPos,
@@ -14551,6 +15251,7 @@ TWEEN.Interpolation = {
         p.tweenSubFunc = function(e) {
             var cObj = this.tweensub.tweenVars();
             this.submarine.xPos(cObj.x);
+            this.submarine.rotateLight(e);
         };
         p.tweenLandFunc = function(e) {
             var cObj = this.tweenland.tweenVars();
@@ -14656,8 +15357,8 @@ TWEEN.Interpolation = {
             this.txtlevel = new StaticLevel("staticstxt");
             this.txtlevel.setup(0, 0, 0);
             this.addLevel(this.txtlevel);
-            this.mountain1 = new ElSprite("mountain_blue_mid.png", 100, 505, 0, 0, 0);
-            this.mountain2 = new ElSprite("mountain_green_small.png", 0, 605, 0, 0, 0);
+            this.mountain1 = new ElSprite("mountain_blue_mid.png", 100, 420, 0, 0, 0);
+            this.mountain2 = new ElSprite("mountain_green_mid.png", -130, 490, 0, 0, 0);
             this.frontProp1 = new ElSprite("processing-front_07.png", 200, 480, 0, 0, 0);
             this.frontProp2 = new ElSprite("processing-front_02.png", 400, 365, 0, 0, 0);
             this.frontProp3 = new ElSprite("processing-front_05.png", 1100, 485, 0, 0, 0);
@@ -14790,7 +15491,7 @@ TWEEN.Interpolation = {
             this.treelarge = new ElSprite("tree_big.png", 1650, 400, 0, 0);
             this.floor = new ElSeaFloor("floor", 0, 708, 0, 0, 0, 900, 70);
             this.road = this.createRoad();
-            this.trucksmall = new ElSprite("truck_01.png", tT.truckX0, 620, 0, 0);
+            this.trucksmall = new ElSprite("truck_01.png", tT.truckX0, 720, 0, 0, 1);
             this.frontmountain1 = new ElSprite("mountain_lightgreen_mid.png", 100, 500, 0, 0, 0);
             this.frontmountain2 = new ElSprite("mountain_green_mid.png", 900, 500, 0, 0, 0);
             this.towngrass = this.createGrass();
@@ -14810,7 +15511,7 @@ TWEEN.Interpolation = {
             this.midlevel.addElement(this.towngrass);
             this.midlevel.addElement(this.frontroad.container);
             this.trucklevel.addElement(this.trucksmall.container);
-            this.frontlevel.addElement(this.tree4.container);
+            this.createHouse(this.midlevel);
             this.frontlevel.addElement(this.frontmountain1.container);
             this.frontlevel.addElement(this.frontmountain2.container);
             this.frontlevel.addElement(this.treelarge.container);
@@ -14837,11 +15538,13 @@ TWEEN.Interpolation = {
             this.tween1 = new TweenEach({
                 x: tT.tweenStartX0,
                 scale: 1,
-                seay: tT.seaY0
+                seay: tT.seaY0,
+                truckscale: 1
             }).to({
                 x: tT.tweenStartX1,
                 scale: .6,
-                seay: tT.seaY1
+                seay: tT.seaY1,
+                truckscale: .5
             }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween1Bound).delay(this.startFrame + tT.tween1Start).start();
             var tween2Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc2);
             this.tween2 = new TweenEach({
@@ -14899,6 +15602,54 @@ TWEEN.Interpolation = {
                 this.container.mask = null;
             }
         };
+        p.createHouse = function(level) {
+            this.house1 = new ElSprite("house.png", 1950, 1e3, 0, .5, 1);
+            this.house1.scale(.3);
+            this.house2 = new ElSprite("house.png", 1050, 1e3, 0, .5, 1);
+            this.house2.scale(.3);
+            this.house3 = new ElSprite("house.png", 640, 1200, 0, .5, 1);
+            this.house2.scale(.4);
+            this.house4 = new ElSprite("house.png", 2200, 810, 0, .5, 1);
+            this.house4.scale(.2);
+            this.house5 = new ElSprite("house.png", 2270, 830, 0, .5, 1);
+            this.house5.scale(.2);
+            this.house6 = new ElSprite("house.png", 2200, 810, 0, .5, 1);
+            this.house6.scale(.3);
+            this.flat1 = new ElSprite("flat.png", 1150, 820, 0, .5, 1);
+            this.flat2 = new ElSprite("flat.png", 1850, 820, 0, .5, 1);
+            this.flat3 = new ElSprite("flat.png", 850, 920, 0, .5, 1);
+            this.flat4 = new ElSprite("flat.png", 2150, 920, 0, .5, 1);
+            this.tree1 = new ElSprite("tree_small.png", 1050, 800, .5, 1);
+            this.tree2 = new ElSprite("tree_small.png", 1150, 770, .5, 1);
+            this.tree2.scale(.8);
+            this.tree3 = new ElSprite("tree_small.png", 1820, 780, .5, 1);
+            this.tree3.scale(.6);
+            this.tree4 = new ElSprite("tree_small.png", 2220, 980, .5, 1);
+            this.tree5 = new ElSprite("tree_small.png", 850, 800, .5, 1);
+            this.tree6 = new ElSprite("tree_small.png", 1300, 800, .5, 1);
+            this.tree6.scale(.8);
+            this.tree7 = new ElSprite("tree_small.png", 1820, 780, .5, 1);
+            this.tree7.scale(.6);
+            this.tree8 = new ElSprite("tree_small.png", 2120, 880, .5, 1);
+            level.addElement(this.flat1.container);
+            level.addElement(this.flat2.container);
+            level.addElement(this.flat3.container);
+            level.addElement(this.flat4.container);
+            level.addElement(this.tree1.container);
+            level.addElement(this.tree2.container);
+            level.addElement(this.tree3.container);
+            level.addElement(this.tree4.container);
+            level.addElement(this.tree5.container);
+            level.addElement(this.tree6.container);
+            level.addElement(this.tree7.container);
+            level.addElement(this.tree8.container);
+            level.addElement(this.house1.container);
+            level.addElement(this.house2.container);
+            level.addElement(this.house3.container);
+            level.addElement(this.house4.container);
+            level.addElement(this.house5.container);
+            level.addElement(this.house6.container);
+        };
         p.tweenTruckFunc = function(e) {
             cObj = this.tweenTruck.tweenVars();
             this.trucksmall.xPos(cObj.x);
@@ -14915,6 +15666,7 @@ TWEEN.Interpolation = {
             this.backlevel.scale(cObj.scale);
             this.midlevel.scale(cObj.scale);
             this.trucklevel.scale(cObj.scale);
+            this.trucksmall.scale(cObj.truckscale);
             this.sea.position.y = cObj.seay;
         };
         p.tweenFunc2 = function(e) {
@@ -15057,6 +15809,7 @@ TWEEN.Interpolation = {
             var strapStyle = styledata.straplinegrey;
             var smallStyle = styledata.endlineBody;
             var replayStyle = styledata.replayGrey;
+            var disclaimTitle = styledata.disclaimTitle;
             this.txt2 = new ElText(copies.line1, tT.txt2X0, tT.txt2Y0, 0, .5, .5);
             this.txt2.setStyle(strapStyle);
             this.txt2.opacity(0);
@@ -15072,9 +15825,13 @@ TWEEN.Interpolation = {
                 console.log("aa tester");
                 that.dispatchCustomEvent("replay");
             };
+            this.txt5 = new ElText(copies.line4, tT.txt5X0, tT.txt5Y0, 0, .5, .5);
+            this.txt5.setStyle(disclaimTitle);
+            this.txt5.opacity(0);
             this.level1.addElement(this.txt2.container);
             this.level1.addElement(this.txt3.container);
             this.level1.addElement(this.txt4.container);
+            this.level1.addElement(this.txt5.container);
             var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
             this.tween0 = new TweenEach({
                 y: tT.txt2Y0
@@ -15093,6 +15850,12 @@ TWEEN.Interpolation = {
             }).to({
                 y: tT.txt4Y1
             }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween2Bound).delay(this.startFrame + tT.stackDelay * 2).start();
+            var tween3Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc3);
+            this.tween3 = new TweenEach({
+                y: tT.txt5Y0
+            }).to({
+                y: tT.txt5Y1
+            }, tT._speed).easing(TWEEN.Easing.Cubic.InOut).onUpdate(tween3Bound).delay(this.startFrame + tT.stackDelay * 3).start();
         };
         p.tweenFunc0 = function(e) {
             var cObj = this.tween0.tweenVars();
@@ -15108,6 +15871,11 @@ TWEEN.Interpolation = {
             var cObj = this.tween2.tweenVars();
             this.txt4.opacity(e);
             this.txt4.yPos(cObj.y);
+        };
+        p.tweenFunc3 = function(e) {
+            var cObj = this.tween3.tweenVars();
+            this.txt5.opacity(e);
+            this.txt5.yPos(cObj.y);
         };
         p.close = function() {};
         p.update = function(frame) {
@@ -15150,14 +15918,16 @@ TWEEN.Interpolation = {
             this.renderer = new PIXI.CanvasRenderer(1024, 768);
             this.renderer.roundPixels = true;
             document.body.appendChild(this.renderer.view);
+            this.soundtrack = new buzz.sound("sound/oilgassoundtrack_1-2_01", {
+                formats: [ "ogg", "mp3", "aac" ]
+            });
             this.loader = new Loader();
             document.body.appendChild(this.loader.view);
             this.navi = new Navi();
             document.body.appendChild(this.navi.topview);
             document.body.appendChild(this.navi.sideview);
-            this.scroller = new Scroller();
+            this.scroller = new Scroller(scenedata.totalFrame);
             this.scroller.setup(this.renderer.view);
-            if (this.isDebug) this.debug();
             this.scene1 = new Scene1();
             this.scene1.setup(scenedata.scene1.startFrame, scenedata.scene1.duration, 0, 0);
             this.scene2 = new Scene2();
@@ -15185,8 +15955,10 @@ TWEEN.Interpolation = {
             this.loader.fadeout();
             this.swipeLeftFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeLeftFunc);
             this.swipeRightFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeRightFunc);
+            this.swipeUpFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeUpFunc);
             this.scroller.trackpad.addEventListener("swipeleft", this.swipeLeftFuncBound);
             this.scroller.trackpad.addEventListener("swiperight", this.swipeRightFuncBound);
+            this.scroller.trackpad.addEventListener("swipeup", this.swipeUpFuncBound);
             this.naviTapFuncBound = ListenerFunctions.createListenerFunction(this, this.naviTapFunc);
             this.navi.addEventListener("navitap", this.naviTapFuncBound);
             this.replayFuncBound = ListenerFunctions.createListenerFunction(this, this.replayFunc);
@@ -15200,9 +15972,14 @@ TWEEN.Interpolation = {
             console.log("swipe right man", e);
             this.navi.showSide();
         };
+        p.swipeUpFunc = function(e) {
+            console.log("swipe up man", e);
+            if (this.scroller.getDistance() < 5e3) {
+                this.soundtrack.play();
+            }
+        };
         p.naviTapFunc = function(e) {
             this.scroller.scrollto(e.detail.distance);
-            this.navi.hideSide();
         };
         p.replayFunc = function(e) {
             this.scroller.scrollto(0);
@@ -15214,7 +15991,7 @@ TWEEN.Interpolation = {
                 rotation: 0
             }).to({
                 rotation: 1
-            }, 3e3).onUpdate(function(e) {
+            }, 7e3).onUpdate(function(e) {
                 that.loader.waveYPos(e);
             }).onComplete(fontActiveBound).start();
         };
@@ -15226,7 +16003,7 @@ TWEEN.Interpolation = {
             this.load();
         };
         p.load = function() {
-            assetsToLoader = [ "assets/global.json", "assets/scene1.json", "assets/scene2.json", "assets/scene2b.json", "assets/scene2c.json", "assets/scene3.json", "assets/scene3b.json", "assets/scene4.json", "assets/scene5.json", "assets/scene6.json", "assets/scene7.json", "assets/scene8.json" ];
+            assetsToLoader = [ "assets/global.json", "assets/scene1.json", "assets/scene2.json", "assets/scene2b.json", "assets/scene2c.json", "assets/scene3.json", "assets/scene3b.json", "assets/scene4.json", "assets/scene5.json", "assets/scene6.json", "assets/scene7.json", "assets/scene8.json", "assets/sceneend.json" ];
             loader = new PIXI.AssetLoader(assetsToLoader);
             var that = this;
             loadComplete = function() {
@@ -15260,31 +16037,9 @@ TWEEN.Interpolation = {
         };
         p.render = function() {
             if (!this.loaded) return;
-            if (this.stats) {
-                this.stats.begin();
-            }
             this.update();
             this.animate();
             this.renderer.render(this.stage);
-            if (this.stats) {
-                this.stats.end();
-            }
-        };
-        p.debug = function() {
-            this.gui = new dat.GUI({
-                autoPlace: false
-            });
-            this.stats = new Stats();
-            var dEle = this.stats.domElement;
-            dEle.style.position = "absolute";
-            dEle.style.right = "0px";
-            dEle.style.bottom = "0px";
-            this.gui.domElement.style.position = "absolute";
-            this.gui.domElement.style.right = "10px";
-            this.gui.domElement.style.top = "46px";
-            document.body.appendChild(this.stats.domElement);
-            document.body.appendChild(this.gui.domElement);
-            this.scroller.debug(this.gui);
         };
     }
 })();

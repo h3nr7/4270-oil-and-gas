@@ -51,6 +51,14 @@
 			document.body.appendChild(this.renderer.view);
 
 			// --------------------------------------------------
+			// Sound
+			// --------------------------------------------------	
+			this.soundtrack = new buzz.sound( "sound/oilgassoundtrack_1-2_01", {
+			    formats: [ "ogg", "mp3", "aac" ]
+			});
+
+
+			// --------------------------------------------------
 			// Loader
 			// --------------------------------------------------	
 			this.loader = new Loader();
@@ -66,11 +74,11 @@
 			// --------------------------------------------------
 			// SCROLLER Setup
 			// --------------------------------------------------
-			this.scroller = new Scroller();
+			this.scroller = new Scroller(scenedata.totalFrame);
 			this.scroller.setup(this.renderer.view);
 			// ------------------
 
-			if (this.isDebug) this.debug();
+			// if (this.isDebug) this.debug();
 
 			//setup scenes
 			this.scene1 = new Scene1();
@@ -114,13 +122,14 @@
 			// --------------------------
 			this.swipeLeftFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeLeftFunc);
 			this.swipeRightFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeRightFunc);
+			this.swipeUpFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeUpFunc);
 
 			this.scroller.trackpad.addEventListener('swipeleft', this.swipeLeftFuncBound);
 			this.scroller.trackpad.addEventListener('swiperight', this.swipeRightFuncBound);
+			this.scroller.trackpad.addEventListener('swipeup', this.swipeUpFuncBound);
 
 			this.naviTapFuncBound = ListenerFunctions.createListenerFunction(this, this.naviTapFunc);
 			this.navi.addEventListener('navitap', this.naviTapFuncBound);
-
 
 			//end scene event
 			this.replayFuncBound = ListenerFunctions.createListenerFunction(this, this.replayFunc);
@@ -140,14 +149,21 @@
 			this.navi.showSide();
 		}
 
+		p.swipeUpFunc = function(e) {
+			console.log('swipe up man', e);
+			if (this.scroller.getDistance()<5000) {
+				this.soundtrack.play();
+			}
+		}
+
 		p.naviTapFunc = function(e) {
 			this.scroller.scrollto(e.detail.distance);
-			this.navi.hideSide();
 		}
 
 		p.replayFunc = function(e) {
 			this.scroller.scrollto(0);
 		}
+
 
         p.loadFonts = function() {
 
@@ -169,7 +185,7 @@
 			//dummy font loader
 			var that = this;
 			this.tweener = new TWEEN.Tween({rotation:0})
-								.to({ rotation: 1 }, 3000)
+								.to({ rotation: 1 }, 7000)
 								.onUpdate(function(e){ that.loader.waveYPos(e); })
 								.onComplete(fontActiveBound).start();
         }
@@ -201,6 +217,7 @@
 				"assets/scene6.json",
 				"assets/scene7.json",
 				"assets/scene8.json",
+				"assets/sceneend.json",
 			];
 
 			loader = new PIXI.AssetLoader(assetsToLoader);
@@ -250,7 +267,7 @@
 
 			if (!this.loaded) return;
 
-			if (this.stats) { this.stats.begin() };
+			// if (this.stats) { this.stats.begin() };
 			//render code starts here
 			this.update();
 			this.animate();
@@ -258,31 +275,31 @@
 			this.renderer.render(this.stage);
 
 			//render code ends here
-			if (this.stats) { this.stats.end() };
+			// if (this.stats) { this.stats.end() };
 		}
 
 
 		//debugger
-		p.debug = function() {	
+		// p.debug = function() {	
 
-			this.gui = new dat.GUI({ autoPlace: false });
+		// 	this.gui = new dat.GUI({ autoPlace: false });
 
-			this.stats = new Stats();
-			var dEle = this.stats.domElement;
-			dEle.style.position = 'absolute';
-			dEle.style.right = '0px';
-			dEle.style.bottom = '0px';
+		// 	this.stats = new Stats();
+		// 	var dEle = this.stats.domElement;
+		// 	dEle.style.position = 'absolute';
+		// 	dEle.style.right = '0px';
+		// 	dEle.style.bottom = '0px';
 
-			this.gui.domElement.style.position = 'absolute';
-			this.gui.domElement.style.right = '10px';
-			this.gui.domElement.style.top = '46px';
+		// 	this.gui.domElement.style.position = 'absolute';
+		// 	this.gui.domElement.style.right = '10px';
+		// 	this.gui.domElement.style.top = '46px';
 
-			document.body.appendChild(this.stats.domElement);
-			document.body.appendChild(this.gui.domElement);
+		// 	document.body.appendChild(this.stats.domElement);
+		// 	document.body.appendChild(this.gui.domElement);
 
-			//add debugger for other libs
-			this.scroller.debug(this.gui);
-		}
+		// 	//add debugger for other libs
+		// 	this.scroller.debug(this.gui);
+		// }
 
 	}
 })();

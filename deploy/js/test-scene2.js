@@ -58,7 +58,7 @@
 			// --------------------------------------------------
 			// SCROLLER Setup
 			// --------------------------------------------------
-			this.scroller = new Scroller();
+			this.scroller = new Scroller(8000);
 			this.scroller.setup(this.renderer.view);
 			// ------------------
 

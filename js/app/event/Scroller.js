@@ -8,17 +8,18 @@
 
 	if (!ns.Scroller) {
 
-		var Scroller = function Scroller() {
+		var Scroller = function Scroller(maxScroll) {
 
 			this.gui = null;
 			this.view = null;
 			this.isStop = false;
 			this.isDebug = false;
-			this.scrollSpeedDamper = 0.03;
+			this.scrollSpeedDamper = 0.05;
 			this.distance = 0;
 			this.maxSpeed = 200;
 			this.minSpeed = -200;
 			this.isAutoScrolling = false;
+			this.scrollMax = maxScroll || 1000;
 			// this.speedRange = 10000;
 		}
 

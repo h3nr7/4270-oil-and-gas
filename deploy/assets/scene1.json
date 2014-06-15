@@ -71,31 +71,31 @@
 		},
 		"cloud_icon_safety.png":
 		{
-            "frame": {"x":730,"y":506,"w":64,"h":64},
+            "frame": {"x":730,"y":506,"w":90,"h":90},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
-            "sourceSize": {"w":64,"h":64}
+            "spriteSourceSize": {"x":0,"y":0,"w":90,"h":90},
+            "sourceSize": {"w":90,"h":90}
 		},
 		"cloud_icon_productivity.png":
 		{
-            "frame": {"x":796,"y":506,"w":64,"h":64},
+            "frame": {"x":822,"y":506,"w":90,"h":90},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
-            "sourceSize": {"w":64,"h":64}
+            "spriteSourceSize": {"x":0,"y":0,"w":90,"h":90},
+            "sourceSize": {"w":90,"h":90}
 		},
 		"cloud_icon_environmental.png":
 		{
-            "frame": {"x":862,"y":506,"w":64,"h":64},
+            "frame": {"x":914,"y":506,"w":90,"h":90},
             "rotated": false,
             "trimmed": false,
-            "spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
-            "sourceSize": {"w":64,"h":64}
+            "spriteSourceSize": {"x":0,"y":0,"w":90,"h":90},
+            "sourceSize": {"w":90,"h":90}
 		},
 		"cloud_blue1.png":
 		{
-            "frame": {"x":928,"y":506,"w":97,"h":54},
+            "frame": {"x":730,"y":598,"w":97,"h":54},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":97,"h":54},
@@ -103,7 +103,7 @@
 		},
 		"signum_small.png":
 		{
-            "frame": {"x":730,"y":572,"w":195,"h":51},
+            "frame": {"x":829,"y":598,"w":195,"h":51},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":195,"h":51},
@@ -111,7 +111,7 @@
 		},
 		"mobile_grease_small.png":
 		{
-            "frame": {"x":730,"y":625,"w":308,"h":44},
+            "frame": {"x":730,"y":654,"w":308,"h":44},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":308,"h":44},

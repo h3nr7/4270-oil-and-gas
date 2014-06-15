@@ -106,7 +106,7 @@
 			this.road = this.createRoad();
 
 			//truckside
-			this.trucksmall = new ElSprite('truck_01.png', tT.truckX0, 620, 0, 0);
+			this.trucksmall = new ElSprite('truck_01.png', tT.truckX0, 720, 0, 0, 1);
 
 			//small front mountains
 			this.frontmountain1 = new ElSprite('mountain_lightgreen_mid.png', 100, 500, 0, 0, 0);
@@ -145,9 +145,11 @@
 
 			// trucklevel
 			this.trucklevel.addElement(this.trucksmall.container);
-
+			this.createHouse(this.midlevel);	
 			// frontlevel
-			this.frontlevel.addElement(this.tree4.container);
+
+			//create and add houses to midlevel
+			
 			this.frontlevel.addElement(this.frontmountain1.container);
 			this.frontlevel.addElement(this.frontmountain2.container);
 			this.frontlevel.addElement(this.treelarge.container);
@@ -182,8 +184,8 @@
 							.delay(this.startFrame ).start();
 
 			var tween1Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc1);
-			this.tween1 = new TweenEach({x: tT.tweenStartX0, scale: 1, seay: tT.seaY0})
-							.to({x: tT.tweenStartX1, scale: 0.6, seay: tT.seaY1}, tT._speed)
+			this.tween1 = new TweenEach({x: tT.tweenStartX0, scale: 1, seay: tT.seaY0, truckscale: 1})
+							.to({x: tT.tweenStartX1, scale: 0.6, seay: tT.seaY1, truckscale: 0.5}, tT._speed)
 							.easing(TWEEN.Easing.Cubic.InOut)
 							.onUpdate(tween1Bound)
 							.delay(this.startFrame + tT.tween1Start).start();
@@ -256,6 +258,69 @@
 			}
 		}
 
+
+		p.createHouse = function(level) {
+			
+			this.house1 = new ElSprite('house.png', 1950, 1000, 0, 0.5, 1);
+			this.house1.scale(0.3);
+
+			this.house2 = new ElSprite('house.png', 1050, 1000, 0, 0.5, 1);
+			this.house2.scale(0.3);
+
+			this.house3 = new ElSprite('house.png', 640, 1200, 0, 0.5, 1);
+			this.house2.scale(0.4);
+			this.house4 = new ElSprite('house.png', 2200, 810, 0, 0.5, 1);
+			this.house4.scale(0.2);
+			this.house5 = new ElSprite('house.png', 2270, 830, 0, 0.5, 1);
+			this.house5.scale(0.2);
+			this.house6 = new ElSprite('house.png', 2200, 810, 0, 0.5, 1);
+			this.house6.scale(0.3);
+
+			this.flat1 = new ElSprite('flat.png', 1150, 820, 0, 0.5, 1);
+			this.flat2 = new ElSprite('flat.png', 1850, 820, 0, 0.5, 1);
+
+			this.flat3 = new ElSprite('flat.png', 850, 920, 0, 0.5, 1);
+			this.flat4 = new ElSprite('flat.png', 2150, 920, 0, 0.5, 1);
+
+			this.tree1 = new ElSprite('tree_small.png', 1050, 800, 0.5, 1);
+			this.tree2 = new ElSprite('tree_small.png', 1150, 770, 0.5, 1);
+			this.tree2.scale(0.8);
+			this.tree3 = new ElSprite('tree_small.png',  1820, 780, 0.5, 1);
+			this.tree3.scale(0.6);
+			this.tree4 = new ElSprite('tree_small.png',  2220, 980, 0.5, 1);
+
+			this.tree5 = new ElSprite('tree_small.png', 850, 800, 0.5, 1);
+			this.tree6 = new ElSprite('tree_small.png', 1300, 800, 0.5, 1);
+			this.tree6.scale(0.8);
+			this.tree7 = new ElSprite('tree_small.png',  1820, 780, 0.5, 1);
+			this.tree7.scale(0.6);
+			this.tree8 = new ElSprite('tree_small.png',  2120, 880, 0.5, 1);
+
+
+	
+
+			level.addElement(this.flat1.container);
+			level.addElement(this.flat2.container);
+			level.addElement(this.flat3.container);
+			level.addElement(this.flat4.container);
+
+			level.addElement(this.tree1.container);
+			level.addElement(this.tree2.container);
+			level.addElement(this.tree3.container);
+			level.addElement(this.tree4.container);
+			level.addElement(this.tree5.container);
+			level.addElement(this.tree6.container);
+			level.addElement(this.tree7.container);
+			level.addElement(this.tree8.container);
+
+			level.addElement(this.house1.container);
+			level.addElement(this.house2.container);
+			level.addElement(this.house3.container);
+			level.addElement(this.house4.container);
+			level.addElement(this.house5.container);
+			level.addElement(this.house6.container);
+		}
+
 		// ------------------------------------------------
 		// TWEEN FUNCTIONS
 		// ------------------------------------------------
@@ -277,6 +342,7 @@
 			this.backlevel.scale(cObj.scale);
 			this.midlevel.scale(cObj.scale);
 			this.trucklevel.scale(cObj.scale);
+			this.trucksmall.scale(cObj.truckscale);
 			this.sea.position.y = cObj.seay;
 		}
 

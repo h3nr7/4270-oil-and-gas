@@ -125,6 +125,11 @@
 
 
 			// ----------------------------
+			// create smallrig
+			// ----------------------------
+			this.smallrig = new ElSprite("small-rig.png", 255, 254, 0, 0, 0);
+
+			// ----------------------------
 			// create iceberg
 			// ----------------------------
 			//iceberg 1
@@ -172,6 +177,8 @@
 			// ----------------------------	
 			//back
 			this.backlevel.addElement(this.iceberg1.container);
+			this.backlevel.addElement(this.smallrig.container);
+
 			//mid
 			this.midlevel.addElement(this.productionrig.container);
 			this.midlevel.addElement(this.helicopter.container);
@@ -338,6 +345,7 @@
 		p.tweenSubFunc = function(e) {
 			var cObj = this.tweensub.tweenVars();
 			this.submarine.xPos(cObj.x);
+			this.submarine.rotateLight(e);
 		}
 
 		p.tweenLandFunc = function(e) {

@@ -19,10 +19,10 @@
 			this.touchStartX = 0;
 			this.touchStartY = 0;
 			this.touchDate = 0;
-			this.minSwipeSpeed = 2.5;
-			this.maxSwipeSpeed = 10;
+			this.minSwipeSpeed = 2.0;
+			this.maxSwipeSpeed = 15;
 			this.maxSwipeTime = 700;
-			this.minSwipeXDistance = 150;
+			this.minSwipeDistance = 120;
 		}
 
 
@@ -86,14 +86,23 @@
 
 			var tT = Date.now() - this.touchDate;
 			this.swipeXDistance = e.changedTouches[0].pageX - this.touchStartX;
+			this.swipeYDistance = e.changedTouches[0].pageY - this.touchStartY;
+
 			this.swipeXspeed = this.swipeXDistance / tT;
-			var absSwipeDistance = Math.abs(this.swipeXDistance);
-			var absSwipeSpeed = Math.abs(this.swipeXspeed);
-			//swipe detect
+			this.swipeYspeed = this.swipeYDistance / tT;
+
+			var absSwipeXDistance = Math.abs(this.swipeXDistance);
+			var absSwipeXSpeed = Math.abs(this.swipeXspeed);
+			var absSwipeYDistance = Math.abs(this.swipeYDistance);
+			var absSwipeYSpeed = Math.abs(this.swipeYspeed);
+
+			//swipe horizontal detect
 			if(tT<=this.maxSwipeTime) {
-				if(absSwipeSpeed>this.minSwipeSpeed 
-					&& absSwipeSpeed<this.maxSwipeSpeed
-					&& absSwipeDistance>this.minSwipeXDistance
+
+				//x detect
+				if(absSwipeXSpeed>this.minSwipeSpeed 
+					&& absSwipeXSpeed<this.maxSwipeSpeed
+					&& absSwipeXDistance>this.minSwipeDistance
 				) {
 					console.log('me swiped', this.swipeXDistance);
 					var sign = Mathbase.Sign(this.swipeXDistance);
@@ -104,11 +113,30 @@
 						this.dispatchCustomEvent('swipeleft');
 					}
 				}
+
+				// y detect
+				if(absSwipeYSpeed>this.minSwipeSpeed 
+					&& absSwipeYSpeed<this.maxSwipeSpeed
+					&& absSwipeYDistance>this.minSwipeDistance
+				) {
+					var sign = Mathbase.Sign(this.swipeYDistance);
+					if(sign>0) {
+						console.log('me down')
+						this.dispatchCustomEvent('swiperdown');
+					}
+					else {
+						console.log('me up')
+						this.dispatchCustomEvent('swipeup');
+					}
+				}
+
+
 			}
 
 			this.dragging = false;
 			this.touchDate = null;
 		}
+
 
 		p.updateDrag = function(e) {
 			if(this.locked || !this.touchDate) return;

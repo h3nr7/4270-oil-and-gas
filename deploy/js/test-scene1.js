@@ -46,12 +46,12 @@
 			// Navigator
 			// --------------------------------------------------	
 			this.navi = new Navi();
-			document.body.appendChild(this.navi.view);
+			document.body.appendChild(this.navi.topview);
 
 			// --------------------------------------------------
 			// SCROLLER Setup
 			// --------------------------------------------------
-			this.scroller = new Scroller();
+			this.scroller = new Scroller(6000);
 			this.scroller.setup(this.renderer.view);
 			// ------------------
 

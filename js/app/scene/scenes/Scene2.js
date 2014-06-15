@@ -240,8 +240,8 @@
 							.delay(this.startFrame+4250).start();
 
 			var tweenRadar1bBound = ListenerFunctions.createListenerFunction(this, this.tweenRadar1b);
-			this.tween4b = new TweenEach({y: 0, scale:2, y: 0})
-							.to({y: 25, scale:0.3}, 600)
+			this.tween4b = new TweenEach({y: 0, scale:2, shipscale: 0.3, shipy: 4364, y: 0})
+							.to({y: 25, scale:0.3, shipscale: 0.2, shipy: 4430}, 600)
 							.onUpdate(tweenRadar1bBound)
 							.easing(TWEEN.Easing.Circular.InOut)
 							.delay(this.startFrame+4850).start();
@@ -358,6 +358,8 @@
 
 		p.tweenRadar1b = function(e) {
 			var cObj = this.tween4b.tweenVars();
+			this.radarboat.yPos(cObj.shipy);
+			this.radarboat.scale(cObj.shipscale);
 			this.radarpuller.sprite[1].yPos(cObj.y);
 			this.radarpuller.sprite[1].scale(cObj.scale);
 		}

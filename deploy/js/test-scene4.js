@@ -41,6 +41,14 @@
 			// add the renderer view element to the DOM
 			document.body.appendChild(this.renderer.view);
 
+			// --------------------------------------------------
+			// Sound
+			// --------------------------------------------------	
+			this.soundtrack = new buzz.sound( "sound/oilgassoundtrack_1-2_01", {
+			    formats: [ "ogg", "mp3", "aac" ]
+			});
+
+			
 
 			// --------------------------------------------------
 			// Navigator
@@ -52,7 +60,7 @@
 			// --------------------------------------------------
 			// SCROLLER Setup
 			// --------------------------------------------------
-			this.scroller = new Scroller();
+			this.scroller = new Scroller(10014);
 			this.scroller.setup(this.renderer.view);
 			// ------------------
 
@@ -81,9 +89,11 @@
 			// --------------------------
 			this.swipeLeftFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeLeftFunc);
 			this.swipeRightFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeRightFunc);
+			this.swipeUpFuncBound = ListenerFunctions.createListenerFunction(this, this.swipeUpFunc);
 
 			this.scroller.trackpad.addEventListener('swipeleft', this.swipeLeftFuncBound);
 			this.scroller.trackpad.addEventListener('swiperight', this.swipeRightFuncBound);
+			this.scroller.trackpad.addEventListener('swipeup', this.swipeUpFuncBound);
 
 			this.naviTapFuncBound = ListenerFunctions.createListenerFunction(this, this.naviTapFunc);
 			this.navi.addEventListener('navitap', this.naviTapFuncBound);
@@ -98,6 +108,13 @@
 		p.swipeRightFunc = function(e) {
 			console.log('swipe right man', e);
 			this.navi.showSide();
+		}
+
+		p.swipeUpFunc = function(e) {
+			console.log('swipe up man', e);
+			if (this.scroller.getDistance()<5000) {
+				this.soundtrack.play();
+			}
 		}
 
 		p.naviTapFunc = function(e) {

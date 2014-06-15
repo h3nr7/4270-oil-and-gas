@@ -1,7 +1,7 @@
 {
 	"meta": {
 		"image": "sceneend.png",
-		"size": {"w":754,"h":709},
+		"size": {"w":1256,"h":776},
 		"scale": "1"
 	},
 	"frames": {
@@ -21,9 +21,25 @@
             "spriteSourceSize": {"x":0,"y":0,"w":450,"h":462},
             "sourceSize": {"w":450,"h":462}
 		},
+		"small-rig.png":
+		{
+            "frame": {"x":756,"y":2,"w":500,"h":454},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":500,"h":454},
+            "sourceSize": {"w":500,"h":454}
+		},
+		"yellow_sub-light.png":
+		{
+            "frame": {"x":2,"y":576,"w":310,"h":200},
+            "rotated": false,
+            "trimmed": false,
+            "spriteSourceSize": {"x":0,"y":0,"w":310,"h":200},
+            "sourceSize": {"w":310,"h":200}
+		},
 		"house.png":
 		{
-            "frame": {"x":2,"y":576,"w":150,"h":133},
+            "frame": {"x":314,"y":576,"w":150,"h":133},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":150,"h":133},
@@ -31,7 +47,7 @@
 		},
 		"pipe-main-joint.png":
 		{
-            "frame": {"x":154,"y":576,"w":55,"h":120},
+            "frame": {"x":466,"y":576,"w":55,"h":120},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":55,"h":120},
@@ -39,7 +55,7 @@
 		},
 		"pipe-meter.png":
 		{
-            "frame": {"x":304,"y":466,"w":62,"h":98},
+            "frame": {"x":756,"y":458,"w":62,"h":98},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":62,"h":98},
@@ -47,23 +63,23 @@
 		},
 		"trees_small.png":
 		{
-            "frame": {"x":368,"y":466,"w":50,"h":95},
+            "frame": {"x":820,"y":458,"w":50,"h":95},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":50,"h":95},
             "sourceSize": {"w":50,"h":95}
 		},
-		"mountain_darkgreen_small.png":
+		"mountain_green_small.png":
 		{
-            "frame": {"x":420,"y":466,"w":200,"h":86},
+            "frame": {"x":872,"y":458,"w":200,"h":86},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":200,"h":86},
             "sourceSize": {"w":200,"h":86}
 		},
-		"mountain_green_small.png":
+		"mountain_darkgreen_small.png":
 		{
-            "frame": {"x":211,"y":576,"w":200,"h":86},
+            "frame": {"x":304,"y":466,"w":200,"h":86},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":200,"h":86},
@@ -71,7 +87,7 @@
 		},
 		"house_small.png":
 		{
-            "frame": {"x":622,"y":466,"w":50,"h":44},
+            "frame": {"x":1074,"y":458,"w":50,"h":44},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":50,"h":44},
@@ -79,7 +95,7 @@
 		},
 		"pipe-joint.png":
 		{
-            "frame": {"x":674,"y":466,"w":7,"h":18},
+            "frame": {"x":1126,"y":458,"w":7,"h":18},
             "rotated": false,
             "trimmed": false,
             "spriteSourceSize": {"x":0,"y":0,"w":7,"h":18},

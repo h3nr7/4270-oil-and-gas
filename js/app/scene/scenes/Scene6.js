@@ -84,8 +84,8 @@
 			this.addLevel(this.txtlevel);		
 
 
-			this.mountain1 = new ElSprite('mountain_blue_mid.png', 100, 505, 0, 0,0);
-			this.mountain2 = new ElSprite('mountain_green_small.png', 0, 605, 0, 0,0);
+			this.mountain1 = new ElSprite('mountain_blue_mid.png', 100, 420, 0, 0,0);
+			this.mountain2 = new ElSprite('mountain_green_mid.png', -130, 490, 0, 0,0);
 
 
 			this.frontProp1 = new ElSprite('processing-front_07.png', 200, 480, 0, 0,0);

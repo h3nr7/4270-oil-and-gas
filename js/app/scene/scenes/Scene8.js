@@ -61,6 +61,7 @@
 			var strapStyle = styledata.straplinegrey;
 			var smallStyle = styledata.endlineBody;
 			var replayStyle = styledata.replayGrey;
+			var disclaimTitle = styledata.disclaimTitle;
 			//strapline1
 			this.txt2 = new ElText(copies.line1, tT.txt2X0, tT.txt2Y0, 0, 0.5, 0.5);
 			this.txt2.setStyle(strapStyle);
@@ -77,10 +78,14 @@
 			var that = this;
 			this.txt4.container.tap = function(e) {console.log('aa tester'); that.dispatchCustomEvent('replay') };
 
+			this.txt5 = new ElText(copies.line4, tT.txt5X0, tT.txt5Y0, 0, 0.5, 0.5);
+			this.txt5.setStyle(disclaimTitle);
+			this.txt5.opacity(0);
+
 			this.level1.addElement(this.txt2.container);
 			this.level1.addElement(this.txt3.container);
 			this.level1.addElement(this.txt4.container);
-
+			this.level1.addElement(this.txt5.container);
 
 			// ------------------------------------------------
 			// Tween
@@ -107,6 +112,13 @@
 							.onUpdate(tween2Bound)
 							.delay(this.startFrame + tT.stackDelay*2).start();
 
+			var tween3Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc3);
+			this.tween3 = new TweenEach({y:tT.txt5Y0})
+							.to({y: tT.txt5Y1}, tT._speed)
+							.easing(TWEEN.Easing.Cubic.InOut)
+							.onUpdate(tween3Bound)
+							.delay(this.startFrame + tT.stackDelay*3).start();
+
 		}
 
 		// ------------------------------------------------
@@ -128,6 +140,12 @@
 			var cObj = this.tween2.tweenVars();
 			this.txt4.opacity(e);
 			this.txt4.yPos(cObj.y);
+		}
+
+		p.tweenFunc3 = function(e) {
+			var cObj = this.tween3.tweenVars();
+			this.txt5.opacity(e);
+			this.txt5.yPos(cObj.y);
 		}
 			
 		//close when destroyed

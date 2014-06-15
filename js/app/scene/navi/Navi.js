@@ -191,7 +191,6 @@
 		p.hideSide = function() {
 
 			if(this.isAnimating || this.isSideHidden) return;
-			console.log('hide me');
 			var tT = this.tweenTime;
 			var that = this;
 			var updateBound = function(e) { that.hideUpdate(e, this) };
@@ -205,7 +204,6 @@
 
 		p.showSide = function() {
 			if(this.isAnimating || !this.isSideHidden) return;
-			console.log('show me');
 			var tT = this.tweenTime;
 			var that = this;
 			var updateBound = function(e) { that.showUpdate(e, this) };
@@ -229,7 +227,6 @@
 
 		p.showUpdate = function(e, obj) {
 			this.isAnimating = true;
-			console.log(obj.x)
 			this.sideview.style.left = obj.x + 'px';
 		}
 
