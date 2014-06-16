@@ -66,7 +66,7 @@
 
 			//setup scenes
 			this.scene2 = new Scene2();
-			this.scene2.setup(0, 5000/*695*/, 0, 0);
+			this.scene2.setup(0, 3000/*5000*/, 0, 0);
 
 			this.loadFonts();
 		}
@@ -83,22 +83,29 @@
 		}
 
 
-        p.loadFonts = function() {
+       p.loadFonts = function() {
 
-        	var fontLoadingBound = ListenerFunctions.createListenerFunction(this, this.fontLoading);
+    //     	var fontLoadingBound = ListenerFunctions.createListenerFunction(this, this.fontLoading);
             var fontActiveBound = ListenerFunctions.createListenerFunction(this, this.fontActive);
-        	WebFont.load({
-	            custom: {
-	                families: ['EMPrintW01-regular', 'EMPrintW01-semibold'],
-	                urls: ['css/main.css']
-	            },
-	            loading: fontLoadingBound,
-	            active: fontActiveBound,
-	            //inactive: function() {console.log('webfont loading')},
-				//fontloading: function(familyName, fvd) {console.log('webfont loading')},
-				//fontactive: function(familyName, fvd) {console.log('webfont loading')},
-				//fontinactive: function(familyName, fvd) {console.log('webfont loading')}
-        	});
+    //     	WebFont.load({
+	   //          custom: {
+	   //              families: ['emprintw01-light', 'emprintw01-regular', 'emprintw01-semibold'],
+	   //              urls: ['css/main.css']
+	   //          },
+	   //          loading: fontLoadingBound,
+	   //          active: fontActiveBound,
+	   //          //inactive: function() {console.log('webfont loading')},
+				// //fontloading: function(familyName, fvd) {console.log('webfont loading')},
+				// //fontactive: function(familyName, fvd) {console.log('webfont loading')},
+				// //fontinactive: function(familyName, fvd) {console.log('webfont loading')}
+    //     	});
+
+			//dummy font loader
+			var that = this;
+			this.tweener = new TWEEN.Tween({rotation:0})
+								.to({ rotation: 1 }, 3000)
+								.onUpdate(function(e){ that.loader.waveYPos(e); })
+								.onComplete(fontActiveBound).start();
         }
 
        p.fontLoading = function() {
@@ -150,11 +157,12 @@
 
 		p.update = function() {
 
+
+			TWEEN.update();
 			if (!this.loaded) return;
 			//scene update
 			var frame = this.scroller.getDistance();
 			FrameTween.update(frame);
-			TWEEN.update();
 			
 			this.scene2.update(frame);
 

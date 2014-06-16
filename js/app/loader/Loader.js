@@ -14,6 +14,8 @@
 
 			this._view = null;
 			this.setup();
+
+			this.assetsloader;
 		}
 
 		ns.Loader = Loader;
@@ -25,7 +27,42 @@
 			this.view = this.createView();
 
 		}
+		// -----------------------------------
+		// Loaders
+		// -----------------------------------	
 
+		p.assetLoader = function(assets, callback) {
+			assetsToLoader = [
+				"assets/global.json",
+				"assets/scene1.json",
+				"assets/scene2.json",
+				"assets/scene2b.json",
+				"assets/scene2c.json",
+				"assets/scene3.json",
+				"assets/scene3b.json",
+				"assets/scene4.json",
+				"assets/scene5.json",
+				"assets/scene6.json",
+				"assets/scene7.json",
+				"assets/scene8.json",
+			];
+
+			this.assetsloader = new PIXI.AssetLoader(assetsToLoader);
+			PIXI.scaleModes.DEFAULT = PIXI.scaleModes.LINEAR;
+			// PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
+			// use callback
+			var that = this;
+			var loadComplete = function() { callback.call() };
+			loader.onComplete = loadComplete;
+			//begin load
+			loader.load();
+		}
+
+
+
+		// -----------------------------------
+		// create views
+		// -----------------------------------		
 		p.createView = function() {
 			//create container
 			var vtmp = document.createElement('div');
@@ -109,6 +146,10 @@
 			return vtmp;	
 		}
 
+
+		// -----------------------------------
+		// setting positions
+		// -----------------------------------	
 		p.waveYPos = function(e) {
 
 			var pos = MathBase.Fit01(e, 90, 15);
@@ -119,6 +160,10 @@
 			this.container.style.top = y+'px';
 		}
 
+
+		// -----------------------------------
+		// fade out contents
+		// -----------------------------------	
 		p.fadeout = function() {
 
 			var that = this;

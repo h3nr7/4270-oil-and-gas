@@ -105,7 +105,7 @@
 		}
 
 		p.yPos = function(y) {
-			if (y) {
+			if (y!=undefined) {
 				this.cPos.y = y;
 				this.container.y = this.cPos.y + this.offPos.y;
 			}

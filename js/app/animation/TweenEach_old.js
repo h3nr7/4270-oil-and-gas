@@ -27,11 +27,8 @@
 			this._easingFunction = TWEEN.Easing.Linear.None;
 			this._interpolationFunction = TWEEN.Interpolation.Linear;
 			this._chainedTweens = [];
-
-			this._nextCallback = null;
 			this._onStartCallback = null;
 			this._onStartCallbackFired = false;
-			this._onCompleteCallbackFired = false;
 			this._onUpdateCallback = null;
 			this._onCompleteCallback = null;
 			this._onStopCallback = null;
@@ -65,7 +62,6 @@
 			this._isPlaying = true;
 
 			this._onStartCallbackFired = false;
-			this._onCompleteCallbackFired = true;
 
 			this._startTime = time || 0;
 			this._startTime += this._delayTime;
@@ -216,17 +212,23 @@
 			var property;
 
 			if ( time < this._startTime ) {
-				if(this._onStartCallbackFired = true) { this._onStartCallbackFired =false };
-				return true;
-			}
-			else if (time >= (this._startTime+this._duration) ){
-				if(this._onCompleteCallbackFired = true) { this._onCompleteCallbackFired = false };
 				return true;
 			}
 
+			if ( this._onStartCallbackFired === false ) {
 
-			var elapsed = ( time - this._startTime )/this._duration;
-			// elapsed = elapsed > 1 ? 1 : elapsed;
+				if ( this._onStartCallback !== null ) {
+
+					this._onStartCallback.call( this._object );
+
+				}
+				this._onStartCallbackFired = true;
+			}
+
+			var elapsed = ( time - this._startTime ) / this._duration;
+
+
+			elapsed = elapsed > 1 ? 1 : elapsed;
 
 
 			var value = this._easingFunction( elapsed );
@@ -257,30 +259,65 @@
 
 			}
 
-			if ( this._onUpdateCallback !== null /*&& time>=this._startTime && time<(this._startTime+this._duration)*/ ) {
-				this._onUpdateCallback.call( this._object, value );
+			if ( this._onUpdateCallback !== null && time>=this._startTime && time<(this._startTime+this._duration) ) {
+
+					this._onUpdateCallback.call( this._object, value );
+
 			}
-			
-			if ( elapsed <= 0.01 && this._onStartCallbackFired === false ) {
 
-				if ( this._onStartCallback !== null ) {
+			if ( elapsed == 1 ) {
 
-					this._onStartCallback.call( this._object, value );
+				if ( this._repeat > 0 || this._scrubbable) {
+
+					if( isFinite( this._repeat ) ) {
+						this._repeat--;
+					}
+
+					// reassign starting values, restart by making startTime = now
+					for( property in this._valuesStartRepeat ) {
+
+						if ( typeof( this._valuesEnd[ property ] ) === "string" ) {
+							this._valuesStartRepeat[ property ] = this._valuesStartRepeat[ property ] + parseFloat(this._valuesEnd[ property ], 10);
+						}
+
+						if (this._yoyo) {
+							var tmp = this._valuesStartRepeat[ property ];
+							this._valuesStartRepeat[ property ] = this._valuesEnd[ property ];
+							this._valuesEnd[ property ] = tmp;
+						}
+
+						this._valuesStart[ property ] = this._valuesStartRepeat[ property ];
+
+					}
+
+					if (this._yoyo) {
+						this._reversed = !this._reversed;
+					}
+
+					if(!this._scrubbable) this._startTime = time + this._delayTime;
+
+
+					return true;
+
+				} 
+				else {
+
+					if ( this._onCompleteCallback !== null ) {
+
+						this._onCompleteCallback.call( this._object );
+
+					}
+
+					for ( var i = 0, numChainedTweens = this._chainedTweens.length; i < numChainedTweens; i++ ) {
+
+						this._chainedTweens[ i ].start( time );
+
+					}
+
+					return false;
 
 				}
-				this._onStartCallbackFired = true;
-				this._onCompleteCallbackFired = false;
-			}
-		
-			if ( elapsed >= 0.99 && this._onCompleteCallbackFired===false ) {
 
-				// console.log('mme called ')
-				if ( this._onCompleteCallback !== null ) {
-
-					this._onCompleteCallback.call( this._object, value );
-				}
-				this._onStartCallbackFired = false;
-				this._onCompleteCallbackFired = true;
 			}
 
 			return true;

@@ -226,32 +226,46 @@
 			// ------------------------------------------------
 
 			var tweenInBound = ListenerFunctions.createListenerFunction(this, this.tweenInFunc);
+			var tweenInStartBound = ListenerFunctions.createListenerFunction(this, this.tweenInFuncStart);
+			var tweenInEndBound = ListenerFunctions.createListenerFunction(this, this.tweenInFuncEnd);
 			this.tweenIn = new TweenEach({y: tT.tweenInY0})
 							.to({ y:tT.tweenInY1 }, tT._speed2)
+							.onStart(tweenInStartBound)
+							.onComplete(tweenInEndBound)
 							.onUpdate(tweenInBound)
 							.delay(this.startFrame).start();
 
 
 			//move iscene lef to right
 			var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
+			var tween0StartBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0Start);
+			var tween0EndBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0End);
 			this.tween0 = new TweenEach({x: 0})
 							.to({x: -4700/*-5120*/}, tT._completespeed)
 							// .easing(TWEEN.Easing.Cubic.Out)
 							.onUpdate(tween0Bound)
-							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime).start();
+							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime)
+							.onStart(tween0StartBound)
+							.onComplete(tween0EndBound).start();
 
 			//move down
+			var tween0bStartBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0bStart);
 			var tween0bBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0b);
+			var tween0bEndBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0bEnd);
 			this.tween0b = new TweenEach({y:0, ry: 200})
 							.to({y: -1100, ry: 950}, tT._speed2)
+							.onStart(tween0Bound)
 							.onUpdate(tween0bBound)
+							.onComplete(tween0Bound)
 							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.movedownStartTime).start();
 
 			var tweenSubBound = ListenerFunctions.createListenerFunction(this, this.tweenSubFunc);
 			this.tweensub = new TweenEach({x: 6200})
 							.to({x: 5080}, 500)
 							.easing(TWEEN.Easing.Cubic.Out)
+							.onStart(tweenSubBound)
 							.onUpdate(tweenSubBound)
+							.onComplete(tweenSubBound)
 							.delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveSubStartTime).start();	
 
 			var tweenLandBound = ListenerFunctions.createListenerFunction(this, this.tweenLandFunc);
@@ -316,16 +330,46 @@
 		// ------------------------------------------------
 		// TWEEN FUNCTIONS
 		// ------------------------------------------------
+
+		p.tweenInFuncStart = function(e) {
+			this.yPos(this.tweenTime.tweenInY0);
+			console.log('me in', this.yPos());
+		}
+
 		p.tweenInFunc = function(e) {
 			var cObj = this.tweenIn.tweenVars();
 			this.yPos(cObj.y);
 		}
 
+		p.tweenInFuncEnd = function(e) {
+			var cObj = this.tweenIn.tweenVars();
+			this.yPos(0);
+			console.log('me out', this.yPos());
+		}
+
+
+		p.tweenFunc0Start = function(e) {
+			this.frontlevel.xPos(0);
+			this.midlevel.xPos(0);
+			this.backlevel.xPos(0);			
+		}
 		p.tweenFunc0 = function(e) {
 			var cObj = this.tween0.tweenVars();
 			this.frontlevel.xPos(cObj.x);
 			this.midlevel.xPos(cObj.x*0.9);
 			this.backlevel.xPos(cObj.x*0.8);
+		}
+		p.tweenFunc0End = function(e) { 
+			this.frontlevel.xPos(-4700);
+			this.midlevel.xPos(-4700*0.9);
+			this.backlevel.xPos(-4700*0.8);	
+		}
+
+		p.tweenFunc0bStart = function(e) {
+			this.frontlevel.yPos(cObj.y);
+			this.midlevel.yPos(cObj.y);
+			this.backlevel.yPos(cObj.y);
+			this.fpsosign.yPos(cObj.ry);
 		}
 
 		p.tweenFunc0b = function(e) {
@@ -334,6 +378,10 @@
 			this.midlevel.yPos(cObj.y);
 			this.backlevel.yPos(cObj.y);
 			this.fpsosign.yPos(cObj.ry);
+		}
+
+		p.tweenFunc0bEnd = function(e) {
+
 		}
 
 		p.tweenFunc1 = function(e) {

@@ -13,8 +13,6 @@
 
 		FrameTween._tweens = [];
 		FrameTween.curFrame = 0;
-		FrameTween.prevFrame = 0;
-
 
 		FrameTween.add = function( tTween ) {
 			FrameTween._tweens.push(tTween);
@@ -34,16 +32,12 @@
 			var i = 0;
 
 			while ( i < FrameTween._tweens.length) {
-				FrameTween._tweens[ i ].update( cFrame );
-				i++;
-				// if ( FrameTween._tweens[ i ].update( cFrame ) ) {
-				// 	i++;
-				// } else {
-				// 	FrameTween._tweens.splice( i, 1 );
-				// }
+				if ( FrameTween._tweens[ i ].update( cFrame ) ) {
+					i++;
+				} else {
+					FrameTween._tweens.splice( i, 1 );
+				}
 			}
-
-			FrameTween.prevFrame = cFrame;
 			return true;
 		}
 
