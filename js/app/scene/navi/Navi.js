@@ -49,6 +49,8 @@
 			this.maxBarHeight = ( (this.buttonLinks.length-1)*this.tweenTime.buttonDistance);
 
 			this.view = null;
+			this.soundState = true;
+			
 			this.setup();
 
 			this.updateProcess(0.96);
@@ -70,6 +72,7 @@
 
 			this.topview = this.setupTop();
 			this.sideview = this.setupSide();
+			this.soundview = this.setupBottomRight();
 		}
 
 		p.setupTop = function() {
@@ -124,12 +127,55 @@
 			return vTemp;
 		}
 
+		p.setupBottomRight = function() {
+
+
+			console.log('setup bottom right');
+			var vTemp = document.createElement('div');
+			var state;
+
+			vTemp.id = 'volume-top';
+			vTemp.style.position = 'absolute';
+			vTemp.style.left = '979px';
+			vTemp.style.top = '723px';
+			vTemp.style.width = "25px";
+			vTemp.style.height = "25px";
+
+			if(this.soundState) state = 'on';
+			else state = 'off';	
+
+			console.log('aa', this.soundState);
+
+			vTemp.style.backgroundImage = 'url(images/volume_white_'+ state +'.png)';
+			vTemp.style.backgroundRepeat = 'none';
+			vTemp.style.backgroundSize = '25px 25px'; 
+			vTemp.style.cursor = 'pointer';
+
+			var that = this;
+			var rbBound = function(e, i) { that.soundTapFunc(e, i, this) };
+			var tT = new TouchEvent( vTemp, 'tap', rbBound );
+
+			this.soundButton = vTemp;
+			return vTemp;			
+		}
+
 
 		p.buttonTapFunc = function(e, i, obj) {
 			// var dist = this.buttonLinks[i]
 			var navNum = parseInt( obj.target.id.replace('navbut', '') );
 			console.log(e, i, navNum);
 			this.dispatchCustomEvent('navitap', {distance: this.buttonLinks[navNum].frame});
+		}
+
+		p.soundTapFunc = function(e, i, obj) {
+			this.soundState = (!this.soundState)? true: false;
+
+			if(this.soundState) state = 'on';
+			else state = 'off';
+
+			this.soundButton.style.backgroundImage = 'url(images/volume_white_'+ state +'.png)';
+
+			this.dispatchCustomEvent('soundtap', {soundstate: this.soundState});
 		}
 
 		// ----------------------------

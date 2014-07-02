@@ -56,7 +56,10 @@
 			this.soundtrack = new buzz.sound( "sound/oilgassoundtrack_1-2_01", {
 			    formats: [ "ogg", "mp3", "aac" ]
 			});
-
+			//load and loop
+			this.soundtrack.load();
+			this.soundtrack.loop();
+			this.soundtrack.whenReady(function(){ console.log('sound ready') });
 
 			// --------------------------------------------------
 			// Loader
@@ -70,6 +73,7 @@
 			this.navi = new Navi();
 			document.body.appendChild(this.navi.topview);
 			document.body.appendChild(this.navi.sideview);
+			document.body.appendChild(this.navi.soundview);
 
 			// --------------------------------------------------
 			// SCROLLER Setup
@@ -131,6 +135,9 @@
 			this.naviTapFuncBound = ListenerFunctions.createListenerFunction(this, this.naviTapFunc);
 			this.navi.addEventListener('navitap', this.naviTapFuncBound);
 
+			this.soundTapFuncBound = ListenerFunctions.createListenerFunction(this, this.soundTapFunc);
+			this.navi.addEventListener('soundtap', this.soundTapFuncBound);
+
 			//end scene event
 			this.replayFuncBound = ListenerFunctions.createListenerFunction(this, this.replayFunc);
 			this.scene8.addEventListener('replay', this.replayFuncBound);
@@ -158,6 +165,17 @@
 
 		p.naviTapFunc = function(e) {
 			this.scroller.scrollto(e.detail.distance);
+		}
+
+		p.soundTapFunc = function(e) {
+
+			if(this.soundstate) {
+				this.soundtrack.play();
+			}
+			else {
+				this.soundtrack.pause();
+			}
+			console.log(this.soundtrack);
 		}
 
 		p.replayFunc = function(e) {

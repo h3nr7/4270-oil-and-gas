@@ -62,6 +62,8 @@
 			this.navi = new Navi();
 			document.body.appendChild(this.navi.topview);
 			document.body.appendChild(this.navi.sideview);
+			document.body.appendChild(this.navi.soundview);
+
 
 			// --------------------------------------------------
 			// SCROLLER Setup
@@ -121,6 +123,9 @@
 			this.naviTapFuncBound = ListenerFunctions.createListenerFunction(this, this.naviTapFunc);
 			this.navi.addEventListener('navitap', this.naviTapFuncBound);
 
+			this.soundTapFuncBound = ListenerFunctions.createListenerFunction(this, this.soundTapFunc);
+			this.navi.addEventListener('soundtap', this.soundTapFuncBound);
+
 			//end scene event
 			this.replayFuncBound = ListenerFunctions.createListenerFunction(this, this.replayFunc);
 			this.scene8.addEventListener('replay', this.replayFuncBound);
@@ -141,6 +146,10 @@
 
 		p.naviTapFunc = function(e) {
 			this.scroller.scrollto(e.detail.distance);
+		}
+
+		p.soundTapFunc = function(e) {
+			console.log('oh man, 'e.detail.soundstate);
 		}
 
 		p.replayFunc = function(e) {

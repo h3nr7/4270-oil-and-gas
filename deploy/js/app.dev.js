@@ -11607,6 +11607,37 @@ TWEEN.Interpolation = {
         ns.FrameTween = FrameTween;
         FrameTween._tweens = [];
         FrameTween.curFrame = 0;
+        FrameTween.prevFrame = 0;
+        FrameTween.add = function(tTween) {
+            FrameTween._tweens.push(tTween);
+        };
+        FrameTween.remove = function(tTween) {
+            var i = FrameTween._tweens.indexOf(tTween);
+            if (i !== -1) {
+                FrameTween._tweens.splice(i, 1);
+            }
+        };
+        FrameTween.update = function(cFrame) {
+            FrameTween.curFrame = cFrame;
+            if (FrameTween._tweens.length === 0) return false;
+            var i = 0;
+            while (i < FrameTween._tweens.length) {
+                FrameTween._tweens[i].update(cFrame);
+                i++;
+            }
+            FrameTween.prevFrame = cFrame;
+            return true;
+        };
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.animation");
+    if (!ns.FrameTween) {
+        var FrameTween = function FrameTween() {};
+        ns.FrameTween = FrameTween;
+        FrameTween._tweens = [];
+        FrameTween.curFrame = 0;
         FrameTween.add = function(tTween) {
             FrameTween._tweens.push(tTween);
         };
@@ -11626,6 +11657,184 @@ TWEEN.Interpolation = {
                 } else {
                     FrameTween._tweens.splice(i, 1);
                 }
+            }
+            return true;
+        };
+    }
+})();
+
+(function() {
+    var ns = MKK.getNamespace("app.animation");
+    var FrameTween = ns.FrameTween;
+    var EventDispatcher = MKK.getNamespace("mkk.event").EventDispatcher;
+    if (!ns.TweenEach) {
+        var TweenEach = function TweenEach(object) {
+            this._object = object;
+            this._scrubbable = true;
+            this._valuesStart = {};
+            this._valuesEnd = {};
+            this._valuesStartRepeat = {};
+            this._duration = 1e3;
+            this._repeat = 0;
+            this._yoyo = false;
+            this._isPlaying = false;
+            this._reversed = false;
+            this._delayTime = 0;
+            this._startTime = null;
+            this._easingFunction = TWEEN.Easing.Linear.None;
+            this._interpolationFunction = TWEEN.Interpolation.Linear;
+            this._chainedTweens = [];
+            this._nextCallback = null;
+            this._onStartCallback = null;
+            this._onStartCallbackFired = false;
+            this._onCompleteCallbackFired = false;
+            this._onUpdateCallback = null;
+            this._onCompleteCallback = null;
+            this._onStopCallback = null;
+            for (var field in object) {
+                this._valuesStart[field] = parseFloat(object[field], 10);
+            }
+        };
+        ns.TweenEach = TweenEach;
+        var p = TweenEach.prototype = new EventDispatcher();
+        p.to = function(properties, duration) {
+            if (duration !== undefined) {
+                this._duration = duration;
+            }
+            this._valuesEnd = properties;
+            return this;
+        };
+        p.start = function(time) {
+            FrameTween.add(this);
+            this._isPlaying = true;
+            this._onStartCallbackFired = false;
+            this._onCompleteCallbackFired = true;
+            this._startTime = time || 0;
+            this._startTime += this._delayTime;
+            for (var property in this._valuesEnd) {
+                if (this._valuesEnd[property] instanceof Array) {
+                    if (this._valuesEnd[property].length === 0) {
+                        continue;
+                    }
+                    this._valuesEnd[property] = [ this._object[property] ].concat(this._valuesEnd[property]);
+                }
+                this._valuesStart[property] = this._object[property];
+                if (this._valuesStart[property] instanceof Array === false) {
+                    this._valuesStart[property] *= 1;
+                }
+                this._valuesStartRepeat[property] = this._valuesStart[property] || 0;
+            }
+            return this;
+        };
+        p.stop = function() {
+            if (!this._isPlaying) {
+                return this;
+            }
+            FrameTween.remove(this);
+            this._isPlaying = false;
+            if (this._onStopCallback !== null) {
+                this._onStopCallback.call(this._object);
+            }
+            this.stopChainedTweens();
+            return this;
+        };
+        p.tweenVars = function() {
+            return this._object;
+        };
+        p.scrub = function(scrub) {
+            this._scrubbable = scrub;
+            return this;
+        };
+        p.stopChainedTweens = function() {
+            for (var i = 0, numChainedTweens = this._chainedTweens.length; i < numChainedTweens; i++) {
+                this._chainedTweens[i].stop();
+            }
+        };
+        p.delay = function(amount) {
+            this._delayTime = amount;
+            return this;
+        };
+        p.repeat = function(times) {
+            this._repeat = times;
+            return this;
+        };
+        p.yoyo = function(yoyo) {
+            this._yoyo = yoyo;
+            return this;
+        };
+        p.easing = function(easing) {
+            this._easingFunction = easing;
+            return this;
+        };
+        p.interpolation = function(interpolation) {
+            this._interpolationFunction = interpolation;
+            return this;
+        };
+        p.chain = function() {
+            this._chainedTweens = arguments;
+            return this;
+        };
+        p.onStart = function(callback) {
+            this._onStartCallback = callback;
+            return this;
+        };
+        p.onUpdate = function(callback) {
+            this._onUpdateCallback = callback;
+            return this;
+        };
+        p.onComplete = function(callback) {
+            this._onCompleteCallback = callback;
+            return this;
+        };
+        p.onStop = function(callback) {
+            this._onStopCallback = callback;
+            return this;
+        };
+        p.update = function(time) {
+            var property;
+            if (time < this._startTime) {
+                if (this._onStartCallbackFired = true) {
+                    this._onStartCallbackFired = false;
+                }
+                return true;
+            } else if (time >= this._startTime + this._duration) {
+                if (this._onCompleteCallbackFired = true) {
+                    this._onCompleteCallbackFired = false;
+                }
+                return true;
+            }
+            var elapsed = (time - this._startTime) / this._duration;
+            var value = this._easingFunction(elapsed);
+            for (property in this._valuesEnd) {
+                var start = this._valuesStart[property] || 0;
+                var end = this._valuesEnd[property];
+                if (end instanceof Array) {
+                    this._object[property] = this._interpolationFunction(end, value);
+                } else {
+                    if (typeof end === "string") {
+                        end = start + parseFloat(end, 10);
+                    }
+                    if (typeof end === "number") {
+                        this._object[property] = start + (end - start) * value;
+                    }
+                }
+            }
+            if (this._onUpdateCallback !== null) {
+                this._onUpdateCallback.call(this._object, value);
+            }
+            if (elapsed <= .01 && this._onStartCallbackFired === false) {
+                if (this._onStartCallback !== null) {
+                    this._onStartCallback.call(this._object, value);
+                }
+                this._onStartCallbackFired = true;
+                this._onCompleteCallbackFired = false;
+            }
+            if (elapsed >= .99 && this._onCompleteCallbackFired === false) {
+                if (this._onCompleteCallback !== null) {
+                    this._onCompleteCallback.call(this._object, value);
+                }
+                this._onStartCallbackFired = false;
+                this._onCompleteCallbackFired = true;
             }
             return true;
         };
@@ -11885,7 +12094,7 @@ TWEEN.Interpolation = {
             return this.cPos.x;
         };
         p.yPos = function(y) {
-            if (y) {
+            if (y != undefined) {
                 this.cPos.y = y;
                 this.container.y = this.cPos.y + this.offPos.y;
             }
@@ -13809,11 +14018,23 @@ TWEEN.Interpolation = {
         var Loader = function Loader() {
             this._view = null;
             this.setup();
+            this.assetsloader;
         };
         ns.Loader = Loader;
         var p = Loader.prototype = new EventDispatcher();
         p.setup = function() {
             this.view = this.createView();
+        };
+        p.assetLoader = function(assets, callback) {
+            assetsToLoader = [ "assets/global.json", "assets/scene1.json", "assets/scene2.json", "assets/scene2b.json", "assets/scene2c.json", "assets/scene3.json", "assets/scene3b.json", "assets/scene4.json", "assets/scene5.json", "assets/scene6.json", "assets/scene7.json", "assets/scene8.json" ];
+            this.assetsloader = new PIXI.AssetLoader(assetsToLoader);
+            PIXI.scaleModes.DEFAULT = PIXI.scaleModes.LINEAR;
+            var that = this;
+            var loadComplete = function() {
+                callback.call();
+            };
+            loader.onComplete = loadComplete;
+            loader.load();
         };
         p.createView = function() {
             var vtmp = document.createElement("div");
@@ -13969,6 +14190,7 @@ TWEEN.Interpolation = {
             };
             this.maxBarHeight = (this.buttonLinks.length - 1) * this.tweenTime.buttonDistance;
             this.view = null;
+            this.soundState = true;
             this.setup();
             this.updateProcess(.96);
             this.isAnimating = false;
@@ -13979,6 +14201,7 @@ TWEEN.Interpolation = {
         p.setup = function() {
             this.topview = this.setupTop();
             this.sideview = this.setupSide();
+            this.soundview = this.setupBottomRight();
         };
         p.setupTop = function() {
             var vTemp = document.createElement("div");
@@ -14021,11 +14244,43 @@ TWEEN.Interpolation = {
             }
             return vTemp;
         };
+        p.setupBottomRight = function() {
+            console.log("setup bottom right");
+            var vTemp = document.createElement("div");
+            var state;
+            vTemp.id = "volume-top";
+            vTemp.style.position = "absolute";
+            vTemp.style.left = "979px";
+            vTemp.style.top = "723px";
+            vTemp.style.width = "25px";
+            vTemp.style.height = "25px";
+            if (this.soundState) state = "on"; else state = "off";
+            console.log("aa", this.soundState);
+            vTemp.style.backgroundImage = "url(images/volume_white_" + state + ".png)";
+            vTemp.style.backgroundRepeat = "none";
+            vTemp.style.backgroundSize = "25px 25px";
+            vTemp.style.cursor = "pointer";
+            var that = this;
+            var rbBound = function(e, i) {
+                that.soundTapFunc(e, i, this);
+            };
+            var tT = new TouchEvent(vTemp, "tap", rbBound);
+            this.soundButton = vTemp;
+            return vTemp;
+        };
         p.buttonTapFunc = function(e, i, obj) {
             var navNum = parseInt(obj.target.id.replace("navbut", ""));
             console.log(e, i, navNum);
             this.dispatchCustomEvent("navitap", {
                 distance: this.buttonLinks[navNum].frame
+            });
+        };
+        p.soundTapFunc = function(e, i, obj) {
+            this.soundState = !this.soundState ? true : false;
+            if (this.soundState) state = "on"; else state = "off";
+            this.soundButton.style.backgroundImage = "url(images/volume_white_" + state + ".png)";
+            this.dispatchCustomEvent("soundtap", {
+                soundstate: this.soundState
             });
         };
         p.createButton = function(y, id, isRed) {
@@ -15158,31 +15413,37 @@ TWEEN.Interpolation = {
             this.desc4 = new ElDescription(copies.desc4.title, copies.desc4.txt, "", copies.desc4.color, this.startFrame + tT.txtTime4, 700, 50, 300, 0);
             this.txtlevel.addElement(this.desc4.container);
             var tweenInBound = ListenerFunctions.createListenerFunction(this, this.tweenInFunc);
+            var tweenInStartBound = ListenerFunctions.createListenerFunction(this, this.tweenInFuncStart);
+            var tweenInEndBound = ListenerFunctions.createListenerFunction(this, this.tweenInFuncEnd);
             this.tweenIn = new TweenEach({
                 y: tT.tweenInY0
             }).to({
                 y: tT.tweenInY1
-            }, tT._speed2).onUpdate(tweenInBound).delay(this.startFrame).start();
+            }, tT._speed2).onStart(tweenInStartBound).onComplete(tweenInEndBound).onUpdate(tweenInBound).delay(this.startFrame).start();
             var tween0Bound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0);
+            var tween0StartBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0Start);
+            var tween0EndBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0End);
             this.tween0 = new TweenEach({
                 x: 0
             }).to({
                 x: -4700
-            }, tT._completespeed).onUpdate(tween0Bound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime).start();
+            }, tT._completespeed).onUpdate(tween0Bound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime).onStart(tween0StartBound).onComplete(tween0EndBound).start();
+            var tween0bStartBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0bStart);
             var tween0bBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0b);
+            var tween0bEndBound = ListenerFunctions.createListenerFunction(this, this.tweenFunc0bEnd);
             this.tween0b = new TweenEach({
                 y: 0,
                 ry: 200
             }).to({
                 y: -1100,
                 ry: 950
-            }, tT._speed2).onUpdate(tween0bBound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.movedownStartTime).start();
+            }, tT._speed2).onStart(tween0Bound).onUpdate(tween0bBound).onComplete(tween0Bound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.movedownStartTime).start();
             var tweenSubBound = ListenerFunctions.createListenerFunction(this, this.tweenSubFunc);
             this.tweensub = new TweenEach({
                 x: 6200
             }).to({
                 x: 5080
-            }, 500).easing(TWEEN.Easing.Cubic.Out).onUpdate(tweenSubBound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveSubStartTime).start();
+            }, 500).easing(TWEEN.Easing.Cubic.Out).onStart(tweenSubBound).onUpdate(tweenSubBound).onComplete(tweenSubBound).delay(this.startFrame + tT.movementStartTime + tT.delayStartTime + tT.moveSubStartTime).start();
             var tweenLandBound = ListenerFunctions.createListenerFunction(this, this.tweenLandFunc);
             this.tweenland = new TweenEach({
                 x: -4700,
@@ -15227,15 +15488,40 @@ TWEEN.Interpolation = {
                 this.helicopter.hideSign();
             }
         };
+        p.tweenInFuncStart = function(e) {
+            this.yPos(this.tweenTime.tweenInY0);
+            console.log("me in", this.yPos());
+        };
         p.tweenInFunc = function(e) {
             var cObj = this.tweenIn.tweenVars();
             this.yPos(cObj.y);
+        };
+        p.tweenInFuncEnd = function(e) {
+            var cObj = this.tweenIn.tweenVars();
+            this.yPos(0);
+            console.log("me out", this.yPos());
+        };
+        p.tweenFunc0Start = function(e) {
+            this.frontlevel.xPos(0);
+            this.midlevel.xPos(0);
+            this.backlevel.xPos(0);
         };
         p.tweenFunc0 = function(e) {
             var cObj = this.tween0.tweenVars();
             this.frontlevel.xPos(cObj.x);
             this.midlevel.xPos(cObj.x * .9);
             this.backlevel.xPos(cObj.x * .8);
+        };
+        p.tweenFunc0End = function(e) {
+            this.frontlevel.xPos(-4700);
+            this.midlevel.xPos(-4700 * .9);
+            this.backlevel.xPos(-4700 * .8);
+        };
+        p.tweenFunc0bStart = function(e) {
+            this.frontlevel.yPos(cObj.y);
+            this.midlevel.yPos(cObj.y);
+            this.backlevel.yPos(cObj.y);
+            this.fpsosign.yPos(cObj.ry);
         };
         p.tweenFunc0b = function(e) {
             var cObj = this.tween0b.tweenVars();
@@ -15244,6 +15530,7 @@ TWEEN.Interpolation = {
             this.backlevel.yPos(cObj.y);
             this.fpsosign.yPos(cObj.ry);
         };
+        p.tweenFunc0bEnd = function(e) {};
         p.tweenFunc1 = function(e) {
             var cObj = this.tween1.tweenVars();
             this.helicopter.position(cObj.x, cObj.y);
@@ -15921,11 +16208,17 @@ TWEEN.Interpolation = {
             this.soundtrack = new buzz.sound("sound/oilgassoundtrack_1-2_01", {
                 formats: [ "ogg", "mp3", "aac" ]
             });
+            this.soundtrack.load();
+            this.soundtrack.loop();
+            this.soundtrack.whenReady(function() {
+                console.log("sound ready");
+            });
             this.loader = new Loader();
             document.body.appendChild(this.loader.view);
             this.navi = new Navi();
             document.body.appendChild(this.navi.topview);
             document.body.appendChild(this.navi.sideview);
+            document.body.appendChild(this.navi.soundview);
             this.scroller = new Scroller(scenedata.totalFrame);
             this.scroller.setup(this.renderer.view);
             this.scene1 = new Scene1();
@@ -15961,6 +16254,8 @@ TWEEN.Interpolation = {
             this.scroller.trackpad.addEventListener("swipeup", this.swipeUpFuncBound);
             this.naviTapFuncBound = ListenerFunctions.createListenerFunction(this, this.naviTapFunc);
             this.navi.addEventListener("navitap", this.naviTapFuncBound);
+            this.soundTapFuncBound = ListenerFunctions.createListenerFunction(this, this.soundTapFunc);
+            this.navi.addEventListener("soundtap", this.soundTapFuncBound);
             this.replayFuncBound = ListenerFunctions.createListenerFunction(this, this.replayFunc);
             this.scene8.addEventListener("replay", this.replayFuncBound);
         };
@@ -15980,6 +16275,14 @@ TWEEN.Interpolation = {
         };
         p.naviTapFunc = function(e) {
             this.scroller.scrollto(e.detail.distance);
+        };
+        p.soundTapFunc = function(e) {
+            if (this.soundstate) {
+                this.soundtrack.play();
+            } else {
+                this.soundtrack.pause();
+            }
+            console.log(this.soundtrack);
         };
         p.replayFunc = function(e) {
             this.scroller.scrollto(0);
