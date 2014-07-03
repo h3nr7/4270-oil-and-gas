@@ -11045,6 +11045,11 @@ TWEEN.Interpolation = {
             e.preventDefault();
             this.speed = e.wheelDeltaY * this.speedDamper;
             this.swipespeed = e.wheelDeltaX * this.swipespeedDamper;
+            if (this.speed > 0) {
+                this.dispatchCustomEvent("swipeup");
+            } else if (this.speed < 0) {
+                this.dispatchCustomEvent("swipedown");
+            }
         };
         p.onArrowHandler = function(event) {
             if (event.keyCode == 38) {
@@ -14190,7 +14195,7 @@ TWEEN.Interpolation = {
             };
             this.maxBarHeight = (this.buttonLinks.length - 1) * this.tweenTime.buttonDistance;
             this.view = null;
-            this.soundState = true;
+            this.soundState = false;
             this.setup();
             this.updateProcess(.96);
             this.isAnimating = false;
@@ -14255,7 +14260,6 @@ TWEEN.Interpolation = {
             vTemp.style.width = "25px";
             vTemp.style.height = "25px";
             if (this.soundState) state = "on"; else state = "off";
-            console.log("aa", this.soundState);
             vTemp.style.backgroundImage = "url(images/volume_white_" + state + ".png)";
             vTemp.style.backgroundRepeat = "none";
             vTemp.style.backgroundSize = "25px 25px";
@@ -14276,12 +14280,16 @@ TWEEN.Interpolation = {
             });
         };
         p.soundTapFunc = function(e, i, obj) {
-            this.soundState = !this.soundState ? true : false;
-            if (this.soundState) state = "on"; else state = "off";
-            this.soundButton.style.backgroundImage = "url(images/volume_white_" + state + ".png)";
+            var state = !this.soundState ? true : false;
+            this.toggleSoundIcon(state);
             this.dispatchCustomEvent("soundtap", {
                 soundstate: this.soundState
             });
+        };
+        p.toggleSoundIcon = function(el) {
+            if (el) state = "on"; else state = "off";
+            this.soundState = el;
+            this.soundButton.style.backgroundImage = "url(images/volume_white_" + state + ".png)";
         };
         p.createButton = function(y, id, isRed) {
             var vTemp = document.createElement("div");
@@ -16269,9 +16277,9 @@ TWEEN.Interpolation = {
             this.navi.showSide();
         };
         p.swipeUpFunc = function(e) {
-            console.log("swipe up man", e);
-            if (this.scroller.getDistance() < 5e3) {
+            if (this.scroller.getDistance() < 100) {
                 this.soundtrack.play();
+                this.navi.toggleSoundIcon(true);
             }
         };
         p.naviTapFunc = function(e) {

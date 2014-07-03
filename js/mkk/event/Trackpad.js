@@ -161,6 +161,12 @@
 			e.preventDefault();
 			this.speed = e.wheelDeltaY * this.speedDamper;
 			this.swipespeed = e.wheelDeltaX * this.swipespeedDamper;
+			if(this.speed>0) {
+				this.dispatchCustomEvent('swipeup');
+			}
+			else if(this.speed<0) {
+				this.dispatchCustomEvent('swipedown');
+			}
 		}
 
 		p.onArrowHandler = function(event) {

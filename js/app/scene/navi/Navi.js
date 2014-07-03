@@ -49,8 +49,8 @@
 			this.maxBarHeight = ( (this.buttonLinks.length-1)*this.tweenTime.buttonDistance);
 
 			this.view = null;
-			this.soundState = true;
-			
+			this.soundState = false;
+
 			this.setup();
 
 			this.updateProcess(0.96);
@@ -144,8 +144,6 @@
 			if(this.soundState) state = 'on';
 			else state = 'off';	
 
-			console.log('aa', this.soundState);
-
 			vTemp.style.backgroundImage = 'url(images/volume_white_'+ state +'.png)';
 			vTemp.style.backgroundRepeat = 'none';
 			vTemp.style.backgroundSize = '25px 25px'; 
@@ -168,14 +166,18 @@
 		}
 
 		p.soundTapFunc = function(e, i, obj) {
-			this.soundState = (!this.soundState)? true: false;
 
-			if(this.soundState) state = 'on';
-			else state = 'off';
-
-			this.soundButton.style.backgroundImage = 'url(images/volume_white_'+ state +'.png)';
-
+			var state = (!this.soundState)? true: false;
+			this.toggleSoundIcon(state);
 			this.dispatchCustomEvent('soundtap', {soundstate: this.soundState});
+		}
+
+		p.toggleSoundIcon = function(el) {
+
+			if(el) state = 'on';
+			else state = 'off';
+			this.soundState = el;
+			this.soundButton.style.backgroundImage = 'url(images/volume_white_'+ state +'.png)';
 		}
 
 		// ----------------------------

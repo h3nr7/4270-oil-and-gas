@@ -158,9 +158,10 @@
 		}
 
 		p.swipeUpFunc = function(e) {
-			console.log('swipe up man', e);
-			if (this.scroller.getDistance()<5000) {
+			if (this.scroller.getDistance()<100) {
 				this.soundtrack.play();
+				this.navi.toggleSoundIcon(true);
+
 			}
 		}
 
