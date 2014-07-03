@@ -59,7 +59,8 @@
 			//load and loop
 			this.soundtrack.load();
 			this.soundtrack.loop();
-			this.soundtrack.whenReady(function(){ console.log('sound ready') });
+			var that = this;
+			this.soundtrack.whenReady(function(){ console.log('sound ready'); });
 
 			// --------------------------------------------------
 			// Loader
@@ -169,13 +170,13 @@
 
 		p.soundTapFunc = function(e) {
 
-			if(this.soundstate) {
+			if(e.detail.soundstate === true) {
 				this.soundtrack.play();
 			}
 			else {
 				this.soundtrack.pause();
 			}
-			console.log(this.soundtrack);
+			console.log('sound state', e.detail.soundstate, this.soundtrack);
 		}
 
 		p.replayFunc = function(e) {

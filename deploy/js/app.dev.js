@@ -16210,6 +16210,7 @@ TWEEN.Interpolation = {
             });
             this.soundtrack.load();
             this.soundtrack.loop();
+            var that = this;
             this.soundtrack.whenReady(function() {
                 console.log("sound ready");
             });
@@ -16277,12 +16278,12 @@ TWEEN.Interpolation = {
             this.scroller.scrollto(e.detail.distance);
         };
         p.soundTapFunc = function(e) {
-            if (this.soundstate) {
+            if (e.detail.soundstate === true) {
                 this.soundtrack.play();
             } else {
                 this.soundtrack.pause();
             }
-            console.log(this.soundtrack);
+            console.log("sound state", e.detail.soundstate, this.soundtrack);
         };
         p.replayFunc = function(e) {
             this.scroller.scrollto(0);
