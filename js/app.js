@@ -66,15 +66,19 @@
 			// Loader
 			// --------------------------------------------------	
 			this.loader = new Loader();
-			document.body.appendChild(this.loader.view);
 
 			// --------------------------------------------------
 			// Navigator
 			// --------------------------------------------------	
 			this.navi = new Navi();
-			document.body.appendChild(this.navi.topview);
+
+			// --------------------------------------------------
+			// Add to DOM
+			// --------------------------------------------------	
 			document.body.appendChild(this.navi.sideview);
 			document.body.appendChild(this.navi.soundview);
+			document.body.appendChild(this.loader.view);
+			document.body.appendChild(this.navi.topview);
 
 			// --------------------------------------------------
 			// SCROLLER Setup
