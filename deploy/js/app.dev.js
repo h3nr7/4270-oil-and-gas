@@ -10970,7 +10970,6 @@ TWEEN.Interpolation = {
         ns.Trackpad = Trackpad;
         var p = Trackpad.prototype = new EventDispatcher();
         p.setup = function() {
-            console.log("Trackpad setup");
             this.mousewheelBound = ListenerFunctions.createListenerFunction(this, this.mousewheelHandler);
             this.target.addEventListener("mousewheel", this.mousewheelBound);
             this.touchStartBound = ListenerFunctions.createListenerFunction(this, this.touchstartHandler);
@@ -16116,7 +16115,8 @@ TWEEN.Interpolation = {
             this.txt4.opacity(0);
             this.txt4.container.interactive = true;
             var that = this;
-            this.txt4.container.tap = function(e) {
+            console.log("lala", this.txt4.container.interactive);
+            this.txt4.container.click = this.txt4.container.tap = function(e) {
                 console.log("aa tester");
                 that.dispatchCustomEvent("replay");
             };
@@ -16223,11 +16223,11 @@ TWEEN.Interpolation = {
                 console.log("sound ready");
             });
             this.loader = new Loader();
-            document.body.appendChild(this.loader.view);
             this.navi = new Navi();
-            document.body.appendChild(this.navi.topview);
             document.body.appendChild(this.navi.sideview);
             document.body.appendChild(this.navi.soundview);
+            document.body.appendChild(this.loader.view);
+            document.body.appendChild(this.navi.topview);
             this.scroller = new Scroller(scenedata.totalFrame);
             this.scroller.setup(this.renderer.view);
             this.scene1 = new Scene1();
@@ -16269,11 +16269,9 @@ TWEEN.Interpolation = {
             this.scene8.addEventListener("replay", this.replayFuncBound);
         };
         p.swipeLeftFunc = function(e) {
-            console.log("swipe left man", e);
             this.navi.hideSide();
         };
         p.swipeRightFunc = function(e) {
-            console.log("swipe right man", e);
             this.navi.showSide();
         };
         p.swipeUpFunc = function(e) {
@@ -16291,7 +16289,6 @@ TWEEN.Interpolation = {
             } else {
                 this.soundtrack.pause();
             }
-            console.log("sound state", e.detail.soundstate, this.soundtrack);
         };
         p.replayFunc = function(e) {
             this.scroller.scrollto(0);

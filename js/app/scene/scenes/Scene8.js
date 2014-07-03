@@ -76,7 +76,8 @@
 			this.txt4.opacity(0);
 			this.txt4.container.interactive = true;
 			var that = this;
-			this.txt4.container.tap = function(e) {console.log('aa tester'); that.dispatchCustomEvent('replay') };
+			console.log('lala', this.txt4.container.interactive);
+			this.txt4.container.click = this.txt4.container.tap = function(e) {console.log('aa tester'); that.dispatchCustomEvent('replay') };
 
 			this.txt5 = new ElText(copies.line4, tT.txt5X0, tT.txt5Y0, 0, 0.5, 0.5);
 			this.txt5.setStyle(disclaimTitle);

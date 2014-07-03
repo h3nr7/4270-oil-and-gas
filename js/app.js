@@ -152,12 +152,12 @@
 		// SWIPE EVENT FUNCTIONS
 		// --------------------------
 		p.swipeLeftFunc = function(e) {
-			console.log('swipe left man', e);
+			// console.log('swipe left man', e);
 			this.navi.hideSide();
 		}
 
 		p.swipeRightFunc = function(e) {
-			console.log('swipe right man', e);
+			// console.log('swipe right man', e);
 			this.navi.showSide();
 		}
 
@@ -181,7 +181,6 @@
 			else {
 				this.soundtrack.pause();
 			}
-			console.log('sound state', e.detail.soundstate, this.soundtrack);
 		}
 
 		p.replayFunc = function(e) {

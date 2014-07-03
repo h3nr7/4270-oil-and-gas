@@ -32,8 +32,6 @@
 
 		p.setup = function() {
 
-			console.log('Trackpad setup');
-
 			// Mouse Wheel Handler
 			this.mousewheelBound = ListenerFunctions.createListenerFunction(this, this.mousewheelHandler);
 			this.target.addEventListener('mousewheel', this.mousewheelBound);
