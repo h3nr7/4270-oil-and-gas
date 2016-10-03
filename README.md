@@ -1,7 +1,7 @@
-khws-exxon-4270-oil-and-gas
+4270-oil-and-gas
 ===========================
 
-KHWS Exxon Oil &amp; Gas Parallax Microsite
+Oil &amp; Gas Parallax Microsite
 
 
 Install
